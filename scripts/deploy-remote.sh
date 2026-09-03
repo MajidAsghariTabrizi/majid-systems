@@ -101,53 +101,42 @@ $SUDO systemctl enable --now ${SERVICE_NAME}.service
 sleep 3
 $SUDO systemctl --no-pager --full status ${SERVICE_NAME}.service | head -20 || true
 
-# ---- 6. nginx site (idempotent) -------------------------------
-log "Writing nginx site /etc/nginx/sites-available/quantiviq"
-$SUDO tee /etc/nginx/sites-available/quantiviq >/dev/null <<'NGINX'
+# ---- 6. nginx site (idempotent, HTTP-only) -------------------
+# We deliberately use a plain HTTP proxy config so the site is reachable
+# immediately. Once a Let's Encrypt cert exists, scripts/enable-https.sh
+# switches the config to terminate TLS at nginx.
+log "Writing nginx HTTP site /etc/nginx/sites-available/quantiviq (no TLS yet)"
+$SUDO tee /etc/nginx/sites-available/quantiviq >/dev/null <<NGINX
 server {
     listen 80;
-    server_name quantiviq.xyz www.quantiviq.xyz;
+    listen [::]:80;
+    server_name ${DOMAIN} www.${DOMAIN};
+
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
 
     location /.well-known/acme-challenge/ {
         root /var/www/html;
         allow all;
     }
 
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    server_name quantiviq.xyz www.quantiviq.xyz;
-
-    gzip on;
-    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
-    gzip_min_length 1024;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Permissions-Policy "interest-cohort=()" always;
-
     location /_next/static/ {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        proxy_set_header Host \$host;
         expires 1y;
         add_header Cache-Control "public, immutable";
         access_log off;
     }
 
     location / {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection "upgrade";
     }
 }
@@ -158,15 +147,25 @@ $SUDO nginx -t
 $SUDO systemctl reload nginx
 
 # ---- 7. TLS cert via Let's Encrypt (only when DNS is correct) -
-if $SUDO certbot certificates 2>/dev/null | grep -q "No certificates found"; then
-  log "Attempting Let's Encrypt certificate"
-  if ! $SUDO certbot --nginx \
-        -d "$DOMAIN" -d "www.$DOMAIN" \
-        --non-interactive --agree-tos -m "$LE_EMAIL" --redirect 2>&1 | tail -20; then
-    warn "Certbot failed. Most likely cause: DNS for ${DOMAIN} does not yet point to this host."
-    warn "Update the A records at the registrar to $(curl -4 -s https://ifconfig.me) and re-run:"
-    warn "    sudo certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos -m ${LE_EMAIL} --redirect"
+THIS_IP=$(curl -4 -s --max-time 8 https://ifconfig.me || echo "")
+DNS_IP=$(getent hosts "$DOMAIN" 2>/dev/null | awk '{print $1}' | head -1)
+if [[ -n "$THIS_IP" && "$DNS_IP" == "$THIS_IP" ]]; then
+  if $SUDO certbot certificates 2>/dev/null | grep -q "No certificates found"; then
+    log "DNS for ${DOMAIN} points here. Attempting Let's Encrypt certificate"
+    if ! $SUDO certbot --nginx \
+          -d "$DOMAIN" -d "www.$DOMAIN" \
+          --non-interactive --agree-tos -m "$LE_EMAIL" --redirect 2>&1 | tail -20; then
+      warn "Certbot failed despite DNS check. Inspect the logs."
+    fi
   fi
+  if [[ -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]]; then
+    log "Switching nginx to TLS-terminating configuration"
+    "$APP_DIR/scripts/enable-https.sh" || warn "enable-https.sh failed; you can re-run it manually."
+  fi
+else
+  warn "DNS for ${DOMAIN} resolves to '${DNS_IP:-<unknown>}', not this host (${THIS_IP:-<unknown>})."
+  warn "Skipping Let's Encrypt. After updating the A record, run:"
+  warn "    sudo ${APP_DIR}/scripts/enable-https.sh"
 fi
 
 # ---- 8. Smoke tests -------------------------------------------
