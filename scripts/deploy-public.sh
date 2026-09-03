@@ -122,6 +122,20 @@ nginx -t
 systemctl reload nginx
 REMOTE
 
+# ---- 5b. Ensure Let's Encrypt cert covers apex + www -----------
+log "Ensuring Let's Encrypt cert covers quantiviq.xyz and www.quantiviq.xyz"
+$SSH "$HOST" bash -s <<REMOTE
+set -e
+if sudo certbot certificates 2>/dev/null | grep -A4 "quantiviq.xyz-0002" | grep -q "www.quantiviq.xyz"; then
+  echo "  cert already covers www.quantiviq.xyz"
+else
+  echo "  expanding cert to include www.quantiviq.xyz"
+  sudo certbot certonly --webroot -w /var/www/html \\
+    -d quantiviq.xyz -d www.quantiviq.xyz \\
+    --expand --non-interactive --agree-tos -m admin@quantiviq.xyz 2>&1 | tail -5
+fi
+REMOTE
+
 # ---- 6. Remote: smoke tests ------------------------------------
 log "Smoke tests"
 $SSH "$HOST" bash -s <<REMOTE

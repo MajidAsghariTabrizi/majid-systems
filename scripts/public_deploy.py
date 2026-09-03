@@ -152,6 +152,21 @@ nginx -t
 systemctl reload nginx
 '""")
 
+        step("Ensuring Let's Encrypt cert covers both apex and www")
+        # The very first deploy only had a cert for the apex. This step
+        # expands it to also cover www.quantiviq.xyz so the HTTPS redirect
+        # from www -> apex does not produce a cert error.
+        run(client, """bash -c '
+if certbot certificates 2>/dev/null | grep -A4 "quantiviq.xyz-0002" | grep -q "www.quantiviq.xyz"; then
+  echo "  cert already covers www.quantiviq.xyz"
+else
+  echo "  expanding cert to include www.quantiviq.xyz"
+  certbot certonly --webroot -w /var/www/html \\
+    -d quantiviq.xyz -d www.quantiviq.xyz \\
+    --expand --non-interactive --agree-tos -m admin@quantiviq.xyz 2>&1 | tail -5
+fi
+'""", timeout=180)
+
         step("Smoke tests (https://127.0.0.1 with Host: quantiviq.xyz)")
         run(client, """bash -c '
 echo PORTFOLIO:
