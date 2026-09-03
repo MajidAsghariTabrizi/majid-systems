@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a0b0d"/>
+      <stop offset="1" stop-color="#111317"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7cd9b7"/>
+      <stop offset="1" stop-color="#4dc59a"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <g transform="translate(80, 110)">
+    <rect width="42" height="42" rx="10" fill="url(#accent)"/>
+    <rect x="7" y="7" width="28" height="28" rx="5" fill="#0a0b0d"/>
+    <rect x="7" y="7" width="28" height="1" fill="#7cd9b7" opacity="0.6"/>
+    <rect x="34" y="7" width="1" height="28" fill="#7cd9b7" opacity="0.6"/>
+    <rect x="16" y="16" width="10" height="2" fill="#7cd9b7"/>
+    <rect x="20" y="16" width="2" height="10" fill="#7cd9b7"/>
+    <rect x="16" y="24" width="10" height="2" fill="#7cd9b7"/>
+  </g>
+
+  <text x="80" y="230" fill="#9aa0a6" font-family="ui-monospace, JetBrains Mono, monospace" font-size="20" letter-spacing="2">
+    PRODUCT · SYSTEMS · AI · ENGINEERING
+  </text>
+
+  <text x="80" y="320" fill="#e8eaed" font-family="Inter, system-ui, sans-serif" font-size="76" font-weight="700" letter-spacing="-2">
+    Majid Asghari.
+  </text>
+
+  <text x="80" y="380" fill="#9aa0a6" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500">
+    Product strategist. Systems builder. AI engineer.
+  </text>
+
+  <text x="80" y="440" fill="#6c7280" font-family="Inter, system-ui, sans-serif" font-size="22">
+    Production-grade financial intelligence · decision systems · AI engineering
+  </text>
+
+  <text x="80" y="520" fill="#7cd9b7" font-family="ui-monospace, JetBrains Mono, monospace" font-size="20">
+    quantiviq.xyz
+  </text>
+</svg>
