@@ -17,6 +17,12 @@ import getpass
 import time
 import paramiko
 
+# Windows consoles default to cp1252; remote output (systemd status, npm
+# progress glyphs) is UTF-8. Force UTF-8 on stdout/stderr or print() dies.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+
 HOST = "171.22.24.45"
 USER = "root"
 PORT = 22
@@ -38,12 +44,16 @@ def connect(password):
 def run(client, cmd, timeout=600, stream=False):
     si, so, se = client.exec_command(cmd, timeout=timeout)
     if stream:
-        for line in iter(so.readline, b""):
-            sys.stdout.write(line.decode("utf-8", errors="replace"))
-            sys.stdout.flush()
-        for line in iter(se.readline, b""):
-            sys.stderr.write(line.decode("utf-8", errors="replace"))
-            sys.stderr.flush()
+        # paramiko >= 3 opens the channel files in text mode: readline()
+        # yields str, not bytes. Handle both so this works on any version.
+        def _drain(f, w):
+            for line in iter(f.readline, ""):
+                text = line.decode("utf-8", errors="replace") if isinstance(line, (bytes, bytearray)) else line
+                w.write(text)
+                w.flush()
+
+        _drain(so, sys.stdout)
+        _drain(se, sys.stderr)
     else:
         out = so.read().decode("utf-8", errors="replace")
         err = se.read().decode("utf-8", errors="replace")
@@ -134,7 +144,8 @@ NoNewPrivileges=true
 WantedBy=multi-user.target
 UNIT
 systemctl daemon-reload
-systemctl enable --now {SERVICE_NAME}.service
+systemctl enable {SERVICE_NAME}.service
+systemctl restart {SERVICE_NAME}.service
 sleep 4
 systemctl --no-pager --full status {SERVICE_NAME}.service | head -15
 '""")
