@@ -3,6 +3,7 @@ export type ProjectStatus =
   | 'production-live'
   | 'production-no-alpha'
   | 'active-development'
+  | 'archived'
   | 'reference-implementation'
   | 'released'
   | 'fork';
@@ -126,8 +127,8 @@ export const PROJECTS: Project[] = [
     slug: 'smart-trader',
     name: 'Smart Trader',
     category: 'flagship',
-    status: 'active-development',
-    statusLabel: 'Active development',
+    status: 'archived',
+    statusLabel: 'Archived · data frozen 2026-09-23',
     oneLiner:
       'A decision-intelligence trading system: market structure, behavior signals, and explicit risk gates.',
     thesis:
@@ -185,7 +186,7 @@ export const PROJECTS: Project[] = [
       'Staging is a feature, not a courtesy. A second environment catches the failures you did not know to test for.',
     ],
     currentState:
-      'Active development. The decision engine, provider abstraction, behavior intelligence, and UI are in production. The additive-only deployment contract with the running services is honored. The next iteration focuses on better behavior modeling, broader provider coverage, and explicit risk visualizations for operators.',
+      'Archived. The production market data stream (Wallex) became unreachable and the last durable trading event was recorded 2026-09-23T13:35:37Z; the feed had already been reporting itself as stale for weeks before that. The system — decision engine, provider abstraction, behavior intelligence, UI, and its databases — is preserved unchanged on the server as an honest case study of what worked and what the log caught. It is deliberately not presented as live. Any successor would be designed on a different data architecture first.',
     githubUrl: 'https://github.com/MajidAsghariTabrizi/smart-trader',
     languages: ['Python', 'HTML', 'CSS', 'JavaScript', 'Shell'],
     dates: { started: '2025-11', latest: '2026-09' },

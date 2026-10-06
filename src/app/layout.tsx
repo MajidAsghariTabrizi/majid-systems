@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
-import { SITE } from '@/content/shared';
+import { BRAND, SITE } from '@/content/shared';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
@@ -10,35 +10,29 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.canonicalUrl),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
-    template: `%s · ${SITE.name}`,
+    default: BRAND.title,
+    template: '%s · Quantiviq',
   },
-  description: SITE.description,
-  applicationName: SITE.name,
+  description: BRAND.description,
+  applicationName: 'Quantiviq',
   authors: [{ name: SITE.name, url: SITE.githubUrl }],
   creator: SITE.name,
-  publisher: SITE.name,
+  publisher: 'Quantiviq',
   keywords: [
+    'Quantiviq',
+    'AI-native organization',
+    'organization transformation',
+    'company brain',
+    'agent runtime',
+    'model routing',
+    'operating model',
+    'AI agents',
+    'workflow design',
+    'decision systems',
     'Majid Asghari',
-    'Majid',
-    'Asghari',
-    'quantiviq',
-    'Product Lead',
-    'Product Engineer',
-    'AI Engineer',
-    'AI Systems',
-    'Engineering Systems',
-    'Blockchain Infrastructure',
-    'Arbitrum',
-    'AI Agents',
-    'Model Routing',
-    'Open Source',
-    'Smart Trader',
     'Phoenix',
     'Free Best Router',
     'Universal Engineering Agent',
-    'Aave V3',
-    'Atlas',
     'DeepSeek Harness',
   ],
   alternates: {
@@ -48,23 +42,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: SITE.canonicalUrl,
-    siteName: SITE.name,
-    title: `${SITE.name} — ${SITE.tagline}`,
-    description: SITE.description,
+    siteName: 'Quantiviq',
+    title: BRAND.title,
+    description: BRAND.description,
     images: [
       {
-        url: SITE.ogImage,
+        url: BRAND.ogImage,
         width: 1200,
         height: 630,
-        alt: SITE.name,
+        alt: 'Quantiviq — Rebuild the Company',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE.name} — ${SITE.tagline}`,
-    description: SITE.description,
-    images: [SITE.ogImage],
+    title: BRAND.title,
+    description: BRAND.description,
+    images: [BRAND.ogImage],
   },
   robots: {
     index: true,
@@ -100,7 +94,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>

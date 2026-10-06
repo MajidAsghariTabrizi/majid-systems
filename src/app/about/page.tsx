@@ -36,10 +36,12 @@ export default function AboutPage() {
                 at the boundary.
               </p>
               <p>
-                The active projects on this site are <strong>Phoenix</strong> (a
+                The projects on this site are <strong>Phoenix</strong> (a
                 production-grade, fail-closed financial intelligence and execution
-                system on Arbitrum), <strong>Smart Trader</strong> (a live decision
-                intelligence trading system), <strong>Free Best Router</strong> (an
+                system on Arbitrum), <strong>Smart Trader</strong> (a decision
+                intelligence trading system, archived — its market data froze on
+                2026-09-23 and it is preserved as a case study),{' '}
+                <strong>Free Best Router</strong> (an
                 OpenAI-compatible intelligent router for free AI models), and the{' '}
                 <strong>Universal Engineering Agent</strong> (a profile-agnostic
                 reference implementation of an engineering-agent operating kernel).
@@ -73,11 +75,12 @@ export default function AboutPage() {
 
               <h2>Currently</h2>
               <p>
-                Phoenix is in production observation on Arbitrum; Smart Trader is in
-                active development with a live market; Free Best Router is shipped and
-                expanding provider coverage; UEA is the reference implementation of a
-                kernel I expect to keep iterating. The honest state is honest; the
-                work is real.
+                Phoenix is in production observation on Arbitrum; Smart Trader is
+                archived (its market data stream froze on 2026-09-23 — kept as an
+                honest case study, not presented as live); Free Best Router is shipped
+                and expanding provider coverage; UEA is the reference implementation
+                of a kernel I expect to keep iterating. The honest state is honest;
+                the work is real.
               </p>
             </div>
 

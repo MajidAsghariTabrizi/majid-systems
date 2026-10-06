@@ -170,7 +170,7 @@ fi
         step("Smoke tests (https://127.0.0.1 with Host: quantiviq.xyz)")
         run(client, """bash -c '
 echo PORTFOLIO:
-for r in / /work /work/phoenix /work/smart-trader /work/free-best-router /work/universal-engineering-agent /engineering /notes /open-source /about /contact /sitemap.xml /robots.txt /manifest.webmanifest; do
+for r in / /profile /work /work/phoenix /work/smart-trader /work/free-best-router /work/universal-engineering-agent /engineering /notes /open-source /about /contact /sitemap.xml /robots.txt /manifest.webmanifest; do
   c=$(curl -sk -o /dev/null -w "%{http_code}" -H "Host: quantiviq.xyz" "https://127.0.0.1$r")
   printf "  %-50s -> %s\\n" "$r" "$c"
 done

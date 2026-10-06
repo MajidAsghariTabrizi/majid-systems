@@ -3,22 +3,27 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { NAV, SITE } from '@/content/shared';
+import { BRAND, BUILDER_LINK, NAV, ROOT_NAV, ROOT_NAV_CTA } from '@/content/shared';
 
 export function Header() {
   const pathname = usePathname();
+  const isRoot = pathname === '/';
+
+  const links = isRoot ? ROOT_NAV : NAV;
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${isRoot ? 'site-header-root' : ''}`}>
       <div className="site-header-inner">
-        <Link href="/" className="brand" aria-label={`${SITE.name} home`}>
+        <Link href="/" className="brand" aria-label="Quantiviq home">
           <span className="brand-mark" aria-hidden />
-          <span>{SITE.shortName}</span>
+          <span className="brand-word">{BRAND.wordmark}</span>
         </Link>
-        <nav className="nav" aria-label="Primary">
-          {NAV.map((item) => {
+        <nav className="nav" aria-label={isRoot ? 'Primary — Quantiviq' : 'Primary — Builder profile'}>
+          {links.map((item) => {
             const href = item.href as string;
-            const active =
-              href === '/'
+            const active = href.startsWith('#')
+              ? false
+              : href === '/'
                 ? pathname === '/'
                 : pathname === href || pathname?.startsWith(`${href}/`);
             return (
@@ -31,7 +36,15 @@ export function Header() {
               </Link>
             );
           })}
+          <Link href={BUILDER_LINK.href} className="nav-builder">
+            {BUILDER_LINK.label}
+          </Link>
         </nav>
+        {isRoot && (
+          <Link href={ROOT_NAV_CTA.href} className="btn btn-primary nav-cta">
+            {ROOT_NAV_CTA.label}
+          </Link>
+        )}
       </div>
     </header>
   );

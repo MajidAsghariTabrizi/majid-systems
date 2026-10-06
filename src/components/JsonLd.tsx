@@ -72,6 +72,36 @@ export function HomeJsonLd() {
   );
 }
 
+export function QuantiviqJsonLd() {
+  const org = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Quantiviq',
+    url: SITE.canonicalUrl,
+    description:
+      'AI-native organization transformation: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
+    slogan: 'Rebuild the company.',
+    founder: { '@type': 'Person', name: SITE.name, url: `${SITE.canonicalUrl}/profile` },
+    areaServed: 'Worldwide',
+    serviceType: [
+      'AI-native organization design',
+      'Function restructuring',
+      'Company brain implementation',
+      'Agent runtime and workflow design',
+    ],
+    knowsAbout: [
+      'AI-native organizations',
+      'Organizational design',
+      'Company brain',
+      'Agent runtime',
+      'Model routing',
+      'Decision systems',
+      'Workflow design',
+    ],
+  };
+  return <JsonLdScript data={org} />;
+}
+
 export function ProjectJsonLd({ project: p }: { project: Project }) {
   const data = {
     '@context': 'https://schema.org',

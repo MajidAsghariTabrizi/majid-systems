@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a0b0d"/>
+      <stop offset="1" stop-color="#111317"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <g transform="translate(80, 96)">
+    <rect width="42" height="42" rx="10" fill="#7cd9b7"/>
+    <rect x="7" y="7" width="28" height="28" rx="5" fill="#0a0b0d"/>
+    <rect x="7" y="7" width="28" height="1" fill="#7cd9b7" opacity="0.6"/>
+    <rect x="34" y="7" width="1" height="28" fill="#7cd9b7" opacity="0.6"/>
+    <rect x="16" y="16" width="10" height="2" fill="#7cd9b7"/>
+    <rect x="20" y="16" width="2" height="10" fill="#7cd9b7"/>
+    <rect x="16" y="24" width="10" height="2" fill="#7cd9b7"/>
+  </g>
+
+  <text x="80" y="196" fill="#9aa0a6" font-family="ui-monospace, JetBrains Mono, monospace" font-size="20" letter-spacing="3">
+    AI-NATIVE ORGANIZATION TRANSFORMATION
+  </text>
+
+  <text x="76" y="300" fill="#e8eaed" font-family="Inter, system-ui, sans-serif" font-size="104" font-weight="800" letter-spacing="-3">
+    REBUILD THE
+  </text>
+  <text x="76" y="412" fill="#e8eaed" font-family="Inter, system-ui, sans-serif" font-size="104" font-weight="800" letter-spacing="-3">
+    COMPANY<tspan fill="#7cd9b7">.</tspan>
+  </text>
+
+  <text x="80" y="486" fill="#c5cad3" font-family="Inter, system-ui, sans-serif" font-size="24">
+    Structure · workflows · agents · decision systems — one operating model.
+  </text>
+
+  <!-- signal states row -->
+  <g font-family="ui-monospace, JetBrains Mono, monospace" font-size="15" letter-spacing="1">
+    <rect x="80" y="530" width="130" height="34" rx="6" fill="rgba(124,217,183,0.10)" stroke="rgba(124,217,183,0.5)"/>
+    <text x="145" y="552" fill="#7cd9b7" text-anchor="middle">VERIFIED</text>
+    <rect x="222" y="530" width="130" height="34" rx="6" fill="rgba(138,180,248,0.10)" stroke="rgba(138,180,248,0.5)"/>
+    <text x="287" y="552" fill="#8ab4f8" text-anchor="middle">PATH</text>
+    <rect x="364" y="530" width="130" height="34" rx="6" fill="rgba(240,168,104,0.10)" stroke="rgba(240,168,104,0.5)"/>
+    <text x="429" y="552" fill="#f0a868" text-anchor="middle">WARNING</text>
+    <rect x="506" y="530" width="140" height="34" rx="6" fill="rgba(226,107,107,0.10)" stroke="rgba(226,107,107,0.5)"/>
+    <text x="576" y="552" fill="#e26b6b" text-anchor="middle">DISPUTED</text>
+    <rect x="658" y="530" width="150" height="34" rx="6" fill="none" stroke="rgba(154,160,166,0.5)" stroke-dasharray="4 4"/>
+    <text x="733" y="552" fill="#9aa0a6" text-anchor="middle">UNKNOWN</text>
+  </g>
+
+  <text x="1120" y="576" fill="#6c7280" font-family="Inter, system-ui, sans-serif" font-size="22" text-anchor="end">
+    quantiviq.xyz
+  </text>
+</svg>

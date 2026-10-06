@@ -15,6 +15,9 @@ export function Footer() {
         </div>
         <ul>
           <li>
+            <Link href="/profile">Builder Profile</Link>
+          </li>
+          <li>
             <Link href="/work">Work</Link>
           </li>
           <li>

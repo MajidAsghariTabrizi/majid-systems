@@ -13,11 +13,14 @@
 # Designed to be run from a local machine that has paramiko and
 # SSH password access to root@171.22.24.45:
 #
-#   python scripts/public_deploy.py "ORDIbehesht1370#+"
+#   python scripts/public_deploy.py "<ssh-password>"
 #
 # Or interactively:
 #   python scripts/public_deploy.py
 #   (it will prompt for the password)
+#
+# NOTE: never commit the password. Use the interactive prompt, the
+# SSH_PASSWORD environment variable, or a password manager.
 # ============================================================
 set -euo pipefail
 
