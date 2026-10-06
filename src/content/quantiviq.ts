@@ -17,15 +17,14 @@ export const BRAND = {
 /* ================= Hero ================= */
 
 export const HERO = {
-  eyebrow: 'AI-Native Organization Transformation',
-  h1: 'Rebuild the company.',
-  sub: 'AI changes the architecture of the company — not just the tools inside it.',
-  body: 'Quantiviq redesigns how a function actually runs: its workflows, its decision rights, its knowledge, and its learning loop — humans and agents operating under one shared company brain. The org chart is replaced by an operating model.',
-  ctaPrimary: { label: 'Explore the Organization OS', href: '#operating-model' },
-  ctaSecondary: { label: 'Rebuild a function', href: '#method' },
-  vizTitle: 'From company-as-chart to company-as-system',
-  vizCaption:
-    'A decision traveling through a traditional org — then the same company, rebuilt as one operating model.',
+  tag: 'FROM COMPANY-AS-CHART / TO COMPANY-AS-SYSTEM',
+  h1: 'REBUILD THE COMPANY.',
+  sub: 'For an era where intelligence is no longer exclusively human.',
+  bodyP1: 'Most companies added AI to the old operating model. The bottleneck is still the company itself.',
+  bodyP2:
+    'Quantiviq redesigns how work, decisions, knowledge and authority move — so humans and agents operate as one learning system.',
+  ctaPrimary: { label: 'EXPLORE THE SYSTEM', href: '#simulator' },
+  ctaSecondary: { label: 'REBUILD A FUNCTION', href: '#method' },
 } as const;
 
 /** Friction metrics shown in the "traditional organization" phase (illustrative). */

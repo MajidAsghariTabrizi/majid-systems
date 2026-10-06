@@ -19,7 +19,8 @@ import {
   USE_CASES,
   BRAND,
 } from '@/content/quantiviq';
-import { OrgTransform } from '@/components/OrgTransform';
+import { SIM_FINAL_CTA, SIM_LATENCY_DEF } from '@/content/simulator';
+import { OrgSimulatorSection } from '@/components/OrgSimulator';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
 import { BrainDemo } from '@/components/BrainDemo';
 import { LearningLoop } from '@/components/LearningLoop';
@@ -56,10 +57,11 @@ export default function QuantiviqHomePage() {
       <section className="q-hero" aria-label="Quantiviq — AI-native organization transformation">
         <div className="container-wide">
           <div className="q-hero-copy">
-            <span className="eyebrow">{HERO.eyebrow}</span>
+            <span className="eyebrow">{HERO.tag}</span>
             <h1 className="q-display">{HERO.h1}</h1>
             <p className="q-hero-sub">{HERO.sub}</p>
-            <p className="q-hero-body">{HERO.body}</p>
+            <p className="q-hero-body">{HERO.bodyP1}</p>
+            <p className="q-hero-body">{HERO.bodyP2}</p>
             <div className="hero-actions">
               <Link href={HERO.ctaPrimary.href} className="btn btn-primary">
                 {HERO.ctaPrimary.label} <span className="arrow" aria-hidden>↓</span>
@@ -69,12 +71,23 @@ export default function QuantiviqHomePage() {
               </Link>
             </div>
           </div>
-          <Reveal className="q-hero-viz">
-            <div className="q-viz-head">
-              <span className="eyebrow" style={{ marginBottom: 0 }}>{HERO.vizTitle}</span>
-              <span className="q-viz-caption">{HERO.vizCaption}</span>
+        </div>
+      </section>
+
+      {/* ============= INTERACTIVE ORGANIZATION SIMULATOR ============= */}
+      <OrgSimulatorSection />
+
+      {/* ============= COMPANY LATENCY — DEFINITION ============= */}
+      <section id="latency-definition" className="q-section q-latency-def" aria-label="Company latency definition">
+        <div className="container-narrow">
+          <Reveal>
+            <span className="eyebrow">COMPANY LATENCY</span>
+            <p className="q-latency-def-body">{SIM_LATENCY_DEF.body}</p>
+            <div className="hero-actions q-latency-def-actions">
+              <Link href={SIM_FINAL_CTA.href} className="btn btn-primary">
+                {SIM_FINAL_CTA.label} <span className="arrow" aria-hidden>↓</span>
+              </Link>
             </div>
-            <OrgTransform />
           </Reveal>
         </div>
       </section>
