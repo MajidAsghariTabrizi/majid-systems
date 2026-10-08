@@ -4,7 +4,7 @@
  * Server-rendered content (SEO-visible) + client interactions.
  * One persistent radial career graph gains layers as scenes activate.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import {
@@ -95,22 +95,36 @@ const ALL_LAYERS = Object.keys(JOURNEY_LAYERS) as GraphLayerKey[];
 /* Persistent career graph                                             */
 /* ------------------------------------------------------------------ */
 
-function ConvergenceGraph({ active }: { active: number }) {
-  const scene = JOURNEY_SCENES[Math.min(active, JOURNEY_SCENES.length - 1)];
+/** Layer → first scene that features it (map navigation). */
+const LAYER_SCENE: Record<GraphLayerKey, string> = {
+  tech: 'technology',
+  product: 'product',
+  org: 'organization',
+  market: 'marketplace',
+  markets: 'decision-systems',
+  ai: 'router',
+  agents: 'agents',
+  learning: 'brain',
+};
+
+function ConvergenceGraph({ active, onJump }: { active: number; onJump: (sceneId: string) => void }) {
+  const scene = JOURNEY_SCENES[Math.max(active - 1, 0)];
   const visible = visibleLayers(scene.layers, ALL_LAYERS);
   const edges = chainEdges(visible);
   const zoomed = scene.id === 'convergence' || active >= JOURNEY_SCENES.length - 1;
+  const isActive = (k: GraphLayerKey) => scene.layers.includes(k);
   return (
-    <div className={`jv-graph ${zoomed ? 'zoom' : ''}`} data-era={scene.layers[scene.layers.length - 1]} aria-hidden="true">
-      <svg viewBox="0 0 1000 620">
+    <div className={`jv-graph ${zoomed ? 'zoom' : ''}`} data-era={scene.layers[scene.layers.length - 1]}>
+      <svg viewBox="0 0 1000 620" role="img" aria-label="Career system map — layers converging into Quantiviq">
         <g className="jv-graph-zoom">
           {edges.map(({ from, to }) => {
             const a = SLOT_BY_KEY[from];
             const b = SLOT_BY_KEY[to];
+            const live = isActive(from) || isActive(to);
             return (
               <path
                 key={`${from}>${to}`}
-                className="jv-g-edge"
+                className={`jv-g-edge seen ${live ? 'live' : ''}`}
                 d={`M${a.x},${a.y} Q${(a.x + b.x) / 2 + (b.y - a.y) * 0.12},${(a.y + b.y) / 2 - (b.x - a.x) * 0.12} ${b.x},${b.y}`}
               />
             );
@@ -121,9 +135,23 @@ function ConvergenceGraph({ active }: { active: number }) {
             ))}
           {LAYER_SLOTS.map((slot) => {
             const on = visible.includes(slot.key);
-            const activeNow = scene.layers.includes(slot.key);
+            const activeNow = isActive(slot.key);
+            const state = activeNow ? 'is-active' : on ? 'is-connected' : 'is-future';
             return (
-              <g key={slot.key} className={`jv-g-node ${on ? 'on' : ''} ${activeNow ? 'hot' : ''}`}>
+              <g
+                key={slot.key}
+                className={`jv-g-node ${on ? 'on' : ''} ${activeNow ? 'hot' : ''} ${state}`}
+                onClick={() => onJump(LAYER_SCENE[slot.key])}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onJump(LAYER_SCENE[slot.key]);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`${slot.label} — jump to ${LAYER_SCENE[slot.key]} scene`}
+              >
                 {orbitDots(slot, 4).map((d, i) => (
                   <circle key={i} className="jv-g-orbit" cx={d.x} cy={d.y} r="3" style={{ transitionDelay: `${i * 90}ms` }} />
                 ))}
@@ -135,7 +163,19 @@ function ConvergenceGraph({ active }: { active: number }) {
             );
           })}
           {zoomed && (
-            <g className="jv-g-center on">
+            <g
+              className="jv-g-center on"
+              onClick={() => onJump('convergence')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onJump('convergence');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Quantiviq — jump to the convergence scene"
+            >
               <circle cx={CONVERGENCE_POINT.x} cy={CONVERGENCE_POINT.y} r="34" className="jv-g-core center" />
               <text x={CONVERGENCE_POINT.x} y={CONVERGENCE_POINT.y + 5} textAnchor="middle" className="jv-g-q">
                 QV
@@ -144,7 +184,6 @@ function ConvergenceGraph({ active }: { active: number }) {
           )}
         </g>
       </svg>
-      <div className="jv-graph-era">{scene.kicker}</div>
     </div>
   );
 }
@@ -304,8 +343,20 @@ function ExploreMap({ open, onClose }: { open: boolean; onClose: () => void }) {
 /* ------------------------------------------------------------------ */
 
 function SceneSection({ id, idx, children }: { id: string; idx: number | string; children: React.ReactNode }) {
+  const ref = useRef<HTMLElement | null>(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.target === el && e.isIntersecting && setSeen(true)),
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
-    <section id={`jv-${id}`} className="jv-scene" data-scene={id} data-idx={idx}>
+    <section id={`jv-${id}`} ref={ref} className={`jv-scene ${seen ? 'seen' : ''}`} data-scene={id} data-idx={idx}>
       {children}
     </section>
   );
@@ -343,17 +394,18 @@ export function JourneyExperience() {
     const els = Array.from(document.querySelectorAll<HTMLElement>('.jv-scene'));
     const io = new IntersectionObserver(
       (entries) => {
-        let best: { idx: number; r: number } | null = null;
+        // Scenes vary hugely in height, so ratio-vs-element breaks on tall
+        // scenes — measure how much of the VIEWPORT each scene covers instead.
+        let best: { idx: number; vh: number } | null = null;
         for (const e of entries) {
           const idx = Number((e.target as HTMLElement).dataset.idx ?? -1);
-          if (idx < 0) continue;
-          if (e.isIntersecting && e.intersectionRatio > 0.3 && (!best || e.intersectionRatio > best.r)) {
-            best = { idx, r: e.intersectionRatio };
-          }
+          if (idx < 0 || !e.isIntersecting) continue;
+          const vhCovered = e.intersectionRect.height / window.innerHeight;
+          if (vhCovered >= 0.25 && (!best || vhCovered > best.vh)) best = { idx, vh: vhCovered };
         }
         if (best) setActive(best.idx + 1);
       },
-      { threshold: [0.3, 0.6] }
+      { threshold: [0, 0.15, 0.5] }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -374,6 +426,15 @@ export function JourneyExperience() {
     const s = JOURNEY_SCENES[Math.min(Math.max(active - 1, 0), JOURNEY_SCENES.length - 1)];
     return Math.max(0, JOURNEY_LOOP.indexOf(s.loopStage as (typeof JOURNEY_LOOP)[number]));
   }, [active]);
+
+  const jumpTo = useCallback((sceneId: string) => {
+    document.getElementById(`jv-${sceneId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  const activeScene = active >= 1 ? JOURNEY_SCENES[Math.min(active - 1, JOURNEY_SCENES.length - 1)] : null;
+  const activeLabel = activeScene
+    ? `SCENE ${String(activeScene.index).padStart(2, '0')} / ${activeScene.theme}`
+    : 'SCENE 00 / TRACE THE SYSTEM';
 
   const scrubExperiments = useMemo(
     () =>
@@ -410,9 +471,28 @@ export function JourneyExperience() {
         </div>
       </header>
 
-      {/* graph rail (desktop) */}
-      <aside className="jv-graph-rail" aria-hidden="true">
-        <ConvergenceGraph active={active} />
+      {/* system map rail (desktop) */}
+      <aside className="jv-graph-rail" aria-label="Journey system map">
+        <div className="jv-map-head">
+          <span className="jv-map-title">SYSTEM MAP</span>
+          <span className="jv-map-sub">Career layers converging into Quantiviq</span>
+        </div>
+        <ConvergenceGraph active={active} onJump={jumpTo} />
+        <div className="jv-map-foot">
+          <div className="jv-map-progress">
+            <span className="jv-map-progress-k">
+              {activeLabel}
+            </span>
+            <div className="jv-map-bar">
+              <i style={{ width: `${(Math.max(active, 1) / JOURNEY_SCENES.length) * 100}%` }} />
+            </div>
+          </div>
+          <div className="jv-map-legend" aria-hidden="true">
+            <span><i className="lg-a" />Active</span>
+            <span><i className="lg-c" />Connected</span>
+            <span><i className="lg-f" />Future layer</span>
+          </div>
+        </div>
       </aside>
 
       {/* scenes */}
@@ -701,13 +781,16 @@ export function JourneyExperience() {
           <p className="jv-soul">{JOURNEY_SOUL}</p>
           <div className="jv-final-ctas">
             <Link href={JOURNEY_FINAL.ctaPrimary.href} className="jv-cta primary">
-              {JOURNEY_FINAL.ctaPrimary.label}
+              <span className="jv-cta-label">{JOURNEY_FINAL.ctaPrimary.label.replace(' →', '')}</span>
+              <span className="jv-cta-arrow" aria-hidden="true">→</span>
             </Link>
-            <Link href={JOURNEY_FINAL.ctaSecondary.href} className="jv-cta">
-              {JOURNEY_FINAL.ctaSecondary.label}
+            <Link href={JOURNEY_FINAL.ctaSecondary.href} className="jv-cta secondary">
+              <span className="jv-cta-label">{JOURNEY_FINAL.ctaSecondary.label.replace(' →', '')}</span>
+              <span className="jv-cta-arrow" aria-hidden="true">→</span>
             </Link>
-            <a href={JOURNEY_FINAL.ctaTertiary.href} target="_blank" rel="noreferrer" className="jv-cta">
-              {JOURNEY_FINAL.ctaTertiary.label}
+            <a href={JOURNEY_FINAL.ctaTertiary.href} target="_blank" rel="noreferrer" className="jv-cta tertiary">
+              <span className="jv-cta-label">{JOURNEY_FINAL.ctaTertiary.label.replace(' →', '')}</span>
+              <span className="jv-cta-arrow" aria-hidden="true">→</span>
             </a>
           </div>
           <p className="jv-verdicts">
