@@ -31,6 +31,7 @@ export const ROOT_NAV = [
   { label: 'Company Brain', href: '#company-brain' },
   { label: 'Method', href: '#method' },
   { label: 'Proof', href: '#proof' },
+  { label: 'Journey', href: '/journey' },
   { label: 'About', href: '/about' },
 ] as const;
 
