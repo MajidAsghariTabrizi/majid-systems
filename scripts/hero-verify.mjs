@@ -56,14 +56,12 @@ const run = async () => {
     (await page.locator('.q-hero-body').first().innerText()).startsWith('Most companies added AI to the old operating model.')
   );
   ok(
-    'hero: latency definition after sim',
-    (await page.locator('#latency-definition .q-latency-def-body').innerText()).includes(
-      'The time between a signal entering the organization and the organization producing the right response'
-    )
+    'problem: five latency forms present',
+    (await page.locator('#problem .latency-row').count()) === 5
   );
   ok(
-    'hero: final CTA label',
-    (await page.locator('#latency-definition .btn.btn-primary').innerText()).includes('EXPLORE THE ORGANIZATION OS')
+    'system: OS index lists all eight layers',
+    (await page.locator('#operating-model .os-index li').count()) === 8
   );
 
   /* ---- 3. old run ---- */

@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import {
-  BEFORE_AFTER,
+  BRAND,
   ENGAGEMENT,
   FINAL_CTA,
-  FOUNDER,
   HERO,
   LATENCY_FORMS,
   LATENCY_INTRO,
@@ -14,16 +13,13 @@ import {
   PRIMITIVES,
   PRIMITIVES_HONESTY,
   PRIMITIVES_NOTE,
-  RESTRUCTURING,
-  SIGNATURE,
-  USE_CASES,
-  BRAND,
+  PROOF_BRIDGE,
+  SYSTEM_FLOW_CAPTION,
 } from '@/content/quantiviq';
-import { SIM_FINAL_CTA, SIM_LATENCY_DEF } from '@/content/simulator';
 import { OrgSimulatorSection } from '@/components/OrgSimulator';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
 import { BrainDemo } from '@/components/BrainDemo';
-import { LearningLoop } from '@/components/LearningLoop';
+import { SystemFlow } from '@/components/LearningLoop';
 import { Reveal } from '@/components/Reveal';
 import { QuantiviqJsonLd } from '@/components/JsonLd';
 
@@ -48,12 +44,17 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * One continuous argument, six beats:
+ * problem → thesis → system → learning → proof → method.
+ * Every section advances exactly one of them.
+ */
 export default function QuantiviqHomePage() {
   return (
     <>
       <QuantiviqJsonLd />
 
-      {/* ============= HERO ============= */}
+      {/* ===== 01 · HERO + SIMULATION — the thesis, felt ===== */}
       <section className="q-hero" aria-label="Quantiviq — AI-native organization transformation">
         <div className="container-wide">
           <div className="q-hero-copy">
@@ -74,46 +75,15 @@ export default function QuantiviqHomePage() {
         </div>
       </section>
 
-      {/* ============= INTERACTIVE ORGANIZATION SIMULATOR ============= */}
       <OrgSimulatorSection />
 
-      {/* ============= COMPANY LATENCY — DEFINITION ============= */}
-      <section id="latency-definition" className="q-section q-latency-def" aria-label="Company latency definition">
-        <div className="container-narrow">
-          <Reveal>
-            <span className="eyebrow">COMPANY LATENCY</span>
-            <p className="q-latency-def-body">{SIM_LATENCY_DEF.body}</p>
-            <div className="hero-actions q-latency-def-actions">
-              <Link href={SIM_FINAL_CTA.href} className="btn btn-primary">
-                {SIM_FINAL_CTA.label} <span className="arrow" aria-hidden>↓</span>
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= SIGNATURE QUESTION ============= */}
-      <section className="q-signature" aria-label="The signature question">
-        <div className="container-narrow">
-          <Reveal>
-            <p className="q-question">{SIGNATURE.question}</p>
-          </Reveal>
-          <Reveal delay={260}>
-            <p className="q-answer">{SIGNATURE.answer}</p>
-          </Reveal>
-          <Reveal delay={420}>
-            <p className="q-close">{SIGNATURE.close}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= COMPANY LATENCY ============= */}
-      <section id="latency" className="q-section" aria-label="Company latency">
+      {/* ===== 02 · THE PROBLEM — company latency ===== */}
+      <section id="problem" className="q-section" aria-label="Company latency">
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow">01 · The bottleneck</span>
+                <span className="eyebrow sig">01 · The problem</span>
                 <h2 className="q-h2">The new bottleneck is company latency.</h2>
               </div>
             </div>
@@ -140,13 +110,13 @@ export default function QuantiviqHomePage() {
         </div>
       </section>
 
-      {/* ============= ORGANIZATION OS ============= */}
+      {/* ===== 03 · THE SYSTEM — the Organization OS (canonical architecture) ===== */}
       <section id="operating-model" className="q-section" aria-label="The AI-native organization operating system">
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow">02 · Operating model</span>
+                <span className="eyebrow sig">02 · The system</span>
                 <h2 className="q-h2">The AI-native Organization OS.</h2>
               </div>
             </div>
@@ -166,19 +136,29 @@ export default function QuantiviqHomePage() {
               ))}
             </ol>
           </Reveal>
+          <Reveal>
+            <p className="q-punch">
+              When intelligence becomes cheap, the shape of the organization itself becomes a design
+              decision: departments become workflows with oversight; meetings become rules.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* ============= COMPANY BRAIN ============= */}
-      <section id="company-brain" className="q-section" aria-label="The company brain">
+      {/* ===== 04 · HOW THE SYSTEM LEARNS — one loop, brain inside it ===== */}
+      <section id="learning" className="q-section" aria-label="How the system learns">
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow">03 · Company brain</span>
-                <h2 className="q-h2">A memory the company can interrogate.</h2>
+                <span className="eyebrow sig">03 · Learning</span>
+                <h2 className="q-h2">Signals in. Learning out.</h2>
               </div>
             </div>
+            <p className="q-lede">{SYSTEM_FLOW_CAPTION}</p>
+          </Reveal>
+          <Reveal>
+            <SystemFlow />
           </Reveal>
           <Reveal>
             <BrainDemo />
@@ -186,107 +166,13 @@ export default function QuantiviqHomePage() {
         </div>
       </section>
 
-      {/* ============= LEARNING LOOP ============= */}
-      <section id="learning" className="q-section" aria-label="The learning loop">
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow">04 · Learning loop</span>
-                <h2 className="q-h2">Experience should compound.</h2>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal>
-            <LearningLoop />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= WHAT ACTUALLY CHANGES ============= */}
-      <section id="changes" className="q-section" aria-label="What actually changes">
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow">05 · Structure</span>
-                <h2 className="q-h2">What actually changes.</h2>
-              </div>
-              <span className="section-num">structural comparison — not KPIs</span>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="ba-table" role="table" aria-label="Before and after, structural comparison">
-              <div className="ba-row ba-head" role="row">
-                <span role="columnheader">Dimension</span>
-                <span role="columnheader">Traditional company</span>
-                <span role="columnheader">AI-native company</span>
-              </div>
-              {BEFORE_AFTER.map((r) => (
-                <div className="ba-row" role="row" key={r.dimension}>
-                  <span className="ba-dim" role="rowheader">{r.dimension}</span>
-                  <span className="ba-before" role="cell">{r.before}</span>
-                  <span className="ba-after" role="cell">{r.after}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= RESTRUCTURING ============= */}
-      <section id="restructuring" className="q-section" aria-label="Company restructuring">
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow">06 · Restructuring</span>
-                <h2 className="q-h2">{RESTRUCTURING.headline}.</h2>
-              </div>
-            </div>
-            <p className="q-lede">{RESTRUCTURING.body}</p>
-          </Reveal>
-          <ul className="restructure-list">
-            {RESTRUCTURING.items.map((item, i) => (
-              <Reveal as="li" key={item} delay={i * 70}>
-                <span aria-hidden>▸ </span>
-                {item}
-              </Reveal>
-            ))}
-          </ul>
-          <Reveal>
-            <p className="q-punch">{RESTRUCTURING.close}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= FOUNDER ============= */}
-      <section id="founder" className="q-section" aria-label="The person behind Quantiviq">
-        <div className="container">
-          <Reveal>
-            <span className="eyebrow">{FOUNDER.eyebrow}</span>
-            <h2 className="q-h2">{FOUNDER.headline}</h2>
-          </Reveal>
-          {FOUNDER.body.map((p, i) => (
-            <Reveal key={p.slice(0, 24)} delay={i * 120}>
-              <p className="q-founder-p">{p}</p>
-            </Reveal>
-          ))}
-          <Reveal>
-            <Link href={FOUNDER.link.href} className="btn">
-              {FOUNDER.link.label} <span className="arrow" aria-hidden>→</span>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============= PRIMITIVES ============= */}
+      {/* ===== 05 · PROOF — primitives, built before the thesis had a name ===== */}
       <section id="proof" className="q-section" aria-label="Primitives as proof">
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow">07 · Proof</span>
+                <span className="eyebrow sig">04 · Proof</span>
                 <h2 className="q-h2">{PRIMITIVES_NOTE}</h2>
               </div>
             </div>
@@ -312,16 +198,30 @@ export default function QuantiviqHomePage() {
           <Reveal>
             <p className="q-honesty">{PRIMITIVES_HONESTY}</p>
           </Reveal>
+          <Reveal>
+            <div className="proof-bridge">
+              <span className="eyebrow sig">{PROOF_BRIDGE.eyebrow}</span>
+              <p className="proof-bridge-line">{PROOF_BRIDGE.line}</p>
+              <div className="hero-actions">
+                <Link href={PROOF_BRIDGE.journey.href} className="btn">
+                  {PROOF_BRIDGE.journey.label} <span className="arrow" aria-hidden>→</span>
+                </Link>
+                <Link href={PROOF_BRIDGE.profile.href} className="btn">
+                  {PROOF_BRIDGE.profile.label} <span className="arrow" aria-hidden>→</span>
+                </Link>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ============= METHOD / ENGAGEMENT ============= */}
+      {/* ===== 06 · METHOD + CTA ===== */}
       <section id="method" className="q-section" aria-label="How the work runs">
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow">08 · Method</span>
+                <span className="eyebrow sig">05 · Method</span>
                 <h2 className="q-h2">{ENGAGEMENT.headline}</h2>
               </div>
             </div>
@@ -339,6 +239,9 @@ export default function QuantiviqHomePage() {
             ))}
           </ol>
           <Reveal>
+            <p className="q-founder-p">{ENGAGEMENT.close}</p>
+          </Reveal>
+          <Reveal>
             <div className="hero-actions" style={{ marginTop: '2.5rem' }}>
               <Link href={ENGAGEMENT.cta.href} className="btn btn-primary">
                 {ENGAGEMENT.cta.label} <span className="arrow" aria-hidden>→</span>
@@ -348,30 +251,7 @@ export default function QuantiviqHomePage() {
         </div>
       </section>
 
-      {/* ============= USE CASES ============= */}
-      <section id="use-cases" className="q-section" aria-label="Ideal first functions">
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow">09 · First functions</span>
-                <h2 className="q-h2">Where to start.</h2>
-              </div>
-              <span className="section-num">ideal first use cases</span>
-            </div>
-          </Reveal>
-          <div className="usecase-grid">
-            {USE_CASES.map((u, i) => (
-              <Reveal key={u.key} delay={i * 60} className="usecase-card">
-                <h3>{u.name}</h3>
-                <p>{u.why}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============= FINAL CTA ============= */}
+      {/* ===== FINAL — the signature question, asked exactly once ===== */}
       <section className="q-final" aria-label="Start">
         <div className="container-narrow">
           <Reveal>

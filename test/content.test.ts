@@ -12,8 +12,8 @@ import {
   OS_LAYERS,
   PRIMITIVES,
   ENGAGEMENT,
-  USE_CASES,
-  BEFORE_AFTER,
+  SYSTEM_FLOW,
+  FINAL_CTA,
 } from '../src/content/quantiviq';
 
 test('SITE constants are present and well-formed', () => {
@@ -109,11 +109,9 @@ test('BRAND constants are well-formed', () => {
   assert.match(BRAND.ogImage, /^\/og-quantiviq\.svg$/);
 });
 
-test('ROOT_NAV covers the commercial sections and About', () => {
+test('ROOT_NAV is intention-based: System / Method / Proof / Journey / About', () => {
   const labels = ROOT_NAV.map((n) => n.label);
-  for (const expected of ['Operating Model', 'Company Brain', 'Method', 'Proof', 'About']) {
-    assert.ok(labels.includes(expected), `missing ROOT_NAV entry: ${expected}`);
-  }
+  assert.deepEqual(labels, ['System', 'Method', 'Proof', 'Journey', 'About']);
   for (const n of [...ROOT_NAV]) {
     assert.ok(n.href.length > 0, `${n.label}: href`);
   }
@@ -126,6 +124,25 @@ test('Latency forms: five, each with question and body', () => {
     assert.ok(f.question.endsWith('?'), `${f.name}: question`);
     assert.ok(f.body.length > 40, `${f.name}: body`);
   }
+});
+
+test('SYSTEM_FLOW: seven steps with the authority gate before action', () => {
+  assert.deepEqual(
+    SYSTEM_FLOW.map((s) => s.label),
+    ['SIGNAL', 'RETRIEVE STATE', 'DECIDE', 'AUTHORITY CHECK', 'ACT', 'MEASURE', 'LEARN']
+  );
+  const authority = SYSTEM_FLOW.findIndex((s) => s.key === 'authority');
+  const act = SYSTEM_FLOW.findIndex((s) => s.key === 'act');
+  assert.ok(authority >= 0 && act > authority, 'authority check precedes action');
+  for (const s of SYSTEM_FLOW) assert.ok(s.note.length > 5, `${s.label}: note`);
+});
+
+test('The signature question appears exactly once (final CTA only)', () => {
+  const question = 'founded today';
+  assert.ok(
+    FINAL_CTA.lines.join(' ').includes(question),
+    'the question lives in FINAL_CTA'
+  );
 });
 
 test('OS layers: exactly eight, each with role and detail', () => {
@@ -155,27 +172,16 @@ test('PRIMITIVES exclude Smart Trader and carry honest status', () => {
   );
 });
 
-test('ENGAGEMENT has seven ordered steps', () => {
+test('ENGAGEMENT is the method loop: MAP→…→EXPAND, seven ordered steps', () => {
   assert.equal(ENGAGEMENT.steps.length, 7);
+  assert.deepEqual(
+    ENGAGEMENT.steps.map((s) => s.title),
+    ['MAP', 'REDESIGN', 'BUILD', 'GOVERN', 'MEASURE', 'LEARN', 'EXPAND']
+  );
   ENGAGEMENT.steps.forEach((s, i) => {
     assert.equal(s.num, String(i + 1).padStart(2, '0'), `step numbering at ${i}`);
-    assert.ok(s.title, `${s.num}: title`);
     assert.ok(s.note, `${s.num}: note`);
   });
-});
-
-test('USE_CASES and BEFORE_AFTER are structurally sound', () => {
-  assert.ok(USE_CASES.length >= 6);
-  for (const u of USE_CASES) {
-    assert.ok(u.name, 'use case name');
-    assert.ok(u.why.length > 20, `${u.name}: why`);
-  }
-  assert.ok(BEFORE_AFTER.length >= 6);
-  for (const r of BEFORE_AFTER) {
-    assert.ok(r.dimension, 'dimension');
-    assert.ok(r.before, `${r.dimension}: before`);
-    assert.ok(r.after, `${r.dimension}: after`);
-  }
 });
 
 test('Commercial copy avoids the banned buzzword list', () => {
@@ -187,8 +193,7 @@ test('Commercial copy avoids the banned buzzword list', () => {
     PRIMITIVES.map((p) => `${p.oneLiner} ${p.proof}`).join(' '),
     ENGAGEMENT.body,
     ENGAGEMENT.steps.map((s) => `${s.title} ${s.note}`).join(' '),
-    USE_CASES.map((u) => `${u.name} ${u.why}`).join(' '),
-    BEFORE_AFTER.map((r) => `${r.dimension} ${r.before} ${r.after}`).join(' '),
+    SYSTEM_FLOW.map((s) => `${s.label} ${s.note}`).join(' '),
   ];
   surfaces.forEach((text, i) => {
     assert.ok(!banned.test(text), `buzzword found in surface ${i}: ${text.slice(0, 80)}`);

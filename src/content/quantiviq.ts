@@ -59,13 +59,21 @@ export const TOPOLOGY_LAYERS = [
 
 export const HERO_REVEAL = 'Same company. Different operating physics.' as const;
 
-/* ================= Signature question ================= */
+/* ================= How the system learns ================= */
 
-export const SIGNATURE = {
-  question: 'If your company were founded today, with the technology that exists today… would you design it the same way?',
-  answer: 'Probably not.',
-  close: 'That’s the work.',
-} as const;
+/** The canonical system flow — one loop, authority inside it. */
+export const SYSTEM_FLOW = [
+  { key: 'signal', label: 'SIGNAL', note: 'event, question, incident' },
+  { key: 'state', label: 'RETRIEVE STATE', note: 'what the company already knows' },
+  { key: 'decide', label: 'DECIDE', note: 'against explicit decision rights' },
+  { key: 'authority', label: 'AUTHORITY CHECK', note: 'act alone, or human approval' },
+  { key: 'act', label: 'ACT', note: 'humans + agents execute' },
+  { key: 'measure', label: 'MEASURE', note: 'outcome recorded as evidence' },
+  { key: 'learn', label: 'LEARN', note: 'brain state updates' },
+] as const;
+
+export const SYSTEM_FLOW_CAPTION =
+  'Signals become decisions. Decisions become actions. Actions create evidence. Evidence updates what the company knows. The company learns.' as const;
 
 /* ================= Company latency ================= */
 
@@ -307,73 +315,13 @@ export const LOOP_NATIVE = {
 export const LOOP_CAPTION =
   'The difference between a company that learns and a company that remembers nothing is infrastructure.' as const;
 
-/* ================= What actually changes ================= */
+/* ================= Founder bridge (one line — story lives in /journey) ================= */
 
-export const BEFORE_AFTER: { dimension: string; before: string; after: string }[] = [
-  {
-    dimension: 'Decision rights',
-    before: 'Decisions concentrate in management layers; escalation is social.',
-    after: 'Decisions distribute to the edge; humans set thresholds and policy.',
-  },
-  {
-    dimension: 'Knowledge',
-    before: 'Lives in inboxes, documents, and heads; walks out the door.',
-    after: 'Lives in a company brain with explicit state: known, disputed, stale.',
-  },
-  {
-    dimension: 'Execution',
-    before: 'Routinized work is performed by humans through tools.',
-    after: 'Workflows execute; humans direct, review, and intervene.',
-  },
-  {
-    dimension: 'Exceptions',
-    before: 'Every exception escalates to a human, unstructured.',
-    after: 'Exceptions escalate by rule — with evidence attached.',
-  },
-  {
-    dimension: 'Coordination',
-    before: 'Meetings are the primary routing mechanism.',
-    after: 'The control plane routes; meetings are for judgment and direction.',
-  },
-  {
-    dimension: 'Improvement',
-    before: 'Retros and postmortems decay into archived documents.',
-    after: 'Procedures update; agents and humans inherit the change.',
-  },
-  {
-    dimension: 'Growth',
-    before: 'Every unit of scale is a hiring problem.',
-    after: 'Capacity is designed — human and agent, per function.',
-  },
-];
-
-/* ================= Restructuring ================= */
-
-export const RESTRUCTURING = {
-  headline: 'AI changes the architecture of the company',
-  body: 'This is not tool adoption. When intelligence becomes cheap, the shape of the organization itself becomes a design decision. Things that used to require a department can become a workflow with oversight. Things that used to require a meeting can become a rule.',
-  items: [
-    'Functions and workflows — what the work actually is, end to end',
-    'Decision rights and escalation paths — who decides, what agents may do',
-    'Knowledge infrastructure — one brain instead of scattered documents',
-    'Agent roles and human roles — defined against each other',
-    'Meeting and communication structure — coordination as system behavior',
-    'The management layer itself — from routing to direction',
-  ],
-  close: 'I am not starting from models. I am starting from how the company works — the flows of information, authority, and execution — and designing what it becomes.',
-} as const;
-
-/* ================= Founder ================= */
-
-export const FOUNDER = {
+export const PROOF_BRIDGE = {
   eyebrow: 'The person behind it',
-  headline: 'I know organizations from the inside.',
-  body: [
-    'Majid Asghari — operator first, systems architect by necessity. I started in product: shipping software inside real companies, where the org chart quietly decides what the product can be. Then marketplace systems, data platforms, analytics — the parts of a company where you learn exactly how information actually flows, and where it stalls.',
-    'Then I spent years building production AI: a fail-closed autonomous execution system on Arbitrum, an agent runtime in daily use, a model router routing thousands of real requests, an MIT-licensed engineering-agent kernel. Not demos — systems that must not lie about their own state.',
-    'Quantiviq is those two careers converging: I have restructured functions from the inside, and I have built the machinery an AI-native company runs on.',
-  ],
-  link: { label: 'Builder profile — selected work', href: '/profile' },
+  line: 'Operator first, systems architect by necessity — two careers, restructured companies from the inside and built the machinery an AI-native company runs on.',
+  journey: { label: 'Why this thesis → the journey', href: '/journey' },
+  profile: { label: 'What he actually built', href: '/profile' },
 } as const;
 
 /* ================= Primitives ================= */
@@ -442,77 +390,30 @@ export const PRIMITIVES_NOTE =
 export const PRIMITIVES_HONESTY =
   'One system is deliberately absent from this list: Smart Trader. Its market data stream froze on 2026-09-23; until it is verifiably live again, it stays archived under the builder profile — not presented as evidence.' as const;
 
-/* ================= Engagement ================= */
+/* ================= Engagement — the method loop ================= */
 
 export const ENGAGEMENT = {
   headline: 'Start with one function.',
-  body: 'Not a transformation program. One function, rebuilt end to end: mapped as it actually runs, redesigned around humans, agents, workflows, and a company brain — then expanded.',
+  body: 'Not a transformation program. One function, rebuilt end to end — then expanded. This is the entire method:',
   steps: [
-    { num: '01', title: 'Map the function as it actually runs', note: 'Not the org-chart version — the real path of information and decisions.' },
-    { num: '02', title: 'Locate latency, routing, and decision structure', note: 'Where time dies, what is routed by humans, who actually decides.' },
-    { num: '03', title: 'Design the target operation', note: 'Humans, agents, workflows, brain — one operating model with explicit authority.' },
-    { num: '04', title: 'Build the domain company brain', note: 'Knowledge with state: verified, disputed, stale. Cited, not recalled.' },
-    { num: '05', title: 'Deploy agents with explicit authority limits', note: 'What they may do alone, what requires approval — enforced, not implied.' },
-    { num: '06', title: 'Instrument decisions and outcomes', note: 'Every automated action logged, reviewable, reversible.' },
-    { num: '07', title: 'Expand to adjacent functions', note: 'The brain compounds; the next function starts ahead.' },
+    { num: '01', title: 'MAP', note: 'the function as it actually runs — not the org-chart version' },
+    { num: '02', title: 'REDESIGN', note: 'humans, agents, workflows, brain — one operating model, explicit authority' },
+    { num: '03', title: 'BUILD', note: 'the domain company brain and governed agents — knowledge with state, authority enforced' },
+    { num: '04', title: 'GOVERN', note: 'what agents may do alone, what needs approval — logged, reviewable, reversible' },
+    { num: '05', title: 'MEASURE', note: 'decisions and outcomes instrumented against the latency baseline' },
+    { num: '06', title: 'LEARN', note: 'evidence updates procedures; agents and humans inherit the change' },
+    { num: '07', title: 'EXPAND', note: 'the brain compounds; the next function starts ahead' },
   ],
+  close: 'Support, data & reporting, sales operations — routinized, knowledge-bound, measurable functions are the fastest place to prove latency collapse.',
   cta: { label: 'Rebuild one function', href: '/contact' },
 } as const;
 
-/* ================= First use cases ================= */
-
-export const USE_CASES = [
-  {
-    key: 'support',
-    name: 'Support operations',
-    why: 'Tier-1 volume is routinized, knowledge-bound, and measurable — the fastest place to prove latency collapse.',
-  },
-  {
-    key: 'data',
-    name: 'Data & reporting',
-    why: 'Question → governed answer, with the query, the data, and the confidence attached.',
-  },
-  {
-    key: 'sales-ops',
-    name: 'Sales operations',
-    why: 'Research, CRM hygiene, and follow-up drafting are context work that agents compound.',
-  },
-  {
-    key: 'content',
-    name: 'Content operations',
-    why: 'Draft → review → publish is a workflow with clear decision gates and full auditability.',
-  },
-  {
-    key: 'eng-support',
-    name: 'Engineering support',
-    why: 'Issue triage, test guarding, and release notes — high-volume, evidence-native work.',
-  },
-  {
-    key: 'knowledge',
-    name: 'Internal knowledge',
-    why: 'Onboarding and process questions: the first function where the brain pays rent.',
-  },
-] as const;
-
-/* ================= Final CTA ================= */
+/* ================= Final CTA — the signature question lives here, once ================= */
 
 export const FINAL_CTA = {
   lines: ['If your company were founded today —', 'would you design it the same way?'],
   answer: 'Probably not.',
   headline: 'Rebuild the company.',
   primary: { label: 'Start an Organization Diagnostic', href: '/contact' },
-  secondary: { label: 'See Majid’s previous work', href: '/profile' },
+  secondary: { label: 'Why this thesis — the journey', href: '/journey' },
 } as const;
-
-/* ================= Commercial nav ================= */
-
-export const ROOT_NAV = [
-  { label: 'Operating Model', href: '#operating-model' },
-  { label: 'Company Brain', href: '#company-brain' },
-  { label: 'Method', href: '#method' },
-  { label: 'Proof', href: '#proof' },
-  { label: 'About', href: '/about' },
-] as const;
-
-export const ROOT_NAV_CTA = { label: 'Rebuild a Function', href: '#method' } as const;
-export const BUILDER_LINK = { label: 'Builder Profile', href: '/profile' } as const;

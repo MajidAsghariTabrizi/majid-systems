@@ -25,10 +25,9 @@ export const BRAND = {
   ogImage: '/og-quantiviq.svg',
 } as const;
 
-/** Commercial navigation — shown on the root page (anchors into the page). */
+/** Commercial navigation — visitor intentions, not internal concepts. */
 export const ROOT_NAV = [
-  { label: 'Operating Model', href: '#operating-model' },
-  { label: 'Company Brain', href: '#company-brain' },
+  { label: 'System', href: '#operating-model' },
   { label: 'Method', href: '#method' },
   { label: 'Proof', href: '#proof' },
   { label: 'Journey', href: '/journey' },
