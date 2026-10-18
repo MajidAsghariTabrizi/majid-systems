@@ -1,18 +1,18 @@
-# EXECUTION BOARD — Quantiviq V3 — updated 2026-10-18
+# EXECUTION BOARD — Quantiviq V3 — updated 2026-10-18 (implementation complete)
 
 Legend: DONE / PARTIAL / IN_PROGRESS / BLOCKED. Docs live in `docs/quantiviq-v3/`.
 
 | Workstream | Owner | File scope | Status | Notes |
 |---|---|---|---|---|
-| Orchestrator / integration | orchestrator agent (me) | whole repo, branch `v3`, merges between workstreams | IN_PROGRESS | Wave-0 docs DONE; sequencing + integration reviews ongoing. |
-| Wave-0 documentation | orchestrator agent (me) | `docs/quantiviq-v3/*` | **DONE** | 9 docs: BASELINE, BENCHMARK, STRATEGY, ART_DIRECTION, I18N_PLAN, PROOF_AUDIT, LEAD_CONTRACT, LEAD_OPERATIONS, EXECUTION_BOARD. |
-| Design shell | design worker | `src/app/globals.css`, `src/components/Header.tsx`, `Footer.tsx`, `LocaleSwitcher.tsx`, layout files | IN_PROGRESS | Token system + dark/mint grammar exist; locale shell (`[locale]/layout.tsx`) scaffolding in working tree, uncommitted. |
-| EN content | EN content worker | `src/content/*.ts` (quantiviq, capabilities, principles, shared) | IN_PROGRESS | Six-beat narrative unified at `3c516e2`; offer-ladder copy + beat CTAs to be aligned with STRATEGY.md. |
-| FA localization | FA subagent | `src/content/i18n/fa.ts` | IN_PROGRESS | `index.ts` imports `./fa` — **file does not exist yet**; build is blocked on landing it (typed parity with `en.ts` per I18N_PLAN.md). |
-| Home + simulation | home worker | `src/app/[locale]/page.tsx` (pending), `src/components/OrgSimulator.tsx`, `OrgNervousSystem.tsx`, `OrgTransform.tsx` | IN_PROGRESS | Simulator + OS diagram are the strengths to preserve; homepage under `[locale]` not yet created (old root page removed in working tree). |
-| Locale pages | locale-pages worker | `src/app/[locale]/{about,contact,services,method,system,proof,privacy}/` | IN_PROGRESS | Middleware 308 map already references all seven; pages themselves pending. `/en/contact` = placeholder links → becomes lead form target. |
-| Lead backend + form | lead worker | `src/app/api/lead/`, `scripts/lead-e2e.mjs`, `.env.example`, `src/components/LeadForm.tsx` | IN_PROGRESS | Contract fixed in LEAD_CONTRACT.md / LEAD_OPERATIONS.md; none of the code exists yet. Notification BLOCKED_PENDING_CONFIG (SMTP unset). |
-| SEO / a11y | SEO worker | `src/app/sitemap.ts`, `manifest.ts`, metadata in layouts, alt/contrast pass | IN_PROGRESS | hreflang + per-locale canonical already in `[locale]/layout.tsx`; sitemap alternates + a11y audit pending. Lighthouse never run — schedule after design shell settles. |
-| QA suites | QA worker | `test/*.test.ts`, `scripts/lead-e2e.mjs`, typecheck/lint/build gates | IN_PROGRESS | Existing: content, journey, sim tests. To add: i18n key-parity test, lead contract tests, E2E. |
+| Orchestrator / integration | orchestrator agent | whole repo, branch `v3` (merged `v3` → `main` at `e92c950`) | **DONE** | All workstreams integrated; four DOM gates + unit/build/lint green before merge. |
+| Wave-0 documentation | orchestrator + docs worker | `docs/quantiviq-v3/*` | **DONE** | 9 docs at Wave-0; QA_EVIDENCE.md added at release; FINAL_RELEASE_REPORT.md closes the mission. |
+| Design shell | orchestrator | `globals.css` (V3 block), `Header.tsx`, `Footer.tsx`, `LocaleSwitcher.tsx`, both root layouts | **DONE** | Segmented EN\|فارسی switcher outside collapsible nav (visible mobile), Vazirmatn for RTL, logical CSS properties. |
+| EN content | orchestrator | `src/content/i18n/en.ts` (canonical UI surface), existing `quantiviq.ts`/`shared.ts` reused | **DONE** | Offer ladder, six-beat home, system/method/proof/about/contact/privacy all in dict. |
+| FA localization | FA editorial subagent + owner | `src/content/i18n/fa.ts` | **DONE** | Editorial-quality Persian verified by owner; osLayers details, latency bodies and flow steps translated by owner (added after subagent draft); key parity enforced by `test/i18n.test.ts`. |
+| Home + simulation | orchestrator | `src/app/[locale]/page.tsx`, `OrgSimulator.tsx`, `OrgNervousSystem.tsx` (layers prop), `LearningLoop.tsx` (steps prop) | **DONE** | Six-beat structure preserved; simulator/OS/flow components accept localized data. Simulator interior microcopy stays EN (documented limitation). |
+| Locale pages | orchestrator | `src/app/[locale]/{services,system,method,proof,about,contact,privacy}/` | **DONE** | All SSG'd for en+fa; contact hosts the real lead form with `?intent=` preselect. |
+| Lead backend + form | orchestrator | `src/app/api/lead/route.ts`, `src/lib/lead/validate.ts`, `src/components/LeadForm.tsx`, `.env.example` | **DONE** | Origin check, 8KB cap, honeypot, 5/h per-IP window, durable JSONL append, health probe. Owner notification **BLOCKED_PENDING_CONFIG** (no SMTP/CRM env on server) — leads stored durably meanwhile. |
+| SEO / a11y | orchestrator | `sitemap.ts` (locale alternates), `robots.ts` (new), per-page canonicals/hreflang, 44px+ targets, aria-live form errors | **DONE** | Lighthouse not yet run post-release — record scores in QA_EVIDENCE.md when done. |
+| QA suites | orchestrator | `test/{i18n,lead}.test.ts`, `scripts/v3-check.mjs` (Language UX Matrix + lead E2E), `scripts/v3-shots.mjs` | **DONE** | 82/82 unit; 27/27 matrix rows; 17 screenshots in `captures-v3/`; legacy gates (hero/unify/journey) all PASS — unify updated to the V3 contract. |
 
-Cross-workstream blockers (live): FA build block above; nothing else at time of writing.
+Residual known gaps (accepted, documented in QA_EVIDENCE.md): simulator interior + shared builder tree (journey/profile/work/notes) in English; owner notification pending config; Lighthouse pending post-release run.
