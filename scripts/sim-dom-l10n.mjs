@@ -15,10 +15,24 @@ const ok = (name, cond, detail = '') => {
 
 const browser = await chromium.launch({ channel: 'msedge', headless: true });
 
+/** goto with one retry — production runs cross a real network. */
+async function goto(p, url) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      await p.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+      return true;
+    } catch (e) {
+      if (attempt === 1) console.log(`goto retry exhausted for ${url}: ${e.message.split('\n')[0]}`);
+      await p.waitForTimeout(1500);
+    }
+  }
+  return false;
+}
+
 /* ---------- FA ---------- */
 {
   const p = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await p.goto(`${BASE}/fa`, { waitUntil: 'networkidle', timeout: 45000 });
+  if (!(await goto(p, `${BASE}/fa`))) ok('FA page load', false, 'networkidle timed out twice');
 
   // the SVG title/desc localized
   const title = await p.locator('svg title').first().textContent().catch(() => '');
@@ -68,7 +82,7 @@ const browser = await chromium.launch({ channel: 'msedge', headless: true });
 /* ---------- EN unchanged ---------- */
 {
   const p = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await p.goto(`${BASE}/en`, { waitUntil: 'networkidle', timeout: 45000 });
+  if (!(await goto(p, `${BASE}/en`))) ok('EN page load', false, 'networkidle timed out twice');
   const labels = await p.locator('.sim-node-label').allTextContents();
   const latin = labels.filter((t) => /^[A-Z]/.test(t.trim()));
   ok('EN node labels stay English', labels.length >= 20 && latin.length === labels.filter((t) => t.trim() !== '').length, `${latin.length}/${labels.length}`);
