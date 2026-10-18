@@ -1,24 +1,46 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import crypto from 'node:crypto';
 
 import { NextResponse, type NextRequest } from 'next/server';
 
 import { ipHash, validateLead } from '@/lib/lead/validate';
+import { appendLead, storageHealth, type LeadRecord } from '@/lib/lead/store';
+import { deliverOwnerNotification, outboxPending, smtpConfigured } from '@/lib/lead/notify';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-/** GET — health probe: is the lead sink writable? */
+/**
+ * GET — health probe distinguishing storage and notification states:
+ *   storage: 'writable' | 'error'
+ *   notify:  'smtp' (credentials present) | 'outbox' (durable fallback active)
+ *   outboxPending: count of queued-but-undelivered notifications (-1 = unreadable)
+ */
 export async function GET() {
-  try {
-    const dir = process.env.QV_LEAD_DATA || path.join(process.cwd(), '.data');
-    fs.mkdirSync(dir, { recursive: true });
-    fs.accessSync(dir, fs.constants.W_OK);
-    return NextResponse.json({ ok: true, storage: 'writable', notify: process.env.LEAD_NOTIFY_EMAIL ? 'configured' : 'pending_config' });
-  } catch {
-    return NextResponse.json({ ok: true, storage: 'error', notify: 'pending_config' });
+  return NextResponse.json({
+    ok: true,
+    storage: storageHealth(),
+    notify: smtpConfigured() ? 'smtp' : 'outbox',
+    outboxPending: outboxPending(),
+  });
+}
+
+/**
+ * Client IP behind our nginx: X-Real-IP is set by the proxy and wins.
+ * X-Forwarded-For is parsed from the RIGHT by QV_XFF_DEPTH (default 1 =
+ * one trusted proxy tier) — the leftmost entries are client-spoofable and
+ * MUST NOT be used for rate limiting.
+ */
+function clientIp(req: NextRequest): string {
+  const real = req.headers.get('x-real-ip');
+  if (real && /^[0-9a-fA-F.:]+$/.test(real.trim())) return real.trim();
+  const xff = req.headers.get('x-forwarded-for');
+  if (xff) {
+    const parts = xff.split(',').map((s) => s.trim()).filter(Boolean);
+    const depth = Math.max(1, Number(process.env.QV_XFF_DEPTH ?? 1));
+    const idx = Math.max(0, parts.length - depth);
+    return parts[idx] ?? '0.0.0.0';
   }
+  return '0.0.0.0';
 }
 
 /** In-memory sliding-window rate limit per IP hash (5/hour). */
@@ -36,11 +58,6 @@ function rateLimited(key: string): boolean {
   arr.push(now);
   hits.set(key, arr);
   return false;
-}
-
-function clientIp(req: NextRequest): string {
-  const xf = req.headers.get('x-forwarded-for');
-  return xf ? xf.split(',')[0].trim() : req.headers.get('x-real-ip') ?? '0.0.0.0';
 }
 
 export async function POST(req: NextRequest) {
@@ -63,9 +80,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, errors: { form: 'too_large' } }, { status: 413 });
   }
 
-  let body: unknown;
+  let body: Record<string, unknown>;
   try {
-    body = JSON.parse(raw);
+    body = JSON.parse(raw) as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false, errors: { form: 'invalid_json' } }, { status: 400 });
   }
@@ -75,9 +92,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, errors: { form: 'rate_limited' } }, { status: 429 });
   }
 
-  const honeypot = typeof (body as Record<string, unknown>)?.company_site === 'string'
-    ? ((body as Record<string, unknown>).company_site as string).trim()
-    : '';
+  const honeypot = typeof body?.company_site === 'string' ? body.company_site.trim() : '';
   if (honeypot !== '') {
     // Bot filled the hidden field — pretend success, store nothing.
     return NextResponse.json({ ok: true, id: 'QV-ignored' }, { status: 202 });
@@ -89,10 +104,10 @@ export async function POST(req: NextRequest) {
   }
 
   const id = `QV-${Date.now().toString(36)}-${crypto.randomBytes(2).toString('hex')}`;
-  const record = {
+  const record: LeadRecord = {
     id,
     createdAt: new Date().toISOString(),
-    locale: typeof (body as Record<string, unknown>).locale === 'string' ? (body as Record<string, unknown>).locale : 'en',
+    locale: typeof body.locale === 'string' ? body.locale : 'en',
     intent: parsed.value.intent,
     fields: {
       name: parsed.value.name,
@@ -106,21 +121,26 @@ export async function POST(req: NextRequest) {
     },
     ipHash: ipKey,
     status: 'stored',
-    notify: process.env.LEAD_NOTIFY_EMAIL ? 'queued' : 'pending_config',
+    notify: 'pending',
   };
 
-  // Durable acceptance: append one JSON line. Only after THIS succeeds do we
-  // claim success — everything else is retried or reported honestly.
+  // Notification is attempted BEFORE the single durable append, so the stored
+  // line carries the true final state (sent | outbox_queued | notify_failed).
+  // If SMTP delivered but storage then fails, the user sees an honest error
+  // and may retry — the owner email is harmless; no lead is ever silently lost.
+  const notify = await deliverOwnerNotification(record);
+  record.notify = notify.delivered
+    ? notify.channel === 'smtp'
+      ? 'sent'
+      : 'outbox_queued'
+    : 'notify_failed';
+
+  // Durable acceptance: append one JSON line. THIS is the success condition.
   try {
-    const dir = process.env.QV_LEAD_DATA || path.join(process.cwd(), '.data');
-    fs.mkdirSync(dir, { recursive: true });
-    fs.appendFileSync(path.join(dir, 'leads.jsonl'), JSON.stringify(record) + '\n', { encoding: 'utf8' });
+    appendLead(record);
   } catch {
     return NextResponse.json({ ok: false, errors: { form: 'storage_failed' } }, { status: 500 });
   }
 
-  // Owner notification: queued for a configured transport; until SMTP/CRM env
-  // exists the record is durably stored and marked pending_config (visible in
-  // operations, retried manually — never reported as a lost lead).
   return NextResponse.json({ ok: true, id }, { status: 200 });
 }

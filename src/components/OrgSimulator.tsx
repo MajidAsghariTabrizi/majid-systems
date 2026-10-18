@@ -15,11 +15,12 @@
  *    transformation and the manual comparison slider.
  */
 
-import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+
+import { makeSimData, type SimLocale } from '@/content/i18n/sim-data';
 
 import {
   EDGES,
-  EDGE_BY_ID,
   NODES,
   NODE_BY_ID,
   NEW_IDS,
@@ -27,7 +28,6 @@ import {
   VIEW_W,
   ambientWeight,
   clamp01,
-  edgeInfoText,
   edgePath,
   edgeWeight,
   nodeLabelT,
@@ -48,7 +48,6 @@ import {
   learnState,
   newFlow,
   oldFlow,
-  signalEntryNote,
   transformT,
 } from '@/lib/sim/timeline';
 import {
@@ -57,25 +56,7 @@ import {
   phaseDuration,
   type MachineState,
 } from '@/lib/sim/machine';
-import {
-  MOTION_SEMANTICS,
-  SIM_BRAIN,
-  SIM_CONTROLS,
-  SIM_DISCLOSURE,
-  SIM_GATE,
-  SIM_LAYERS,
-  SIM_LEARN,
-  SIM_METRIC_LABELS,
-  SIM_NEW_METRICS,
-  SIM_NODE_INFO,
-  SIM_OLD_METRICS,
-  SIM_PAYOFF,
-  SIM_SIGNALS,
-  SIM_STRIP_SLOTS,
-  SIM_TOTAL_OLD,
-  SIM_TAG,
-  type LayerKey,
-} from '@/content/simulator';
+import { type LayerKey } from '@/content/simulator';
 
 /* ------------------------------------------------------------------ */
 /* helpers                                                             */
@@ -111,28 +92,7 @@ const setTxt = (el: Element | null | undefined, v: string, cache: Map<string, st
   cache.set(key, v);
 };
 
-const whoActs = (stepKind: string, k = 0): string => {
-  switch (stepKind) {
-    case 'CONTEXT':
-      return 'SYSTEM — assembly';
-    case 'AGENT':
-      return 'AGENT — bounded';
-    case 'GATE':
-      return k > 0.8 ? 'HUMAN — granted' : 'HUMAN — decides';
-    case 'ACTION':
-      return 'AGENT — executes';
-    case 'EVAL':
-      return 'SYSTEM — measures';
-    case 'LEARN':
-      return 'COMPANY — learns';
-    case 'BRAIN':
-      return 'BRAIN — retrieves';
-    case 'INVESTIGATE':
-      return 'SYSTEM — verifies';
-    default:
-      return 'SYSTEM';
-  }
-};
+/** Actor lines come from the dictionary (S.whoActs), not from this module. */
 
 /** reduced-motion checkpoint times for the transform phase */
 const MORPH_TIMES = [0.2, 0.4, 0.6, 0.8, 1].map((k) => k * TRANSFORM_DURATION * 0.999);
@@ -185,7 +145,8 @@ const VISIT_ORDER = ['SIGNAL', ...OLD_HOPS.map((h) => h.to)];
 /* Section                                                             */
 /* ================================================================== */
 
-export function OrgSimulatorSection() {
+export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
+  const S = useMemo(() => makeSimData(locale), [locale]);
   const [state, dispatch] = useReducer(machine, initialMachine);
   const [isMobile, setIsMobile] = useState(false);
   const [reduced, setReduced] = useState(false);
@@ -273,68 +234,68 @@ export function OrgSimulatorSection() {
     let whoTxt = '—';
     let changedTxt = '';
     let learnedTxt = '—';
-    let latencyTxt: string = era === 'new' ? SIM_NEW_METRICS.latency : SIM_OLD_METRICS.latency;
-    let handoffTxt: string = era === 'new' ? SIM_NEW_METRICS.handoffs : SIM_OLD_METRICS.handoffs;
+    let latencyTxt: string = era === 'new' ? S.newMetrics.latency : S.oldMetrics.latency;
+    let handoffTxt: string = era === 'new' ? S.newMetrics.handoffs : S.oldMetrics.handoffs;
     let lossTxt = '0';
 
     if (st.phase === 'SIGNAL_OLD' || st.phase === 'OLD_COMPLETE') {
       const f = oldFlow(st.phase === 'OLD_COMPLETE' ? OLD_DURATION : T);
       activeNodeId = f.toNode;
-      latencyTxt = st.phase === 'OLD_COMPLETE' ? SIM_TOTAL_OLD : formatLatency(f.latencyHours);
+      latencyTxt = st.phase === 'OLD_COMPLETE' ? S.totalOld : formatLatency(f.latencyHours);
       handoffTxt = String(f.handoffs);
       lossTxt = String(f.lossBits);
       hotEdgeId = `${f.fromNode}>${f.toNode}`;
-      whereTxt = NODE_BY_ID[f.toNode].old.label;
-      whoTxt = 'HUMANS — routing';
+      whereTxt = S.nodeLabel(NODE_BY_ID[f.toNode].old.label);
+      whoTxt = S.strip.humansRouting;
       const to = f.toNode;
       if (f.phase === 'wait') {
         whyTxt =
-          to === 'SLACK' ? MOTION_SEMANTICS.CONTEXT_LOSS
-          : to === 'MEETING' ? MOTION_SEMANTICS.MEETING
-          : to === 'APPROVAL' ? MOTION_SEMANTICS.APPROVAL
-          : MOTION_SEMANTICS.WAITING;
+          to === 'SLACK' ? S.motion.CONTEXT_LOSS
+          : to === 'MEETING' ? S.motion.MEETING
+          : to === 'APPROVAL' ? S.motion.APPROVAL
+          : S.motion.WAITING;
         const hop = OLD_HOPS[f.hopIndex];
         changedTxt = hop && hop.hours > 0 ? `+${hop.hours}h` : '';
       } else {
-        whyTxt = MOTION_SEMANTICS.TRAVEL;
+        whyTxt = S.motion.TRAVEL;
       }
     } else if (st.phase === 'SIGNAL_NEW' || st.phase === 'LEARNING') {
       const f = newFlow(st.phase === 'LEARNING' ? NEW_RUN_DURATION : T);
       activeNodeId = f.toNode;
-      latencyTxt = st.phase === 'LEARNING' ? SIM_NEW_METRICS.latency : `~${f.latencyMin} MIN`;
-      handoffTxt = SIM_NEW_METRICS.handoffs;
+      latencyTxt = st.phase === 'LEARNING' ? S.newMetrics.latency : `~${f.latencyMin} MIN`;
+      handoffTxt = S.newMetrics.handoffs;
       lossTxt = '0';
-      whereTxt = NODE_BY_ID[f.toNode]?.new.label ?? '';
+      whereTxt = S.nodeLabel(NODE_BY_ID[f.toNode]?.new.label ?? '');
       const step = f.step;
       if (step.kind === 'wait') {
         const lbl = NODE_BY_ID[step.node].new.label;
         whoTxt =
-          lbl === 'CONTEXT ASSEMBLY' ? whoActs('CONTEXT')
-          : lbl === 'AGENTS' ? whoActs('AGENT')
-          : lbl === 'ENTERPRISE SYSTEMS' ? whoActs('ACTION')
-          : lbl === 'EVALUATION' ? whoActs('EVAL')
-          : whoActs('BRAIN');
+          lbl === 'CONTEXT ASSEMBLY' ? S.whoActs('CONTEXT')
+          : lbl === 'AGENTS' ? S.whoActs('AGENT')
+          : lbl === 'ENTERPRISE SYSTEMS' ? S.whoActs('ACTION')
+          : lbl === 'EVALUATION' ? S.whoActs('EVAL')
+          : S.whoActs('BRAIN');
         whyTxt =
-          lbl === 'AGENTS' ? MOTION_SEMANTICS.EXECUTION
-          : lbl === 'COMPANY BRAIN' ? MOTION_SEMANTICS.RETRIEVAL
-          : lbl === 'EVALUATION' ? MOTION_SEMANTICS.OUTCOME
-          : MOTION_SEMANTICS.TRAVEL;
+          lbl === 'AGENTS' ? S.motion.EXECUTION
+          : lbl === 'COMPANY BRAIN' ? S.motion.RETRIEVAL
+          : lbl === 'EVALUATION' ? S.motion.OUTCOME
+          : S.motion.TRAVEL;
       } else if (step.kind === 'brain') {
-        whoTxt = whoActs('BRAIN');
-        whyTxt = MOTION_SEMANTICS.RETRIEVAL;
+        whoTxt = S.whoActs('BRAIN');
+        whyTxt = S.motion.RETRIEVAL;
       } else if (step.kind === 'investigate') {
-        whoTxt = whoActs('INVESTIGATE');
-        whyTxt = MOTION_SEMANTICS.INVESTIGATION;
+        whoTxt = S.whoActs('INVESTIGATE');
+        whyTxt = S.motion.INVESTIGATION;
       } else if (step.kind === 'gate') {
-        whoTxt = whoActs('GATE', f.gateK ?? 0);
-        whyTxt = MOTION_SEMANTICS.AUTHORITY;
+        whoTxt = S.whoActs('GATE', f.gateK ?? 0);
+        whyTxt = S.motion.AUTHORITY;
       } else if (step.kind === 'gate-open') {
-        whoTxt = whoActs('GATE', 1);
-        whyTxt = MOTION_SEMANTICS.AUTHORITY;
-        changedTxt = 'GATE OPEN';
+        whoTxt = S.whoActs('GATE', 1);
+        whyTxt = S.motion.AUTHORITY;
+        changedTxt = S.strip.gateOpen;
       } else {
-        whoTxt = whoActs('SYSTEM');
-        whyTxt = MOTION_SEMANTICS.TRAVEL;
+        whoTxt = S.whoActs('SYSTEM');
+        whyTxt = S.motion.TRAVEL;
       }
       hotEdgeId =
         step.kind === 'travel'
@@ -344,31 +305,31 @@ export function OrgSimulatorSection() {
             : null;
       if (st.phase === 'LEARNING') {
         const L = learnState(T);
-        whereTxt = 'COMPANY BRAIN';
-        whoTxt = whoActs('LEARN');
-        whyTxt = MOTION_SEMANTICS.LEARNING;
-        changedTxt = 'KNOWLEDGE +1';
-        learnedTxt = L.showBadges ? 'NEW KNOWLEDGE +1 · LOOP CLOSED' : 'learning…';
+        whereTxt = S.nodeLabel('COMPANY BRAIN');
+        whoTxt = S.whoActs('LEARN');
+        whyTxt = S.motion.LEARNING;
+        changedTxt = S.strip.knowledgePlus;
+        learnedTxt = L.showBadges ? S.strip.learnedCombo : S.strip.learningBusy;
       }
     } else if (st.phase === 'TRANSFORMING') {
-      whereTxt = morph < 0.5 ? 'RESTRUCTURING…' : 'TOPOLOGY SETTLING';
-      whyTxt = 'hierarchy stops routing the work';
-      whoTxt = 'YOU — the architect';
-      changedTxt = 'STRUCTURE';
+      whereTxt = morph < 0.5 ? S.strip.restructuringEllipsis : S.phase.topologySettling;
+      whyTxt = S.strip.hierarchyStops;
+      whoTxt = S.strip.youArchitect;
+      changedTxt = S.strip.structure;
     } else if (st.phase === 'IDLE_NEW') {
-      whereTxt = 'AI-NATIVE';
-      latencyTxt = SIM_OLD_METRICS.latency;
-      handoffTxt = SIM_OLD_METRICS.handoffs;
-      whyTxt = 'ready — run the same signal';
+      whereTxt = S.phase.aiNative;
+      latencyTxt = S.oldMetrics.latency;
+      handoffTxt = S.oldMetrics.handoffs;
+      whyTxt = S.strip.ready;
     } else if (st.phase === 'COMPARISON') {
-      whereTxt = era === 'new' ? 'AI-NATIVE' : 'TRADITIONAL';
-      latencyTxt = era === 'new' ? SIM_NEW_METRICS.latency : SIM_TOTAL_OLD;
-      handoffTxt = era === 'new' ? SIM_NEW_METRICS.handoffs : SIM_OLD_METRICS.handoffs;
-      whyTxt = 'compare the operating physics';
-      learnedTxt = 'NEW KNOWLEDGE +1';
+      whereTxt = era === 'new' ? S.phase.aiNative : S.phase.traditional;
+      latencyTxt = era === 'new' ? S.newMetrics.latency : S.totalOld;
+      handoffTxt = era === 'new' ? S.newMetrics.handoffs : S.oldMetrics.handoffs;
+      whyTxt = S.strip.compare;
+      learnedTxt = S.learn.update[0];
     } else {
-      whereTxt = 'TRADITIONAL';
-      whyTxt = 'choose a signal and send it';
+      whereTxt = S.phase.traditional;
+      whyTxt = S.strip.chooseSignal;
     }
 
     /* node classes */
@@ -539,16 +500,16 @@ export function OrgSimulatorSection() {
     setTxt(latencyRef.current, latencyTxt, cache, 'lat');
     setTxt(handoffRef.current, handoffTxt, cache, 'hoffs');
     setTxt(lossRef.current, `${lossTxt} BITS`, cache, 'loss');
-    const routingTxt = era === 'new' ? SIM_NEW_METRICS.routing : SIM_OLD_METRICS.routing;
-    const knowTxt = era === 'new' ? SIM_NEW_METRICS.knowledge : SIM_OLD_METRICS.knowledge;
+    const routingTxt = era === 'new' ? S.newMetrics.routing : S.oldMetrics.routing;
+    const knowTxt = era === 'new' ? S.newMetrics.knowledge : S.oldMetrics.knowledge;
     const loopTxt =
-      st.phase === 'LEARNING' || st.phase === 'COMPARISON' ? SIM_NEW_METRICS.loop : SIM_OLD_METRICS.loop;
+      st.phase === 'LEARNING' || st.phase === 'COMPARISON' ? S.newMetrics.loop : S.oldMetrics.loop;
     setTxt(stripRefs.current.routing, routingTxt, cache, 'routing');
     setTxt(stripRefs.current.knowledge, knowTxt, cache, 'know');
     setTxt(stripRefs.current.loop, loopTxt, cache, 'loop');
 
     /* ---- narrative strip ---- */
-    setTxt(stripRefs.current.entered, SIM_SIGNALS.find((s) => s.key === st.signal)?.label ?? '', cache, 'entered');
+    setTxt(stripRefs.current.entered, S.signals.find((s) => s.key === st.signal)?.label ?? '', cache, 'entered');
     setTxt(stripRefs.current.where, whereTxt, cache, 'where');
     setTxt(stripRefs.current.why, whyTxt, cache, 'why');
     setTxt(stripRefs.current.who, whoTxt, cache, 'who');
@@ -601,13 +562,13 @@ export function OrgSimulatorSection() {
         : null;
     setTxt(
       brainCountRefs.current.known,
-      String(SIM_BRAIN.counters.known + (L?.knownAdded ? 1 : 0)),
+      String(S.brain.counters.known + (L?.knownAdded ? 1 : 0)),
       cache,
       'b-known',
     );
     setTxt(
       brainCountRefs.current.unknown,
-      String(SIM_BRAIN.counters.unknown - (L?.unknownReduced ? 1 : 0)),
+      String(S.brain.counters.unknown - (L?.unknownReduced ? 1 : 0)),
       cache,
       'b-unknown',
     );
@@ -643,7 +604,7 @@ export function OrgSimulatorSection() {
         }
       }
     }
-  }, []);
+  }, [S]);
 
   /* ---------------- repaint on every machine change ---------------- */
 
@@ -830,27 +791,27 @@ export function OrgSimulatorSection() {
 
   /* ---------------- derived UI ---------------- */
 
-  const signalLabel = SIM_SIGNALS.find((s) => s.key === state.signal)?.label ?? '';
-  const info = state.selectedNode ? SIM_NODE_INFO[state.selectedNode] : null;
+  const signalLabel = S.signals.find((s) => s.key === state.signal)?.label ?? '';
+  const info = state.selectedNode ? S.nodeInfo[state.selectedNode] : null;
   const nodeLabel = state.selectedNode
-    ? state.morphT > 0.5
-      ? NODE_BY_ID[state.selectedNode]?.new.label
-      : NODE_BY_ID[state.selectedNode]?.old.label
+    ? S.nodeLabel(
+        (state.morphT > 0.5
+          ? NODE_BY_ID[state.selectedNode]?.new.label
+          : NODE_BY_ID[state.selectedNode]?.old.label) ?? ''
+      )
     : '';
-  const edgeInfo = state.selectedEdge
-    ? edgeInfoText(EDGE_BY_ID[state.selectedEdge] ?? EDGES.find((e) => e.id === state.selectedEdge))
-    : null;
-  const layerBody = state.layer ? SIM_LAYERS.find((l) => l.key === state.layer)?.body : null;
+  const edgeInfo = state.selectedEdge ? S.edgeText(state.selectedEdge) : null;
+  const layerBody = state.layer ? S.layers.find((l) => l.key === state.layer)?.body : null;
 
   const mainAction: { label: string; run: () => void; primary?: boolean } | null =
     state.phase === 'IDLE_OLD'
-      ? { label: SIM_CONTROLS.send, run: () => dispatch({ type: 'SEND_SIGNAL' }), primary: true }
+      ? { label: S.controls.send, run: () => dispatch({ type: 'SEND_SIGNAL' }), primary: true }
       : state.phase === 'OLD_COMPLETE'
-        ? { label: SIM_CONTROLS.rebuild, run: () => dispatch({ type: 'REBUILD' }), primary: true }
+        ? { label: S.controls.rebuild, run: () => dispatch({ type: 'REBUILD' }), primary: true }
         : state.phase === 'IDLE_NEW'
-          ? { label: SIM_CONTROLS.runAgain, run: () => dispatch({ type: 'RUN_AGAIN' }), primary: true }
+          ? { label: S.controls.runAgain, run: () => dispatch({ type: 'RUN_AGAIN' }), primary: true }
           : state.phase === 'COMPARISON'
-            ? { label: SIM_CONTROLS.runAgain, run: () => dispatch({ type: 'RUN_AGAIN' }) }
+            ? { label: S.controls.runAgain, run: () => dispatch({ type: 'RUN_AGAIN' }) }
             : null;
 
   const running =
@@ -876,17 +837,15 @@ export function OrgSimulatorSection() {
       viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
       className="sim-svg"
       role="img"
-      aria-label="Interactive organization simulator: send a signal through a traditional company, rebuild it, and run the same signal through the AI-native operating model."
+      aria-label={S.a11y.simAria}
       onClick={(e) => {
         if ((e.target as Element).classList.contains('sim-bg') && inspecting) {
           dispatch({ type: 'CLEAR_INSPECT' });
         }
       }}
     >
-      <title>Organization simulator — traditional company vs AI-native company</title>
-      <desc>
-        A miniature organization. Send a signal, watch it wait inside hierarchy, inspect where latency is created, rebuild the company, run the same signal again and watch it learn.
-      </desc>
+      <title>{S.a11y.simTitle}</title>
+      <desc>{S.a11y.simDesc}</desc>
       <rect className="sim-bg" x="0" y="0" width={VIEW_W} height={VIEW_H} fill="transparent" tabIndex={-1} aria-hidden="true" />
 
       {EDGES.map((e) => (
@@ -899,7 +858,7 @@ export function OrgSimulatorSection() {
           d="M 0 0"
           tabIndex={0}
           role="button"
-          aria-label={`Connection: ${edgeInfoText(e)}`}
+          aria-label={S.a11y.connection.replace('{info}', S.edgeText(e.id ?? ''))}
           onClick={(ev) => {
             ev.stopPropagation();
             manual(() => dispatch({ type: 'EDGE_INSPECT', id: e.id }));
@@ -969,7 +928,11 @@ export function OrgSimulatorSection() {
             transform={`translate(${n.old.pos.x} ${n.old.pos.y})`}
             tabIndex={0}
             role="button"
-            aria-label={`Inspect ${n.old.label}${n.new.label !== n.old.label ? ` — becomes ${n.new.label}` : ''}`}
+            aria-label={
+              n.new.label !== n.old.label
+                ? S.a11y.inspectNodeBecomes.replace('{label}', S.nodeLabel(n.old.label)).replace('{becomes}', S.nodeLabel(n.new.label))
+                : S.a11y.inspectNode.replace('{label}', S.nodeLabel(n.old.label))
+            }
             onClick={(ev) => {
               ev.stopPropagation();
               manual(() => dispatch({ type: 'NODE_INSPECT', id: n.id }));
@@ -984,16 +947,16 @@ export function OrgSimulatorSection() {
           >
             <rect className="sim-node-box" x={-w / 2} y={-h / 2} width={w} height={h} rx="7" />
             <text ref={(el) => { labelOldRefs.current[n.id] = el; }} className="sim-node-label old" y={-3} textAnchor="middle">
-              {n.old.label}
+              {S.nodeLabel(n.old.label)}
             </text>
             <text ref={(el) => { labelNewRefs.current[n.id] = el; }} className="sim-node-label new" y={-3} textAnchor="middle" opacity="0">
-              {n.new.label}
+              {S.nodeLabel(n.new.label)}
             </text>
             <text ref={(el) => { roleOldRefs.current[n.id] = el; }} className="sim-node-role old" y={h / 2 - 8} textAnchor="middle">
-              {n.old.role}
+              {S.nodeRole(n.old.role)}
             </text>
             <text ref={(el) => { roleNewRefs.current[n.id] = el; }} className="sim-node-role new" y={h / 2 - 8} textAnchor="middle" opacity="0">
-              {n.new.role}
+              {S.nodeRole(n.new.role)}
             </text>
             {isBrain && (
               <g ref={brainGroupRef} className="sim-brain-counters" opacity="0">
@@ -1016,7 +979,7 @@ export function OrgSimulatorSection() {
                           brainCountRefs.current[key] = el;
                         }}
                       >
-                        {SIM_BRAIN.counters[key]}
+                        {S.brain.counters[key]}
                       </tspan>
                     </text>
                   </g>
@@ -1060,21 +1023,21 @@ export function OrgSimulatorSection() {
       {stageSvg}
 
       <div ref={brainCardRef} className="sim-brain-card" aria-hidden="true">
-        <div className="sbc-head">COMPANY BRAIN — STATE</div>
-        <div className="sbc-sec">{SIM_BRAIN.card.head}</div>
-        {SIM_BRAIN.card.known.map((k) => (
+        <div className="sbc-head">{S.brain.card.head} — {S.nodeLabel('COMPANY BRAIN')}</div>
+        <div className="sbc-sec">{S.brain.card.head}</div>
+        {S.brain.card.known.map((k) => (
           <div key={k} className="sbc-known">
             {k}
           </div>
         ))}
-        <div className="sbc-sec">{SIM_BRAIN.card.changedHead}</div>
-        {SIM_BRAIN.card.changed.map((c) => (
+        <div className="sbc-sec">{S.brain.card.changedHead}</div>
+        {S.brain.card.changed.map((c) => (
           <div key={c} className="sbc-changed">
             {c}
           </div>
         ))}
-        <div className="sbc-sec">{SIM_BRAIN.card.nextHead}</div>
-        {SIM_BRAIN.card.next.map((nn) => (
+        <div className="sbc-sec">{S.brain.card.nextHead}</div>
+        {S.brain.card.next.map((nn) => (
           <div key={nn} className="sbc-next">
             {nn}
           </div>
@@ -1085,18 +1048,18 @@ export function OrgSimulatorSection() {
       </div>
 
       <div ref={gateCardRef} className="sim-gate-card" aria-hidden="true">
-        <div className="sgc-head">{SIM_GATE.head}</div>
-        {SIM_GATE.rows.map((r) => (
+        <div className="sgc-head">{S.gate.head}</div>
+        {S.gate.rows.map((r) => (
           <div key={r.k} className="sgc-row" data-gate-row="">
             <span>{r.k}</span>
             <span>{r.v}</span>
           </div>
         ))}
-        <div className="sgc-principle">{SIM_GATE.principle}</div>
+        <div className="sgc-principle">{S.gate.principle}</div>
       </div>
 
       <div ref={learnBadgeRef} className="sim-learn-badge" aria-hidden="true">
-        {SIM_LEARN.update.map((u) => (
+        {S.learn.update.map((u) => (
           <div key={u}>{u}</div>
         ))}
       </div>
@@ -1107,52 +1070,48 @@ export function OrgSimulatorSection() {
           style={{ position: 'fixed', left: edgeTip.x + 14, top: edgeTip.y + 14 }}
           role="tooltip"
         >
-          <div className="set-k">WHY DOES THIS CONNECTION EXIST?</div>
-          <div className="set-v">
-            {edgeTip.id in EDGE_BY_ID
-              ? edgeInfoText(EDGE_BY_ID[edgeTip.id])
-              : 'Structural connection of the current organization design.'}
-          </div>
+          <div className="set-k">{S.edgeHead}</div>
+          <div className="set-v">{S.edgeText(edgeTip.id)}</div>
         </div>
       )}
     </div>
   );
 
   const rail = (
-    <aside className="sim-rail" aria-label="Simulation metrics and inspection">
+    <aside className="sim-rail" aria-label={S.a11y.rail}>
       <div className="sim-metrics">
         <div className="sm-row sm-big">
-          <span className="sm-k">{SIM_METRIC_LABELS.latency}</span>
+          <span className="sm-k">{S.metricLabels.latency}</span>
           <span className="sm-v" ref={latencyRef}>
-            {SIM_OLD_METRICS.latency}
+            {S.oldMetrics.latency}
           </span>
         </div>
         <div className="sm-row">
-          <span className="sm-k">{SIM_METRIC_LABELS.handoffs}</span>
+          <span className="sm-k">{S.metricLabels.handoffs}</span>
           <span className="sm-v" ref={handoffRef}>
-            {SIM_OLD_METRICS.handoffs}
+            {S.oldMetrics.handoffs}
           </span>
         </div>
         <div className="sm-row">
-          <span className="sm-k">{SIM_METRIC_LABELS.routing}</span>
+          <span className="sm-k">{S.metricLabels.routing}</span>
           <span className="sm-v" ref={(el) => { stripRefs.current.routing = el; }}>
-            {SIM_OLD_METRICS.routing}
+            {S.oldMetrics.routing}
           </span>
         </div>
         <div className="sm-row">
-          <span className="sm-k">{SIM_METRIC_LABELS.knowledge}</span>
+          <span className="sm-k">{S.metricLabels.knowledge}</span>
           <span className="sm-v" ref={(el) => { stripRefs.current.knowledge = el; }}>
-            {SIM_OLD_METRICS.knowledge}
+            {S.oldMetrics.knowledge}
           </span>
         </div>
         <div className="sm-row">
-          <span className="sm-k">{SIM_METRIC_LABELS.loop}</span>
+          <span className="sm-k">{S.metricLabels.loop}</span>
           <span className="sm-v" ref={(el) => { stripRefs.current.loop = el; }}>
-            {SIM_OLD_METRICS.loop}
+            {S.oldMetrics.loop}
           </span>
         </div>
         <div className="sm-row sm-loss">
-          <span className="sm-k">CONTEXT LOSS</span>
+          <span className="sm-k">{S.metricLabels.contextLoss}</span>
           <span className="sm-v" ref={lossRef}>
             0 BITS
           </span>
@@ -1166,7 +1125,7 @@ export function OrgSimulatorSection() {
             <button
               className="si-close"
               onClick={() => manual(() => dispatch({ type: 'CLEAR_INSPECT' }))}
-              aria-label="Close inspection and resume"
+              aria-label={S.a11y.closeInspect}
             >
               ✕
             </button>
@@ -1186,35 +1145,35 @@ export function OrgSimulatorSection() {
               BECOMES <span>{info.becomes}</span>
             </p>
           )}
-          <p className="si-hint">{SIM_CONTROLS.pauseHint}</p>
+          <p className="si-hint">{S.controls.pauseHint}</p>
         </div>
       )}
 
       {edgeInfo && !info && (
-        <div className="sim-inspect" role="dialog" aria-label="Connection inspection">
+        <div className="sim-inspect" role="dialog" aria-label={S.a11y.connectionInspection}>
           <div className="si-head">
             <span className="si-title">{state.selectedEdge?.replace(/^N:/, '').replace('>', ' → ')}</span>
             <button
               className="si-close"
               onClick={() => manual(() => dispatch({ type: 'CLEAR_INSPECT' }))}
-              aria-label="Close inspection and resume"
+              aria-label={S.a11y.closeInspect}
             >
               ✕
             </button>
           </div>
           <p className="si-line">{edgeInfo}</p>
-          <p className="si-hint">{SIM_CONTROLS.pauseHint}</p>
+          <p className="si-hint">{S.controls.pauseHint}</p>
         </div>
       )}
 
       {layerBody && (
-        <div className="sim-layer-panel" role="region" aria-label="Layer explorer">
+        <div className="sim-layer-panel" role="region" aria-label={S.a11y.layerPanel}>
           <div className="si-head">
-            <span className="si-title">{SIM_LAYERS.find((l) => l.key === state.layer)?.label}</span>
+            <span className="si-title">{S.layers.find((l) => l.key === state.layer)?.label}</span>
             <button
               className="si-close"
               onClick={() => dispatch({ type: 'SET_LAYER', layer: null })}
-              aria-label="Close layer panel"
+              aria-label={S.a11y.closeLayer}
             >
               ✕
             </button>
@@ -1226,10 +1185,10 @@ export function OrgSimulatorSection() {
       )}
 
       {state.reachedNew && !layerBody && !info && !edgeInfo && (
-        <div className="sim-layers" aria-label="Organization layers">
-          <span className="sm-k">EXPLORE THE LAYERS</span>
+        <div className="sim-layers" aria-label={S.a11y.layersRegion}>
+          <span className="sm-k">{S.exploreLayers}</span>
           <div className="sim-layer-chips">
-            {SIM_LAYERS.map((l) => (
+            {S.layers.map((l) => (
               <button
                 key={l.key}
                 className={`chip ${state.layer === l.key ? 'on' : ''}`}
@@ -1251,8 +1210,8 @@ export function OrgSimulatorSection() {
   const controls = (
     <div className="sim-controls">
       <div className="sim-ctl-row">
-        <div className="sim-signals" role="group" aria-label="Choose an organizational signal">
-          {SIM_SIGNALS.map((s) => (
+        <div className="sim-signals" role="group" aria-label={S.a11y.chooseSignal}>
+          {S.signals.map((s) => (
             <button
               key={s.key}
               className={`chip sig ${state.signal === s.key ? 'on' : ''}`}
@@ -1269,23 +1228,23 @@ export function OrgSimulatorSection() {
             {mainAction.label}
           </button>
         )}</div>
-        <div className="sim-util" role="group" aria-label="Simulation controls">
+        <div className="sim-util" role="group" aria-label={S.a11y.controls}>
           <button
             className={`chip util ${state.speed === 2 ? 'on' : ''}`}
             onClick={() => manual(() => dispatch({ type: 'SET_SPEED', speed: state.speed === 1 ? 2 : 1 }))}
             aria-label={`Playback speed, currently ${state.speed} times`}
           >
-            {state.speed === 1 ? SIM_CONTROLS.speed1 : SIM_CONTROLS.speed2}
+            {state.speed === 1 ? S.controls.speed1 : S.controls.speed2}
           </button>
           <button
             className="chip util"
             onClick={() => manual(() => dispatch({ type: 'REPLAY' }))}
             disabled={state.phase === 'IDLE_OLD' && !state.completed}
           >
-            {SIM_CONTROLS.replay}
+            {S.controls.replay}
           </button>
           <button className="chip util" onClick={() => manual(() => dispatch({ type: 'RESET' }))}>
-            {SIM_CONTROLS.reset}
+            {S.controls.reset}
           </button>
         </div>
       </div>
@@ -1296,38 +1255,38 @@ export function OrgSimulatorSection() {
           aria-pressed={state.overlays.latency}
           onClick={() => manual(() => dispatch({ type: 'TOGGLE_OVERLAY', key: 'latency' }))}
         >
-          {SIM_CONTROLS.showLatency}
+          {S.controls.showLatency}
         </button>
         <button
           className={`chip tog ${state.overlays.human ? 'on' : ''}`}
           aria-pressed={state.overlays.human}
           onClick={() => manual(() => dispatch({ type: 'TOGGLE_OVERLAY', key: 'human' }))}
         >
-          {SIM_CONTROLS.showHuman}
+          {S.controls.showHuman}
         </button>
         <button
           className={`chip tog ${state.overlays.knowledge ? 'on' : ''}`}
           aria-pressed={state.overlays.knowledge}
           onClick={() => manual(() => dispatch({ type: 'TOGGLE_OVERLAY', key: 'knowledge' }))}
         >
-          {SIM_CONTROLS.showKnowledge}
+          {S.controls.showKnowledge}
         </button>
         {state.phase === 'COMPARISON' && (
-          <div className="sim-compare" aria-label="Compare traditional and AI-native organization">
-            <span className="sc-l">{SIM_CONTROLS.compareLeft}</span>
+          <div className="sim-compare" aria-label={S.a11y.compareGroup}>
+            <span className="sc-l">{S.controls.compareLeft}</span>
             <input
               type="range"
               min={0}
               max={1}
               step={0.01}
               value={state.morphT}
-              aria-label="Organization structure, traditional to AI-native"
+              aria-label={S.a11y.compareSlider}
               aria-valuetext={state.morphT < 0.5 ? 'Traditional organization' : 'AI-native organization'}
               onChange={(e) => manual(() => dispatch({ type: 'SET_COMPARE_POSITION', t: parseFloat(e.target.value) }))}
               onPointerDown={() => manual()}
               onKeyDown={() => manual()}
             />
-            <span className="sc-r">{SIM_CONTROLS.compareRight}</span>
+            <span className="sc-r">{S.controls.compareRight}</span>
           </div>
         )}
       </div>
@@ -1338,12 +1297,12 @@ export function OrgSimulatorSection() {
     <div className="sim-strip" role="status" aria-live="polite">
       {(
         [
-          ['entered', SIM_STRIP_SLOTS.entered, signalLabel],
-          ['where', SIM_STRIP_SLOTS.where, 'TRADITIONAL'],
-          ['why', SIM_STRIP_SLOTS.why, 'choose a signal and send it'],
-          ['who', SIM_STRIP_SLOTS.who, '—'],
-          ['changed', SIM_STRIP_SLOTS.changed, '—'],
-          ['learned', SIM_STRIP_SLOTS.learned, '—'],
+          ['entered', S.slots.entered, signalLabel],
+          ['where', S.slots.where, S.phase.traditional],
+          ['why', S.slots.why, S.strip.chooseSignal],
+          ['who', S.slots.who, '—'],
+          ['changed', S.slots.changed, '—'],
+          ['learned', S.slots.learned, '—'],
         ] as const
       ).map(([k, label, init]) => (
         <div key={k} className={`strip-cell ${k === 'why' || k === 'where' ? 'wide' : ''}`}>
@@ -1377,17 +1336,17 @@ export function OrgSimulatorSection() {
   const mobile = (
     <div className="sim-mobile" ref={frameRef} data-era={state.morphT > 0.5 ? 'new' : 'old'}>
       <div className="sim-m-metrics">
-        <span className="sm-k">{SIM_METRIC_LABELS.latency}</span>
+        <span className="sm-k">{S.metricLabels.latency}</span>
         <span className="sm-v" ref={latencyRef}>
           00:00
         </span>
         <span className="sm-k">·</span>
-        <span className="sm-k">{SIM_METRIC_LABELS.handoffs}</span>
+        <span className="sm-k">{S.metricLabels.handoffs}</span>
         <span className="sm-v" ref={handoffRef}>
           0
         </span>
         <span className="sm-k">·</span>
-        <span className="sm-k">{SIM_METRIC_LABELS.loop}</span>
+        <span className="sm-k">{S.metricLabels.loop}</span>
         <span className="sm-v" ref={(el) => { stripRefs.current.loop = el; }}>
           OPEN
         </span>
@@ -1402,9 +1361,9 @@ export function OrgSimulatorSection() {
               }}
               className="sim-m-step"
               onClick={() => manual(() => dispatch({ type: 'NODE_INSPECT', id }))}
-              aria-label={`Inspect ${NODE_BY_ID[id].old.label}`}
+              aria-label={S.a11y.inspectNode.replace('{label}', S.nodeLabel(NODE_BY_ID[id].old.label))}
             >
-              <span className="sms-label">{NODE_BY_ID[id].old.label}</span>
+              <span className="sms-label">{S.nodeLabel(NODE_BY_ID[id].old.label)}</span>
               {latByNode[id] && <span className="sms-lat">{latByNode[id]}</span>}
             </button>
           ))}
@@ -1418,13 +1377,13 @@ export function OrgSimulatorSection() {
               }}
               className="sim-m-step"
               onClick={() => manual(() => dispatch({ type: 'NODE_INSPECT', id }))}
-              aria-label={`Inspect ${NODE_BY_ID[id].new.label}`}
+              aria-label={S.a11y.inspectNode.replace('{label}', S.nodeLabel(NODE_BY_ID[id].new.label))}
             >
-              <span className="sms-label">{NODE_BY_ID[id].new.label}</span>
+              <span className="sms-label">{S.nodeLabel(NODE_BY_ID[id].new.label)}</span>
             </button>
           ))}
           <div className="sim-m-step learn">
-            <span className="sms-label">LEARN · NEW KNOWLEDGE +1</span>
+            <span className="sms-label">{S.mobileLearnStep}</span>
           </div>
         </div>
       </div>
@@ -1435,7 +1394,7 @@ export function OrgSimulatorSection() {
             <button
               className="si-close"
               onClick={() => manual(() => dispatch({ type: 'CLEAR_INSPECT' }))}
-              aria-label="Close inspection and resume"
+              aria-label={S.a11y.closeInspect}
             >
               ✕
             </button>
@@ -1457,7 +1416,7 @@ export function OrgSimulatorSection() {
           )}
         </div>
       )}
-      <p className="sim-m-note">{signalEntryNote(state.signal)}</p>
+      <p className="sim-m-note">{S.signals.find((s) => s.key === state.signal)?.note ?? ''}</p>
       <div className="sim-m-ctas">
         {mainAction && (
           <button className={`sim-cta ${mainAction.primary ? 'primary' : ''}`} onClick={() => manual(mainAction.run)}>
@@ -1465,11 +1424,11 @@ export function OrgSimulatorSection() {
           </button>
         )}
         <button className="chip util" onClick={() => manual(() => dispatch({ type: 'REPLAY' }))}>
-          {SIM_CONTROLS.replay}
+          {S.controls.replay}
         </button>
       </div>
       <div className="sim-signals">
-        {SIM_SIGNALS.map((s) => (
+        {S.signals.map((s) => (
           <button
             key={s.key}
             className={`chip sig ${state.signal === s.key ? 'on' : ''}`}
@@ -1489,7 +1448,7 @@ export function OrgSimulatorSection() {
       id="simulator"
       ref={scrollRef}
       className={`sim-scroll ${isMobile ? 'no-sticky' : ''} ${reduced ? 'reduced' : ''}`}
-      aria-label="Interactive organization simulator"
+      aria-label={S.a11y.section}
     >
       <div className="sim-sticky">
         <div
@@ -1497,14 +1456,18 @@ export function OrgSimulatorSection() {
         >
           <header className="sim-head">
             <div className="sim-head-l">
-              <span className="sim-tag">{SIM_TAG}</span>
+              <span className="sim-tag">{S.tag}</span>
             </div>
             <div className="sim-head-r">
               <span className={`sim-phase era-${phaseLabel === 'TRADITIONAL' ? 'old' : phaseLabel === 'RESTRUCTURING' ? 'mid' : 'new'}`}>
-                {phaseLabel}
+                {phaseLabel === 'TRADITIONAL'
+                  ? S.phase.traditional
+                  : phaseLabel === 'RESTRUCTURING'
+                    ? S.phase.restructuring
+                    : S.phase.aiNative}
               </span>
               <span className="sim-disclosure">
-                <strong>{SIM_DISCLOSURE.tag}</strong> {SIM_DISCLOSURE.body}
+                <strong>{S.disclosure.tag}</strong> {S.disclosure.body}
               </span>
             </div>
           </header>
@@ -1525,8 +1488,8 @@ export function OrgSimulatorSection() {
             className={`sim-payoff ${state.phase === 'COMPARISON' && state.morphT >= 0.999 ? 'on' : ''}`}
             aria-hidden={!(state.phase === 'COMPARISON' && state.morphT >= 0.999)}
           >
-            <p className="sp-h">{SIM_PAYOFF.h}</p>
-            <p className="sp-sub">{SIM_PAYOFF.sub}</p>
+            <p className="sp-h">{S.payoff.h}</p>
+            <p className="sp-sub">{S.payoff.sub}</p>
           </div>
         </div>
       </div>

@@ -190,7 +190,7 @@ export const en = {
     flowLede: 'One loop with authority inside it — intelligence is not authority.',
     demoEyebrow: 'Ask the company a question',
     demoH2: 'A memory the company can interrogate.',
-    demoCaption: 'A company brain is not a chatbot over documents. It is a system that remembers what the company knows, how sure it is, and what would change its mind.',
+    demoCaption: 'Illustrative demonstration with sample data — a company brain is not a chatbot over documents. It is a system that remembers what the company knows, how sure it is, and what would change its mind.',
     principle: 'INTELLIGENCE IS NOT AUTHORITY.',
     osLayers: [
       { num: '01', name: 'Governance & Access', role: 'what agents may do alone', detail: 'Decision rights are explicit and machine-readable: which actions agents take autonomously, which require human approval, which are forbidden. Authority is a policy artifact, not a tribal understanding.' },
@@ -228,11 +228,11 @@ export const en = {
     journeyCta: 'Why this thesis → the journey',
     profileCta: 'What he actually built',
     items: [
-      { name: 'Company Brain', status: 'IN DAILY USE', level: 'OWNER-ATTESTED', blurb: 'Persistent organizational memory with epistemic state — claims carry evidence, sensitivity, and supersession history.' },
-      { name: 'Agent Runtime', status: 'PRODUCTION', level: 'OWNER-ATTESTED', blurb: 'Multi-stage missions with checkpoints, budgets, and classification of every failure.' },
-      { name: 'Model Router', status: 'MIT · v0.1.0', level: 'PUBLICLY VERIFIED', blurb: 'OpenAI-compatible router across free model providers with health scoring — deterministic test suite, CI green.' },
-      { name: 'Phoenix', status: 'PRODUCTION', level: 'PUBLICLY VERIFIED', blurb: 'Fail-closed autonomous execution: intelligence, authority, and execution strictly separated.' },
-      { name: 'Universal Engineering Agent', status: 'MIT · REFERENCE', level: 'PUBLICLY VERIFIED', blurb: 'A profile-agnostic operating kernel contract for engineering agents: staged verification, failure classification, checkpointing.' },
+      { key: 'company-brain', name: 'Company Brain', status: 'IN DAILY USE', level: 'OWNER-ATTESTED', blurb: 'Persistent organizational memory with epistemic state — claims carry evidence, sensitivity, and supersession history.' },
+      { key: 'agent-runtime', name: 'Agent Runtime', status: 'PRODUCTION', level: 'OWNER-ATTESTED', blurb: 'Multi-stage missions with checkpoints, budgets, and classification of every failure.' },
+      { key: 'model-router', name: 'Model Router', status: 'MIT · v0.1.0', level: 'PUBLICLY VERIFIED', blurb: 'OpenAI-compatible router across free model providers with health scoring — deterministic test suite, CI green.' },
+      { key: 'phoenix', name: 'Phoenix', status: 'PRODUCTION', level: 'PUBLICLY VERIFIED', blurb: 'Fail-closed autonomous execution: intelligence, authority, and execution strictly separated.' },
+      { key: 'uea', name: 'Universal Engineering Agent', status: 'MIT · REFERENCE', level: 'PUBLICLY VERIFIED', blurb: 'A profile-agnostic operating kernel contract for engineering agents: staged verification, failure classification, checkpointing.' },
     ],
   },
   about: {

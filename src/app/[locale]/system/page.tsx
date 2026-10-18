@@ -89,7 +89,7 @@ export default async function SystemPage({ params }: { params: { locale: string 
             </div>
           </Reveal>
           <Reveal>
-            <BrainDemo />
+            <BrainDemo locale={l} />
           </Reveal>
           <Reveal>
             <p className="q-punch">{s.demoCaption}</p>

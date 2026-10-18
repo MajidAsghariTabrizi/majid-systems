@@ -127,7 +127,14 @@ const run = async () => {
   const leadsPath = path.resolve('.data', 'leads.jsonl');
   const lines = fs.existsSync(leadsPath) ? fs.readFileSync(leadsPath, 'utf8').trim().split('\n') : [];
   const mine = lines.map((l) => JSON.parse(l)).find((r) => r.id === refId);
-  ok('LEAD durably stored', !!mine && mine.fields.email === 'e2e@example.com' && mine.status === 'stored' && mine.notify === 'pending_config', mine ? `${mine.id} notify=${mine.notify}` : 'missing');
+  ok(
+    'LEAD durably stored',
+    !!mine &&
+      mine.fields.email === 'e2e@example.com' &&
+      mine.status === 'stored' &&
+      ['outbox_queued', 'smtp', 'sent'].includes(mine.notify),
+    mine ? `${mine.id} notify=${mine.notify}` : 'missing'
+  );
 
   // Persian form end-to-end (validation messages localized)
   await p6.goto(`${BASE}/fa/contact`, { waitUntil: 'networkidle' });
@@ -141,31 +148,40 @@ const run = async () => {
   ok('LEAD FA validation message localized', /[\u0600-\u06FF]/.test(faErr), faErr.slice(0, 40));
   await p6.screenshot({ path: path.join(OUT, 'fa-contact-error.png') });
 
-  // honeypot: bots get fake success, nothing stored
-  const before = fs.existsSync(leadsPath) ? fs.readFileSync(leadsPath, 'utf8').trim().split('\n').length : 0;
-  const hp = await p6.evaluate(async () => {
-    const r = await fetch('/api/lead', {
+  // honeypot: bots get fake success, nothing stored.
+  // Probed from node with an isolated x-real-ip so the shared 127.0.0.1
+  // rate-limit bucket from the browser flow above cannot mask the result.
+  const probe = async (ip, body) => {
+    const r = await fetch(`${BASE}/api/lead`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ intent: 'diagnostic', name: 'Bot', email: 'bot@spam.com', message: 'buy now please', consent: true, company_site: 'http://spam.tld' }),
+      headers: { 'content-type': 'application/json', 'x-real-ip': ip },
+      body: JSON.stringify(body),
     });
-    return { status: r.status, body: await r.json() };
+    return { status: r.status, body: await r.json().catch(() => ({})) };
+  };
+  const before = fs.existsSync(leadsPath) ? fs.readFileSync(leadsPath, 'utf8').trim().split('\n').length : 0;
+  const hp = await probe('203.0.113.77', {
+    intent: 'diagnostic',
+    name: 'Bot',
+    email: 'bot@spam.com',
+    message: 'buy now please',
+    consent: true,
+    company_site: 'http://spam.tld',
   });
   const after = fs.existsSync(leadsPath) ? fs.readFileSync(leadsPath, 'utf8').trim().split('\n').length : 0;
   ok('LEAD honeypot: fake success, nothing stored', hp.status === 202 && hp.body.id === 'QV-ignored' && before === after, `${hp.status} ${before}→${after}`);
 
-  // rate limit: 6 rapid posts from same IP → 429 on the 6th
+  // rate limit: 6 rapid posts from one isolated IP → 429 on the 6th
   let got429 = false;
   for (let i = 0; i < 6; i++) {
-    const r = await p6.evaluate(async () => {
-      const res = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ intent: 'other', name: 'RL Test', email: 'rl@example.com', message: 'rate limit probe message long enough', consent: true }),
-      });
-      return res.status;
+    const r = await probe('198.51.100.9', {
+      intent: 'other',
+      name: 'RL Test',
+      email: 'rl@example.com',
+      message: 'rate limit probe message long enough',
+      consent: true,
     });
-    if (r === 429) { got429 = true; break; }
+    if (r.status === 429) { got429 = true; break; }
   }
   ok('LEAD rate limit 429 after burst', got429);
 

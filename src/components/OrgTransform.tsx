@@ -20,20 +20,20 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { FRICTION_METRICS, HERO_REVEAL, SIGNAL_HOPS, TOPOLOGY_LAYERS } from '@/content/quantiviq';
+import { simLabels } from '@/content/i18n/sim';
+import { FRICTION_METRICS, SIGNAL_HOPS, TOPOLOGY_LAYERS } from '@/content/quantiviq';
 import { useInView, usePrefersReducedMotion } from '@/lib/motion';
 
 type Phase = 0 | 1 | 2 | 3 | 4;
+type Locale = 'en' | 'fa';
+/** Widened dictionary view: both locales' literal types are assignable. */
+type SimT = { readonly [K in keyof (typeof simLabels)['en']]: string };
 
-const PHASES: { name: string; label: string; dur: number }[] = [
-  { name: 'CHART', label: '01 / TRADITIONAL ORGANIZATION', dur: 3000 },
-  { name: 'SIGNAL', label: '02 / ONE DECISION TRAVELS', dur: 6400 },
-  { name: 'TRANSFORM', label: '03 / REBUILT AS ONE SYSTEM', dur: 3200 },
-  { name: 'NATIVE', label: '04 / THE SAME DECISION, REBUILT', dur: 4200 },
-  { name: 'REVEAL', label: '05 / RESULT', dur: 3400 },
-];
+/** Phase names stay Latin (ids); display labels come from the dictionary. */
+const PHASE_KEYS = ['ot_phase_1', 'ot_phase_2', 'ot_phase_3', 'ot_phase_4', 'ot_phase_5'] as const;
+const PHASE_DUR = [3000, 6400, 3200, 4200, 3400];
 
-const TOTAL = PHASES.reduce((a, p) => a + p.dur, 0);
+const TOTAL = PHASE_DUR.reduce((a, p) => a + p, 0);
 
 const C = {
   edge: 'rgba(255,255,255,0.13)',
@@ -98,21 +98,22 @@ function drawLabel(
   ctx.fillText(text, x, y);
 }
 
-export function OrgTransform() {
+export function OrgTransform({ locale = 'en' }: { locale?: Locale }) {
+  const T: SimT = simLabels[locale];
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { ref: ioRef, inView } = useInView<HTMLDivElement>('80px');
   const reduced = usePrefersReducedMotion();
-  const [phaseLabel, setPhaseLabel] = useState(PHASES[0].label);
+  const [phaseLabel, setPhaseLabel] = useState<string>(T.ot_phase_1);
   const [cycle, setCycle] = useState(0);
 
   const running = inView && !reduced;
 
   const drawStatic = useCallback((ctx: CanvasRenderingContext2D, W: number, H: number) => {
     // Reduced-motion static equivalent: final topology, fully labeled.
-    drawScene(ctx, W, H, { phase: 3, t: 1, elapsed: TOTAL, mobile: W < 720 }, 1);
-    drawScene(ctx, W, H, { phase: 4, t: 1, elapsed: TOTAL, mobile: W < 720 }, 1);
-  }, []);
+    drawScene(ctx, W, H, { phase: 3, t: 1, elapsed: TOTAL, mobile: W < 720 }, 1, T);
+    drawScene(ctx, W, H, { phase: 4, t: 1, elapsed: TOTAL, mobile: W < 720 }, 1, T);
+  }, [T]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -143,7 +144,7 @@ export function OrgTransform() {
     ro.observe(wrap);
 
     if (reduced) {
-      setPhaseLabel('STATIC VIEW / REDUCED MOTION');
+      setPhaseLabel(T.ot_static);
       return () => ro.disconnect();
     }
 
@@ -163,19 +164,19 @@ export function OrgTransform() {
         }
         let acc = 0;
         let phase: Phase = 0;
-        for (let i = 0; i < PHASES.length; i++) {
-          if (elapsed < acc + PHASES[i].dur) {
+        for (let i = 0; i < PHASE_DUR.length; i++) {
+          if (elapsed < acc + PHASE_DUR[i]) {
             phase = i as Phase;
             break;
           }
-          acc += PHASES[i].dur;
+          acc += PHASE_DUR[i];
         }
         if (phase !== lastPhase) {
           lastPhase = phase;
-          setPhaseLabel(PHASES[phase].label);
+          setPhaseLabel(T[PHASE_KEYS[phase]]);
         }
         ctx.clearRect(0, 0, W, H);
-        drawScene(ctx, W, H, { phase, t: (elapsed - acc) / PHASES[phase].dur, elapsed, mobile: W < 720 }, cyc);
+        drawScene(ctx, W, H, { phase, t: (elapsed - acc) / PHASE_DUR[phase], elapsed, mobile: W < 720 }, cyc, T);
       }
       raf = requestAnimationFrame(frame);
     };
@@ -184,7 +185,7 @@ export function OrgTransform() {
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [inView, reduced, drawStatic, cycle]);
+  }, [inView, reduced, drawStatic, cycle, T]);
 
   return (
     <div className="orgviz" ref={ioRef}>
@@ -205,24 +206,69 @@ export function OrgTransform() {
             setCycle((c) => c + 1);
           }}
         >
-          ↻ replay
+          ↻ {T.ot_replay.replace('↻ ', '')}
         </button>
       </div>
       <div className="orgviz-stage" ref={wrapRef}>
-        <canvas ref={canvasRef} role="img" aria-label="Diagram animation: a decision traveling through a traditional organization with accumulating latency, then the same company rebuilt as an AI-native operating model." />
+        <canvas ref={canvasRef} role="img" aria-label={T.ot_canvas_aria} />
       </div>
       <p className="visually-hidden">
-        Textual equivalent of the animation: In the traditional organization, a decision
-        travels {SIGNAL_HOPS.map((h) => h.node.toLowerCase()).join(' → ')}, with latency
-        accumulating at each hop ({SIGNAL_HOPS.filter((h) => h.latency).map((h) => `${h.node.toLowerCase()} ${h.latency}`).join(', ')})
-        — roughly 4.2 days end to end, across 17 handoffs, 31 meetings a week, 84% human
-        routing, fragmented knowledge, and an open learning loop. Rebuilt as an
-        AI-native operating model, the same decision passes through:{' '}
-        {TOPOLOGY_LAYERS.map((l) => l.label.toLowerCase()).join(' → ')}. Same company.
-        Different operating physics.
+        {T.ot_sr_equivalent
+          .replace('{hops}', SIGNAL_HOPS.map((h) => localizedNode(h.node, T).toLowerCase()).join(' → '))
+          .replace(
+            '{hop_latencies}',
+            SIGNAL_HOPS.filter((h) => h.latency)
+              .map((h) => `${localizedNode(h.node, T).toLowerCase()} ${h.latency}`)
+              .join(', ')
+          )
+          .replace('{layers}', topologyLabels(T).join(' → '))}
       </p>
     </div>
   );
+}
+
+/* ---------------------- localized label lookups ---------------------- */
+
+/** node id → localized node label (falls back to the canonical EN label). */
+function localizedNode(node: string, T: SimT): string {
+  const id = node.toLowerCase().replace(/\s+/g, '_');
+  const key = `node_${id}` as keyof SimT;
+  return T[key] ?? node;
+}
+
+/** friction metric label → localized. */
+function localizedMetricLabel(label: string, T: SimT): string {
+  const key = `fm_${label.toLowerCase().replace(/[\s./]+/g, '_')}` as keyof SimT;
+  return T[key] ?? label;
+}
+
+/** friction metric value → localized where the value has a key. */
+function localizedMetricValue(label: string, value: string, T: SimT): string {
+  const slug = label.toLowerCase().replace(/[\s./]+/g, '_');
+  if (slug === 'decision_latency') return T.total_old_latency;
+  const key = `fm_v_${slug}` as keyof SimT;
+  return T[key] ?? value;
+}
+
+/** five canonical topology bands, in TOPOLOGY_LAYERS order. */
+const BAND_KEYS = [
+  'tl_human_authority',
+  'tl_org_control_plane',
+  'tl_execution_edge',
+  'tl_company_brain',
+  'tl_enterprise',
+] as const;
+const BAND_NOTE_KEYS = [
+  'tl_note_authority',
+  'tl_note_control_plane',
+  'tl_note_execution',
+  'tl_note_company_brain',
+  'tl_note_enterprise',
+] as const;
+
+/** topology layer label → localized (index-based, mirrors TOPOLOGY_LAYERS order). */
+function topologyLabels(T: SimT): string[] {
+  return TOPOLOGY_LAYERS.map((l, i) => T[BAND_KEYS[i]] ?? l.label);
 }
 
 /* ============================== drawing ============================== */
@@ -243,18 +289,18 @@ type Layout = {
   counter: Pt;
 };
 
-function buildLayout(W: number, H: number, mobile: boolean): Layout {
+function buildLayout(W: number, H: number, mobile: boolean, T: SimT): Layout {
   const P = 18;
   if (mobile) {
     // Vertical: compact tree on top, stations zigzag below, metrics bottom.
     const cx = W / 2;
     const tree: Layout['tree'] = [
-      { label: 'CEO', x: cx - 42, y: 14, w: 84, h: 20 },
-      { label: 'VP', x: cx - 42 - 70, y: 48, w: 64, h: 19 },
-      { label: 'VP', x: cx - 42 + 70, y: 48, w: 64, h: 19 },
-      { label: 'DIR', x: cx - 42 - 105, y: 82, w: 62, h: 18 },
-      { label: 'DIR', x: cx - 42, y: 82, w: 62, h: 18 },
-      { label: 'DIR', x: cx - 42 + 105, y: 82, w: 62, h: 18 },
+      { label: localizedNode('CEO', T), x: cx - 42, y: 14, w: 84, h: 20 },
+      { label: localizedNode('VP', T), x: cx - 42 - 70, y: 48, w: 64, h: 19 },
+      { label: localizedNode('VP', T), x: cx - 42 + 70, y: 48, w: 64, h: 19 },
+      { label: localizedNode('DIRECTOR', T), x: cx - 42 - 105, y: 82, w: 62, h: 18 },
+      { label: localizedNode('DIRECTOR', T), x: cx - 42, y: 82, w: 62, h: 18 },
+      { label: localizedNode('DIRECTOR', T), x: cx - 42 + 105, y: 82, w: 62, h: 18 },
     ];
     const edges: [Pt, Pt][] = [
       [tree[0], tree[1]].map(n => ({ x: n.x + n.w / 2, y: n.y + n.h })) as [Pt, Pt],
@@ -266,7 +312,7 @@ function buildLayout(W: number, H: number, mobile: boolean): Layout {
     const zw = Math.min(W - 2 * P, 170);
     const zx = (W - zw) / 2;
     const stations = SIGNAL_HOPS.map((h, i) => ({
-      label: h.node,
+      label: localizedNode(h.node, T),
       x: i % 2 === 0 ? zx - 8 : zx + zw + 8 - zw,
       y: 132 + i * 30,
       w: zw,
@@ -274,14 +320,14 @@ function buildLayout(W: number, H: number, mobile: boolean): Layout {
     const mPer = 3;
     const mw = (W - 2 * P - 12) / mPer - 8;
     const metrics = FRICTION_METRICS.map((m, i) => ({
-      label: m.label,
-      value: m.value,
+      label: localizedMetricLabel(m.label, T),
+      value: localizedMetricValue(m.label, m.value, T),
       x: P + (i % mPer) * (mw + 8),
       y: H - 64 + Math.floor(i / mPer) * 26,
     })).slice(0, 6);
     const bands = TOPOLOGY_LAYERS.map((l, i) => ({
-      label: l.label,
-      note: l.note,
+      label: T[BAND_KEYS[i]] ?? l.label,
+      note: T[BAND_NOTE_KEYS[i]] ?? l.note,
       y: 26 + i * 60,
       h: 46,
       color: layerColor(i),
@@ -292,15 +338,15 @@ function buildLayout(W: number, H: number, mobile: boolean): Layout {
   // Desktop: tree left, metrics column right.
   const chartR = W - Math.min(260, W * 0.26) - 30;
   const tree: Layout['tree'] = [
-    { label: 'CEO', x: chartR / 2 - 46, y: 22, w: 92, h: 24 },
-    { label: 'VP', x: chartR / 4 - 56, y: 74, w: 84, h: 22 },
-    { label: 'VP', x: (chartR * 3) / 4 - 40, y: 74, w: 84, h: 22 },
-    { label: 'DIRECTOR', x: chartR / 8 - 46, y: 128, w: 92, h: 22 },
-    { label: 'DIRECTOR', x: chartR / 2 - 46, y: 128, w: 92, h: 22 },
-    { label: 'DIRECTOR', x: (chartR * 7) / 8 - 46, y: 128, w: 92, h: 22 },
-    { label: 'MANAGER', x: chartR / 8 - 44, y: 182, w: 88, h: 22 },
-    { label: 'MANAGER', x: chartR / 2 - 44, y: 182, w: 88, h: 22 },
-    { label: 'MANAGER', x: (chartR * 7) / 8 - 44, y: 182, w: 88, h: 22 },
+    { label: localizedNode('CEO', T), x: chartR / 2 - 46, y: 22, w: 92, h: 24 },
+    { label: localizedNode('VP', T), x: chartR / 4 - 56, y: 74, w: 84, h: 22 },
+    { label: localizedNode('VP', T), x: (chartR * 3) / 4 - 40, y: 74, w: 84, h: 22 },
+    { label: localizedNode('DIRECTOR', T), x: chartR / 8 - 46, y: 128, w: 92, h: 22 },
+    { label: localizedNode('DIRECTOR', T), x: chartR / 2 - 46, y: 128, w: 92, h: 22 },
+    { label: localizedNode('DIRECTOR', T), x: (chartR * 7) / 8 - 46, y: 128, w: 92, h: 22 },
+    { label: localizedNode('MANAGER', T), x: chartR / 8 - 44, y: 182, w: 88, h: 22 },
+    { label: localizedNode('MANAGER', T), x: chartR / 2 - 44, y: 182, w: 88, h: 22 },
+    { label: localizedNode('MANAGER', T), x: (chartR * 7) / 8 - 44, y: 182, w: 88, h: 22 },
   ];
   const edges: [Pt, Pt][] = [
     [0, 1], [0, 2], [1, 3], [1, 4], [2, 4], [2, 5], [3, 6], [4, 7], [5, 8],
@@ -315,14 +361,14 @@ function buildLayout(W: number, H: number, mobile: boolean): Layout {
     const fr = [0.04, 0.16, 0.32, 0.5, 0.68, 0.84, 0.96][i];
     const yTop = [258, 214, 236, 208, 214, 172, 258][i];
     const w = Math.max(74, Math.min(120, chartR / 8));
-    return { label: h.node, x: Math.min(stX(fr), chartR - w - 4), y: yTop, w };
+    return { label: localizedNode(h.node, T), x: Math.min(stX(fr), chartR - w - 4), y: yTop, w };
   });
 
   const mx = chartR + 26;
   const mw = W - mx - P;
   const metrics = FRICTION_METRICS.map((m, i) => ({
-    label: m.label,
-    value: m.value,
+    label: localizedMetricLabel(m.label, T),
+    value: localizedMetricValue(m.label, m.value, T),
     x: mx,
     y: 24 + i * 42,
   }));
@@ -331,8 +377,8 @@ function buildLayout(W: number, H: number, mobile: boolean): Layout {
   const bandTop = 26;
   const bandH = Math.min(64, (H - 64) / 5 - 10);
   const bands = TOPOLOGY_LAYERS.map((l, i) => ({
-    label: l.label,
-    note: l.note,
+    label: T[BAND_KEYS[i]] ?? l.label,
+    note: T[BAND_NOTE_KEYS[i]] ?? l.note,
     y: bandTop + i * (bandH + 12),
     h: bandH,
     color: layerColor(i),
@@ -349,9 +395,10 @@ function drawScene(
   W: number,
   H: number,
   s: SceneState,
-  _cycle: number
+  _cycle: number,
+  T: SimT
 ) {
-  const L = buildLayout(W, H, s.mobile);
+  const L = buildLayout(W, H, s.mobile, T);
 
   // Global fade envelope for traditional vs native content.
   const fadeIn = easeInOut(s.phase === 0 ? s.t * 1.6 : 1);
@@ -428,9 +475,9 @@ function drawScene(
       ctx.fill();
       // cumulative counter
       const totalDays = cumulativeDays(hopProgress);
-      drawLabel(ctx, `LATENCY ACCUMULATED: ${totalDays.toFixed(1)} DAYS`, L.counter.x, L.counter.y, C.warn, 10, 'right');
+      drawLabel(ctx, T.ot_latency_accumulated.replace('{n}', totalDays.toFixed(1)), L.counter.x, L.counter.y, C.warn, 10, 'right');
     } else if (tradAlpha > 0.5) {
-      drawLabel(ctx, 'LATENCY ACCUMULATED: 4.2 DAYS', L.counter.x, L.counter.y, C.warn, 10, 'right');
+      drawLabel(ctx, T.ot_latency_accumulated.replace('{n}', '4.2'), L.counter.x, L.counter.y, C.warn, 10, 'right');
     }
 
     // friction metrics
@@ -507,11 +554,11 @@ function drawScene(
       roundRect(ctx, { x: 18, y: brain.y, w: fullW, h: brain.h }, 8);
       ctx.stroke();
       if (s.t > 0.85) {
-        drawLabel(ctx, 'LATENCY: 11 SECONDS', L.counter.x, L.counter.y, C.ok, 10, 'right');
+        drawLabel(ctx, T.ot_latency_native, L.counter.x, L.counter.y, C.ok, 10, 'right');
       }
     }
     if (s.phase === 4) {
-      drawLabel(ctx, 'LATENCY: 11 SECONDS', L.counter.x, L.counter.y, C.ok, 10, 'right');
+      drawLabel(ctx, T.ot_latency_native, L.counter.x, L.counter.y, C.ok, 10, 'right');
     }
     ctx.globalAlpha = 1;
   }
@@ -526,7 +573,7 @@ function drawScene(
     ctx.fillStyle = C.text;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const lines = splitLines(HERO_REVEAL, W * 0.86);
+    const lines = splitLines(T.ot_reveal, W * 0.86);
     lines.forEach((ln, i) => ctx.fillText(ln, W / 2, H / 2 - (lines.length - 1) * 14 + i * 28));
     ctx.globalAlpha = 1;
   }

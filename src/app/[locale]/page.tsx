@@ -67,7 +67,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
         </div>
       </section>
 
-      <OrgSimulatorSection />
+      <OrgSimulatorSection locale={l} />
 
       {/* ===== 03 · THE PROBLEM ===== */}
       <section id="problem" className="q-section" aria-label={h.problemH2}>

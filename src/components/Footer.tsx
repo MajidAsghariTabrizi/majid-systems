@@ -23,8 +23,11 @@ export function Footer({ locale }: { locale?: Locale }) {
             <li><Link href={localePath(locale, '/method')}>{t.nav.method}</Link></li>
             <li><Link href={localePath(locale, '/proof')}>{t.nav.proof}</Link></li>
             <li><Link href={localePath(locale, '/privacy')}>{t.meta.privacy.title.split(' — ')[0]}</Link></li>
+            {locale === 'fa' && <li className="footer-en-note" aria-label={t.footer.englishNote}>{t.footer.englishNote}</li>}
             <li><Link href="/journey">{t.nav.journey} · EN</Link></li>
             <li><Link href="/profile">{t.nav.builder} · EN</Link></li>
+            <li><Link href="/work">{locale === 'fa' ? 'کارها' : 'Work'} · EN</Link></li>
+            <li><Link href="/notes">{locale === 'fa' ? 'یادداشت‌ها' : 'Notes'} · EN</Link></li>
           </ul>
         ) : (
           <ul>

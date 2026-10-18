@@ -281,6 +281,21 @@ section:first-of-type {
   flex-wrap: wrap;
 }
 
+.footer-en-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--fg-subtle);
+  opacity: 0.8;
+  align-self: center;
+}
+
+.shared-en-mark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-subtle);
+}
+
 /* ====== Hero ====== */
 
 .hero {
@@ -5654,8 +5669,36 @@ section:first-of-type {
     display: inline;
   }
 
+  /* Full navigation on phones: header wraps into two rows —
+     row 1: brand + switcher + CTA; row 2: horizontally scrollable nav.
+     The switcher never sits inside a collapsed menu. */
+  .site-header-inner {
+    flex-wrap: wrap;
+    row-gap: 0.55rem;
+    padding-block: 0.7rem;
+  }
+
   .site-header .nav {
-    display: none; /* locale nav collapses; switcher + CTA stay visible */
+    order: 3;
+    flex: 1 0 100%;
+    gap: 1.1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  .site-header .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-header .nav a {
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+
+  .site-header .nav .nav-builder {
+    white-space: nowrap;
   }
 }
 

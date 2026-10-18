@@ -127,13 +127,34 @@ export function LeadForm({ locale }: { locale: Locale }) {
       <div className="lead-row">
         <label className="lead-field">
           <span className="lead-label">{t.name} *</span>
-          <input name="name" type="text" required maxLength={100} autoComplete="name" />
-          {fieldErrors.name && <span className="lead-error">{fieldErrors.name}</span>}
+          <input
+            name="name"
+            type="text"
+            required
+            maxLength={100}
+            autoComplete="name"
+            aria-invalid={!!fieldErrors.name}
+            aria-describedby={fieldErrors.name ? 'err-name' : undefined}
+          />
+          {fieldErrors.name && (
+            <span className="lead-error" id="err-name" role="alert">{fieldErrors.name}</span>
+          )}
         </label>
         <label className="lead-field">
           <span className="lead-label">{t.email} *</span>
-          <input name="email" type="email" required maxLength={254} autoComplete="email" dir="ltr" />
-          {fieldErrors.email && <span className="lead-error">{fieldErrors.email}</span>}
+          <input
+            name="email"
+            type="email"
+            required
+            maxLength={254}
+            autoComplete="email"
+            dir="ltr"
+            aria-invalid={!!fieldErrors.email}
+            aria-describedby={fieldErrors.email ? 'err-email' : undefined}
+          />
+          {fieldErrors.email && (
+            <span className="lead-error" id="err-email" role="alert">{fieldErrors.email}</span>
+          )}
         </label>
       </div>
 
@@ -152,20 +173,31 @@ export function LeadForm({ locale }: { locale: Locale }) {
         <label className="lead-field">
           <span className="lead-label">{t.website}</span>
           <input name="website" type="url" maxLength={300} placeholder="https://…" dir="ltr" />
-          {fieldErrors.website && <span className="lead-error">{fieldErrors.website}</span>}
+          {fieldErrors.website && <span className="lead-error" id="err-website" role="alert">{fieldErrors.website}</span>}
         </label>
         <label className="lead-field">
           <span className="lead-label">{t.preferredLink}</span>
           <input name="preferredLink" type="url" maxLength={300} placeholder="https://linkedin.com/in/…" dir="ltr" />
-          {fieldErrors.preferredLink && <span className="lead-error">{fieldErrors.preferredLink}</span>}
+          {fieldErrors.preferredLink && (
+            <span className="lead-error" id="err-preferredLink" role="alert">{fieldErrors.preferredLink}</span>
+          )}
         </label>
       </div>
 
       <label className="lead-field">
         <span className="lead-label">{t.message} *</span>
-        <textarea name="message" required maxLength={5000} rows={5} />
-        <span className="lead-hint">{t.messageHint}</span>
-        {fieldErrors.message && <span className="lead-error">{fieldErrors.message}</span>}
+        <textarea
+          name="message"
+          required
+          maxLength={5000}
+          rows={5}
+          aria-invalid={!!fieldErrors.message}
+          aria-describedby={fieldErrors.message ? 'err-message' : 'hint-message'}
+        />
+        <span className="lead-hint" id="hint-message">{t.messageHint}</span>
+        {fieldErrors.message && (
+          <span className="lead-error" id="err-message" role="alert">{fieldErrors.message}</span>
+        )}
       </label>
 
       <label className="lead-consent">
