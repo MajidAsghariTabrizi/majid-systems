@@ -43,3 +43,6 @@ Thumbs.db
 .cached-github.json
 captures/
 captures-journey/
+
+# Lead store (runtime data)
+.data/
