@@ -28,15 +28,20 @@ const POS = [
   { x: 14, y: 26 }, // (spare — unused)
 ];
 
-export function OrgNervousSystem() {
+/** Localized layer names/roles can be injected; default = canonical EN data. */
+export function OrgNervousSystem({
+  layers = OS_LAYERS,
+}: {
+  layers?: { key: string; num: string; name: string; role: string; detail: string }[];
+}) {
   const [activeKey, setActiveKey] = useState('control-plane');
   const { ref, inView } = useInView<HTMLDivElement>('60px');
   const reduced = usePrefersReducedMotion();
   const animate = inView && !reduced;
 
-  const brain = OS_LAYERS.find((l) => l.key === BRAIN_KEY)!;
-  const orbit = OS_LAYERS.filter((l) => l.key !== BRAIN_KEY);
-  const active = OS_LAYERS.find((l) => l.key === activeKey) ?? brain;
+  const brain = layers.find((l) => l.key === BRAIN_KEY)!;
+  const orbit = layers.filter((l) => l.key !== BRAIN_KEY);
+  const active = layers.find((l) => l.key === activeKey) ?? brain;
 
   return (
     <div className="os-viz" ref={ref}>

@@ -4,29 +4,52 @@ import { PROJECTS } from '@/content/projects';
 import { NOTES } from '@/content/notes';
 import { SITE } from '@/content/shared';
 
+const BASE = SITE.canonicalUrl;
+
+/** Locale-prefixed routes with EN/FA alternates. */
+function loc(p: string): MetadataRoute.Sitemap[number] {
+  return {
+    url: `${BASE}/en${p}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: p === '' ? 1.0 : 0.8,
+    alternates: {
+      languages: {
+        en: `${BASE}/en${p}`,
+        fa: `${BASE}/fa${p}`,
+        'x-default': `${BASE}/en${p}`,
+      },
+    },
+  };
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = [
-    { path: '', priority: 1.0, changeFrequency: 'monthly' as const },
-    { path: '/profile', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/work', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/engineering', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/notes', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/open-source', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/about', priority: 0.7, changeFrequency: 'yearly' as const },
-    { path: '/contact', priority: 0.6, changeFrequency: 'yearly' as const },
-  ];
+  const items: MetadataRoute.Sitemap = ['', '/services', '/system', '/method', '/proof', '/about', '/contact', '/privacy'].map((p) =>
+    loc(p)
+  );
 
-  const items: MetadataRoute.Sitemap = staticRoutes.map((r) => ({
-    url: `${SITE.canonicalUrl}${r.path}`,
+  // Shared English deep content (locale-neutral builder tree).
+  const shared: MetadataRoute.Sitemap = [
+    { path: '/journey', priority: 0.9 },
+    { path: '/profile', priority: 0.9 },
+    { path: '/work', priority: 0.85 },
+    { path: '/engineering', priority: 0.8 },
+    { path: '/notes', priority: 0.8 },
+    { path: '/open-source', priority: 0.8 },
+    { path: '/resume', priority: 0.5 },
+  ].map((r) => ({
+    url: `${BASE}${r.path}`,
     lastModified: now,
-    changeFrequency: r.changeFrequency,
+    changeFrequency: 'monthly' as const,
     priority: r.priority,
   }));
 
+  items.push(...shared);
+
   for (const p of PROJECTS.filter((x) => x.category === 'flagship')) {
     items.push({
-      url: `${SITE.canonicalUrl}/work/${p.slug}`,
+      url: `${BASE}/work/${p.slug}`,
       lastModified: p.dates.latest ? new Date(p.dates.latest) : now,
       changeFrequency: 'monthly',
       priority: 0.85,
@@ -35,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const n of NOTES) {
     items.push({
-      url: `${SITE.canonicalUrl}/notes/${n.slug}`,
+      url: `${BASE}/notes/${n.slug}`,
       lastModified: n.date ? new Date(n.date) : now,
       changeFrequency: 'yearly',
       priority: 0.7,

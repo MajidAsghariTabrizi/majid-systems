@@ -34,17 +34,17 @@ const run = async () => {
   const thesis = (bodyText.match(/bottleneck is still the company itself/g) ?? []).length;
   ok('thesis stated once in hero', thesis === 1, `${thesis}×`);
 
-  /* nav is intention-based */
-  const nav = await page.locator('.site-header-root .nav a').allInnerTexts();
-  ok('nav: System/Method/Proof/Journey/About', nav.slice(0, 5).join('|') === 'System|Method|Proof|Journey|About', nav.join('|'));
+  /* nav is intention-based — V3 locale nav (switcher sits outside .nav) */
+  const nav = await page.locator('.site-header .nav a').allInnerTexts();
+  ok('nav: Services/System/Method/Proof/About', nav.join('|') === 'Services|System|Method|Proof|About', nav.join('|'));
 
   /* system flow: 7 steps with authority gate */
   const flow = await page.locator('.loop-step .loop-step-label').allInnerTexts();
   ok('flow: SIGNAL→LEARN with AUTHORITY CHECK', flow.join('→').includes('SIGNAL→RETRIEVE STATE→DECIDE→AUTHORITY CHECK→ACT→MEASURE→LEARN'), flow.join('→'));
   ok('flow: authority gate styled', (await page.locator('.loop-step-gate').count()) === 1);
 
-  /* signal grammar shared (5 section eyebrows + proof bridge) */
-  ok('signal dot on home sections', (await page.locator('.eyebrow.sig').count()) === 6);
+  /* signal grammar shared (V3: hero, sim frame, 5 beats, proof bridge) */
+  ok('signal dot on home sections', (await page.locator('.eyebrow.sig').count()) === 8);
 
   /* proof bridge links to journey + profile */
   const bridge = await page.locator('.proof-bridge').innerText();
@@ -56,9 +56,9 @@ const run = async () => {
     ok(`anchor ${a} resolves`, (await page.locator(a).count()) === 1);
   }
 
-  /* homepage is materially shorter */
+  /* homepage stays lean — V3: sim frame + 5 beats (final CTA is display-type) */
   const h1 = await page.locator('.q-h2').allInnerTexts();
-  ok('six section headers', h1.length === 5, `${h1.length}: ${h1.join(' | ').slice(0, 90)}`);
+  ok('six section headers', h1.length === 6, `${h1.length}: ${h1.join(' | ').slice(0, 90)}`);
 
   await page.screenshot({ path: path.join(OUT, 'unify-home-top.png') });
   await page.locator('#learning').scrollIntoViewIfNeeded();

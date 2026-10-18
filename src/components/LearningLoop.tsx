@@ -12,7 +12,10 @@ import { useEffect, useState } from 'react';
 import { SYSTEM_FLOW } from '@/content/quantiviq';
 import { useInView, usePrefersReducedMotion } from '@/lib/motion';
 
-export function SystemFlow() {
+type FlowStep = { key: string; label: string; note: string };
+
+/** Localized steps can be injected (locale dictionaries); default = canonical EN. */
+export function SystemFlow({ steps = SYSTEM_FLOW as readonly FlowStep[] }: { steps?: readonly FlowStep[] }) {
   const { ref, inView } = useInView<HTMLDivElement>('60px');
   const reduced = usePrefersReducedMotion();
   const [step, setStep] = useState(0);
@@ -20,19 +23,19 @@ export function SystemFlow() {
 
   useEffect(() => {
     if (!animate) return;
-    const id = setInterval(() => setStep((s) => (s + 1) % SYSTEM_FLOW.length), 1100);
+    const id = setInterval(() => setStep((s) => (s + 1) % steps.length), 1100);
     return () => clearInterval(id);
-  }, [animate]);
+  }, [animate, steps.length]);
 
   return (
     <div ref={ref}>
       <ol className="loop-flow" aria-label="How the system learns — signal to learning">
-        {SYSTEM_FLOW.map((s, i) => (
+        {steps.map((s, i) => (
           <li
             key={s.key}
             className={`loop-step ${s.key === 'authority' ? 'loop-step-gate' : ''} ${
               animate && i === step ? 'is-active' : ''
-            } ${!animate && i === SYSTEM_FLOW.length - 1 ? 'is-active-static' : ''}`}
+            } ${!animate && i === steps.length - 1 ? 'is-active-static' : ''}`}
             aria-current={animate && i === step ? 'step' : undefined}
           >
             <span className="loop-step-label">{s.label}</span>
