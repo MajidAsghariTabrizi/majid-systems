@@ -3,8 +3,8 @@
 Date: 2026-10-18
 Auditor: Universal Engineering Agent (post-implementation audit, fix-and-verify)
 Repo: `majid-systems`, branch `main`
-Repo HEAD: **`6deec4d`** — "V3 hardening: full FA localization of the organization simulator + lead-pipeline E2E isolation"
-Deployed revision (VPS `/opt/majid-systems`, verified via SSH `git log`): **`6deec4d`** — deployment drift: **zero**.
+Repo HEAD: **`ecab474`** — hardening in `6deec4d` ("V3 hardening: full FA localization of the organization simulator + lead-pipeline E2E isolation"), audit deliverables in `d556e27`, probe hardening in `ecab474`. Later doc-only commits do not change the audited site build.
+Deployed revision (VPS `/opt/majid-systems`, verified via SSH `git log`): **`ecab474`** — deployment drift: **zero**.
 Production: https://quantiviq.xyz (`/en` default, `/fa` Persian, RTL)
 
 ---
