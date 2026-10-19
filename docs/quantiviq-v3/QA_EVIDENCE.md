@@ -23,7 +23,11 @@ Date: 2026-10-18 · Branch: `v3` · Evidence collected locally before release.
 - R6 mobile (390px): switcher visible without hamburger, zero horizontal scroll in RTL, Persian services page, mobile switch preserves `/services`
 - R7 hreflang `en`/`fa`/`x-default` alternates + per-locale canonicals + `og:locale` (`fa_IR` on FA pages)
 - R8 legacy: `/about`→308 `/en/about`; `/contact?intent=…`→308 `/en/contact?intent=…`; `/journey` untouched
-- LEAD: negative submit → 4 localized inline errors; valid submit → success with `QV-…` reference; record durably in `.data/leads.jsonl` (`status:stored`, `notify:pending_config`); FA validation message in Persian; honeypot → fake 202 success with **nothing stored** (verified byte-identical file); burst → 429; `GET /api/lead` health → `storage:writable`
+- LEAD: negative submit → 4 localized inline errors; valid submit → success with `QV-…` reference; record durably in `.data/leads.jsonl` (`status:stored`, `notify:outbox_queued`); FA validation message in Persian; honeypot → fake 202 success with **nothing stored** (verified byte-identical file); burst → 429; `GET /api/lead` health → `storage:writable`, `notify:outbox`, `outboxPending` count
+
+## Post-audit update (2026-10-18)
+
+- Simulator localization, production Lighthouse and the full hostile-QA pass are recorded in **`QUANTIVIQ_V3_FINAL_AUDIT.md`** (repo root). Production mobile: EN 86→90/85, FA 95→81/87, TBT 95ms→0, CLS ~0; JSONs in `captures-v3-audit/lh-*-mobile*.json`. Rendered-DOM localization on the live site: `scripts/sim-dom-l10n.mjs` ALL PASS.
 
 ## Screenshots (`captures-v3/`, gitignored)
 
@@ -31,7 +35,7 @@ Date: 2026-10-18 · Branch: `v3` · Evidence collected locally before release.
 
 ## Known limitations (stated, not hidden)
 
-- Simulator interior microcopy and the shared builder tree (journey, profile, work, notes) remain English; FA context localizes frame, captions and CTA labels around them.
-- Owner notification on new leads is **BLOCKED_PENDING_CONFIG** until `LEAD_NOTIFY_EMAIL` + SMTP/CRM env exist on the server; leads are durably stored meanwhile (see LEAD_OPERATIONS.md).
-- Lighthouse: not yet run against this build (no scores claimed anywhere in these docs). Run `npx lighthouse` against production after release and record in this file.
+- ~~Simulator interior microcopy~~ **CLOSED (post-audit)**: fully localized on `/fa`; see `QUANTIVIQ_V3_FINAL_AUDIT.md`. The shared builder tree (journey, profile, work, notes) remains English **by design**, visibly labeled `·EN`.
+- Owner notification SMTP delivery is **BLOCKED_PENDING_CONFIG** until `LEAD_NOTIFY_EMAIL` + SMTP env exist on the server; meanwhile leads are durably stored **and queued in the outbox** (nothing lost, nothing faked) (see LEAD_OPERATIONS.md).
+- ~~Lighthouse: not yet run~~ **DONE (post-audit)**: production mobile before/after recorded in `QUANTIVIQ_V3_FINAL_AUDIT.md`.
 - Local-only CORS console artifacts in `journey-refine-check` stem from Next serving local prefetch redirects against `localhost` while the page is loaded from `127.0.0.1`; whitelisted with an explanatory comment. Single-host production is unaffected.

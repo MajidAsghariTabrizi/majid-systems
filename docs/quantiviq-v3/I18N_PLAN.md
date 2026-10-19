@@ -34,4 +34,5 @@ Status: scaffold already in the v3 working tree (`src/middleware.ts`, `src/app/[
 - Vazirmatn (400–800) from Google Fonts, requested only when `locale === 'fa'`; fallback Tahoma. FA line-height slightly larger than EN (≈1.9) for readability.
 
 ## Known P1 gap (accepted)
-- Simulator microcopy and the shared deep pages (`/journey`, `/work/*`, `/notes/*`, …) remain English-only. When a FA visitor lands on a shared page, a localized frame note explains: the deep content is available in English while the site chrome, navigation, and core offer pages are in Persian. Localization of deep content is a later wave decision.
+- ~~Simulator microcopy~~ **CLOSED by the post-implementation audit**: the organization simulator is fully localized on `/fa` (labels, roles, inspection cards, edge tooltips, painter copy, a11y) via `src/content/i18n/sim-data.ts`; zero EN display-copy leaks are enforced by `test/sim-i18n.test.ts` and proven live by `scripts/sim-dom-l10n.mjs`.
+- The shared deep pages (`/journey`, `/work/*`, `/notes/*`, …) remain English-only **by design** and visibly carry an `·EN` marker. When a FA visitor lands on a shared page, a localized frame note explains: the deep content is available in English while the site chrome, navigation, and core offer pages are in Persian. Localization of deep content is a later wave decision.

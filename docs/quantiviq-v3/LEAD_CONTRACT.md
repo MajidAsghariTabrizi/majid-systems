@@ -36,13 +36,13 @@ Durable-append lead capture. Success claim = **the lead is appended to the JSONL
 
 ## Storage
 - Append-only JSONL at `QV_LEAD_DATA` (default `.data/leads.jsonl`). One JSON object per line:
-  `{ id, createdAt, locale, intent, name, email, org?, website?, role?, message, preferred, preferredLink?, consent, ipHash, status: "stored", notify: "pending_config" }`
+  `{ id, createdAt, locale, intent, fields: { name, email, org?, website?, role?, message, preferred, preferredLink? }, ipHash, status: "stored" | "deleted", notify: "outbox_queued" | "smtp" | "notify_failed" }`
 - `id` format `QV-<short-random>`; `ipHash` is a salted hash (never the raw IP).
 - **No PII in server logs** — log only id, intent, outcome.
-- `notify` stays `"pending_config"` until SMTP is configured (see LEAD_OPERATIONS.md); notification is a later enhancement, not part of the success claim.
+- `notify` records the true final delivery outcome at write time: `outbox_queued` (durable outbox, no SMTP configured), `smtp` (delivered via SMTP), or `notify_failed` (transport error — the lead is still stored). Notification ordering is notify-first, persist-after, so the line never lies.
 
-## Env names (to be added to `.env.example`)
-`QV_LEAD_DATA`, `LEAD_NOTIFY_EMAIL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`.
+## Env names (in `.env.example`)
+`QV_LEAD_DATA`, `QV_LEAD_OUTBOX`, `QV_NOTIFY_TRANSPORT`, `LEAD_NOTIFY_EMAIL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `QV_XFF_DEPTH`.
 
 ## Privacy / deletion
 - Deletion on request: visitor replies referencing their lead ID; operator removes/annotates the JSONL line per LEAD_OPERATIONS.md procedure.

@@ -114,6 +114,12 @@ Copy `.env.example` to `.env.local` for local development. **Never commit `.env.
 | `NEXT_PUBLIC_GITHUB_USER` | no | GitHub username (default: `MajidAsghariTabrizi`) |
 | `GITHUB_TOKEN` | optional | Personal access token. Increases GitHub API rate limit from 60 to 5000/hr. Only set this in the **server runtime** that produces the cache; never expose it to the browser. |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | optional | Plausible analytics domain (privacy-first analytics; leave empty to disable). |
+| `QV_LEAD_DATA` | no | Durable lead storage directory (JSONL append; default `.data`). Must be writable by the node process in production. |
+| `QV_LEAD_OUTBOX` | no | Durable owner-notification outbox directory (defaults to `QV_LEAD_DATA`). |
+| `QV_NOTIFY_TRANSPORT` | no | `smtp` (default; requires SMTP vars) or `test` (queue to outbox only, never opens a socket). |
+| `LEAD_NOTIFY_EMAIL` | for delivery | Owner notification target for accepted leads. |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_FROM` | for delivery | SMTP transport for owner notification. Without these, accepted leads are durably stored **and queued in the outbox** — never lost. |
+| `QV_XFF_DEPTH` | no | Trust depth for `X-Forwarded-For` when rate limiting (default `1`; nginx sets `X-Real-IP`, which always wins). |
 
 > No analytics is loaded by default. Plausible is wired in `src/app/layout.tsx`
 > if `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set. It is privacy-respecting and

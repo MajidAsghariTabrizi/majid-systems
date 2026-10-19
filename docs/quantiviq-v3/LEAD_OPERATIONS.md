@@ -27,8 +27,8 @@ No CAPTCHA — friction stays near zero for humans.
 
 ## Test commands
 - Unit/contract: `npm test` (payload validation, honeypot, rate-limit window logic).
-- E2E against a running server: `node scripts/lead-e2e.mjs` — posts valid + invalid + honeypot + rate-limit-exceeding sequences and asserts the JSONL contents and status codes.
+- E2E against a running server: `node scripts/v3-check.mjs` (lead block: valid, invalid, FA, honeypot, rate-limit, health — run against a **fresh** `next start` so the in-memory 5/hour IP bucket is empty) and `node scripts/audit-check.mjs` (C3: accept → outbox → delete).
 
-## BLOCKED_PENDING_CONFIG — notification
-- Until SMTP env vars are set, every stored lead records `notify: "pending_config"` and **no email is sent**. The pipeline is not broken; notification is pending config.
-- Health endpoint and lead file remain authoritative. Enable notification by setting `LEAD_NOTIFY_EMAIL` + `SMTP_*` and restarting; new leads then attempt notify (old `pending_config` lines are swept on next deploy or manually).
+## BLOCKED_PENDING_CONFIG — SMTP delivery (outbox is live)
+- Without SMTP env vars, every accepted lead is **durably stored and its owner notification is queued in the outbox** (`notify: "outbox_queued"`; health reports `notify: "outbox"` + `outboxPending`). The transport is `QV_NOTIFY_TRANSPORT` (`smtp` default / `test` = outbox only).
+- The pipeline is not broken: nothing is lost and nothing pretends to be delivered. Drain the outbox after provisioning by setting `LEAD_NOTIFY_EMAIL` + `SMTP_*` (+ optional `SMTP_FROM`) and restarting; `scripts/leads-tool.mjs` lists/flushes/deletes records and purges past the 24-month retention window.
