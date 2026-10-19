@@ -2,7 +2,9 @@
 
 Date: 2026-10-18 · Branch flow: `v3` (`6e6cf90`, `e92c950`) → merged → `main` → deployed via `scripts/public_deploy.py`.
 
-## VERDICT: READY_WITH_CONFIG_BLOCKER
+> **POST-AUDIT FINAL STATE (2026-10-18):** the post-implementation audit closed this report's open items — the full audit, test matrix and production Lighthouse are in **`QUANTIVIQ_V3_FINAL_AUDIT.md`** (repo root), verdict **READY**, deployed `619532f`, drift zero. The "known limitations" below were re-checked: limitation 1 (simulator English) and 3 (no Lighthouse) are **closed**; limitation 2 (SMTP) remains the sole owner action.
+
+## VERDICT: READY_WITH_CONFIG_BLOCKER → superseded by READY (see audit)
 
 The bilingual site, locale routing, RTL Persian experience, services ladder, honest proof labels and the complete lead pipeline are **live on quantiviq.xyz and verified**. The single blocking configuration item: **owner notification of new leads is BLOCKED_PENDING_CONFIG** — no SMTP/CRM transport exists on the server yet. Leads are durably stored (`/home` app `.data/leads.jsonl`, writable confirmed via live health probe `{"ok":true,"storage":"writable","notify":"pending_config"}`) and never lost; provisioning steps are in LEAD_OPERATIONS.md.
 
@@ -43,13 +45,14 @@ The bilingual site, locale routing, RTL Persian experience, services ladder, hon
 
 ## Known limitations (accepted)
 
-1. Simulator interior microcopy and the shared builder tree (journey, profile, work, notes, engineering) remain English; FA context localizes frames, captions and CTAs around them. Documented in I18N_PLAN.md as the P1 gap.
-2. Owner notification BLOCKED_PENDING_CONFIG (above).
-3. Lighthouse not yet run against production; no scores are claimed in any V3 doc. Run and append to QA_EVIDENCE.md.
+1. ~~Simulator interior microcopy and the shared builder tree (journey, profile, work, notes, engineering) remain English~~ — **CLOSED by the post-implementation audit**: the organization simulator is now fully localized on `/fa` (labels, roles, inspection cards, edge tooltips, painter copy, a11y) via `src/content/i18n/sim-data.ts`; zero EN display-copy leaks enforced by `test/sim-i18n.test.ts` and proven in the live DOM by `scripts/sim-dom-l10n.mjs`. The shared builder tree remains English by design, visibly labeled `·EN`.
+2. Owner notification BLOCKED_PENDING_CONFIG (above) — still the sole open item; leads are durably stored and queued in the outbox (`notify=outbox`), nothing is lost.
+3. ~~Lighthouse not yet run against production~~ — **CLOSED**: production mobile runs recorded before/after in `QUANTIVIQ_V3_FINAL_AUDIT.md` and `captures-v3-audit/lh-*-mobile*.json` (EN 86→90/85, FA 95→81/87, TBT 95ms→0, CLS ~0).
 4. `smart-trader` subapp and `/resume` print sheet remain as-is (out of V3 scope).
 
 ## Post-release checklist for the owner
 
-1. Configure `LEAD_NOTIFY_EMAIL` + SMTP_* (see LEAD_OPERATIONS.md) → flips `notify: pending_config` to delivered.
-2. Run Lighthouse (mobile+desktop) on `/en` and `/fa`; append scores to QA_EVIDENCE.md.
+1. Configure `LEAD_NOTIFY_EMAIL` + SMTP_* (see LEAD_OPERATIONS.md) → drains the durable outbox; flips notification from `outbox` to real e-mail delivery.
+2. ~~Run Lighthouse~~ — done (see the audit).
 3. Review `docs/quantiviq-v3/BENCHMARK.md` items flagged "borrow" for the next iteration.
+4. Optional cosmetic: dedupe X-Frame-Options / X-Content-Type-Options / Referrer-Policy (nginx and Next both emit them).
