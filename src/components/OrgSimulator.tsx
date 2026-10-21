@@ -15,7 +15,7 @@
  *    transformation and the manual comparison slider.
  */
 
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type ReactElement } from 'react';
 
 import { makeSimData, type SimLocale } from '@/content/i18n/sim-data';
 
@@ -63,17 +63,60 @@ import { type LayerKey } from '@/content/simulator';
 /* ------------------------------------------------------------------ */
 
 const NODE_SIZE: Record<string, [number, number]> = {
-  default: [112, 34],
-  MEETING: [160, 58], // COMPANY BRAIN — structured institutional state
-  APPROVAL: [132, 42], // AUTHORITY GATE
-  CEO: [126, 38],
-  ambient: [86, 24],
+  default: [128, 40],
+  MEETING: [176, 62], // COMPANY BRAIN — structured institutional state
+  APPROVAL: [148, 48], // AUTHORITY GATE
+  CEO: [140, 44],
+  ambient: [96, 26],
 };
 
 function nodeSize(n: SimNode): [number, number] {
   if (n.ambient) return NODE_SIZE.ambient;
   return NODE_SIZE[n.id] ?? NODE_SIZE.default;
 }
+
+/**
+ * Per-kind geometric glyph — entity type must be readable without color
+ * (shape + stroke carry the semantics; color only reinforces them).
+ */
+const KIND_GLYPH: Record<string, ReactElement> = {
+  signal: <path d="M0,-3.4 L3.4,0 L0,3.4 L-3.4,0 Z" fill="currentColor" />,
+  human: (
+    <g fill="currentColor">
+      <circle r="2" cy="-1.8" />
+      <path d="M-3.6,4.4 a3.6,3.6 0 0 1 7.2,0 Z" />
+    </g>
+  ),
+  system: <rect x="-3.1" y="-3.1" width="6.2" height="6.2" rx="1" fill="none" stroke="currentColor" strokeWidth="1.1" />,
+  agent: <path d="M0,-3.8 L3.3,-1.9 L3.3,1.9 L0,3.8 L-3.3,1.9 L-3.3,-1.9 Z" fill="currentColor" />,
+  brain: (
+    <g fill="currentColor" stroke="none">
+      <circle r="1.5" cx="-2.8" cy="-1.8" />
+      <circle r="1.5" cx="2.8" cy="-1.8" />
+      <circle r="1.5" cx="0" cy="2.6" />
+      <path d="M-2.4,-1.4 L-0.4,-0.4 M2.4,-1.4 L0.4,-0.4 M0,1.1 L0,0.4" stroke="currentColor" strokeWidth="0.8" fill="none" />
+    </g>
+  ),
+  gate: (
+    <g>
+      <rect x="-3.4" y="-3.4" width="6.8" height="6.8" rx="1" fill="none" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M0,-1.9 L0,1.9" stroke="currentColor" strokeWidth="1.5" />
+    </g>
+  ),
+  enterprise: (
+    <g fill="none" stroke="currentColor">
+      <rect x="-3.6" y="-2.7" width="7.2" height="5.4" rx="1" strokeWidth="1" />
+      <rect x="-1.9" y="-1" width="3.8" height="2" rx="0.5" strokeWidth="0.8" />
+    </g>
+  ),
+  infra: (
+    <g fill="none" stroke="currentColor" strokeWidth="0.9">
+      <ellipse cx="0" cy="-2.3" rx="3.1" ry="1.25" />
+      <path d="M-3.1,-2.3 V2.3 a3.1,1.25 0 0 0 6.2,0 V-2.3" />
+    </g>
+  ),
+  ambient: <circle r="2.7" fill="none" stroke="currentColor" strokeWidth="0.9" strokeDasharray="1.6 1.6" />,
+};
 
 const snap = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -236,9 +279,14 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     let learnedTxt = '—';
     let latencyTxt: string = era === 'new' ? S.newMetrics.latency : S.oldMetrics.latency;
     let handoffTxt: string = era === 'new' ? S.newMetrics.handoffs : S.oldMetrics.handoffs;
-    let lossTxt = '0';
+    let lossTxt = '—';
 
-    if (st.phase === 'SIGNAL_OLD' || st.phase === 'OLD_COMPLETE') {
+    if (st.phase === 'IDLE_OLD') {
+      // honest zero-state: nothing has run yet, so there is nothing to measure
+      latencyTxt = S.kpiIdle;
+      handoffTxt = S.kpiIdle;
+      lossTxt = S.kpiIdle;
+    } else if (st.phase === 'SIGNAL_OLD' || st.phase === 'OLD_COMPLETE') {
       const f = oldFlow(st.phase === 'OLD_COMPLETE' ? OLD_DURATION : T);
       activeNodeId = f.toNode;
       latencyTxt = st.phase === 'OLD_COMPLETE' ? S.totalOld : formatLatency(f.latencyHours);
@@ -369,7 +417,11 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         const k = clamp01((morph - 0.55) / 0.35);
         b = pointOnEdge(a, b, e.bow, k * k);
       }
-      path.setAttribute('d', edgePath(a, b, e.bow));
+      // stop the visible edge at the target box border so arrowheads stay readable
+      const halfW = nodeSize(NODE_BY_ID[e.to])[0] / 2 + 6;
+      const dist = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      const bDrawn = pointOnEdge(a, b, e.bow, Math.max(0.45, 1 - halfW / dist));
+      path.setAttribute('d', edgePath(a, bDrawn, e.bow));
 
       let o = w;
       let sw = e.kind === 'flow' || e.kind === 'new' || e.kind === 'return' ? 1.6 : 1;
@@ -499,7 +551,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     /* ---- metrics ---- */
     setTxt(latencyRef.current, latencyTxt, cache, 'lat');
     setTxt(handoffRef.current, handoffTxt, cache, 'hoffs');
-    setTxt(lossRef.current, `${lossTxt} BITS`, cache, 'loss');
+    setTxt(lossRef.current, /\d/.test(lossTxt) ? `${lossTxt} BITS` : lossTxt, cache, 'loss');
     const routingTxt = era === 'new' ? S.newMetrics.routing : S.oldMetrics.routing;
     const knowTxt = era === 'new' ? S.newMetrics.knowledge : S.oldMetrics.knowledge;
     const loopTxt =
@@ -814,6 +866,21 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
             ? { label: S.controls.runAgain, run: () => dispatch({ type: 'RUN_AGAIN' }) }
             : null;
 
+  /** busy CTA: visible, disabled, honest — the user always sees the primary slot */
+  const primaryCta =
+    mainAction !== null ? (
+      <button
+        className={`sim-cta ${mainAction.primary ? 'primary' : ''}`}
+        onClick={() => manual(mainAction.run)}
+      >
+        {mainAction.label}
+      </button>
+    ) : (
+      <button className="sim-cta primary is-busy" disabled aria-disabled="true">
+        {S.ctaRunning}
+      </button>
+    );
+
   const running =
     state.phase === 'SIGNAL_OLD' ||
     state.phase === 'TRANSFORMING' ||
@@ -846,6 +913,27 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     >
       <title>{S.a11y.simTitle}</title>
       <desc>{S.a11y.simDesc}</desc>
+      <defs>
+        {/*
+          Arrowheads per path semantics (color never the only cue — the legend
+          also maps dash/solid language to meaning).
+        */}
+        <marker id="arr-base" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0.6 L7.2,4 L0,7.4 Z" className="mk-base" />
+        </marker>
+        <marker id="arr-warm" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0.6 L7.2,4 L0,7.4 Z" className="mk-warm" />
+        </marker>
+        <marker id="arr-mint" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0.6 L7.2,4 L0,7.4 Z" className="mk-mint" />
+        </marker>
+        <marker id="arr-hot-warm" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0.6 L7.2,4 L0,7.4 Z" className="mk-hot-warm" />
+        </marker>
+        <marker id="arr-hot-mint" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0.6 L7.2,4 L0,7.4 Z" className="mk-hot-mint" />
+        </marker>
+      </defs>
       <rect className="sim-bg" x="0" y="0" width={VIEW_W} height={VIEW_H} fill="transparent" tabIndex={-1} aria-hidden="true" />
 
       {EDGES.map((e) => (
@@ -945,7 +1033,14 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
               }
             }}
           >
-            <rect className="sim-node-box" x={-w / 2} y={-h / 2} width={w} height={h} rx="7" />
+            <rect className="sim-node-box" x={-w / 2} y={-h / 2} width={w} height={h} rx="9" />
+            <g
+              className={`sim-node-ico k-${n.kind}`}
+              transform={`translate(${-w / 2 + 13} ${-h / 2 + 13})`}
+              aria-hidden="true"
+            >
+              {KIND_GLYPH[n.kind] ?? KIND_GLYPH.system}
+            </g>
             <text ref={(el) => { labelOldRefs.current[n.id] = el; }} className="sim-node-label old" y={-3} textAnchor="middle">
               {S.nodeLabel(n.old.label)}
             </text>
@@ -1083,13 +1178,13 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         <div className="sm-row sm-big">
           <span className="sm-k">{S.metricLabels.latency}</span>
           <span className="sm-v" ref={latencyRef}>
-            {S.oldMetrics.latency}
+            {S.kpiIdle}
           </span>
         </div>
         <div className="sm-row">
           <span className="sm-k">{S.metricLabels.handoffs}</span>
           <span className="sm-v" ref={handoffRef}>
-            {S.oldMetrics.handoffs}
+            {S.kpiIdle}
           </span>
         </div>
         <div className="sm-row">
@@ -1113,13 +1208,13 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         <div className="sm-row sm-loss">
           <span className="sm-k">{S.metricLabels.contextLoss}</span>
           <span className="sm-v" ref={lossRef}>
-            0 BITS
+            {S.kpiIdle}
           </span>
         </div>
       </div>
 
       {info && (
-        <div className="sim-inspect" role="dialog" aria-label={`Inspection: ${nodeLabel}`}>
+        <div className="sim-inspect" role="dialog" aria-label={`${S.a11y.inspectionDialog}: ${nodeLabel}`}>
           <div className="si-head">
             <span className="si-title">{nodeLabel}</span>
             <button
@@ -1137,12 +1232,12 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
           ))}
           {info.latency && (
             <p className="si-lat">
-              LATENCY CONTRIBUTION <span>{info.latency}</span>
+              {S.inspect.latencyContribution} <span>{info.latency}</span>
             </p>
           )}
           {info.becomes && (
             <p className="si-becomes">
-              BECOMES <span>{info.becomes}</span>
+              {S.inspect.becomes} <span>{info.becomes}</span>
             </p>
           )}
           <p className="si-hint">{S.controls.pauseHint}</p>
@@ -1207,9 +1302,11 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     </aside>
   );
 
-  const controls = (
-    <div className="sim-controls">
-      <div className="sim-ctl-row">
+  /** Step 1 + Step 2: the scenario controls, at the top near the graph title. */
+  const commandBar = (
+    <div className="sim-command">
+      <div className="cmd-step cmd-choose">
+        <span className="cmd-k">{S.cmd.step1}</span>
         <div className="sim-signals" role="group" aria-label={S.a11y.chooseSignal}>
           {S.signals.map((s) => (
             <button
@@ -1223,11 +1320,33 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
             </button>
           ))}
         </div>
-        <div className="sim-main-actions">{mainAction && (
-          <button className={`sim-cta ${mainAction.primary ? 'primary' : ''}`} onClick={() => manual(mainAction.run)}>
-            {mainAction.label}
-          </button>
-        )}</div>
+      </div>
+      <div className="cmd-step cmd-run">
+        <span className="cmd-k">{S.cmd.step2}</span>
+        <div className="sim-main-actions">{primaryCta}</div>
+      </div>
+    </div>
+  );
+
+  /** Node/edge semantics — shape and text carry the meaning, color reinforces it. */
+  const legendBar = (
+    <div className="sim-legend">
+      <span className="lg-item"><i className="lg-mark lg-human" aria-hidden="true" />{S.legend.human}</span>
+      <span className="lg-item"><i className="lg-mark lg-agent" aria-hidden="true" />{S.legend.agent}</span>
+      <span className="lg-item"><i className="lg-mark lg-brain" aria-hidden="true" />{S.legend.brain}</span>
+      <span className="lg-item"><i className="lg-mark lg-gate" aria-hidden="true" />{S.legend.gate}</span>
+      <span className="lg-item"><i className="lg-mark lg-signal" aria-hidden="true" />{S.legend.signal}</span>
+      <span className="lg-item"><i className="lg-mark lg-system" aria-hidden="true" />{S.legend.system}</span>
+      <span className="lg-item"><i className="lg-line lg-flow" aria-hidden="true" />{S.legend.flow}</span>
+      <span className="lg-item"><i className="lg-line lg-wait" aria-hidden="true" />{S.legend.wait}</span>
+      <span className="lg-item"><i className="lg-line lg-active" aria-hidden="true" />{S.legend.active}</span>
+    </div>
+  );
+
+  /** Replay / speed / layers stay accessible but secondary, below the stage. */
+  const controls = (
+    <div className="sim-controls">
+      <div className="sim-ctl-row">
         <div className="sim-util" role="group" aria-label={S.a11y.controls}>
           <button
             className={`chip util ${state.speed === 2 ? 'on' : ''}`}
@@ -1338,17 +1457,17 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
       <div className="sim-m-metrics">
         <span className="sm-k">{S.metricLabels.latency}</span>
         <span className="sm-v" ref={latencyRef}>
-          00:00
+          {S.kpiIdle}
         </span>
         <span className="sm-k">·</span>
         <span className="sm-k">{S.metricLabels.handoffs}</span>
         <span className="sm-v" ref={handoffRef}>
-          0
+          {S.kpiIdle}
         </span>
         <span className="sm-k">·</span>
         <span className="sm-k">{S.metricLabels.loop}</span>
         <span className="sm-v" ref={(el) => { stripRefs.current.loop = el; }}>
-          OPEN
+          {S.oldMetrics.loop}
         </span>
       </div>
       <div className="sim-m-flow" data-era={state.morphT > 0.5 ? 'new' : 'old'}>
@@ -1388,7 +1507,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         </div>
       </div>
       {info && (
-        <div className="sim-inspect" role="dialog" aria-label={`Inspection: ${nodeLabel}`}>
+        <div className="sim-inspect" role="dialog" aria-label={`${S.a11y.inspectionDialog}: ${nodeLabel}`}>
           <div className="si-head">
             <span className="si-title">{nodeLabel}</span>
             <button
@@ -1406,39 +1525,28 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
           ))}
           {info.latency && (
             <p className="si-lat">
-              LATENCY CONTRIBUTION <span>{info.latency}</span>
+              {S.inspect.latencyContribution} <span>{info.latency}</span>
             </p>
           )}
           {info.becomes && (
             <p className="si-becomes">
-              BECOMES <span>{info.becomes}</span>
+              {S.inspect.becomes} <span>{info.becomes}</span>
             </p>
           )}
         </div>
       )}
       <p className="sim-m-note">{S.signals.find((s) => s.key === state.signal)?.note ?? ''}</p>
       <div className="sim-m-ctas">
-        {mainAction && (
-          <button className={`sim-cta ${mainAction.primary ? 'primary' : ''}`} onClick={() => manual(mainAction.run)}>
-            {mainAction.label}
-          </button>
-        )}
-        <button className="chip util" onClick={() => manual(() => dispatch({ type: 'REPLAY' }))}>
+        <button
+          className="chip util"
+          onClick={() => manual(() => dispatch({ type: 'REPLAY' }))}
+          disabled={state.phase === 'IDLE_OLD' && !state.completed}
+        >
           {S.controls.replay}
         </button>
-      </div>
-      <div className="sim-signals">
-        {S.signals.map((s) => (
-          <button
-            key={s.key}
-            className={`chip sig ${state.signal === s.key ? 'on' : ''}`}
-            disabled={!['IDLE_OLD', 'OLD_COMPLETE'].includes(state.phase)}
-            aria-pressed={state.signal === s.key}
-            onClick={() => manual(() => dispatch({ type: 'SET_SIGNAL', signal: s.key }))}
-          >
-            {s.label}
-          </button>
-        ))}
+        <button className="chip util" onClick={() => manual(() => dispatch({ type: 'RESET' }))}>
+          {S.controls.reset}
+        </button>
       </div>
     </div>
   );
@@ -1471,6 +1579,9 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
               </span>
             </div>
           </header>
+
+          {commandBar}
+          {legendBar}
 
           {isMobile ? (
             mobile

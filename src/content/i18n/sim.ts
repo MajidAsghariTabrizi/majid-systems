@@ -361,6 +361,24 @@ export const simLabels = {
     a11y_compare_traditional: 'Traditional organization',
     a11y_compare_native: 'AI-native organization',
 
+    /* ---------------- Simulator UX upgrade · command bar / legend / KPI ---------------- */
+    kpi_idle: 'RUN TO EXPLORE',
+    cta_running: 'RUNNING…',
+    cmd_step1: 'STEP 1 · CHOOSE A SIGNAL',
+    cmd_step2: 'STEP 2 · RUN THE SIMULATION',
+    cmd_step3: 'STEP 3 · READ THE RESULT',
+    legend_human: 'Human / management',
+    legend_agent: 'AI agent',
+    legend_brain: 'Company Brain · knowledge',
+    legend_gate: 'Decision · authority gate',
+    legend_signal: 'Signal · event',
+    legend_system: 'Software system',
+    legend_infra: 'Infrastructure · tool',
+    legend_flow: 'Signal path',
+    legend_wait: 'Hierarchy · waiting',
+    legend_active: 'Active path',
+    legend_loss: 'Context loss',
+
     /* ---------------- BrainDemo · terminal chrome ---------------- */
     term_title: 'company-brain · query',
     term_ready: 'READY',
@@ -780,6 +798,24 @@ export const simLabels = {
     a11y_compare_slider: 'ساختار سازمان، از سنتی تا بومی هوش مصنوعی',
     a11y_compare_traditional: 'سازمان سنتی',
     a11y_compare_native: 'سازمان بومی هوش مصنوعی',
+
+    /* ---------------- Simulator UX upgrade · command bar / legend / KPI ---------------- */
+    kpi_idle: 'برای کاوش اجرا کنید',
+    cta_running: 'در حال اجرا…',
+    cmd_step1: 'گام ۱ · سیگنال را انتخاب کنید',
+    cmd_step2: 'گام ۲ · شبیه‌سازی را اجرا کنید',
+    cmd_step3: 'گام ۳ · نتیجه را بخوانید',
+    legend_human: 'انسان / مدیریت',
+    legend_agent: 'ایجنت هوش مصنوعی',
+    legend_brain: 'مغز شرکت · دانش',
+    legend_gate: 'تصمیم · دریچهٔ اختیار',
+    legend_signal: 'سیگنال / رخداد',
+    legend_system: 'سامانهٔ نرم‌افزاری',
+    legend_infra: 'زیرساخت / ابزار',
+    legend_flow: 'مسیر سیگنال',
+    legend_wait: 'سلسله‌مراتب / انتظار',
+    legend_active: 'مسیر فعال',
+    legend_loss: 'اتلاف زمینه',
 
     /* ---------------- BrainDemo · terminal chrome ---------------- */
     term_title: 'company-brain · پرس‌وجو',

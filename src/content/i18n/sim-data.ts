@@ -318,6 +318,26 @@ export function makeSimData(locale: SimLocale = 'en') {
     },
     mobileLearnStep: d.mobile_learn_step,
     exploreLayers: d.explore_layers,
+    kpiIdle: d.kpi_idle,
+    ctaRunning: d.cta_running,
+    cmd: {
+      step1: d.cmd_step1,
+      step2: d.cmd_step2,
+      step3: d.cmd_step3,
+    },
+    legend: {
+      human: d.legend_human,
+      agent: d.legend_agent,
+      brain: d.legend_brain,
+      gate: d.legend_gate,
+      signal: d.legend_signal,
+      system: d.legend_system,
+      infra: d.legend_infra,
+      flow: d.legend_flow,
+      wait: d.legend_wait,
+      active: d.legend_active,
+      loss: d.legend_loss,
+    },
   };
 }
 

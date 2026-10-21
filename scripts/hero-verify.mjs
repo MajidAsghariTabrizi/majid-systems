@@ -43,7 +43,7 @@ const run = async () => {
   ok('initial: disclosure visible', (await page.locator('.sim-disclosure').innerText()).includes('ILLUSTRATIVE ORGANIZATION'));
   const sig0 = await transformOf('SIGNAL');
   ok('initial: SIGNAL parked at old pos', approx(sig0.x, 95, 2) && approx(sig0.y, 430, 2), JSON.stringify(sig0));
-  ok('initial: latency 00:00', (await railText('COMPANY LATENCY')) === '00:00');
+  ok('initial: honest idle KPI (no misleading 00:00)', (await railText('COMPANY LATENCY')) === 'RUN TO EXPLORE');
   ok('initial: payoff hidden', await page.locator('.sim-payoff').evaluate((el) => getComputedStyle(el).opacity) === '0');
 
   /* ---- 2. hero copy ---- */

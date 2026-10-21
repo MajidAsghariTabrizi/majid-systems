@@ -5705,7 +5705,7 @@ section:first-of-type {
 /* ---- RTL: Persian typography + logical-direction fixes ---- */
 
 html[dir='rtl'] body {
-  font-family: Vazirmatn, Inter, Tahoma, sans-serif;
+  font-family: 'Estedad', Inter, Tahoma, sans-serif;
 }
 
 html[dir='rtl'] .latency-bar {
@@ -6091,5 +6091,586 @@ html[dir='rtl'] .os-index-num {
     width: 100%;
     border-radius: 0;
     padding: 0;
+  }
+}
+/* ==================================================================== */
+/* V4 UPGRADE — Persian typography (Estedad) + simulator command-center */
+/*                                                                      */
+/* Estedad Variable: self-hosted, SIL OFL 1.1 (public/fonts/).          */
+/* Scoped to the Persian locale; English typography stays Inter/JBM.    */
+/* Simulator tokens: enterprise command-center palette, WCAG-checked.   */
+/* ==================================================================== */
+
+@font-face {
+  font-family: 'Estedad';
+  src: url('/fonts/Estedad-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- Workstream A: Persian locale typography ---------------------- */
+
+html[lang='fa'] {
+  --font-sans: 'Estedad', 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+  --font-display: 'Estedad', 'Vazirmatn', Tahoma, sans-serif;
+}
+
+html[lang='fa'] body {
+  letter-spacing: 0;
+}
+
+/* Persian never uses tracked-out mono labels; Latin claim codes keep mono. */
+html[lang='fa'] .sim-tag,
+html[lang='fa'] .sim-phase,
+html[lang='fa'] .sim-disclosure,
+html[lang='fa'] .sm-k,
+html[lang='fa'] .strip-k,
+html[lang='fa'] .cmd-k,
+html[lang='fa'] .si-title,
+html[lang='fa'] .si-lat,
+html[lang='fa'] .si-becomes,
+html[lang='fa'] .sim-latency,
+html[lang='fa'] .sim-node-label,
+html[lang='fa'] .sim-node-role,
+html[lang='fa'] .sim-gate-motto,
+html[lang='fa'] .sc-l,
+html[lang='fa'] .sc-r,
+html[lang='fa'] .chip.sig,
+html[lang='fa'] .chip.util,
+html[lang='fa'] .chip.tog,
+html[lang='fa'] .lg-item,
+html[lang='fa'] .sms-label,
+html[lang='fa'] .sim-m-note {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+/* Mixed RTL/LTR values (+6h, 00:00, QV-…) order correctly inside FA text. */
+html[lang='fa'] .sm-v,
+html[lang='fa'] .strip-v,
+html[lang='fa'] .sms-lat,
+html[lang='fa'] .si-lat span,
+html[lang='fa'] .si-becomes span {
+  unicode-bidi: plaintext;
+}
+
+/* ---- Workstream B: command-center tokens -------------------------- */
+
+.sim-frame {
+  --sq-bg: #0b1119;
+  --sq-surface: #141f2b;
+  --sq-elev: #1c2a38;
+  --sq-border: #344657;
+  --sq-text: #f1f5f9;
+  --sq-text2: #b4c3d1;
+  --sq-agent: #69deb9;   /* agentic / success   */
+  --sq-human: #80c9f8;   /* human / authority   */
+  --sq-decision: #f5b968;/* decision / handoff  */
+  --sq-event: #a694f7;   /* event / signal      */
+  --sq-loss: #f27e85;    /* blocker / loss      */
+  --sq-edge: #55708c;    /* >=3:1 on --sq-bg    */
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto auto;
+  max-width: 1560px;
+  margin-inline: auto;
+  color: var(--sq-text);
+}
+
+.sim-frame .sim-tag {
+  color: var(--sq-text2);
+  border-color: var(--sq-border);
+}
+
+.sim-frame .sim-phase {
+  color: var(--sq-text2);
+  border-color: var(--sq-border);
+  font-size: 11px;
+  padding: 4px 12px;
+}
+
+.sim-frame .sim-phase.era-old {
+  color: var(--sq-decision);
+  border-color: rgba(245, 185, 104, 0.55);
+}
+
+.sim-frame .sim-phase.era-new {
+  color: var(--sq-agent);
+  border-color: rgba(105, 222, 185, 0.55);
+}
+
+.sim-frame .sim-disclosure {
+  color: var(--sq-text2);
+  font-size: 11px;
+}
+
+.sim-frame .sim-disclosure strong {
+  color: var(--sq-text);
+}
+
+/* ---- stage --------------------------------------------------------- */
+
+.sim-frame .sim-stage {
+  background:
+    radial-gradient(110% 80% at 50% 0%, rgba(105, 222, 185, 0.05), transparent 55%),
+    var(--sq-bg);
+  border-color: var(--sq-border);
+  border-radius: 12px;
+}
+
+/* ---- nodes: readable boxes, per-kind shape/color semantics --------- */
+
+.sim-frame .sim-node-box {
+  fill: var(--sq-surface);
+  stroke: var(--sq-border);
+  stroke-width: 1.2;
+}
+
+.sim-frame .sim-node:hover .sim-node-box,
+.sim-frame .sim-node:focus-visible .sim-node-box {
+  stroke: var(--sq-text2);
+  stroke-width: 1.6;
+}
+
+.sim-frame .sim-node:focus-visible .sim-node-box {
+  stroke: var(--sq-text);
+  stroke-width: 2;
+}
+
+.sim-frame .sim-node.is-selected .sim-node-box {
+  stroke: var(--sq-text);
+  stroke-width: 1.8;
+  stroke-dasharray: 5 3;
+}
+
+.sim-frame .sim-node.is-active .sim-node-box {
+  stroke-width: 2.2;
+}
+
+.sim-frame .sim-node.k-human .sim-node-box {
+  stroke: var(--sq-human);
+  fill: #12202c;
+}
+
+.sim-frame .sim-node.k-agent .sim-node-box {
+  stroke: var(--sq-agent);
+  fill: #0f211c;
+}
+
+.sim-frame .sim-node.k-brain .sim-node-box {
+  stroke: var(--sq-agent);
+  stroke-dasharray: 5 3;
+  fill: #0f211c;
+}
+
+.sim-frame .sim-node.k-gate .sim-node-box {
+  stroke: var(--sq-decision);
+  fill: #221a10;
+}
+
+.sim-frame .sim-node.k-signal .sim-node-box {
+  stroke: var(--sq-event);
+  fill: #171327;
+}
+
+.sim-frame .sim-node.k-enterprise .sim-node-box {
+  stroke: var(--sq-text2);
+  fill: var(--sq-elev);
+}
+
+.sim-frame .sim-node.k-system .sim-node-box {
+  stroke: #7c8fa3;
+  fill: var(--sq-elev);
+}
+
+.sim-frame .sim-node.k-infra .sim-node-box {
+  stroke: #566f8a;
+  fill: var(--sq-surface);
+}
+
+.sim-node-ico {
+  pointer-events: none;
+}
+
+.sim-node-ico.k-signal  { color: var(--sq-event); }
+.sim-node-ico.k-human   { color: var(--sq-human); }
+.sim-node-ico.k-agent,
+.sim-node-ico.k-brain   { color: var(--sq-agent); }
+.sim-node-ico.k-gate    { color: var(--sq-decision); }
+.sim-node-ico.k-enterprise,
+.sim-node-ico.k-system  { color: var(--sq-text2); }
+.sim-node-ico.k-infra,
+.sim-node-ico.k-ambient { color: #7c8fa3; }
+
+.sim-frame .sim-node-label {
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  fill: var(--sq-text);
+  font-weight: 500;
+}
+
+.sim-frame .sim-node-role {
+  font-size: 10.5px;
+  fill: var(--sq-text2);
+}
+
+.sim-frame .sim-node.is-active .sim-node-label {
+  fill: var(--sq-decision);
+}
+
+.sim-stage[data-era='new'] .sim-node.is-active .sim-node-label {
+  fill: var(--sq-agent);
+}
+
+.sim-frame .sim-brain-counters .bc-k {
+  color: var(--sq-text2);
+}
+
+.sim-frame .sim-brain-counters .bc-v {
+  color: var(--sq-text);
+}
+
+/* ---- edges: visible grammar + arrowheads --------------------------- */
+
+.sim-frame .sim-edge {
+  stroke: var(--sq-edge);
+  stroke-opacity: 0.9;
+  marker-end: url(#arr-base);
+}
+
+.sim-frame .sim-edge.k-hierarchy {
+  stroke-dasharray: 3 4;
+  stroke: #566f8a;
+}
+
+.sim-frame .sim-edge.k-flow {
+  stroke: var(--sq-decision);
+  stroke-opacity: 0.75;
+  marker-end: url(#arr-warm);
+}
+
+.sim-frame .sim-edge.k-ambient {
+  stroke-dasharray: 1 6;
+  stroke: var(--sq-edge);
+  stroke-opacity: 0.55;
+  marker-end: none;
+}
+
+.sim-frame .sim-edge.k-new,
+.sim-frame .sim-edge.k-return {
+  stroke: var(--sq-agent);
+  stroke-opacity: 0.75;
+  marker-end: url(#arr-mint);
+}
+
+.sim-frame .sim-edge.k-return {
+  stroke-dasharray: 6 4;
+}
+
+.sim-frame .sim-edge.is-hot {
+  stroke-opacity: 1;
+  stroke-width: 2.6;
+}
+
+.sim-frame .sim-edge.k-flow.is-hot,
+.sim-frame .sim-edge.k-flow.is-selected {
+  stroke: var(--sq-decision);
+  marker-end: url(#arr-hot-warm);
+}
+
+.sim-frame .sim-edge.k-new.is-hot,
+.sim-frame .sim-edge.k-return.is-hot,
+.sim-frame .sim-edge.k-new.is-selected,
+.sim-frame .sim-edge.k-return.is-selected {
+  stroke: var(--sq-agent);
+  marker-end: url(#arr-hot-mint);
+}
+
+.sim-frame .sim-edge.is-selected {
+  stroke-width: 2.6;
+}
+
+.sim-frame .sim-edge.is-human-dep {
+  stroke: var(--sq-human);
+}
+
+.sim-frame .sim-edge.is-knowledge,
+.sim-frame .sim-edge.is-layer {
+  stroke: var(--sq-agent);
+}
+
+.sim-frame .sim-trail {
+  stroke: var(--sq-decision);
+  stroke-width: 1.8;
+  marker-end: url(#arr-hot-warm);
+}
+
+.mk-base      { fill: #8fa3b8; }
+.mk-warm      { fill: var(--sq-decision); }
+.mk-mint      { fill: var(--sq-agent); }
+.mk-hot-warm  { fill: #ffd39a; }
+.mk-hot-mint  { fill: #a5f2d9; }
+
+/* ---- command bar: Step 1 / Step 2 at the top ----------------------- */
+
+.sim-frame .sim-command {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--sq-border);
+  border-radius: 12px;
+  background: var(--sq-surface);
+  padding: 10px 14px;
+  margin: 0 0 0.6rem;
+}
+
+.sim-frame .cmd-step {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.sim-frame .cmd-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--sq-text2);
+}
+
+.sim-frame .cmd-run {
+  align-items: flex-start;
+}
+
+.sim-frame .sim-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sim-frame .sim-main-actions {
+  display: flex;
+}
+
+.sim-frame .sim-cta {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--sq-text);
+  background: var(--sq-elev);
+  border: 1px solid var(--sq-border);
+  border-radius: 10px;
+  padding: 11px 22px;
+  min-height: 44px;
+}
+
+.sim-frame .sim-cta:hover {
+  color: var(--sq-text);
+  border-color: var(--sq-text2);
+}
+
+.sim-frame .sim-cta.primary {
+  color: #08130e;
+  background: var(--sq-agent);
+  border-color: var(--sq-agent);
+  font-size: 15px;
+  padding: 12px 26px;
+}
+
+.sim-frame .sim-cta.primary:hover {
+  background: #8ae7cb;
+  border-color: #8ae7cb;
+}
+
+.sim-frame .sim-cta.primary.is-busy {
+  opacity: 0.72;
+  cursor: progress;
+}
+
+.sim-frame .sim-cta:focus-visible,
+.sim-frame .chip:focus-visible,
+.sim-frame .si-close:focus-visible {
+  outline: 2px solid var(--sq-human);
+  outline-offset: 2px;
+}
+
+/* ---- legend --------------------------------------------------------- */
+
+.sim-frame .sim-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding: 2px 4px 8px;
+}
+
+.sim-frame .lg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--sq-text2);
+}
+
+.sim-frame .lg-mark {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  flex: none;
+}
+
+.sim-frame .lg-human  { background: var(--sq-human); border-radius: 50%; }
+.sim-frame .lg-agent  { background: var(--sq-agent); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.sim-frame .lg-brain  { background: transparent; border: 2px dotted var(--sq-agent); border-radius: 50%; }
+.sim-frame .lg-gate   { background: var(--sq-decision); transform: rotate(45deg) scale(0.92); border-radius: 2px; }
+.sim-frame .lg-signal { background: var(--sq-event); transform: rotate(45deg) scale(0.8); border-radius: 1px; }
+.sim-frame .lg-system { background: transparent; border: 2px solid #7c8fa3; border-radius: 2px; }
+
+.sim-frame .lg-line {
+  width: 18px;
+  height: 0;
+  display: inline-block;
+  flex: none;
+  border-top: 2.5px solid var(--sq-decision);
+}
+
+.sim-frame .lg-wait   { border-top-style: dashed; border-color: #566f8a; }
+.sim-frame .lg-active { border-color: var(--sq-text); box-shadow: 0 0 6px rgba(241, 245, 249, 0.4); }
+
+/* ---- KPI rail: hierarchy + honest idle ------------------------------ */
+
+.sim-frame .sim-metrics {
+  background: var(--sq-surface);
+  border-color: var(--sq-border);
+  padding: 12px 14px;
+  gap: 9px;
+}
+
+.sim-frame .sm-k {
+  color: var(--sq-text2);
+  font-size: 10.5px;
+}
+
+.sim-frame .sm-v {
+  color: var(--sq-text);
+  font-size: 13px;
+}
+
+.sim-frame .sm-row.sm-big .sm-v {
+  font-size: 23px;
+  color: var(--sq-decision);
+}
+
+.sim-stage[data-era='new'] ~ .sim-rail .sm-row.sm-big .sm-v,
+.sim-frame .sm-row.sm-big .sm-v.new-era {
+  color: var(--sq-agent);
+}
+
+.sim-frame.phase-signal-old .sm-row.sm-big .sm-v,
+.sim-frame.phase-old-complete .sm-row.sm-big .sm-v {
+  color: var(--sq-decision);
+}
+
+/* idle: explicit invitation instead of misleading 00:00 */
+.sim-frame.phase-idle-old .sm-row .sm-v {
+  color: #8fa3b8;
+}
+
+.sim-frame.phase-idle-old .sm-row.sm-big .sm-v {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sim-frame .sm-row.sm-loss .sm-v {
+  color: var(--sq-loss);
+}
+
+.sim-frame .sim-inspect,
+.sim-frame .sim-layer-panel {
+  background: var(--sq-elev);
+  border-color: var(--sq-border);
+}
+
+.sim-frame .si-title {
+  color: var(--sq-text);
+}
+
+.sim-frame .si-line {
+  color: var(--sq-text2);
+}
+
+.sim-frame .si-lat span {
+  color: var(--sq-decision);
+}
+
+.sim-frame .si-becomes span {
+  color: var(--sq-agent);
+}
+
+/* ---- secondary controls stay visible below the stage ---------------- */
+
+.sim-frame .chip.sig,
+.sim-frame .chip.util,
+.sim-frame .chip.tog {
+  font-size: 12px;
+  color: var(--sq-text2);
+  border-color: var(--sq-border);
+  padding: 7px 14px;
+}
+
+.sim-frame .chip.sig.on,
+.sim-frame .chip.tog.on {
+  color: var(--sq-agent);
+  border-color: rgba(105, 222, 185, 0.6);
+  background: rgba(105, 222, 185, 0.08);
+}
+
+.sim-frame .chip.sig:disabled {
+  opacity: 0.45;
+}
+
+.sim-frame .sim-strip {
+  background: var(--sq-surface);
+  border-color: var(--sq-border);
+}
+
+.sim-frame .strip-k {
+  color: var(--sq-text2);
+}
+
+.sim-frame .strip-v {
+  color: var(--sq-text);
+}
+
+/* ---- responsive ------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .sim-frame .sim-command {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sim-frame .cmd-run .sim-cta {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .sim-frame .sim-legend {
+    gap: 3px 10px;
+  }
+}
+
+/* ---- reduced motion: no new transitions ------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-frame .sim-cta,
+  .sim-frame .chip.sig,
+  .sim-frame .chip.util,
+  .sim-frame .chip.tog,
+  .sim-frame .sim-node-box,
+  .sim-frame .sim-edge {
+    transition: none;
   }
 }
