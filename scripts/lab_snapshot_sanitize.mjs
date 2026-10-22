@@ -103,7 +103,7 @@ const FORBIDDEN = [
   { re: /root@|ssh -i|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/i, why: 'credential or ssh material' },
   { re: /password|passwd|api[_-]?key|secret|token\s*[:=]/i, why: 'credential-shaped string' },
   { re: /wallex|nobitex|ramzinex|binance/i, why: 'exchange/broker name' },
-  { re: /trader-vnext-predict|trader-market\b|trader-micro\b|trader-brain\b|trader-brain-api/i, why: 'internal systemd unit name' },
+  { re: /trader-vnext-predict|trader-vnext-readout|trader-market\b|trader-micro\b|trader-brain\b|trader-brain-api/i, why: 'internal systemd unit name' },
 ];
 
 function assertClean(serialized) {

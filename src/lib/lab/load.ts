@@ -4,7 +4,8 @@
  * Client loader for the public sanitized lab snapshot.
  *
  * The artifact is a static, cacheable asset committed with the site
- * (public/lab/snapshot.json.gz) — there is NO runtime connection to any
+ * (public/lab/snapshot.labpack — gzip bytes under a custom extension,
+ * inflated in the browser) — there is NO runtime connection to any
  * private system. If the asset cannot be loaded (rare: JS disabled networks,
  * CDN fault), the lab renders an explicit unavailability state. It never
  * fabricates data.
