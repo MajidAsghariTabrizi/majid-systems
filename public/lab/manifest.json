@@ -1,0 +1,24 @@
+{
+  "artifact": "quantiviq-lab-snapshot",
+  "schema": 1,
+  "sanitizer": "lab_snapshot_sanitize v1.1",
+  "generated_at": "2026-10-22T11:45:17.579308+00:00",
+  "sanitized_at": "2026-10-22T12:24:05.283Z",
+  "source_sha256": "4b9d27d2c10be49273dc10b3f10419de01a59baf47a14f99415aaf911db0996b",
+  "artifact_sha256": "060326b45e3f3bbb649575c317afcac5b2729a9e2640c5b7a2b9bd2b07418dbc",
+  "bytes_gz": 447288,
+  "safety": {
+    "live_execution": "OFF",
+    "live_capital": "OFF",
+    "mode": "PAPER"
+  },
+  "counts": {
+    "decisions": 18600,
+    "rich_decisions": 240,
+    "outcomes": 18479,
+    "market_points": 2152,
+    "experiments": 5,
+    "brain_claims": 186
+  },
+  "window_days": 7
+}

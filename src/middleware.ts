@@ -19,6 +19,7 @@ const LEGACY: Record<string, string> = {
   '/services': '/en/services',
   '/method': '/en/method',
   '/system': '/en/system',
+  '/lab': '/en/lab',
   '/proof': '/en/proof',
   '/privacy': '/en/privacy',
 };

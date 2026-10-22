@@ -25,7 +25,7 @@ function loc(p: string): MetadataRoute.Sitemap[number] {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const items: MetadataRoute.Sitemap = ['', '/services', '/system', '/method', '/proof', '/about', '/contact', '/privacy'].map((p) =>
+  const items: MetadataRoute.Sitemap = ['', '/services', '/system', '/lab', '/method', '/proof', '/about', '/contact', '/privacy'].map((p) =>
     loc(p)
   );
 

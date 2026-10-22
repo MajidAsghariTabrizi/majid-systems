@@ -24,6 +24,7 @@ export function Header({ locale }: { locale?: Locale }) {
     ? [
         { label: t.nav.services, href: localePath(locale, '/services') },
         { label: t.nav.system, href: localePath(locale, '/system') },
+        { label: t.nav.lab, href: localePath(locale, '/lab') },
         { label: t.nav.method, href: localePath(locale, '/method') },
         { label: t.nav.proof, href: localePath(locale, '/proof') },
         { label: t.nav.about, href: localePath(locale, '/about') },

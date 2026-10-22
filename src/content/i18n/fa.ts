@@ -4,7 +4,10 @@
  * same keys, same nesting, same array lengths. Latin tokens (Quantiviq,
  * LinkedIn, GitHub, MIT, status codes, layer nums, offer key/intent) kept as-is.
  */
+import { labFa } from '@/content/lab/fa';
+
 export const fa = {
+  lab: labFa,
   meta: {
     home: {
       title: 'Quantiviq — شرکت را برای عصر ایجنت‌ها از نو بسازید',
@@ -41,6 +44,11 @@ export const fa = {
       title: 'حریم خصوصی — داده‌های استعلام چگونه مدیریت می‌شوند',
       description: 'هنگام تماس با ما چه چیزی ذخیره می‌کنیم، چرا، تا چه مدت، و چگونه می‌توانید حذفش کنید.',
     },
+    lab: {
+      title: 'آزمایشگاه هوش تصمیم — سیستم واقعی، صداقت اندازه‌گرفته',
+      description:
+        'آزمایشگاه تعاملی روی یک سیستم تصمیم واقعیِ فقط-کاغذی: نه خبره، دو همد مدل منجمد، پنج گیت سیاست، حلقه یادگیریِ دروازه‌دار به شواهد — و حدود صادقانه‌ی چیزهایی که اعتبارسنجی شده‌اند.',
+    },
   },
   nav: {
     services: 'خدمات',
@@ -48,6 +56,7 @@ export const fa = {
     method: 'روش',
     proof: 'شواهد',
     about: 'درباره',
+    lab: 'آزمایشگاه',
     contact: 'تماس',
     cta: 'بازسازی یک بخش',
     builder: 'پروفایل سازنده',

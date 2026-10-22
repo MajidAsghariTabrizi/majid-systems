@@ -4,7 +4,10 @@
  * Keep every user-visible string for locale pages here (or in data reused with
  * localized labels), never inline in components.
  */
+import { labEn } from '@/content/lab/en';
+
 export const en = {
+  lab: labEn,
   meta: {
     home: {
       title: 'Quantiviq — Rebuild the Company for the Agentic Era',
@@ -41,6 +44,11 @@ export const en = {
       title: 'Privacy — How Inquiry Data Is Handled',
       description: 'What we store when you contact us, why, for how long, and how to have it deleted.',
     },
+    lab: {
+      title: 'AI Decision Intelligence Laboratory — Real System, Measured Honesty',
+      description:
+        'An interactive laboratory over a real paper-only decision system: nine experts, two frozen model heads, five policy gates, an evidence-gated learning loop — and the honest limits of what has been validated.',
+    },
   },
   nav: {
     services: 'Services',
@@ -48,6 +56,7 @@ export const en = {
     method: 'Method',
     proof: 'Proof',
     about: 'About',
+    lab: 'Lab',
     contact: 'Contact',
     cta: 'Rebuild a Function',
     builder: 'Builder Profile',
