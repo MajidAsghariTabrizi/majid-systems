@@ -1,0 +1,222 @@
+{
+  "base": "https://quantiviq.xyz",
+  "at": "2026-10-22T13:07:45.161Z",
+  "results": [
+    {
+      "check": "en/desktop: .lab-estat stat cards == 6",
+      "pass": true,
+      "detail": "count=6"
+    },
+    {
+      "check": "en/desktop: .lab-topo-node >= 20",
+      "pass": true,
+      "detail": "count=21"
+    },
+    {
+      "check": "en/desktop: .lab-replay-dots buttons == 10",
+      "pass": true,
+      "detail": "count=10"
+    },
+    {
+      "check": "en/desktop: .lab-matrix li == 11",
+      "pass": true,
+      "detail": "count=11"
+    },
+    {
+      "check": "en/desktop: experiment panels == 5",
+      "pass": true,
+      "detail": "count=5"
+    },
+    {
+      "check": "en/desktop: no horizontal overflow @1366px",
+      "pass": true,
+      "detail": "scrollW=1366 clientW=1366 bodyScrollW=1366"
+    },
+    {
+      "check": "en: replay Next-scene advances to outcome scene",
+      "pass": true,
+      "detail": "data-scene=outcome"
+    },
+    {
+      "check": "en: replay outcome scene shows bps value",
+      "pass": true,
+      "detail": "text=\"+49.2 bps\""
+    },
+    {
+      "check": "en: Live Laboratory tab (role=tab) present",
+      "pass": true,
+      "detail": "count=1"
+    },
+    {
+      "check": "en: .lab-provenance shows snapshot age after Live toggle",
+      "pass": true,
+      "detail": "prov=\"Data generated: 2026-10-22T11:45ZSnapshot age: 1.4h · freshArtifact SHA-256: 060326b45e3f…PAPERPUBLIC_SANITIZED\""
+    },
+    {
+      "check": "en/desktop: zero pageerror events",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "en/desktop: zero console errors",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "supplementary: fetch /lab/nope.labpack -> 404, lab stays rendered",
+      "pass": true,
+      "detail": "{\"status\":404,\"ok\":false} lab-app=1"
+    },
+    {
+      "check": "fa/desktop: .lab-estat stat cards == 6",
+      "pass": true,
+      "detail": "count=6"
+    },
+    {
+      "check": "fa/desktop: .lab-topo-node >= 20",
+      "pass": true,
+      "detail": "count=21"
+    },
+    {
+      "check": "fa/desktop: .lab-replay-dots buttons == 10",
+      "pass": true,
+      "detail": "count=10"
+    },
+    {
+      "check": "fa/desktop: .lab-matrix li == 11",
+      "pass": true,
+      "detail": "count=11"
+    },
+    {
+      "check": "fa/desktop: experiment panels == 5",
+      "pass": true,
+      "detail": "count=5"
+    },
+    {
+      "check": "fa/desktop: no horizontal overflow @1366px",
+      "pass": true,
+      "detail": "scrollW=1366 clientW=1366 bodyScrollW=1366"
+    },
+    {
+      "check": "fa: replay Next-scene advances to outcome scene",
+      "pass": true,
+      "detail": "data-scene=outcome"
+    },
+    {
+      "check": "fa: replay outcome scene shows bps value",
+      "pass": true,
+      "detail": "text=\"+49.2 bps\""
+    },
+    {
+      "check": "fa: Live Laboratory tab (role=tab) present",
+      "pass": true,
+      "detail": "count=1"
+    },
+    {
+      "check": "fa: .lab-provenance shows snapshot age after Live toggle",
+      "pass": true,
+      "detail": "prov=\"تولید داده: 2026-10-22T11:45Zسن تصویر لحظه‌ای: 1.4h · تازهSHA-256 مصنوع: 060326b45e3f…PAPERPUBLIC_SANITIZED\""
+    },
+    {
+      "check": "fa/desktop: documentElement dir == rtl",
+      "pass": true,
+      "detail": "dir=rtl"
+    },
+    {
+      "check": "fa/desktop: zero pageerror events",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "fa/desktop: zero console errors",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "en/mobile: .lab-estat stat cards == 6",
+      "pass": true,
+      "detail": "count=6"
+    },
+    {
+      "check": "en/mobile: .lab-topo-node >= 20",
+      "pass": true,
+      "detail": "count=21"
+    },
+    {
+      "check": "en/mobile: .lab-replay-dots buttons == 10",
+      "pass": true,
+      "detail": "count=10"
+    },
+    {
+      "check": "en/mobile: .lab-matrix li == 11",
+      "pass": true,
+      "detail": "count=11"
+    },
+    {
+      "check": "en/mobile: experiment panels == 5",
+      "pass": true,
+      "detail": "count=5"
+    },
+    {
+      "check": "en/mobile: no horizontal overflow @390px",
+      "pass": true,
+      "detail": "scrollW=390 clientW=390 bodyScrollW=390"
+    },
+    {
+      "check": "en/mobile: zero pageerror events",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "en/mobile: zero console errors",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "fa/mobile: .lab-estat stat cards == 6",
+      "pass": true,
+      "detail": "count=6"
+    },
+    {
+      "check": "fa/mobile: .lab-topo-node >= 20",
+      "pass": true,
+      "detail": "count=21"
+    },
+    {
+      "check": "fa/mobile: .lab-replay-dots buttons == 10",
+      "pass": true,
+      "detail": "count=10"
+    },
+    {
+      "check": "fa/mobile: .lab-matrix li == 11",
+      "pass": true,
+      "detail": "count=11"
+    },
+    {
+      "check": "fa/mobile: experiment panels == 5",
+      "pass": true,
+      "detail": "count=5"
+    },
+    {
+      "check": "fa/mobile: no horizontal overflow @390px",
+      "pass": true,
+      "detail": "scrollW=390 clientW=390 bodyScrollW=390"
+    },
+    {
+      "check": "fa/mobile: documentElement dir == rtl",
+      "pass": true,
+      "detail": "dir=rtl"
+    },
+    {
+      "check": "fa/mobile: zero pageerror events",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "check": "fa/mobile: zero console errors",
+      "pass": true,
+      "detail": "none"
+    }
+  ],
+  "failures": []
+}

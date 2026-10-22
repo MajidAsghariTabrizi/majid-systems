@@ -135,7 +135,7 @@ Environment=NODE_ENV=production
 Environment=PORT={APP_PORT}
 Environment=NEXT_PUBLIC_SITE_URL=https://quantiviq.xyz
 Environment=NEXT_PUBLIC_GITHUB_USER=MajidAsghariTabrizi
-ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -p {APP_PORT}
+ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -p {APP_PORT} -H 127.0.0.1
 Restart=on-failure
 RestartSec=5s
 NoNewPrivileges=true

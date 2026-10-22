@@ -36,7 +36,9 @@ export async function GET() {
         counts: m.counts,
         window_days: m.window_days,
       },
-      { headers: { 'Cache-Control': 'public, max-age=60' } },
+      // no-store: the age field must be recomputed per request — a cached
+      // response could understate snapshot age.
+      { headers: { 'Cache-Control': 'no-store' } },
     );
   } catch {
     return NextResponse.json({ error: 'lab manifest unavailable' }, { status: 503 });
