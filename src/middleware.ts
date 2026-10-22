@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
+import { SITE } from '@/content/shared';
+
 /**
  * Locale routing rules (EN default, NO auto-detection):
  * - `/`            → 307 to /en (or /fa if the visitor explicitly chose FA before)
@@ -27,11 +29,25 @@ const LEGACY: Record<string, string> = {
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
+  // Redirects MUST use the canonical public origin. Behind nginx, Next 14.2
+  // `next start` ignores the forwarded Host header when it absolutizes
+  // middleware redirect targets: `new URL(req.url)` inherits the server's
+  // INTERNAL bind origin (`next start -H 127.0.0.1` advertises
+  // `localhost:3000`), which leaked to the public as
+  // https://localhost:3000/... (ERR_CONNECTION_REFUSED). Next's middleware
+  // runtime rejects relative Location headers (Invalid URL), so the redirect
+  // target is built explicitly from the canonical public origin instead.
+  // (Development keeps req.url so local dev stays local.)
+  const base =
+    process.env.NODE_ENV === 'production' ? SITE.canonicalUrl : new URL(req.url).origin;
+
+  function redirectTo(path: string, status: 307 | 308): NextResponse {
+    return NextResponse.redirect(new URL(path + search, base), status);
+  }
+
   // trailing slash → canonical single slash
   if (pathname !== '/' && pathname.endsWith('/')) {
-    const u = new URL(req.url);
-    u.pathname = pathname.replace(/\/+$/, '');
-    return NextResponse.redirect(u, 308);
+    return redirectTo(pathname.replace(/\/+$/, ''), 308);
   }
 
   const seg = pathname.split('/')[1] ?? '';
@@ -53,18 +69,13 @@ export function middleware(req: NextRequest) {
     // never Accept-Language, never IP/geolocation.
     const remembered = req.cookies.get(LOCALE_COOKIE)?.value;
     const locale = remembered === 'fa' ? 'fa' : 'en';
-    const u = new URL(req.url); // preserve the exact request origin (avoid host aliasing)
-    u.pathname = `/${locale}`;
-    u.search = search;
-    return NextResponse.redirect(u, 307);
+    return redirectTo(`/${locale}`, 307);
   }
 
   const legacy = LEGACY[pathname];
   if (legacy) {
-    const u = new URL(req.url);
-    u.pathname = legacy;
-    u.search = search; // e.g. /contact?intent=diagnostic → /en/contact?intent=diagnostic
-    return NextResponse.redirect(u, 308);
+    // e.g. /contact?intent=diagnostic → /en/contact?intent=diagnostic
+    return redirectTo(legacy, 308);
   }
 
   return NextResponse.next();
