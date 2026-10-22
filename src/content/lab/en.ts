@@ -82,7 +82,7 @@ export const labEn = {
       },
       {
         title: 'How decisions are gated',
-        body: 'Five independent gates — EV margin, uncertainty cap, quiet-market veto, liquidity-stress veto, magnitude-clears-cost. A BUY or SELL requires all five to pass simultaneously. Today, the uncertainty gate binds essentially every minute: the machine abstains by arithmetic, not by accident.',
+        body: 'Five separate gates — EV margin, uncertainty cap, quiet-market veto, liquidity-stress veto, magnitude-clears-cost. A BUY or SELL requires all five to pass simultaneously. Today, the uncertainty gate binds essentially every minute: the machine abstains by arithmetic, not by accident.',
       },
     ],
   },
