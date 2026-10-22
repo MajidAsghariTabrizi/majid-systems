@@ -338,6 +338,29 @@ export function makeSimData(locale: SimLocale = 'en') {
       active: d.legend_active,
       loss: d.legend_loss,
     },
+    journey: {
+      received: d.journey_received,
+      routed: d.journey_routed,
+      waiting: d.journey_waiting,
+      decision: d.journey_decision,
+      action: d.journey_action,
+      learning: d.journey_learning,
+    },
+    maps: {
+      operational: d.map_operational,
+      full: d.map_full,
+    },
+    view: {
+      zoomIn: d.view_zoom_in,
+      zoomOut: d.view_zoom_out,
+      reset: d.view_reset,
+      fit: d.view_fit,
+      refocus: d.view_refocus,
+      fullscreen: d.view_fullscreen,
+      fullscreenExit: d.view_fullscreen_exit,
+    },
+    mobileFullMap: d.mobile_fullmap,
+    mobileFullMapHint: d.mobile_fullmap_hint,
   };
 }
 

@@ -15,7 +15,17 @@
  *    transformation and the manual comparison slider.
  */
 
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type ReactElement } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+  type ReactElement,
+} from 'react';
 
 import { makeSimData, type SimLocale } from '@/content/i18n/sim-data';
 
@@ -63,11 +73,11 @@ import { type LayerKey } from '@/content/simulator';
 /* ------------------------------------------------------------------ */
 
 const NODE_SIZE: Record<string, [number, number]> = {
-  default: [128, 40],
+  default: [150, 46],
   MEETING: [176, 62], // COMPANY BRAIN — structured institutional state
   APPROVAL: [148, 48], // AUTHORITY GATE
   CEO: [140, 44],
-  ambient: [96, 26],
+  ambient: [104, 28],
 };
 
 function nodeSize(n: SimNode): [number, number] {
@@ -117,6 +127,63 @@ const KIND_GLYPH: Record<string, ReactElement> = {
   ),
   ambient: <circle r="2.7" fill="none" stroke="currentColor" strokeWidth="0.9" strokeDasharray="1.6 1.6" />,
 };
+
+/* ------------------------------------------------------------------ */
+/* camera — operational (signal-path focus) vs full system map         */
+/* ------------------------------------------------------------------ */
+
+type Cam = { k: number; tx: number; ty: number; mode: 'operational' | 'full' };
+
+/** Nodes on the real signal journey per era (from OLD_HOPS / NEW_STEPS — no invented edges). */
+const PATH_IDS = {
+  old: ['SIGNAL', 'EMPLOYEE', 'MANAGER', 'SLACK', 'MEETING', 'ANALYST', 'DIRECTOR', 'APPROVAL', 'ACTION'],
+  new: ['SIGNAL', 'SLACK', 'MEETING', 'MANAGER', 'APPROVAL', 'ACTION', 'ANALYST'],
+} as const;
+
+function regionOf(ids: readonly string[], t: 0 | 1, pad: number) {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const id of ids) {
+    const n = NODE_BY_ID[id];
+    const p = nodePos(n, t);
+    const [w, h] = nodeSize(n);
+    minX = Math.min(minX, p.x - w / 2);
+    maxX = Math.max(maxX, p.x + w / 2);
+    minY = Math.min(minY, p.y - h / 2);
+    maxY = Math.max(maxY, p.y + h / 2);
+  }
+  return { x: minX - pad, y: minY - pad, w: maxX - minX + pad * 2, h: maxY - minY + pad * 2 };
+}
+
+function fitCam(r: { x: number; y: number; w: number; h: number }, mode: Cam['mode'], visW = VIEW_W): Cam {
+  const k = Math.min(visW / r.w, VIEW_H / r.h);
+  const tx = (visW - r.w * k) / 2 - r.x * k;
+  const ty = (VIEW_H - r.h * k) / 2 - r.y * k;
+  return { k, tx, ty, mode };
+}
+
+function camFor(mode: Cam['mode'], era: 'old' | 'new', visW = VIEW_W): Cam {
+  if (mode === 'full') {
+    return fitCam({ x: 0, y: 0, w: VIEW_W, h: VIEW_H }, 'full', visW);
+  }
+  return fitCam(regionOf(PATH_IDS[era], era === 'new' ? 1 : 0, 18), 'operational', visW);
+}
+
+const CAM_MIN = 0.75;
+const CAM_MAX = 2.6;
+
+/** zoom by factor around a viewBox point (defaults to stage center) */
+function zoomCam(c: Cam, factor: number, px = VIEW_W / 2, py = VIEW_H / 2): Cam {
+  const k = Math.min(CAM_MAX, Math.max(CAM_MIN, c.k * factor));
+  const wx = (px - c.tx) / c.k;
+  const wy = (py - c.ty) / c.k;
+  return { ...c, k, tx: px - wx * k, ty: py - wy * k };
+}
+
+function clampPan(c: Cam): Cam {
+  const tx = Math.min(VIEW_W * 0.9, Math.max(VIEW_W * 0.1 - VIEW_W * c.k, c.tx));
+  const ty = Math.min(VIEW_H * 0.9, Math.max(VIEW_H * 0.1 - VIEW_H * c.k, c.ty));
+  return { ...c, tx, ty };
+}
 
 const snap = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -194,6 +261,13 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
   const [isMobile, setIsMobile] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [edgeTip, setEdgeTip] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [cam, setCam] = useState<Cam>(() => camFor('operational', 'old'));
+  const [mobileMapOpen, setMobileMapOpen] = useState(false);
+  const camRef = useRef(cam);
+  camRef.current = cam;
+  const stageBoxRef = useRef<HTMLDivElement | null>(null);
+  const panRef = useRef<{ id: number; sx: number; sy: number; tx: number; ty: number; moved: boolean } | null>(null);
+  const suppressClickRef = useRef(false);
 
   const stateRef = useRef(state);
   stateRef.current = state;
@@ -560,6 +634,50 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     setTxt(stripRefs.current.knowledge, knowTxt, cache, 'know');
     setTxt(stripRefs.current.loop, loopTxt, cache, 'loop');
 
+    /* ---- signal journey stepper (painter-driven: T advances via rAF) ---- */
+    {
+      let idx = -1;
+      let lat = '';
+      if (st.phase === 'SIGNAL_OLD') {
+        const f = oldFlow(T);
+        lat = formatLatency(f.latencyHours);
+        if (f.phase === 'travel') idx = f.hopIndex === 0 ? 0 : 1;
+        else if (f.phase === 'wait') idx = f.toNode === 'APPROVAL' ? 3 : 2;
+        else idx = 4;
+      } else if (st.phase === 'OLD_COMPLETE') {
+        idx = 4;
+        lat = S.totalOld;
+      } else if (st.phase === 'SIGNAL_NEW') {
+        const f = newFlow(T);
+        lat = `${f.latencyMin} MIN`;
+        const k = f.step.kind;
+        if (k === 'travel') idx = f.stepIndex === 0 ? 0 : 1;
+        else if (k === 'wait') {
+          idx = f.step.node === 'ACTION' || f.step.node === 'MANAGER' ? 4 : f.step.node === 'SLACK' ? 1 : 3;
+        } else if (k === 'gate' || k === 'gate-open') {
+          idx = 3;
+        } else {
+          idx = 1; // brain / investigate — knowledge routing
+        }
+      } else if (st.phase === 'LEARNING' || st.phase === 'COMPARISON') {
+        idx = 5;
+        lat = S.newMetrics.latency;
+      } else if (st.phase === 'TRANSFORMING' || st.phase === 'IDLE_NEW') {
+        lat = '—';
+      }
+      journeyRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const cls = `sj-step${i === idx ? ' on' : ''}${idx >= 0 && i < idx ? ' done' : ''}${idx < 0 ? ' idle' : ''}`;
+        if (cache.get(`jc${i}`) !== cls) {
+          cache.set(`jc${i}`, cls);
+          el.className = cls;
+          if (i === idx) el.setAttribute('aria-current', 'step');
+          else el.removeAttribute('aria-current');
+        }
+      });
+      if (journeyLatRef.current) setTxt(journeyLatRef.current, lat, cache, 'jlat');
+    }
+
     /* ---- narrative strip ---- */
     setTxt(stripRefs.current.entered, S.signals.find((s) => s.key === st.signal)?.label ?? '', cache, 'entered');
     setTxt(stripRefs.current.where, whereTxt, cache, 'where');
@@ -576,8 +694,9 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
       brainCardRef.current.style.visibility = show ? 'visible' : 'hidden';
       if (show && stp) {
         const bp = nodePos(NODE_BY_ID[NEW_IDS.brain], 1);
-        brainCardRef.current.style.left = `${((bp.x + 95) / VIEW_W) * 100}%`;
-        brainCardRef.current.style.top = `${((bp.y - 130) / VIEW_H) * 100}%`;
+        const cm = camRef.current;
+        brainCardRef.current.style.left = `${(((cm.tx + (bp.x + 95) * cm.k) / VIEW_W)) * 100}%`;
+        brainCardRef.current.style.top = `${(((cm.ty + (bp.y - 130) * cm.k) / VIEW_H)) * 100}%`;
         if (stp.kind === 'investigate') {
           const k = newFlow(T).investigateK ?? 0;
           setTxt(brainCardRef.current.querySelector('[data-iv]'), k < 0.5 ? '→ INVESTIGATE' : '← EVIDENCE', cache, 'iv');
@@ -595,8 +714,9 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
       gateCardRef.current.style.visibility = show ? 'visible' : 'hidden';
       if (show && stp) {
         const gp = nodePos(NODE_BY_ID[NEW_IDS.gate], 1);
-        gateCardRef.current.style.left = `${((gp.x + 60) / VIEW_W) * 100}%`;
-        gateCardRef.current.style.top = `${((gp.y - 128) / VIEW_H) * 100}%`;
+        const cm = camRef.current;
+        gateCardRef.current.style.left = `${(((cm.tx + (gp.x + 60) * cm.k) / VIEW_W)) * 100}%`;
+        gateCardRef.current.style.top = `${(((cm.ty + (gp.y - 128) * cm.k) / VIEW_H)) * 100}%`;
         const k = newFlow(T).gateK ?? 0;
         const rows = gateCardRef.current.querySelectorAll('[data-gate-row]');
         rows.forEach((r, i) => {
@@ -656,7 +776,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         }
       }
     }
-  }, [S]);
+  }, [S, cam]);
 
   /* ---------------- repaint on every machine change ---------------- */
 
@@ -786,6 +906,146 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     } catch {
       /* private mode */
     }
+  }, []);
+
+  /* ---------------- camera: refocus on era flip, wheel zoom, drag pan ---------------- */
+
+  const era = state.morphT > 0.5 ? 'new' : 'old';
+  const eraRef = useRef(era);
+  useEffect(() => {
+    if (eraRef.current !== era) {
+      eraRef.current = era;
+      // operational mode follows the active signal path of the new era
+      setCam((c) => (c.mode === 'operational' ? camFor('operational', era, visWRef.current) : c));
+    }
+  }, [era]);
+
+  /** client px -> viewBox units (accounts for preserveAspectRatio letterboxing) */
+  const toViewCoords = useCallback((clientX: number, clientY: number) => {
+    const svg = stageBoxRef.current?.querySelector('svg');
+    if (!svg) return { x: VIEW_W / 2, y: VIEW_H / 2 };
+    const r = svg.getBoundingClientRect();
+    const s = Math.min(r.width / VIEW_W, r.height / VIEW_H);
+    const ox = (r.width - VIEW_W * s) / 2;
+    const oy = (r.height - VIEW_H * s) / 2;
+    return { x: (clientX - r.left - ox) / s, y: (clientY - r.top - oy) / s };
+  }, []);
+
+  /** visible viewBox width (stage is usually height-bound; the extra width is usable) */
+  const measureVisW = useCallback(() => {
+    const box = stageBoxRef.current;
+    if (!box) return VIEW_W;
+    const h = box.clientHeight;
+    const w = box.clientWidth;
+    if (!h || !w) return VIEW_W;
+    const s = Math.min(w / VIEW_W, h / VIEW_H);
+    return Math.min(w / s, (VIEW_W * 3) / 2);
+  }, []);
+  const visWRef = useRef(VIEW_W);
+  visWRef.current = measureVisW();
+  const [visW, setVisW] = useState(VIEW_W);
+  const userCamRef = useRef(false);
+  useEffect(() => {
+    const update = () => setVisW(measureVisW());
+    update();
+    window.addEventListener('resize', update);
+    document.addEventListener('fullscreenchange', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      document.removeEventListener('fullscreenchange', update);
+    };
+  }, [measureVisW]);
+  // keep the automatic framing correct when the stage box changes size,
+  // until the user takes manual control of the camera
+  useEffect(() => {
+    if (!userCamRef.current) {
+      setCam((c) => camFor(c.mode, state.morphT > 0.5 ? 'new' : 'old', visW));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visW]);
+
+  useEffect(() => {
+    const box = stageBoxRef.current;
+    if (!box || isMobile) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      userCamRef.current = true;
+      const p = toViewCoords(e.clientX, e.clientY);
+      const factor = e.deltaY < 0 ? 1.18 : 1 / 1.18;
+      setCam((c) => clampPan(zoomCam(c, factor, p.x, p.y)));
+    };
+    box.addEventListener('wheel', onWheel, { passive: false });
+    return () => box.removeEventListener('wheel', onWheel);
+  }, [isMobile, toViewCoords]);
+
+  const onStagePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (isMobile || e.button !== 0) return;
+    if ((e.target as Element).closest('.sim-viewbar')) return;
+    panRef.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, tx: cam.tx, ty: cam.ty, moved: false };
+  };
+
+  const onStagePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const pan = panRef.current;
+    if (!pan || pan.id !== e.pointerId) return;
+    const svg = stageBoxRef.current?.querySelector('svg');
+    if (!svg) return;
+    const r = svg.getBoundingClientRect();
+    const s = Math.min(r.width / VIEW_W, r.height / VIEW_H);
+    const dx = (e.clientX - pan.sx) / s;
+    const dy = (e.clientY - pan.sy) / s;
+    if (!pan.moved && Math.hypot(e.clientX - pan.sx, e.clientY - pan.sy) > 5) {
+      pan.moved = true;
+      suppressClickRef.current = true;
+      try {
+        stageBoxRef.current?.setPointerCapture(pan.id);
+      } catch {
+        /* noop */
+      }
+    }
+    if (pan.moved) {
+      userCamRef.current = true;
+      setCam((c) => clampPan({ ...c, tx: pan.tx + dx, ty: pan.ty + dy }));
+    }
+  };
+
+  const onStagePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (panRef.current?.id === e.pointerId) {
+      panRef.current = null;
+      // let the suppressed click pass once, then restore
+      window.setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 60);
+    }
+  };
+
+  const onStageClickCapture = (e: ReactMouseEvent) => {
+    if (suppressClickRef.current) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
+
+  const setCamMode = (mode: Cam['mode']) => {
+    userCamRef.current = true;
+    setCam(camFor(mode, era, visWRef.current));
+  };
+
+  const toggleFullscreen = () => {
+    const el = stageBoxRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    } else {
+      void el.requestFullscreen().catch(() => {
+        /* denied — button stays honest */
+      });
+    }
+  };
+
+  useEffect(() => {
+    const onFs = () => setCam((c) => ({ ...c })); // re-render on fullscreenchange for correct letterbox math
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
   }, []);
 
   useEffect(() => {
@@ -936,6 +1196,10 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
       </defs>
       <rect className="sim-bg" x="0" y="0" width={VIEW_W} height={VIEW_H} fill="transparent" tabIndex={-1} aria-hidden="true" />
 
+      <g
+        className="sim-viewport"
+        transform={`translate(${cam.tx.toFixed(2)} ${cam.ty.toFixed(2)}) scale(${cam.k.toFixed(4)})`}
+      >
       {EDGES.map((e) => (
         <path
           key={e.id}
@@ -1033,10 +1297,10 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
               }
             }}
           >
-            <rect className="sim-node-box" x={-w / 2} y={-h / 2} width={w} height={h} rx="9" />
+            <rect className="sim-node-box" x={-w / 2} y={-h / 2} width={w} height={h} rx="10" />
             <g
               className={`sim-node-ico k-${n.kind}`}
-              transform={`translate(${-w / 2 + 13} ${-h / 2 + 13})`}
+              transform={`translate(${-w / 2 + 15} ${-h / 2 + 15}) scale(1.35)`}
               aria-hidden="true"
             >
               {KIND_GLYPH[n.kind] ?? KIND_GLYPH.system}
@@ -1099,15 +1363,24 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         <circle r="7" className="sim-signal-ring" />
         <circle r="3.4" className="sim-signal-core" />
       </g>
+      </g>
     </svg>
   );
 
   const stage = (
     <div
       className="sim-stage"
-      ref={frameRef}
+      ref={(el) => {
+        frameRef.current = el;
+        stageBoxRef.current = el;
+      }}
       data-era="old"
       onPointerDownCapture={() => manual()}
+      onPointerDown={onStagePointerDown}
+      onPointerMove={onStagePointerMove}
+      onPointerUp={onStagePointerUp}
+      onPointerCancel={onStagePointerUp}
+      onClickCapture={onStageClickCapture}
       onKeyDown={(ev) => {
         if (ev.key === 'Escape' && (state.selectedNode || state.selectedEdge)) {
           ev.stopPropagation();
@@ -1116,6 +1389,63 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
       }}
     >
       {stageSvg}
+
+      <div className="sim-viewbar" role="toolbar" aria-label={S.maps.operational}>
+        <button
+          className="vb-btn"
+          onClick={() => {
+            userCamRef.current = true;
+            setCam((c) => clampPan(zoomCam(c, 1.25)));
+          }}
+          aria-label={S.view.zoomIn}
+          title={S.view.zoomIn}
+        >
+          +
+        </button>
+        <button
+          className="vb-btn"
+          onClick={() => {
+            userCamRef.current = true;
+            setCam((c) => clampPan(zoomCam(c, 1 / 1.25)));
+          }}
+          aria-label={S.view.zoomOut}
+          title={S.view.zoomOut}
+        >
+          −
+        </button>
+        <button
+          className={`vb-btn ${cam.mode === 'operational' ? 'on' : ''}`}
+          onClick={() => setCamMode('operational')}
+          aria-label={S.view.refocus}
+          title={S.view.refocus}
+        >
+          <span className="vb-ico vb-target" aria-hidden="true" />
+        </button>
+        <button
+          className={`vb-btn ${cam.mode === 'full' ? 'on' : ''}`}
+          onClick={() => setCamMode('full')}
+          aria-label={S.view.fit}
+          title={S.view.fit}
+        >
+          <span className="vb-ico vb-map" aria-hidden="true" />
+        </button>
+        <button
+          className="vb-btn"
+          onClick={() => setCam(camFor(cam.mode, era, visWRef.current))}
+          aria-label={S.view.reset}
+          title={S.view.reset}
+        >
+          <span className="vb-ico vb-reset" aria-hidden="true" />
+        </button>
+        <button
+          className="vb-btn"
+          onClick={toggleFullscreen}
+          aria-label={S.view.fullscreen}
+          title={S.view.fullscreen}
+        >
+          <span className="vb-ico vb-full" aria-hidden="true" />
+        </button>
+      </div>
 
       <div ref={brainCardRef} className="sim-brain-card" aria-hidden="true">
         <div className="sbc-head">{S.brain.card.head} — {S.nodeLabel('COMPANY BRAIN')}</div>
@@ -1343,6 +1673,39 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     </div>
   );
 
+  /* ---- Signal Journey: live narrative, painter-driven (refs, like the strip) ---- */
+  const journeyRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const journeyLatRef = useRef<HTMLSpanElement | null>(null);
+  const journeySteps = [
+    S.journey.received,
+    S.journey.routed,
+    S.journey.waiting,
+    S.journey.decision,
+    S.journey.action,
+    S.journey.learning,
+  ];
+  const journeyBar = (
+    <div className="sim-journey" role="group" aria-label={S.cmd.step3}>
+      <span className="sj-k">{S.cmd.step3}</span>
+      <ol className="sj-steps">
+        {journeySteps.map((label, i) => (
+          <li
+            key={label}
+            ref={(el) => {
+              journeyRefs.current[i] = el;
+            }}
+            className="sj-step idle"
+            data-step={i}
+          >
+            <span className="sj-dot" aria-hidden="true" />
+            {label}
+          </li>
+        ))}
+      </ol>
+      <span className="sj-lat" ref={journeyLatRef} />
+    </div>
+  );
+
   /** Replay / speed / layers stay accessible but secondary, below the stage. */
   const controls = (
     <div className="sim-controls">
@@ -1547,7 +1910,24 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
         <button className="chip util" onClick={() => manual(() => dispatch({ type: 'RESET' }))}>
           {S.controls.reset}
         </button>
+        <button
+          className="chip util sim-m-mapbtn"
+          aria-expanded={mobileMapOpen}
+          onClick={() => {
+            const next = !mobileMapOpen;
+            setMobileMapOpen(next);
+            if (next) setCam(camFor('full', state.morphT > 0.5 ? 'new' : 'old'));
+          }}
+        >
+          {S.mobileFullMap}
+        </button>
       </div>
+      {mobileMapOpen && (
+        <div className="sim-m-fullmap">
+          {stageSvg}
+          <p className="sim-m-map-hint">{S.mobileFullMapHint}</p>
+        </div>
+      )}
     </div>
   );
 
@@ -1560,7 +1940,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     >
       <div className="sim-sticky">
         <div
-          className={`sim-frame phase-${state.phase.toLowerCase().replace('_', '-')} ${inspecting ? 'inspecting' : ''} ${running ? 'running' : ''}`}
+          className={`sim-frame phase-${state.phase.toLowerCase().replace('_', '-')} cam-${cam.mode} ${inspecting ? 'inspecting' : ''} ${running ? 'running' : ''}`}
         >
           <header className="sim-head">
             <div className="sim-head-l">
@@ -1581,6 +1961,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
           </header>
 
           {commandBar}
+          {journeyBar}
           {legendBar}
 
           {isMobile ? (

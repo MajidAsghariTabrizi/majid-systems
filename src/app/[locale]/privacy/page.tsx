@@ -40,7 +40,7 @@ export default async function PrivacyPage({ params }: { params: { locale: string
         <div className="container-narrow">
           {sections.map((s) => (
             <div key={s.h} style={{ marginBottom: '2rem' }}>
-              <h2 className="q-h2" style={{ fontSize: '1.25rem' }}>{s.h}</h2>
+              <h2 className="q-h2">{s.h}</h2>
               <p className="q-founder-p">{s.b}</p>
             </div>
           ))}

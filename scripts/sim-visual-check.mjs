@@ -133,6 +133,130 @@ for (const [w, h] of [[360, 800], [768, 900], [1733, 900]]) {
   ok('en: body font stays Inter', /^("?Inter"?)/.test(enBody.trim()), enBody.slice(0, 40));
   const enEst = await p.evaluate(() => document.fonts.check('16px Estedad'));
   ok('en: Estedad NOT loaded on EN page', enEst === false);
+  /* V5: site-wide FA typography tokens */
+  const faH1 = await p.goto(`${BASE}/fa`, { waitUntil: 'networkidle', timeout: 60000 });
+  const h1s = await p.locator('h1').first().evaluate((el) => {
+    const c = getComputedStyle(el);
+    return { fs: parseFloat(c.fontSize), lh: parseFloat(c.lineHeight), ff: c.fontFamily, ls: c.letterSpacing };
+  });
+  ok('fa: H1 44-56px', h1s.fs >= 44 && h1s.fs <= 56, `${h1s.fs}px`);
+  ok('fa: H1 Estedad line-height >= 1.2', /Estedad/i.test(h1s.ff) && h1s.lh / h1s.fs >= 1.2, `${(h1s.lh / h1s.fs).toFixed(2)}`);
+  ok('fa: H1 no negative tracking', parseFloat(h1s.ls) >= 0 || h1s.ls === 'normal', h1s.ls);
+  const h2s = await p.locator('h2').first().evaluate((el) => ({ fs: parseFloat(getComputedStyle(el).fontSize) }));
+  ok('fa: H2 30-40px', h2s.fs >= 30 && h2s.fs <= 40, `${h2s.fs}px`);
+  const eye = await p.locator('.eyebrow').first().evaluate((el) => ({
+    ff: getComputedStyle(el).fontFamily,
+    ls: getComputedStyle(el).letterSpacing,
+  }));
+  ok('fa: eyebrow mono removed + no tracking', /Estedad/i.test(eye.ff) && (eye.ls === 'normal' || parseFloat(eye.ls) === 0), `${eye.ff.slice(0, 16)} ls=${eye.ls}`);
+  await p.goto(`${BASE}/en`, { waitUntil: 'networkidle', timeout: 60000 });
+  const enH1 = await p.locator('h1').first().evaluate((el) => getComputedStyle(el).fontFamily);
+  ok('en: H1 stays Inter', /Inter/i.test(enH1), enH1.slice(0, 24));
+  await ctx.close();
+}
+
+/* ---- V5: camera, viewbar, signal journey (acceptance criteria) ---- */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 768 } });
+  const p = await ctx.newPage();
+  await p.goto(`${BASE}/en`, { waitUntil: 'networkidle', timeout: 60000 });
+  await p.locator('.sim-frame').scrollIntoViewIfNeeded();
+  await p.waitForTimeout(1100);
+  ok('v5: viewport transform group present', (await p.locator('.sim-viewport').count()) === 1);
+  ok('v5: viewbar has 6 controls', (await p.locator('.sim-viewbar .vb-btn').count()) === 6);
+  ok('v5: journey shows 6 stages', (await p.locator('.sj-step').count()) === 6);
+
+  /* acceptance 1: active path readable at 1366x768 without manual zoom */
+  await p.evaluate(() => {
+    const sec = document.querySelector('.sim-scroll');
+    const top = sec.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, top + 220); // inside the sticky pin range
+  });
+  await p.waitForTimeout(1300);
+  const lbl = p.locator('.sim-node-label').first();
+  const rendered = await lbl.evaluate((el) => {
+    const m = el.getScreenCTM();
+    return parseFloat(getComputedStyle(el).fontSize) * m.a;
+  });
+  ok('v5: node label rendered >= 15px on 1366x768', rendered >= 15, `${Math.round(rendered * 10) / 10}px`);
+  // return to the idle state for the interaction checks
+  await p.evaluate(() => {
+    const sec = document.querySelector('.sim-scroll');
+    const top = sec.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, top + 4);
+  });
+  await p.waitForTimeout(800);
+
+  const t0 = await (async () => {
+    await p.locator('.sim-viewbar .vb-btn').nth(4).click(); // reset to the live-baseline camera
+    await p.waitForTimeout(650);
+    return p.locator('.sim-viewport').getAttribute('transform');
+  })();
+  await p.locator('.sim-viewbar .vb-btn').nth(3).click(); // full system map
+  await p.waitForTimeout(650);
+  const t1 = await p.locator('.sim-viewport').getAttribute('transform');
+  ok('v5: full-map mode changes camera', t0 !== t1, `${t0} -> ${t1}`);
+  await p.locator('.sim-viewbar .vb-btn').nth(2).click(); // refocus signal path
+  await p.waitForTimeout(650);
+  const t2 = await p.locator('.sim-viewport').getAttribute('transform');
+  ok('v5: operational refocus restores path camera', t2 === t0);
+  await p.locator('.sim-viewbar .vb-btn').nth(0).click(); // zoom in
+  await p.waitForTimeout(500);
+  const t3 = await p.locator('.sim-viewport').getAttribute('transform');
+  ok('v5: zoom-in button works', t3 !== t2);
+  await p.locator('.sim-viewbar .vb-btn').nth(4).click(); // reset
+  await p.waitForTimeout(500);
+  ok('v5: reset restores camera', (await p.locator('.sim-viewport').getAttribute('transform')) === t2);
+
+  /* journey follows the real run */
+  await p.locator('.sim-cta.primary').click();
+  await p.waitForTimeout(900);
+  const stepA = await p.locator('.sj-step.on').innerText().catch(() => '');
+  ok('v5: journey active during run', stepA.length > 0, stepA);
+  ok('v5: journey latency present', ((await p.locator('.sj-lat').innerText().catch(() => '')) || '').length > 0);
+  await p.waitForTimeout(8000);
+  const stepB = await p.locator('.sj-step.on').innerText().catch(() => '');
+  ok('v5: journey step advances with simulation', stepB !== stepA, `${stepA} -> ${stepB}`);
+  const dim = await p.evaluate(() => {
+    const n = [...document.querySelectorAll('.sim-node')].find((x) => !x.classList.contains('is-active'));
+    return n ? getComputedStyle(n).opacity : '1';
+  });
+  ok('v5: unrelated nodes de-emphasized', parseFloat(dim) < 0.9, `opacity=${dim}`);
+
+  /* full engine path: old run -> rebuild -> run again -> comparison payoff */
+  await p.waitForFunction(
+    () => (document.querySelector('.sim-cta.primary')?.textContent ?? '').includes('REBUILD'),
+    null,
+    { timeout: 60000 },
+  );
+  const kpiOld = await p.locator('.sm-row.sm-big .sm-v').innerText();
+  ok('v5: old run completes with measured total', /\d/.test(kpiOld), kpiOld);
+  await p.locator('.sim-cta.primary').click(); // rebuild
+  await p.waitForTimeout(7000);
+  await p.locator('.sim-cta.primary').click(); // run the same signal on the new org
+  await p.waitForSelector('.sim-payoff.on', { timeout: 90000 }).catch(() => {});
+  ok('v5: full run completes (engine untouched)', (await p.locator('.sim-payoff.on').count()) === 1);
+  await ctx.close();
+}
+
+/* ---- V5: mobile journey + full-map disclosure + touch targets ---- */
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const p = await ctx.newPage();
+  await p.goto(`${BASE}/en`, { waitUntil: 'networkidle', timeout: 60000 });
+  await p.locator('.sim-frame').scrollIntoViewIfNeeded().catch(() => {});
+  await p.waitForTimeout(800);
+  ok('v5 mobile: journey stepper present', (await p.locator('.sj-step').count()) === 6);
+  ok('v5 mobile: full-map toggle present', (await p.locator('.sim-m-mapbtn').count()) === 1);
+  const targets = await p.evaluate(() =>
+    [...document.querySelectorAll('.sim-m-mapbtn, .sim-m-ctas .chip.util')].map((b) => b.getBoundingClientRect().height),
+  );
+  ok('v5 mobile: controls >= 44px touch targets', targets.length >= 3 && Math.min(...targets) >= 44, targets.map((x) => Math.round(x)).join(','));
+  await p.locator('.sim-m-mapbtn').click();
+  await p.waitForTimeout(600);
+  ok('v5 mobile: full-map graph opens', (await p.locator('.sim-m-fullmap svg').count()) === 1);
+  const overflow = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  ok('v5 mobile: no horizontal overflow with map open', overflow <= 0, `${overflow}px`);
   await ctx.close();
 }
 

@@ -29,6 +29,16 @@
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+  /* centralized type scale (desktop 1440 → mobile 360) */
+  --fs-h1: clamp(2.75rem, 2.5rem + 1.111vw, 3.5rem);
+  --fs-h2: clamp(1.875rem, 1.667rem + 0.926vw, 2.5rem);
+  --fs-h3: clamp(1.375rem, 1.25rem + 0.556vw, 1.75rem);
+  --fs-h4: clamp(1.1875rem, 1.125rem + 0.278vw, 1.375rem);
+  --fs-body: clamp(1rem, 0.958rem + 0.185vw, 1.125rem);
+  --fs-support: 0.875rem;
+  --fs-btn: 0.9375rem;
+  --lh-heading: 1.15;
+  --lh-body: 1.6;
 }
 
 * {
@@ -92,23 +102,23 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-size: var(--fs-h1);
   letter-spacing: -0.035em;
   font-weight: 600;
   line-height: 1.05;
 }
 
 h2 {
-  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  font-size: var(--fs-h2);
   letter-spacing: -0.025em;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: var(--fs-h3);
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: var(--fs-h4);
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -121,7 +131,7 @@ p {
 
 small {
   color: var(--fg-muted);
-  font-size: 0.85rem;
+  font-size: var(--fs-support);
 }
 
 code {
@@ -244,7 +254,7 @@ section:first-of-type {
 }
 
 .nav a {
-  font-size: 0.92rem;
+  font-size: var(--fs-btn);
   color: var(--fg-muted);
   transition: color 120ms ease;
 }
@@ -349,7 +359,7 @@ section:first-of-type {
   gap: 0.5rem;
   padding: 0.65rem 1.1rem;
   border-radius: 8px;
-  font-size: 0.92rem;
+  font-size: var(--fs-btn);
   font-weight: 500;
   border: 1px solid var(--border-strong);
   background: var(--bg-elevated);
@@ -415,7 +425,7 @@ section:first-of-type {
 }
 
 .stat-sub {
-  font-size: 0.78rem;
+  font-size: var(--fs-support);
   color: var(--fg-muted);
 }
 
@@ -528,7 +538,7 @@ section:first-of-type {
 
 .project-card h3 {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: var(--fs-h3);
 }
 
 .project-card .card-thesis {
@@ -752,7 +762,7 @@ section:first-of-type {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.1rem;
+  font-size: var(--fs-h3);
 }
 
 .cap-icon {
@@ -834,7 +844,7 @@ section:first-of-type {
 
 .note-card h3 {
   margin: 0;
-  font-size: 1.08rem;
+  font-size: var(--fs-h3);
 }
 
 .note-card p {
@@ -1063,7 +1073,7 @@ section:first-of-type {
     gap: 1rem;
   }
   .nav a {
-    font-size: 0.84rem;
+    font-size: var(--fs-btn);
   }
 }
 
@@ -1072,7 +1082,7 @@ section:first-of-type {
     padding: 0 1.1rem;
   }
   h1 {
-    font-size: 2.1rem;
+    font-size: var(--fs-h1);
   }
   .hero-stats {
     grid-template-columns: 1fr 1fr;
@@ -1180,7 +1190,7 @@ section:first-of-type {
 
 .q-display {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  font-size: var(--fs-h1);
   font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 0.98;
@@ -1343,7 +1353,7 @@ section:first-of-type {
 }
 
 .q-h2 {
-  font-size: clamp(1.7rem, 3.8vw, 2.6rem);
+  font-size: var(--fs-h2);
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.08;
@@ -2220,7 +2230,7 @@ section:first-of-type {
 }
 
 .nav-cta {
-  font-size: 0.8rem;
+  font-size: var(--fs-btn);
   padding: 0.45rem 0.95rem;
   white-space: nowrap;
 }
@@ -5694,7 +5704,7 @@ section:first-of-type {
 
   .site-header .nav a {
     white-space: nowrap;
-    font-size: 0.9rem;
+    font-size: var(--fs-btn);
   }
 
   .site-header .nav .nav-builder {
@@ -5766,7 +5776,7 @@ html[dir='rtl'] .os-index-num {
 }
 
 .service-name {
-  font-size: 1.35rem;
+  font-size: var(--fs-h2);
   font-weight: 800;
   letter-spacing: -0.01em;
   margin: 0;
@@ -5840,7 +5850,7 @@ html[dir='rtl'] .os-index-num {
   border: 1px solid var(--border-strong);
   border-radius: 7px;
   color: var(--fg);
-  font-size: 0.95rem;
+  font-size: 1rem;
   padding: 11px 13px;
   font-family: inherit;
   min-height: 44px;
@@ -5860,7 +5870,7 @@ html[dir='rtl'] .os-index-num {
 }
 
 .lead-hint {
-  font-size: 0.8rem;
+  font-size: var(--fs-support);
   color: var(--fg-subtle);
 }
 
@@ -5894,7 +5904,7 @@ html[dir='rtl'] .os-index-num {
 
 .lead-submit {
   align-self: flex-start;
-  font-size: 13px;
+  font-size: var(--fs-btn);
   padding: 13px 22px;
 }
 
@@ -5918,7 +5928,7 @@ html[dir='rtl'] .os-index-num {
 
 .lead-success-title {
   color: var(--accent);
-  font-size: 1.3rem;
+  font-size: var(--fs-h3);
   margin: 0 0 0.6rem;
 }
 
@@ -6302,14 +6312,14 @@ html[lang='fa'] .si-becomes span {
 .sim-node-ico.k-ambient { color: #7c8fa3; }
 
 .sim-frame .sim-node-label {
-  font-size: 12.5px;
-  letter-spacing: 0.06em;
+  font-size: 17px;
+  letter-spacing: 0.04em;
   fill: var(--sq-text);
   font-weight: 500;
 }
 
 .sim-frame .sim-node-role {
-  font-size: 10.5px;
+  font-size: 13.5px;
   fill: var(--sq-text2);
 }
 
@@ -6673,4 +6683,333 @@ html[lang='fa'] .si-becomes span {
   .sim-frame .sim-edge {
     transition: none;
   }
+}
+
+/* ==================================================================== */
+/* V5 UPGRADE — flow intelligence: camera, journey, viewbar, mobile      */
+/* ==================================================================== */
+
+/* ---- camera transition (instant under reduced motion) ---------------- */
+
+.sim-viewport {
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.sim-scroll.reduced .sim-viewport,
+.sim-scroll.no-sticky.reduced .sim-viewport {
+  transition: none;
+}
+
+.sim-stage:fullscreen {
+  border-radius: 0;
+  background: #0b1119;
+}
+
+/* ---- view toolbar ----------------------------------------------------- */
+
+.sim-frame .sim-viewbar {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  display: flex;
+  gap: 4px;
+  z-index: 6;
+  background: rgba(11, 17, 25, 0.82);
+  border: 1px solid var(--sq-border, #344657);
+  border-radius: 10px;
+  padding: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.sim-frame .vb-btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: var(--sq-text2, #b4c3d1);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sim-frame .vb-btn:hover {
+  color: var(--sq-text, #f1f5f9);
+  border-color: var(--sq-border, #344657);
+}
+
+.sim-frame .vb-btn.on {
+  color: #08130e;
+  background: var(--sq-agent, #69deb9);
+}
+
+.sim-frame .vb-btn:focus-visible {
+  outline: 2px solid var(--sq-human, #80c9f8);
+  outline-offset: 1px;
+}
+
+.vb-ico { display: block; width: 15px; height: 15px; }
+
+.vb-target {
+  background: transparent;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  position: relative;
+}
+
+.vb-target::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.vb-map {
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  background:
+    linear-gradient(currentColor, currentColor) 50% 0 / 2px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 0 50% / 100% 2px no-repeat;
+}
+
+.vb-reset {
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  background: linear-gradient(currentColor, currentColor) 50% 50% / 9px 2px no-repeat;
+}
+
+.vb-full {
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  clip-path: polygon(0 0, 40% 0, 40% 12%, 12% 12%, 12% 40%, 0 40%, 100% 40%, 100% 0, 60% 0, 60% 0, 0 60%, 0 100%, 40% 100%, 40% 88%, 88% 88%, 88% 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+/* ---- signal journey stepper ------------------------------------------- */
+
+.sim-frame .sim-journey {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px solid var(--sq-border, #344657);
+  border-radius: 10px;
+  background: var(--sq-surface, #141f2b);
+  padding: 7px 12px;
+  margin: 0 0 0.6rem;
+}
+
+.sim-frame .sj-k {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--sq-text2, #b4c3d1);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sim-frame .sj-steps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.sim-frame .sj-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #8fa3b8;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.sim-frame .sj-step .sj-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4a6076;
+  flex: none;
+}
+
+.sim-frame .sj-step.done {
+  color: var(--sq-text2, #b4c3d1);
+}
+
+.sim-frame .sj-step.done .sj-dot {
+  background: var(--sq-text2, #b4c3d1);
+}
+
+.sim-frame .sj-step.on {
+  color: #08130e;
+  background: var(--sq-decision, #f5b968);
+  border-color: var(--sq-decision, #f5b968);
+  font-weight: 700;
+}
+
+.sim-frame .sj-step.on .sj-dot {
+  background: #08130e;
+}
+
+.sim-frame .sj-step.idle {
+  opacity: 0.55;
+}
+
+.sim-frame .sj-lat {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--sq-decision, #f5b968);
+  white-space: nowrap;
+}
+
+/* ---- de-emphasis of unrelated elements while the signal runs ---------- */
+
+.sim-frame.cam-operational.phase-signal-old .sim-node:not(.is-active),
+.sim-frame.cam-operational.phase-signal-new .sim-node:not(.is-active) {
+  opacity: 0.62;
+}
+
+.sim-frame.cam-operational.phase-signal-old .sim-edge:not(.is-hot):not(.is-selected),
+.sim-frame.cam-operational.phase-signal-new .sim-edge:not(.is-hot):not(.is-selected) {
+  stroke-opacity: 0.28;
+}
+
+.sim-frame.cam-operational.phase-signal-old .sim-edge.is-hot,
+.sim-frame.cam-operational.phase-signal-new .sim-edge.is-hot {
+  stroke-opacity: 1;
+}
+
+/* ---- mobile: journey + full map + touch targets ------------------------ */
+
+.sim-mobile .sim-journey {
+  margin: 0 0 0.5rem;
+}
+
+.sim-mobile .sj-steps {
+  gap: 2px;
+}
+
+.sim-mobile .sj-step {
+  font-size: 11px;
+  padding: 3px 7px;
+}
+
+.sim-frame .sim-m-mapbtn,
+.sim-frame .sim-m-ctas .chip.util {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.sim-m-fullmap {
+  margin: 0.5rem 0 0;
+  border: 1px solid var(--sq-border, #344657);
+  border-radius: 10px;
+  background: #0b1119;
+  overflow: hidden;
+}
+
+.sim-m-fullmap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.sim-m-map-hint {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--sq-text2, #b4c3d1);
+  border-top: 1px solid var(--sq-border, #344657);
+}
+
+@media (max-width: 899px) {
+  .sim-frame .sim-journey {
+    order: 0;
+  }
+}
+
+/* ---- FA site-wide typography (Estedad metrics) ------------------------ */
+
+html[lang='fa'] {
+  --lh-body: 1.75;
+  --lh-heading: 1.35;
+}
+
+html[lang='fa'] body {
+  line-height: var(--lh-body);
+  font-size: var(--fs-body);
+}
+
+html[lang='fa'] :is(h1, h2, h3, h4, .q-display, .q-h2, .service-name, .lead-success-title, .jv-headline, .jv-open-l1, .jv-final-h) {
+  line-height: var(--lh-heading);
+  letter-spacing: 0;
+}
+
+html[lang='fa'] .q-display,
+html[lang='fa'] .q-h2 {
+  font-weight: 700;
+}
+
+/* remaining mono users that render Persian text → Estedad (Latin constants keep mono) */
+html[lang='fa'] :is(.eyebrow, .hero-eyebrow, .section-num, .sim-disclaimer, .latency-question, .q-answer,
+  .q-final-answer, .q-hero-promise, .card-cta, .os-row h3, .os-row .os-action, .lead-label,
+  .lead-success-body, .stat-label, .contact-card .label, .service-facts dt, .service-num,
+  .note-cat, .note-num, .principle-num) {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+/* legibility floor for small FA text (replaces 10-12px fixed values) */
+html[lang='fa'] :is(.lead-label, .sim-disclaimer, .q-hero-promise, .footer-en-note, .shared-en-mark) {
+  font-size: 0.8125rem;
+}
+
+/* buttons/nav stay >= 15px in Persian */
+html[lang='fa'] :is(.btn, .nav a, .nav-cta, .lead-submit) {
+  font-size: var(--fs-btn);
+}
+
+/* ---- V5b: chrome density at 1366x768 (stage height is the constraint) -- */
+
+.sim-frame {
+  gap: 0.45rem;
+}
+
+.sim-frame .sim-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.sim-frame .sim-controls .sim-ctl-row {
+  display: contents;
+}
+
+.sim-frame .sim-command {
+  padding: 8px 12px;
+}
+
+.sim-frame .sim-journey {
+  padding: 5px 10px;
+}
+
+.sim-frame .sim-legend {
+  padding: 0 2px 2px;
+  gap: 3px 12px;
+}
+
+.sim-frame .sim-strip {
+  padding: 6px 10px;
 }

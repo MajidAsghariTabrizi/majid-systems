@@ -134,8 +134,8 @@ export const NODES: SimNode[] = [
   },
   {
     id: 'BACKLOG',
-    old: { pos: { x: 215, y: 345 }, label: 'BACKLOG', role: 'queue' },
-    new: { pos: { x: 215, y: 345 }, label: 'BACKLOG', role: 'queue' },
+    old: { pos: { x: 168, y: 322 }, label: 'BACKLOG', role: 'queue' },
+    new: { pos: { x: 168, y: 322 }, label: 'BACKLOG', role: 'queue' },
     kind: 'ambient',
     human: false,
     ambient: true,
@@ -173,7 +173,7 @@ export const NODES: SimNode[] = [
   {
     id: 'APPROVAL',
     old: { pos: { x: 430, y: 548 }, label: 'APPROVAL', role: 'sign-off' },
-    new: { pos: { x: 655, y: 300 }, label: 'AUTHORITY GATE', role: 'risk · permission · reversibility' },
+    new: { pos: { x: 670, y: 300 }, label: 'AUTHORITY GATE', role: 'risk · permission · reversibility' },
     kind: 'gate',
     human: false,
     stagger: 0.22,

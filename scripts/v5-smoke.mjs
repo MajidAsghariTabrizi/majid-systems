@@ -1,0 +1,28 @@
+﻿import { chromium } from 'playwright';
+const b = await chromium.launch({ channel: 'msedge', headless: true });
+const p = await (await b.newContext({ viewport: { width: 1366, height: 768 } })).newPage();
+await p.goto('http://127.0.0.1:3219/en', { waitUntil: 'networkidle', timeout: 60000 });
+await p.locator('.sim-frame').scrollIntoViewIfNeeded();
+await p.waitForTimeout(900);
+const vp = p.locator('.sim-viewport');
+console.log('viewport g:', await vp.count(), await vp.getAttribute('transform'));
+console.log('viewbar buttons:', await p.locator('.sim-viewbar .vb-btn').count());
+console.log('journey chips:', await p.locator('.sj-step').count(), '| label:', (await p.locator('.sj-k').innerText()));
+console.log('latency chip:', JSON.stringify(await p.locator('.sj-lat').innerText().catch(() => null)));
+const t = p.locator('.sim-node-label').first();
+const box = await t.boundingBox();
+console.log('label rendered height:', box && Math.round(box.height * 10) / 10, 'px (screen)');
+await p.screenshot({ path: 'captures-v5/smoke-en-idle.png' });
+await p.locator('.sim-cta.primary').click();
+await p.waitForTimeout(4000);
+await p.screenshot({ path: 'captures-v5/smoke-en-running.png' });
+console.log('active step:', await p.locator('.sj-step.on').innerText().catch(() => 'none'), '| lat:', await p.locator('.sj-lat').innerText().catch(() => ''));
+// zoom out via viewbar then full map
+await p.locator('.sim-viewbar .vb-btn').nth(3).click();
+await p.waitForTimeout(700);
+console.log('full transform:', await vp.getAttribute('transform'));
+await p.screenshot({ path: 'captures-v5/smoke-en-fullmap.png' });
+const err = [];
+p.on('pageerror', (e) => err.push(String(e)));
+console.log('page errors:', err.length);
+await b.close();

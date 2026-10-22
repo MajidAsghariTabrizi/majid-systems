@@ -1,0 +1,28 @@
+﻿import { chromium } from 'playwright';
+const b = await chromium.launch({ channel: 'msedge', headless: true });
+const p = await (await b.newContext({ viewport: { width: 1366, height: 768 } })).newPage();
+await p.goto('http://127.0.0.1:3219/en', { waitUntil: 'networkidle', timeout: 60000 });
+await p.locator('.sim-frame').scrollIntoViewIfNeeded();
+await p.waitForTimeout(1100);
+console.log('cam:', await p.locator('.sim-viewport').getAttribute('transform'));
+const lbl = p.locator('.sim-node-label').first();
+const bb = await lbl.boundingBox();
+const box = await p.locator('.sim-stage').boundingBox();
+console.log('label bbox h:', Math.round(bb.height * 10) / 10, 'px | stage:', Math.round(box.width), 'x', Math.round(box.height));
+const fs = await lbl.evaluate((el) => {
+  const m = el.getScreenCTM();
+  return Math.round(el.getComputedTextLength() / (el.textContent.length) * 100) / 100 + ' avg-adv @ ctm-a=' + Math.round(m.a * 1000) / 1000;
+});
+console.log('label metrics:', fs);
+await p.screenshot({ path: 'captures-v5/smoke2-en-idle.png' });
+await p.locator('.sim-cta.primary').click();
+await p.waitForTimeout(5000);
+console.log('journey active:', await p.locator('.sj-step.on').innerText().catch(() => 'none'), '| lat:', await p.locator('.sj-lat').innerText());
+console.log('dim nodes:', await p.evaluate(() => { const n = [...document.querySelectorAll('.sim-node')].find((x) => !x.classList.contains('is-active')); return n ? getComputedStyle(n).opacity : 'n/a'; }));
+await p.screenshot({ path: 'captures-v5/smoke2-en-running.png' });
+const fa = await (await b.newContext({ viewport: { width: 1366, height: 768 } })).newPage();
+await fa.goto('http://127.0.0.1:3219/fa', { waitUntil: 'networkidle', timeout: 60000 });
+const h1 = await fa.locator('h1').first();
+console.log('FA h1 size:', await h1.evaluate((el) => getComputedStyle(el).fontSize + ' / lh ' + getComputedStyle(el).lineHeight + ' / ls ' + getComputedStyle(el).letterSpacing + ' / ff ' + getComputedStyle(el).fontFamily.slice(0, 24)));
+console.log('FA eyebrow ff:', await fa.locator('.eyebrow').first().evaluate((el) => getComputedStyle(el).fontFamily.slice(0, 20) + ' ls ' + getComputedStyle(el).letterSpacing));
+await b.close();
