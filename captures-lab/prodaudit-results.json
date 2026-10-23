@@ -1,0 +1,158 @@
+{
+  "at": "2026-10-23T06:42:41.363Z",
+  "base": "https://quantiviq.xyz",
+  "total": 29,
+  "pass": 29,
+  "fail": 0,
+  "consoleErrors": [],
+  "consoleErrorCount": 0,
+  "failedRequests": [],
+  "failedRequestCount": 0,
+  "results": [
+    {
+      "name": "en-mobile home title",
+      "pass": true,
+      "detail": "Quantiviq — Rebuild the Company for the Agentic Er"
+    },
+    {
+      "name": "en-mobile home dir",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lang-switch href sane",
+      "pass": true,
+      "detail": "/en/services"
+    },
+    {
+      "name": "en-mobile lab hydrated",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lab topology nodes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lab replay dots",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lab matrix rows",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lab experiments",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile lab no localhost in DOM",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile topology click shows detail",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile replay reaches outcome",
+      "pass": true,
+      "detail": "+49.2 bps"
+    },
+    {
+      "name": "en-mobile decision browser selectable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "en-mobile nav links present",
+      "pass": true,
+      "detail": "8 links"
+    },
+    {
+      "name": "en-mobile no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "fa-mobile home title",
+      "pass": true,
+      "detail": "Quantiviq — شرکت را برای عصر ایجنت‌ها از نو بسازید"
+    },
+    {
+      "name": "fa-mobile home dir",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lang-switch href sane",
+      "pass": true,
+      "detail": "/fa/services"
+    },
+    {
+      "name": "fa-mobile lab hydrated",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lab topology nodes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lab replay dots",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lab matrix rows",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lab experiments",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile lab no localhost in DOM",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile topology click shows detail",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile replay reaches outcome",
+      "pass": true,
+      "detail": "+49.2 bps"
+    },
+    {
+      "name": "fa-mobile decision browser selectable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fa-mobile nav links present",
+      "pass": true,
+      "detail": "8 links"
+    },
+    {
+      "name": "fa-mobile no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "en contact form renders",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}
