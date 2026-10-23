@@ -81,7 +81,13 @@ export function QuantiviqJsonLd() {
     description:
       'AI-native organization transformation: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
     slogan: 'Rebuild the company.',
-    founder: { '@type': 'Person', name: SITE.name, url: `${SITE.canonicalUrl}/profile` },
+    founder: {
+      '@type': 'Person',
+      name: SITE.name,
+      url: `${SITE.canonicalUrl}/profile`,
+      jobTitle: 'AI Product & Transformation Leader',
+      sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
+    },
     areaServed: 'Worldwide',
     serviceType: [
       'AI-native organization design',
