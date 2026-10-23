@@ -24,7 +24,7 @@ export function HomeJsonLd() {
     url: SITE.canonicalUrl,
     image: `${SITE.canonicalUrl}${SITE.ogImage}`,
     sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
-    jobTitle: 'Product Engineer · AI Engineer · Systems Builder',
+    jobTitle: 'AI Product & Transformation Leader',
     knowsAbout: [
       'Product strategy',
       'Marketplace systems',

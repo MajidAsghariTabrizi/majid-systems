@@ -332,7 +332,7 @@ export const en = {
     eyebrow: 'Proof',
     h1: 'Built before the thesis had a name.',
     lede: 'These primitives were not invented for a website. They are systems in daily use, in production, or MIT-licensed — each with its status stated honestly.',
-    levels: 'Evidence levels: PUBLICLY VERIFIED · OWNER-ATTESTED · DEMONSTRATION · ARCHIVED',
+    levels: 'Evidence levels: PUBLICLY VERIFIED = anyone can check it themselves (repo, live artifact) · OWNER-ATTESTED = stated by the operator, not independently audited · DEMONSTRATION = illustrative model, not a client result · ARCHIVED = preserved unchanged, no longer running.',
     seeSystem: 'See the system',
     journeyCta: 'Why this thesis → the journey',
     profileCta: 'What he actually built',

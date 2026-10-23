@@ -96,7 +96,7 @@ export default async function LocaleLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        {locale === 'en' && <QuantiviqJsonLd />}
+        <QuantiviqJsonLd />
       </head>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>

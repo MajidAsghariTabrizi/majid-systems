@@ -52,6 +52,8 @@ export default async function ContactPage({
           <div className="lead-direct" style={{ marginTop: '2.5rem' }}>
             <span className="eyebrow">{t.direct}</span>
             <p className="q-founder-p">
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+              {' · '}
               <a href={SITE.linkedinUrl} rel="me noopener" target="_blank">LinkedIn</a>
               {' · '}
               <a href={SITE.githubUrl} rel="me noopener" target="_blank">GitHub</a>
