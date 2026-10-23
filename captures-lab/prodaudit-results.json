@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-23T06:42:41.363Z",
+  "at": "2026-10-23T07:57:03.025Z",
   "base": "https://quantiviq.xyz",
   "total": 29,
   "pass": 29,
@@ -72,7 +72,7 @@
     {
       "name": "en-mobile nav links present",
       "pass": true,
-      "detail": "8 links"
+      "detail": "9 links"
     },
     {
       "name": "en-mobile no horizontal overflow",
@@ -142,7 +142,7 @@
     {
       "name": "fa-mobile nav links present",
       "pass": true,
-      "detail": "8 links"
+      "detail": "9 links"
     },
     {
       "name": "fa-mobile no horizontal overflow",
