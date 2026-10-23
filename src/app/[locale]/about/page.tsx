@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { Reveal } from '@/components/Reveal';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -11,7 +12,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: `/${params.locale}/about`, languages: { en: '/en/about', fa: '/fa/about', 'x-default': '/en/about' } },
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${params.locale}/about`,
+      locale: params.locale === 'fa' ? 'fa' : 'en',
+      languages: { en: '/en/about', fa: '/fa/about', 'x-default': '/en/about' },
+    }),
   };
 }
 

@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /.next/
-Disallow: /api/internal/
-
-Sitemap: https://quantiviq.xyz/sitemap.xml

@@ -14,7 +14,7 @@ export const SITE = {
   location: 'Iran',
   establishedYear: 2020,
   lastUpdated: '2026-10-06',
-  ogImage: '/og-image.svg',
+  ogImage: '/og/quantiviq-og.png',
 } as const;
 
 export const BRAND = {
@@ -22,7 +22,7 @@ export const BRAND = {
   title: 'Quantiviq — Rebuild the Company for the Agentic Era',
   description:
     'AI-native organization design: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
-  ogImage: '/og-quantiviq.svg',
+  ogImage: '/og/quantiviq-og.png',
 } as const;
 
 /** Commercial navigation — visitor intentions, not internal concepts. */

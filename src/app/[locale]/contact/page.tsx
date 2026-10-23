@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale, type Locale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { LeadForm } from '@/components/LeadForm';
 import { SITE } from '@/content/shared';
 
@@ -13,7 +14,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: `/${params.locale}/contact`, languages: { en: '/en/contact', fa: '/fa/contact', 'x-default': '/en/contact' } },
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${params.locale}/contact`,
+      locale: params.locale === 'fa' ? 'fa' : 'en',
+      languages: { en: '/en/contact', fa: '/fa/contact', 'x-default': '/en/contact' },
+    }),
   };
 }
 

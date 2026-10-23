@@ -8,26 +8,18 @@ import { NOTES } from '@/content/notes';
 import { SITE } from '@/content/shared';
 import { getGitHubData, repoByName } from '@/content/github';
 import { HomeJsonLd } from '@/components/JsonLd';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
   description: SITE.description,
-  alternates: { canonical: `${SITE.canonicalUrl}/profile` },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: `${SITE.canonicalUrl}/profile`,
-    siteName: SITE.name,
-    title: `${SITE.name} — ${SITE.tagline}`,
+  ...socialMeta({
+    title: SITE.name + ' — ' + SITE.tagline,
     description: SITE.description,
-    images: [{ url: SITE.ogImage, width: 1200, height: 630, alt: SITE.name }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${SITE.name} — ${SITE.tagline}`,
-    description: SITE.description,
-    images: [SITE.ogImage],
-  },
+    path: '/profile',
+  }),
+  
+  
 };
 
 export default async function ProfilePage() {
@@ -237,12 +229,14 @@ export default async function ProfilePage() {
           </div>
           <div style={{ display: 'grid', gap: '1.5rem', maxWidth: '70ch' }}>
             <p>
-              The active surfaces are Phoenix (production-observation mode on Arbitrum),
-              Free Best Router (v0.1.0 shipped; expanding provider coverage and scoring),
-              and Universal Engineering Agent (reference implementation, working through
-              profile and harness integrations). Smart Trader is archived — its production
-              data stream froze on 2026-09-23, and the system is preserved unchanged as a
-              case study rather than presented as live.
+              The active surfaces are Free Best Router (v0.1.0 shipped; expanding provider
+              coverage and scoring) and Universal Engineering Agent (reference
+              implementation, working through profile and harness integrations). Phoenix was
+              retired on 2026-09-17 — after 39,538 shadow decisions, 0 executions and $0
+              realized revenue, it was shut down as a measured negative result and kept
+              public as a case study. Smart Trader is archived — its production data stream
+              froze on 2026-09-23, and the system is preserved unchanged as a case study
+              rather than presented as live.
             </p>
             <p>
               If any of that overlaps with what you are building, I would like to hear

@@ -46,6 +46,7 @@ export default function SharedLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body>
+        <a className="skip-link" href="#main">Skip to content</a>
         <Header />
         <main id="main">{children}</main>
         <Footer />

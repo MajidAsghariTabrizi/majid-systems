@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
 import { BrainDemo } from '@/components/BrainDemo';
 import { SystemFlow } from '@/components/LearningLoop';
@@ -16,7 +17,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: `/${params.locale}/system`, languages: { en: '/en/system', fa: '/fa/system', 'x-default': '/en/system' } },
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${params.locale}/system`,
+      locale: params.locale === 'fa' ? 'fa' : 'en',
+      languages: { en: '/en/system', fa: '/fa/system', 'x-default': '/en/system' },
+    }),
   };
 }
 

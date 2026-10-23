@@ -4,12 +4,17 @@ import Link from 'next/link';
 import { JOURNEY_LAYERS, JOURNEY_NODES } from '@/content/journey';
 import { PROJECTS } from '@/content/projects';
 import { SITE } from '@/content/shared';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: 'Majid Asghari Tabrizi — Résumé',
   description:
     'Traditional résumé view: product lead, systems builder, AI-native organizations. Print this page to PDF.',
-  alternates: { canonical: 'https://quantiviq.xyz/resume' },
+  ...socialMeta({
+    title: 'Majid Asghari Tabrizi — Résumé',
+    description: 'Traditional résumé view: product lead, systems builder, AI-native organizations. Print this page to PDF.',
+    path: '/resume',
+  }),
   robots: { index: true },
 };
 

@@ -3,12 +3,17 @@ import type { Metadata } from 'next';
 import { CAPABILITIES } from '@/content/capabilities';
 import { PRINCIPLES } from '@/content/principles';
 import { SITE } from '@/content/shared';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: 'Engineering',
   description:
     'How I think about product, AI, systems, and engineering — applied principles and capability map.',
-  alternates: { canonical: `${SITE.canonicalUrl}/engineering` },
+  ...socialMeta({
+    title: 'Engineering — How the Systems Are Built',
+    description: 'Engineering standards and practices behind the systems: verification, safety, observability, evidence.',
+    path: '/engineering',
+  }),
 };
 
 export default function EngineeringPage() {

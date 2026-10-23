@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
@@ -9,7 +10,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: `/${params.locale}/privacy`, languages: { en: '/en/privacy', fa: '/fa/privacy', 'x-default': '/en/privacy' } },
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${params.locale}/privacy`,
+      locale: params.locale === 'fa' ? 'fa' : 'en',
+      languages: { en: '/en/privacy', fa: '/fa/privacy', 'x-default': '/en/privacy' },
+    }),
     robots: { index: true, follow: true },
   };
 }

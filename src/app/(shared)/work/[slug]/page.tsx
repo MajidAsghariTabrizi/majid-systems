@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 
 import { PROJECTS, PROJECT_BY_SLUG } from '@/content/projects';
 import { getGitHubData, repoByName } from '@/content/github';
+import { socialMeta } from '@/lib/social';
 import { ProjectJsonLd } from '@/components/JsonLd';
 import { SITE } from '@/content/shared';
 import { getArchitecture, getPipeline, getSafety } from '@/content/architecture';
@@ -29,18 +30,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `${SITE.canonicalUrl}/work/${slug}` },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE.canonicalUrl}/work/${slug}`,
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
+    ...socialMeta({ title, description, path: `/work/${slug}`, type: 'article' }),
   };
 }
 
@@ -85,7 +75,7 @@ export default async function ProjectDetailPage({
         <div className="container-wide">
           <span
             className={`status-pill ${
-              project.status === 'production-no-alpha' ? 'warm' : ''
+              project.status === 'production-no-alpha' || project.status === 'retired' ? 'warm' : ''
             }`}
           >
             {project.statusLabel}

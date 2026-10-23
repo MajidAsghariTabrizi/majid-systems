@@ -2,6 +2,7 @@ export type ProjectCategory = 'flagship' | 'supporting' | 'fork' | 'experiment';
 export type ProjectStatus =
   | 'production-live'
   | 'production-no-alpha'
+  | 'retired'
   | 'active-development'
   | 'archived'
   | 'reference-implementation'
@@ -43,12 +44,12 @@ export const PROJECTS: Project[] = [
     slug: 'phoenix',
     name: 'Phoenix',
     category: 'flagship',
-    status: 'production-no-alpha',
-    statusLabel: 'Production live — observing alpha',
+    status: 'retired',
+    statusLabel: 'Retired 2026-09-17 — disciplined shutdown, measured negative result',
     oneLiner:
-      'Production-grade, fail-closed financial intelligence and execution system for Arbitrum.',
+      'Production-grade, fail-closed financial intelligence and execution system for Arbitrum — retired after measurement, with the negative result kept public.',
     thesis:
-      'A profitable-looking opportunity is irrelevant if the underlying state is uncertain. Phoenix exists to keep intelligence, authority, and execution strictly separate — and to refuse action until every gate agrees.',
+      'A profitable-looking opportunity is irrelevant if the underlying state is uncertain. Phoenix exists to keep intelligence, authority, and execution strictly separate — and to refuse action until every gate agrees. It refused so consistently that no opportunity ever cleared the economics: that measurement is the result.',
     problem:
       'Most on-chain trading systems are described as strategy code. In production they must coordinate real-time event ingestion, on-chain state, independent RPC evidence, exact economics, signer and nonce safety, single-transaction authority, receipts, reconciliation, monitoring, and incident recovery. Phoenix treats all of those as one product and one control system.',
     whatIBuilt: [
@@ -59,7 +60,7 @@ export const PROJECTS: Project[] = [
       'Production observability across release SHA, container health, provider identity, signers (without keys), controls, candidate counts, expected vs realized PnL, loss-cause ledger, and protected rollback.',
     ],
     whyItMatters:
-      'The system explicitly refuses to count submission as profit. Realized net PnL after every actual cost — gas, L1 data, flash premium, ordering, slippage, model reserve — is the only authority. A healthy production system can legitimately remain in FULL_LIVE_NO_ALPHA. That honesty is the design.',
+      'The system explicitly refuses to count submission as profit. Realized net PnL after every actual cost — gas, L1 data, flash premium, ordering, slippage, model reserve — is the only authority. When measurement showed that no opportunity would ever clear the economic gates on the targeted pools, the system was retired rather than loosened. That honesty is the design.',
     hasArchitecture: true,
     hasPipeline: true,
     hasSafety: true,

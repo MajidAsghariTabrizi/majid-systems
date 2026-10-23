@@ -3,12 +3,17 @@ import type { Metadata } from 'next';
 
 import { NOTES } from '@/content/notes';
 import { SITE } from '@/content/shared';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: 'Field notes',
   description:
     'Lessons, observations, and engineering notes extracted from real production systems.',
-  alternates: { canonical: `${SITE.canonicalUrl}/notes` },
+  ...socialMeta({
+    title: 'Field Notes',
+    description: 'Working notes from building production systems — decisions, trade-offs, and lessons with evidence.',
+    path: '/notes',
+  }),
 };
 
 export default function NotesIndexPage() {

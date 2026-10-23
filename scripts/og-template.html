@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: #0a0b0d;
+    color: #e8eaed;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .wash {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(600px 320px at 88% -10%, rgba(124, 217, 183, 0.10), transparent 70%),
+      radial-gradient(500px 300px at -5% 110%, rgba(138, 180, 248, 0.06), transparent 70%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(900px 500px at 50% 40%, #000 40%, transparent 100%);
+  }
+  .wrap { position: relative; padding: 72px 84px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; background: #7cd9b7; box-shadow: 0 0 18px rgba(124, 217, 183, 0.55); }
+  .word { font-family: 'JetBrains Mono', 'Cascadia Code', monospace; font-size: 30px; font-weight: 700; letter-spacing: 0.34em; color: #e8eaed; }
+  h1 { font-size: 68px; line-height: 1.12; letter-spacing: -0.015em; font-weight: 800; max-width: 15ch; }
+  h1 .accent { color: #7cd9b7; }
+  .sub { margin-top: 26px; font-size: 26px; line-height: 1.5; color: #9aa0a6; max-width: 52ch; font-weight: 400; }
+  .foot { display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: 0.08em; color: #6c7280; }
+  .foot .sig { color: #7cd9b7; }
+  .rule { position: absolute; left: 84px; right: 84px; bottom: 148px; height: 1px; background: rgba(255,255,255,0.10); }
+</style>
+</head>
+<body>
+  <div class="wash"></div>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><span class="word">QUANTIVIQ</span></div>
+    <div>
+      <h1>Rebuild the company<br />for the <span class="accent">agentic era</span>.</h1>
+      <p class="sub">AI-native organization design — work, decisions, knowledge and authority engineered as one operating model.</p>
+    </div>
+    <div class="rule"></div>
+    <div class="foot">
+      <span>quantiviq.xyz</span>
+      <span class="sig">OPERATOR-LED · EVIDENCE-FIRST</span>
+    </div>
+  </div>
+</body>
+</html>

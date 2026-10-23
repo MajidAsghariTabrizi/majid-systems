@@ -43,6 +43,7 @@ export function LocaleSwitcher({ compact = false }: { compact?: boolean }) {
         type="button"
         className={`lang-tab${current === 'en' ? ' is-on' : ''}`}
         aria-pressed={current === 'en'}
+        aria-label={t.en}
         onClick={() => go('en')}
       >
         <span className="lt-full">{t.en}</span>
@@ -52,6 +53,7 @@ export function LocaleSwitcher({ compact = false }: { compact?: boolean }) {
         type="button"
         className={`lang-tab${current === 'fa' ? ' is-on' : ''}`}
         aria-pressed={current === 'fa'}
+        aria-label="فارسی"
         onClick={() => go('fa')}
       >
         <span className="lt-full">فارسی</span>

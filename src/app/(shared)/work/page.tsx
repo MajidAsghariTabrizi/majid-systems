@@ -4,11 +4,16 @@ import type { Metadata } from 'next';
 import { PROJECTS } from '@/content/projects';
 import { getGitHubData, repoByName } from '@/content/github';
 import { SITE } from '@/content/shared';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: 'Work',
   description: 'Selected projects by Majid Asghari — production systems, case studies, and engineering evidence.',
-  alternates: { canonical: `${SITE.canonicalUrl}/work` },
+  ...socialMeta({
+    title: 'Work — Selected Systems & Case Studies',
+    description: 'Selected projects by Majid Asghari — production systems, case studies, and engineering evidence.',
+    path: '/work',
+  }),
 };
 
 export default async function WorkPage() {

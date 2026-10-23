@@ -4,7 +4,7 @@
  * to a localized message.
  */
 
-export const LEAD_INTENTS = ['diagnostic', 'rebuild-function', 'infrastructure', 'partnership', 'other'] as const;
+export const LEAD_INTENTS = ['hiring', 'diagnostic', 'rebuild-function', 'infrastructure', 'partnership', 'other'] as const;
 export type LeadIntent = (typeof LEAD_INTENTS)[number];
 
 export const LEAD_MAX = {

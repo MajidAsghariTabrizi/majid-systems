@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { Reveal } from '@/components/Reveal';
 import { LabApp } from '@/components/lab/LabApp';
 
@@ -12,10 +13,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: {
-      canonical: `/${params.locale}/lab`,
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${params.locale}/lab`,
+      locale: params.locale === 'fa' ? 'fa' : 'en',
       languages: { en: '/en/lab', fa: '/fa/lab', 'x-default': '/en/lab' },
-    },
+    }),
     robots: { index: true, follow: true },
   };
 }

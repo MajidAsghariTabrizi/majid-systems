@@ -256,7 +256,7 @@ export function LabTopology({ snap, locale, live }: { snap: LabSnapshot; locale:
                 <aside className="lab-topo-detail" aria-live="polite">
                   <div className="lab-topo-detail-head">
                     <strong>{selNode.label}</strong>
-                    <button onClick={() => setSel(null)} aria-label="×">×</button>
+                    <button onClick={() => setSel(null)} aria-label="Close detail">×</button>
                   </div>
                   {selNode.lineage && (
                     <LabChip kind={selNode.lineage === 'huber' ? 'ok' : selNode.lineage === 'mfe' ? 'path' : selNode.lineage === 'spread' ? 'warn' : 'neutral'}>

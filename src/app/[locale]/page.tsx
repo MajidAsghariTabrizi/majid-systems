@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { OrgSimulatorSection } from '@/components/OrgSimulator';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
 import { BrainDemo } from '@/components/BrainDemo';
@@ -16,9 +17,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: `/${l}`, languages: { en: '/en', fa: '/fa', 'x-default': '/en' } },
-    openGraph: { title: t.title, description: t.description, url: `/${l}` },
-    twitter: { title: t.title, description: t.description },
+    ...socialMeta({
+      title: t.title,
+      description: t.description,
+      path: `/${l}`,
+      locale: l === 'fa' ? 'fa' : 'en',
+      languages: { en: '/en', fa: '/fa', 'x-default': '/en' },
+    }),
   };
 }
 
@@ -48,6 +53,9 @@ export default async function LocaleHome({ params }: { params: { locale: string 
                 {t.hero.ctaSecondary} <span className="arrow" aria-hidden>→</span>
               </Link>
             </div>
+            <p className="hero-hiring">
+              <Link href={`/${l}/leadership`}>{t.hero.hiringLink}</Link>
+            </p>
           </div>
         </div>
       </section>
@@ -202,6 +210,9 @@ export default async function LocaleHome({ params }: { params: { locale: string 
               <span className="eyebrow sig">{h.bridgeEyebrow}</span>
               <p className="proof-bridge-line">{h.bridgeLine}</p>
               <div className="hero-actions">
+                <Link href={`/${l}/leadership`} className="btn btn-primary">
+                  {h.bridgeLeadership} <span className="arrow" aria-hidden>→</span>
+                </Link>
                 <Link href="/journey" className="btn">
                   {h.bridgeJourney} <span className="arrow" aria-hidden>→</span>
                 </Link>

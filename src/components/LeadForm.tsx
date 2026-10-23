@@ -4,10 +4,13 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { dict, type Locale } from '@/content/i18n';
+import { LEAD_INTENTS } from '@/lib/lead/validate';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
-const INTENT_KEYS = ['diagnostic', 'rebuild-function', 'infrastructure', 'partnership', 'other'] as const;
+/** Single source of truth: LEAD_INTENTS in lib/lead/validate.ts (server truth).
+ *  The select and the ?intent= preselect must never drift from the API's set. */
+const INTENT_KEYS = LEAD_INTENTS;
 
 export function LeadForm({ locale }: { locale: Locale }) {
   const t = dict(locale).contact.form;

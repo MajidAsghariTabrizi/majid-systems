@@ -217,6 +217,7 @@ test('All project statuses belong to the declared union', () => {
   const allowed = new Set([
     'production-live',
     'production-no-alpha',
+    'retired',
     'active-development',
     'archived',
     'reference-implementation',

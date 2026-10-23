@@ -3,11 +3,16 @@ import type { Metadata } from 'next';
 import { OPEN_SOURCE_ITEMS, FORK_ITEMS } from '@/content/openSource';
 import { getGitHubData, repoByName } from '@/content/github';
 import { SITE } from '@/content/shared';
+import { socialMeta } from '@/lib/social';
 
 export const metadata: Metadata = {
   title: 'Open source',
   description: 'Original open-source work, curated lists, and forks that helped me learn the systems I now build on.',
-  alternates: { canonical: `${SITE.canonicalUrl}/open-source` },
+  ...socialMeta({
+    title: 'Open Source',
+    description: 'Original open-source work, curated lists, and forks that helped me learn the systems I now build on.',
+    path: '/open-source',
+  }),
 };
 
 export default async function OpenSourcePage() {

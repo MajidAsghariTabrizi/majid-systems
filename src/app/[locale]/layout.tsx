@@ -19,12 +19,11 @@ const OG_LOCALE: Record<Locale, string> = { en: 'en_US', fa: 'fa_IR' };
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
   const l = params.locale;
-  const t = dict(l).meta.home;
   const base = SITE.canonicalUrl;
   return {
     metadataBase: new URL(base),
-    title: { default: t.title, template: '%s · Quantiviq' },
-    description: t.description,
+    title: { default: BRAND.title, template: '%s · Quantiviq' },
+    description: BRAND.description,
     applicationName: 'Quantiviq',
     authors: [{ name: SITE.name, url: SITE.githubUrl }],
     creator: SITE.name,
@@ -37,19 +36,21 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         'x-default': `${base}/en`,
       },
     },
+    // Site-level fallback ONLY. Every page must override with socialMeta()
+    // so shared links render the page's own card, not this one (audit P0).
     openGraph: {
       type: 'website',
       locale: OG_LOCALE[l],
       url: `${base}/${l}`,
       siteName: 'Quantiviq',
-      title: t.title,
-      description: t.description,
+      title: BRAND.title,
+      description: BRAND.description,
       images: [{ url: BRAND.ogImage, width: 1200, height: 630, alt: 'Quantiviq — Rebuild the Company' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: t.title,
-      description: t.description,
+      title: BRAND.title,
+      description: BRAND.description,
       images: [BRAND.ogImage],
     },
     robots: {
@@ -98,6 +99,7 @@ export default async function LocaleLayout({
         {locale === 'en' && <QuantiviqJsonLd />}
       </head>
       <body>
+        <a className="skip-link" href="#main">Skip to content</a>
         <Header locale={locale} />
         <main id="main">{children}</main>
         <Footer locale={locale} />
