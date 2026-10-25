@@ -72,3 +72,25 @@ Content, structure, prose, bidi reading order, RTL page chrome: untouched. The o
 ## REMAINING ISSUES
 
 None known. The QA layer that missed this class of defect (outer-box containment only) is superseded by `insights-figcheck.mjs`, wired as `npm run qa:figures`.
+
+---
+
+## ADDENDUM — hero images never rendering (raw `&` → XML-invalid SVG)
+
+**Reported:** https://quantiviq.xyz/insights/heroes/01.svg on https://quantiviq.xyz/en/insights/ai-adoption-is-not-ai-transformation — "fix exactly this one."
+
+**Root cause:** the hero generator (`scripts/insights-heroes.mjs`) emitted the pillar kicker text unescaped. Three of five pillar names contain `&` (`AI TRANSFORMATION & STRATEGY`, `ECONOMICS & BUSINESS VALUE`, `TRUST, SAFETY & CHANGE`). An SVG **file** is XML; a raw `&` is a well-formedness error, so the browser **refuses to load the image entirely** (`<img>` never paints, `naturalWidth` stays 0 — the hero showed as an empty box). **12 heroes were affected** (EN 01–08, 13–16 — exactly the articles of those three pillars; 09–12/17–20 and all FA heroes use `&`-free kickers). The og-src SVGs had the same defect; the deployed OG PNGs were unaffected because their render pipeline embeds the SVG via the lenient HTML parser.
+
+**Why earlier QA missed it:** element-level checks measured the `<img>` box (aspect reserved via width/height attrs) — a broken image still passes containment; `naturalWidth` was observed as 0x0 but misread as an SVG-without-intrinsic-size artifact.
+
+**Fix:** `esc()` added to the generator (pillar name + phrase + og-src kicker), heroes and og-src regenerated — `git diff` = exactly 24 files × 1 line (`&` → `&amp;`). Committed `1105933`, deployed.
+
+**Verification (production):**
+- `naturalWidth: 0` → **1600** on the live article (same URL, same box)
+- img-box pixel ink **0.87% → 2.01%** (artwork now paints; `captures-figqa/hero/imgbox-en01-{before,prod-after}.png`)
+- All 12 previously-broken heroes verified loading individually
+- XML validation: 60 hero SVGs + 20 og-src — **0 invalid**
+- `insights-figcheck.mjs` extended with a hero **load assertion** (`complete && naturalWidth > 0` — the exact gap that hid this) — **122/122 PASS on production**
+- All 40 article routes 200 (an initial scare — scattered 404s seconds after deploy — was the post-deploy warm-up race, not a regression)
+
+**Regression guard:** `npm run qa:figures` now fails on any hero that fails to load, in addition to all figure geometry checks.
