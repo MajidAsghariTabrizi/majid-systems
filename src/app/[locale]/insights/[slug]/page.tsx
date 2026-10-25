@@ -5,12 +5,15 @@ import { notFound } from 'next/navigation';
 import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
 import {
-  ARTICLES,
-  ARTICLE_BY_SLUG,
+  ARTICLES_BY_LOCALE,
   AUTHORS,
   PILLAR_BY_ID,
+  getArticleBySlug,
+  getArticles,
+  pillarFor,
   sourcesFor,
   type Article,
+  type Locale,
 } from '@/content/insights';
 import { INSIGHTS_UI } from '@/content/insights/ui';
 import { ArticleJsonLd } from '@/components/InsightsJsonLd';
@@ -18,62 +21,76 @@ import { SITE } from '@/content/shared';
 
 type Params = { locale: string; slug: string };
 
-/** Articles are published in English only. FA article URLs do not exist
- *  (no fake hreflang; the FA index links to the English originals). */
+/** Articles are published bilingually: EN originals + complete FA counterparts
+ *  at the same slug under /fa/insights. Missing FA content is a hard 404 —
+ *  never an English fallback under a Persian URL. */
 export function generateStaticParams(): { locale: string; slug: string }[] {
-  return ARTICLES.map((a) => ({ locale: 'en', slug: a.slug }));
+  return (['en', 'fa'] as Locale[]).flatMap((locale) =>
+    getArticles(locale).map((a) => ({ locale, slug: a.slug })),
+  );
 }
 
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, slug } = params;
-  if (locale !== 'en') return { robots: { index: false, follow: false } };
-  const article = ARTICLE_BY_SLUG[slug];
+  if (!isLocale(locale)) return { robots: { index: false, follow: false } };
+  const l = locale as Locale;
+  const article = getArticleBySlug(slug, l);
   if (!article) return {};
+  const path = `/${l}/insights/${article.slug}`;
+  const ogImage = l === 'fa' ? `/og/insights/fa/${article.id}.png` : `/og/insights/${article.id}.png`;
   return {
     title: article.seo_title,
     description: article.seo_description,
     keywords: [article.primary_term, ...article.secondary_terms],
     alternates: {
-      canonical: `/en/insights/${article.slug}`,
-      types: { 'application/rss+xml': `${SITE.canonicalUrl}/insights.xml` },
+      canonical: path,
+      languages: { en: `/en/insights/${article.slug}`, fa: `/fa/insights/${article.slug}` },
+      types: { 'application/rss+xml': `${SITE.canonicalUrl}/${l === 'fa' ? 'fa/insights.xml' : 'insights.xml'}` },
     },
     ...socialMeta({
       title: article.seo_title,
       description: article.seo_description,
-      path: `/en/insights/${article.slug}`,
-      locale: 'en',
-      image: `/og/insights/${article.id}.png`,
+      path,
+      locale: l,
+      languages: { en: `/en/insights/${article.slug}`, fa: `/fa/insights/${article.slug}` },
+      image: ogImage,
       imageAlt: article.hero_alt,
       type: 'article',
     }),
   };
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: string, locale: Locale): string {
   const d = new Date(`${iso}T00:00:00Z`);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+  return locale === 'fa'
+    ? d.toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+    : d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
 
 export default async function ArticlePage({ params }: { params: Params }) {
   const { locale, slug } = params;
-  if (locale !== 'en') notFound();
-  const article = ARTICLE_BY_SLUG[slug];
+  if (!isLocale(locale)) notFound();
+  const l = locale as Locale;
+  const article = getArticleBySlug(slug, l);
   if (!article) notFound();
 
-  const t = INSIGHTS_UI.en;
-  const d = dict('en');
+  const t = INSIGHTS_UI[l];
+  const d = dict(l);
   const author = AUTHORS[article.author_id];
-  const pillar = PILLAR_BY_ID[article.pillar];
+  const pillar = pillarFor(article.pillar, l);
   const sources = sourcesFor(article);
-  const idx = ARTICLES.findIndex((a) => a.slug === article.slug);
-  const prev = idx < ARTICLES.length - 1 ? ARTICLES[idx + 1] : null;
-  const next = idx > 0 ? ARTICLES[idx - 1] : null;
+  const corpus = ARTICLES_BY_LOCALE[l];
+  const idx = corpus.findIndex((a) => a.slug === article.slug);
+  const prev = idx < corpus.length - 1 ? corpus[idx + 1] : null;
+  const next = idx > 0 ? corpus[idx - 1] : null;
   const related = (article.related_article_ids ?? [])
-    .map((id) => ARTICLES.find((a) => a.id === id))
+    .map((id) => corpus.find((a) => a.id === id))
     .filter((a): a is Article => Boolean(a));
-  const shareUrl = `${SITE.canonicalUrl}/en/insights/${article.slug}`;
+  const shareUrl = `${SITE.canonicalUrl}/${l}/insights/${article.slug}`;
+  const ogImage = l === 'fa' ? `/og/insights/fa/${article.id}.png` : `/og/insights/${article.id}.png`;
+  const pillarName = (p: string) => pillarFor(p, l)?.name ?? PILLAR_BY_ID[p]?.name;
 
   return (
     <article className="ins-article" itemScope itemType="https://schema.org/BlogPosting">
@@ -83,10 +100,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
         <div className="container">
           <nav className="ins-breadcrumb" aria-label="Breadcrumb">
             <ol>
-              <li><Link href="/en">Home</Link></li>
-              <li><Link href="/en/insights">{t.title}</Link></li>
+              <li><Link href={`/${l}`}>{l === 'fa' ? 'خانه' : 'Home'}</Link></li>
+              <li><Link href={`/${l}/insights`}>{t.title}</Link></li>
               <li>
-                <Link href={`/en/insights/topics/${article.pillar}`}>{pillar?.name}</Link>
+                <Link href={`/${l}/insights/topics/${article.pillar}`}>{pillar?.name}</Link>
               </li>
             </ol>
           </nav>
@@ -97,20 +114,20 @@ export default async function ArticlePage({ params }: { params: Params }) {
             {author && (
               <span className="ins-meta-author">
                 {t.byAuthor}{' '}
-                <Link href="/en/insights/author" itemProp="author">
+                <Link href={`/${l}/insights/author`} itemProp="author">
                   {author.name}
                 </Link>
               </span>
             )}
             <span className="ins-meta-dot" aria-hidden>·</span>
             <time dateTime={article.published_at} itemProp="datePublished">
-              {t.published} {formatDate(article.published_at)}
+              {t.published} {formatDate(article.published_at, l)}
             </time>
             {article.updated_at !== article.published_at && (
               <>
                 <span className="ins-meta-dot" aria-hidden>·</span>
                 <time dateTime={article.updated_at} itemProp="dateModified">
-                  {t.updated} {formatDate(article.updated_at)}
+                  {t.updated} {formatDate(article.updated_at, l)}
                 </time>
               </>
             )}
@@ -162,7 +179,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
                   X
                 </a>
                 <a href={`mailto:?subject=${encodeURIComponent(article.seo_title)}&body=${encodeURIComponent(shareUrl)}`}>
-                  Email
+                  {l === 'fa' ? 'ایمیل' : 'Email'}
                 </a>
               </div>
             </aside>
@@ -183,23 +200,23 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <section className="ins-refs" aria-label={t.references}>
             <p className="ins-refs-note">
               {sources.length} {t.sourcesLabel} · {t.methodologyNote}:{' '}
-              <Link href="/en/insights/methodology">methodology</Link>. Links verified {sources[0]?.accessed_at ?? '2026-10-23'}.
+              <Link href={`/${l}/insights/methodology`}>{t.methodologyTitle}</Link>. Links verified {sources[0]?.accessed_at ?? '2026-10-23'}.
             </p>
           </section>
 
           <nav className="ins-articlenav" aria-label="Article navigation">
             {prev ? (
-              <Link className="ins-articlenav-prev" href={`/en/insights/${prev.slug}`} rel="prev">
+              <Link className="ins-articlenav-prev" href={`/${l}/insights/${prev.slug}`} rel="prev">
                 <span className="ins-articlenav-label">← {t.prevArticle}</span>
                 <span className="ins-articlenav-title">{prev.title}</span>
               </Link>
             ) : (
-              <Link className="ins-articlenav-prev" href="/en/insights" rel="prev">
+              <Link className="ins-articlenav-prev" href={`/${l}/insights`} rel="prev">
                 <span className="ins-articlenav-label">← {t.backToInsights}</span>
               </Link>
             )}
             {next && (
-              <Link className="ins-articlenav-next" href={`/en/insights/${next.slug}`} rel="next">
+              <Link className="ins-articlenav-next" href={`/${l}/insights/${next.slug}`} rel="next">
                 <span className="ins-articlenav-label">{t.nextArticle} →</span>
                 <span className="ins-articlenav-title">{next.title}</span>
               </Link>
@@ -211,8 +228,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
               <h2>{t.related}</h2>
               <div className="ins-grid">
                 {related.map((r) => (
-                  <Link key={r.slug} className="ins-card" href={`/en/insights/${r.slug}`}>
-                    <span className="ins-card-pillar">{PILLAR_BY_ID[r.pillar]?.name}</span>
+                  <Link key={r.slug} className="ins-card" href={`/${l}/insights/${r.slug}`}>
+                    <span className="ins-card-pillar">{pillarName(r.pillar)}</span>
                     <span className="ins-card-title">{r.title}</span>
                     <span className="ins-card-meta">{r.readingTime} {t.minRead}</span>
                   </Link>
@@ -225,10 +242,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <h2>{t.contactCta}</h2>
             <p>{t.contactBody}</p>
             <div className="hero-actions">
-              <Link href="/en/contact" className="btn btn-primary">
+              <Link href={`/${l}/contact`} className="btn btn-primary">
                 {d.nav.contact} <span className="arrow" aria-hidden>→</span>
               </Link>
-              <Link href="/en/system" className="btn">
+              <Link href={`/${l}/system`} className="btn">
                 {d.nav.system} <span className="arrow" aria-hidden>→</span>
               </Link>
             </div>

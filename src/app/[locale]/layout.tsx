@@ -89,13 +89,22 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        />
+        {/* Inter + JetBrains Mono are self-hosted variable fonts loaded via
+            @font-face in globals.css (public/fonts/) — the former
+            render-blocking fonts.googleapis.com stylesheet is gone. */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {locale === 'fa' && (
+          /* Persian pages: start the self-hosted Estedad variable font at
+             HTML-parse time instead of waiting for CSS discovery (~400ms
+             later); font-display: swap shows Tahoma meanwhile. */
+          <link
+            rel="preload"
+            href="/fonts/Estedad-Variable.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+        )}
         <QuantiviqJsonLd />
       </head>
       <body>

@@ -147,46 +147,37 @@ Three phases, three gates, three artifacts — a program stopped, corrected or s
         <path d="M0,0 L10,5 L0,10 z" fill="#8fa3b8"/>
       </marker>
     </defs>
-
     <rect x="46" y="44" width="222" height="122" rx="10" fill="#0d1420" stroke="#69deb9" stroke-width="2"/>
     <text x="157" y="70" font-size="13" fill="#8fa3b8" text-anchor="middle">DAYS 1–30</text>
     <text x="157" y="94" font-size="14" font-weight="bold" fill="#d7e0ea" text-anchor="middle">Prove one mission</text>
     <text x="157" y="116" font-size="13" fill="#8fa3b8" text-anchor="middle">thin end-to-end slice,</text>
     <text x="157" y="134" font-size="13" fill="#8fa3b8" text-anchor="middle">baselines captured first</text>
-
     <rect x="276" y="44" width="222" height="122" rx="10" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="387" y="70" font-size="13" fill="#8fa3b8" text-anchor="middle">DAYS 31–60</text>
     <text x="387" y="94" font-size="14" font-weight="bold" fill="#d7e0ea" text-anchor="middle">Harden and book</text>
     <text x="387" y="116" font-size="13" fill="#8fa3b8" text-anchor="middle">evals · guardrails · supervision,</text>
     <text x="387" y="134" font-size="13" fill="#8fa3b8" text-anchor="middle">first value-ledger entry</text>
-
     <rect x="506" y="44" width="222" height="122" rx="10" fill="#0d1420" stroke="#a694f7" stroke-width="2"/>
     <text x="617" y="70" font-size="13" fill="#8fa3b8" text-anchor="middle">DAYS 61–90</text>
     <text x="617" y="94" font-size="14" font-weight="bold" fill="#d7e0ea" text-anchor="middle">Scale, institutionalize</text>
     <text x="617" y="116" font-size="13" fill="#8fa3b8" text-anchor="middle">mission two from harvested</text>
     <text x="617" y="134" font-size="13" fill="#8fa3b8" text-anchor="middle">capabilities · operating rhythm</text>
-
     <path d="M157,166 L263,285" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M387,166 L489,285" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M617,166 L716,285" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
-
     <path d="M40,300 L726,300" stroke="#2a3a4c" stroke-width="2"/>
     <path d="M40,295 L40,305 M267,295 L267,305 M493,295 L493,305 M720,295 L720,305" stroke="#2a3a4c" stroke-width="2"/>
     <text x="40" y="322" font-size="13" fill="#8fa3b8">Day 0</text>
     <text x="267" y="322" font-size="13" fill="#8fa3b8" text-anchor="middle">Day 30</text>
     <text x="493" y="322" font-size="13" fill="#8fa3b8" text-anchor="middle">Day 60</text>
     <text x="720" y="322" font-size="13" fill="#8fa3b8" text-anchor="end">Day 90</text>
-
     <path d="M267,289 L278,300 L267,311 L256,300 Z" fill="#f5b968"/>
     <path d="M493,289 L504,300 L493,311 L482,300 Z" fill="#f5b968"/>
     <path d="M720,289 L731,300 L720,311 L709,300 Z" fill="#f5b968"/>
-
     <text x="267" y="348" font-size="13" font-weight="bold" fill="#f5b968" text-anchor="middle">GATE 1</text>
     <text x="267" y="368" font-size="13" fill="#d7e0ea" text-anchor="middle">Baseline pack + go/no-go</text>
-
     <text x="480" y="348" font-size="13" font-weight="bold" fill="#f5b968" text-anchor="middle">GATE 2</text>
     <text x="480" y="368" font-size="13" fill="#d7e0ea" text-anchor="middle">Value-ledger entry</text>
-
     <text x="752" y="348" font-size="13" font-weight="bold" fill="#f5b968" text-anchor="end">GATE 3</text>
     <text x="752" y="368" font-size="13" fill="#d7e0ea" text-anchor="end">Operating rhythm installed</text>
   </svg>
