@@ -110,15 +110,12 @@ The corrective is procedural: make outcome movement a condition of continued fun
         <path d="M0,0 L10,5 L0,10 z" fill="#8fa3b8"/>
       </marker>
     </defs>
-
     <text x="24" y="64" font-size="15" font-weight="bold" fill="#d7e0ea">ADOPT</text>
     <text x="24" y="84" font-size="13" fill="#8fa3b8">same process,</text>
     <text x="24" y="100" font-size="13" fill="#8fa3b8">AI bolted on</text>
-
     <rect x="336" y="14" width="28" height="20" rx="4" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="350" y="28" font-size="13" fill="#80c9f8" text-anchor="middle">AI</text>
     <path d="M350,34 L350,50" stroke="#80c9f8" stroke-width="2" stroke-dasharray="4 3"/>
-
     <rect x="150" y="52" width="120" height="44" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <text x="210" y="79" font-size="15" fill="#d7e0ea" text-anchor="middle">Intake</text>
     <rect x="290" y="52" width="120" height="44" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
@@ -130,40 +127,31 @@ The corrective is procedural: make outcome movement a condition of continued fun
     <path d="M272,74 L288,74" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M412,74 L428,74" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M552,74 L568,74" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
-
     <path d="M150,134 L690,134" stroke="#f27e85" stroke-width="2.5" fill="none"/>
     <text x="150" y="158" font-size="13" fill="#f27e85">Value captured: flat — gains leak at unchanged handoffs</text>
-
     <path d="M20,188 L740,188" stroke="#2a3a4c" stroke-width="1.5"/>
-
     <text x="24" y="236" font-size="15" font-weight="bold" fill="#d7e0ea">TRANSFORM</text>
     <text x="24" y="256" font-size="13" fill="#8fa3b8">process redesigned</text>
     <text x="24" y="272" font-size="13" fill="#8fa3b8">around proven AI</text>
-
     <rect x="150" y="226" width="120" height="66" rx="10" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <rect x="195" y="232" width="30" height="16" rx="3" fill="#80c9f8"/>
     <text x="210" y="244" font-size="13" fill="#0d1420" text-anchor="middle">AI</text>
     <text x="210" y="278" font-size="15" fill="#d7e0ea" text-anchor="middle">AI triage</text>
-
     <rect x="290" y="226" width="120" height="66" rx="10" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <rect x="335" y="232" width="30" height="16" rx="3" fill="#80c9f8"/>
     <text x="350" y="244" font-size="13" fill="#0d1420" text-anchor="middle">AI</text>
     <text x="350" y="270" font-size="15" fill="#d7e0ea" text-anchor="middle">Human + AI</text>
     <text x="350" y="287" font-size="15" fill="#d7e0ea" text-anchor="middle">co-work</text>
-
     <rect x="430" y="226" width="120" height="66" rx="10" fill="#0d1420" stroke="#f5b968" stroke-width="2"/>
     <rect x="475" y="232" width="30" height="16" rx="3" fill="#80c9f8"/>
     <text x="490" y="244" font-size="13" fill="#0d1420" text-anchor="middle">AI</text>
     <text x="490" y="270" font-size="15" fill="#d7e0ea" text-anchor="middle">Review by</text>
     <text x="490" y="287" font-size="15" fill="#d7e0ea" text-anchor="middle">exception</text>
-
     <rect x="570" y="226" width="120" height="66" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <text x="630" y="278" font-size="15" fill="#d7e0ea" text-anchor="middle">Deliver</text>
-
     <path d="M272,258 L288,258" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M412,258 L428,258" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
     <path d="M552,258 L568,258" stroke="#8fa3b8" stroke-width="2" marker-end="url(#f1-arw)"/>
-
     <path d="M150,336 C330,330 520,314 690,300" stroke="#69deb9" stroke-width="2.5" fill="none"/>
     <text x="150" y="360" font-size="13" fill="#69deb9">Value captured: compounding — redesign converts productivity into P&amp;L</text>
   </svg>

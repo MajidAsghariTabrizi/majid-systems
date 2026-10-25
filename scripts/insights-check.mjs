@@ -60,7 +60,7 @@ const main = async () => {
     check(`EN ${a.id} BlogPosting JSON-LD`, html.includes('BlogPosting'));
     check(`EN ${a.id} BreadcrumbList JSON-LD`, html.includes('BreadcrumbList'));
     check(`EN ${a.id} hero SVG referenced`, html.includes(a.hero));
-    check(`EN ${a.id} reciprocal hreflang → fa`, new RegExp(`hreflang="fa"[^>]*href="${CANON}/fa/insights/${a.slug}"`).test(html) || new RegExp(`href="${CANON}/fa/insights/${a.slug}"[^>]*hreflang="fa"`).test(html));
+    check(`EN ${a.id} reciprocal hreflang → fa`, new RegExp(`[hH][rR][eE][fF][lL][aA][nN][gG]="fa"[^>]*href="${CANON}/fa/insights/${a.slug}"`).test(html) || new RegExp(`href="${CANON}/fa/insights/${a.slug}"[^>]*[hH][rR][eE][fF][lL][aA][nN][gG]="fa"`).test(html));
     const links = [...new Set([...html.matchAll(/href="(\/(?:en|fa)\/[^"#]*)"/g)].map((m) => m[1]))]
       .filter((l) => /^\/en\//.test(l));
     const bad = [];
@@ -89,7 +89,7 @@ const main = async () => {
   check('sitemap: all 20 EN articles', articles.every((a) => smx.includes(`/en/insights/${a.slug}`)));
   check('sitemap: all 20 FA articles', faArticles.every((a) => smx.includes(`/fa/insights/${a.slug}`)));
   check('sitemap: 40 article URLs total', (smx.match(/\/insights\/[^<]*/g) || []).length >= 40);
-  check('sitemap: FA hreflang reciprocity', articles.every((a) => new RegExp(`hreflang="fa"[^>]*href="${CANON}/fa/insights/${a.slug}"`).test(smx)));
+  check('sitemap: FA hreflang reciprocity', articles.every((a) => new RegExp(`[hH][rR][eE][fF][lL][aA][nN][gG]="fa"[^>]*href="${CANON}/fa/insights/${a.slug}"`).test(smx)));
 
   /* ================= llms.txt (bilingual) ================= */
   const ll = await http(`${BASE}/llms.txt`);
@@ -111,7 +111,7 @@ const main = async () => {
     check(`FA ${a.id} lang=fa dir=rtl`, html.includes('lang="fa"') && html.includes('dir="rtl"'));
     check(`FA ${a.id} canonical (self, FA)`, new RegExp(`rel="canonical" href="${CANON}/fa/insights/${a.slug}"`).test(html));
     check(`FA ${a.id} FA OG image`, html.includes('og:image') && html.includes(`/og/insights/fa/${a.id}.png`));
-    check(`FA ${a.id} reciprocal hreflang → en`, new RegExp(`hreflang="en"[^>]*href="${CANON}/en/insights/${a.slug}"`).test(html) || new RegExp(`href="${CANON}/en/insights/${a.slug}"[^>]*hreflang="en"`).test(html));
+    check(`FA ${a.id} reciprocal hreflang → en`, new RegExp(`[hH][rR][eE][fF][lL][aA][nN][gG]="en"[^>]*href="${CANON}/en/insights/${a.slug}"`).test(html) || new RegExp(`href="${CANON}/en/insights/${a.slug}"[^>]*[hH][rR][eE][fF][lL][aA][nN][gG]="en"`).test(html));
     check(`FA ${a.id} FA hero SVG referenced`, html.includes(`/insights/heroes/fa/${a.id}.svg`));
     check(`FA ${a.id} references anchors`, html.includes('id="ref-'));
     check(`FA ${a.id} inline citation links`, /href="#ref-/.test(html));
@@ -144,24 +144,28 @@ const main = async () => {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(`${BASE}/en/insights`, { waitUntil: 'networkidle', timeout: 60000 });
-  const idxHtml = await page.content();
-  check('EN index: 20 article cards', (idxHtml.match(/ins-card/g) || []).length >= 20);
+  const idxDom = await page.evaluate((slugs) => ({
+    cardHtml: (document.body.innerHTML.match(/ins-card/g) || []).length,
+    articleLinks: [...new Set([...document.querySelectorAll('a[href^="/en/insights/"]')].map((a) => a.getAttribute('href')))].filter((h) => slugs.some((s) => h === `/en/insights/${s}`)).length,
+  }), articles.map((a) => a.slug));
+  check('EN index: all 20 articles listed', idxDom.articleLinks === 20, `${idxDom.articleLinks} article links, ${idxDom.cardHtml} ins-card refs`);
   await page.screenshot({ path: path.join(OUT, 'index-en-desktop.png'), fullPage: false });
 
   // FA index in a real browser: RTL, Persian H1, 20 cards, no notice
   const faPage = await ctx.newPage();
   await faPage.goto(`${BASE}/fa/insights`, { waitUntil: 'networkidle', timeout: 60000 });
-  const faDom = await faPage.evaluate(() => ({
+  const faDom = await faPage.evaluate((slugs) => ({
     lang: document.documentElement.lang,
     dir: document.documentElement.dir,
     h1: document.querySelector('h1')?.textContent ?? '',
     cards: document.querySelectorAll('.ins-card').length,
+    articleLinks: [...new Set([...document.querySelectorAll('a[href^="/fa/insights/"]')].map((a) => a.getAttribute('href')))].filter((h) => slugs.some((s) => h === `/fa/insights/${s}`)).length,
     notice: document.body.textContent.includes('فارسی در راه') || document.body.textContent.includes('English edition'),
-  }));
+  }), faArticles.map((a) => a.slug));
   check('FA index: documentElement lang=fa', faDom.lang === 'fa', `got '${faDom.lang}'`);
   check('FA index: documentElement dir=rtl', faDom.dir === 'rtl', `got '${faDom.dir}'`);
   check('FA index: Persian H1', /[\u0600-\u06FF]/.test(faDom.h1), `h1='${faDom.h1.slice(0, 40)}'`);
-  check('FA index: 20 article cards', faDom.cards >= 20, `got ${faDom.cards}`);
+  check('FA index: all 20 articles listed', faDom.articleLinks === 20, `${faDom.articleLinks} article links, ${faDom.cards} .ins-card`);
   check('FA index: no fallback notice', !faDom.notice);
   await faPage.screenshot({ path: path.join(OUT, 'index-fa-desktop.png'), fullPage: true });
 

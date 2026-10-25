@@ -5678,7 +5678,7 @@ section:first-of-type {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1023px) {
   .lang-tab {
     padding: 10px 12px;
     min-height: 42px;
@@ -5692,9 +5692,11 @@ section:first-of-type {
     display: inline;
   }
 
-  /* Full navigation on phones: header wraps into two rows —
+  /* Full navigation on phones and tablets: header wraps into two rows —
      row 1: brand + switcher + CTA; row 2: horizontally scrollable nav.
-     The switcher never sits inside a collapsed menu. */
+     The switcher never sits inside a collapsed menu. (was max-width: 600px —
+     the single-row header with 8 nav links + switcher + CTA overflowed the
+     601-1023px range in both LTR and RTL.) */
   .site-header-inner {
     flex-wrap: wrap;
     row-gap: 0.55rem;
@@ -7896,6 +7898,7 @@ html[dir='rtl'] .arrow {
   border: 1px solid #1c2733;
   border-radius: 5px;
   padding: 0.1em 0.35em;
+  overflow-wrap: anywhere; /* long identifiers/URLs must wrap, never push RTL or LTR prose wide */
 }
 
 .ins-prose strong {
