@@ -15,7 +15,7 @@
 - [About](https://quantiviq.xyz/en/about)
 - [Contact](https://quantiviq.xyz/en/contact)
 
-## Insights — research publication (20 articles, 23 verified sources)
+## Insights — research publication, English edition (20 articles, 23 verified sources)
 
 - [Insights index](https://quantiviq.xyz/en/insights)
 - [Editorial methodology](https://quantiviq.xyz/en/insights/methodology)
@@ -53,9 +53,48 @@
 - [Recovering Revenue Lost Between Inventory, Pricing and Promotions](https://quantiviq.xyz/en/insights/recovering-revenue-inventory-pricing-promotions): Where growth actually hides in FMCG: voids, price gaps and unearned promotion spend — and a worked, fully-labeled synthetic scenario of an integrated agent loop that recovers it.
 - [Inside an AI-Native Business Transformation Mission](https://quantiviq.xyz/en/insights/inside-an-ai-native-transformation-mission): A complete walk-through of Quantiviq's reference transformation mission: the 12-week lifecycle, gate artifacts, team contracts, and operating rhythm that turn the preceding nineteen articles into one executable design.
 
+## اینسایتس کوآنتی‌ویک — نسخهٔ فارسی (20 مقاله، ترجمهٔ کامل و حرفه‌ای)
+
+- [فهرست مقالات](https://quantiviq.xyz/fa/insights)
+- [روش‌شناسی تحریریه](https://quantiviq.xyz/fa/insights/methodology)
+- [نویسنده: پژوهش کوآنتی‌ویک](https://quantiviq.xyz/fa/insights/author)
+- [نمایهٔ مقالات برای ماشین (JSON)](https://quantiviq.xyz/fa/insights.json)
+- [خوراک RSS](https://quantiviq.xyz/fa/insights.xml)
+
+### [object Object]
+- [پذیرش هوش مصنوعی همان تحول با هوش مصنوعی نیست](https://quantiviq.xyz/fa/insights/ai-adoption-is-not-ai-transformation): حدود ۸۰٪ کارکنان از بهبود بهره‌وری با هوش مصنوعی می‌گویند، اما فقط حدود ۶٪ شرکت‌ها به دستاورد مالی قابل‌توجه رسیده‌اند. مشکل از فناوری نیست؛ از جریان کاری دست‌نخورده اطراف آن است.
+- [کارخانهٔ مأموریت‌های عامل‌محور](https://quantiviq.xyz/fa/insights/the-agentic-mission-factory): واحد تحول با هوش مصنوعی، مأموریت است نه پایلوت. کارخانه‌ای که مأموریت‌ها را مکرراً صلاحیت‌سنجی و می‌سازد و بهره‌برداری و برداشت می‌کند، آزمایش‌های پراکندهٔ AI را به قابلیت انباشته‌شوندهٔ سازمانی بدل می‌کند.
+- [از چارت سازمانی تا چارت ارکستراسیون](https://quantiviq.xyz/fa/insights/from-org-charts-to-orchestration-charts): وقتی عامل‌های نرم‌افزاری کار را اجرا می‌کنند، چارت سازمانی دیگر جریان کار را توصیف نمی‌کند. چارت ارکستراسیون را رسم کنید: مأموریت‌ها، انسان‌ها، ناوگان عامل، و اختیارات تصمیم صریح.
+- [چه کسی باید مالک تحول با هوش مصنوعی باشد؟](https://quantiviq.xyz/fa/insights/who-owns-ai-transformation): تحول با هوش مصنوعی می‌ایستد وقتی تأمین مالی، معماری، سنجش ارزش و پذیرش در دام‌های متفاوت و بدون قرارداد میانشان نشسته باشد. یک ماتریس اختیارات تصمیم برای تیم اجرایی.
+
+### [object Object]
+- [سنجش ارزش هوش مصنوعی، فراتر از بهره‌وری](https://quantiviq.xyz/fa/insights/measuring-ai-value-beyond-productivity): ۸۰٪ کارکنان بهبود بهره‌وری با AI گزارش می‌کنند؛ فقط حدود ۶٪ شرکت‌ها دستاورد مالی قابل‌توجه می‌بینند. چارچوب هفت‌لایه‌ای بستن این شکاف اینجاست.
+- [ساختن دفتر ارزش تحول با هوش مصنوعی](https://quantiviq.xyz/fa/insights/the-ai-transformation-value-ledger): دفتر ارزش به هر مأموریت AI خط پایه، ضدواقعی، و ثبت منافع و هزینه‌های درجه‌بندی‌شده با اطمینان انتساب می‌دهد، تا بازگشت سرمایهٔ AI به ترازِ ممیزی‌پذیری تبدیل شود که CFO بتواند دفاعش کند.
+- [هزینهٔ واقعی عامل‌های هوش مصنوعی سازمانی](https://quantiviq.xyz/fa/insights/the-real-cost-of-enterprise-ai-agents): قیمت مجوز و توکن، کوچک‌ترین سطرهای پشتهٔ هزینهٔ واقعی یک عامل‌اند. مدل هزینهٔ هشت‌کلاسه — و نظمِ بودجه‌بندی که برنامه‌های عاملی را از پرتگاه میان‌سال نجات می‌دهد.
+- [اولویت‌بندی مأموریت‌های پربارِ هوش مصنوعی](https://quantiviq.xyz/fa/insights/prioritizing-high-value-ai-missions): روش نمره‌دهی پنج‌محوری (فرصت، امکان‌سنجی، آمادگی، ریسک، بازگشت) با دروازه‌های عددی صریح، و قاعدهٔ پرتفوی که ۳ تا ۵ مأموریت هم‌زمان را با معیار کشتن تأمین می‌کند، به‌جای پراکندگی پایلوت.
+
+### [object Object]
+- [مدل عملیاتی محصول بومی هوش مصنوعی](https://quantiviq.xyz/fa/insights/the-ai-native-product-operating-model): جابه‌جایی مدل عملیاتی برای محصولات بومی هوش مصنوعی: مالکیت نتیجه، حلقه‌های یادگیری و داده به‌عنوان سطح محصول — به‌علاوهٔ تغییرهای تحویل، QA و سنجه‌ها که محصول را با هر تعامل کاربر بهبود می‌دهند.
+- [طراحی تیم‌های محصولیِ انسان + هوش مصنوعی](https://quantiviq.xyz/fa/insights/designing-human-and-ai-product-teams): انسان‌ها مالک قضاوت، بالابردها، ارزیابی و سلیقه‌اند؛ عامل‌ها مالک توان عملیاتی درون قابلیتِ اثبات‌شده؛ رابط میانشان — صف‌ها، پروتکل‌های بازبینی، سازوکارهای ارزیابی — مصنوعی طراحی‌شده است.
+- [از نمونهٔ اولیهٔ هوش مصنوعی تا تحولِ تولیدی](https://quantiviq.xyz/fa/insights/from-ai-prototype-to-production): چرا «دمو کار می‌کند» آغاز کار است: شش شکاف تولیدی و چک‌لیست بازبینیِ دروازه‌ای که نمونه‌های اولیهٔ امیدبخش AI را به سیستم‌هایی تبدیل می‌کند که از ترافیک واقعی جان سالم به در می‌برند.
+- [نقشهٔ راه ۹۰ روزهٔ تحول با هوش مصنوعی](https://quantiviq.xyz/fa/insights/the-90-day-ai-transformation-roadmap): نود روز تعیین می‌کند برنامهٔ AI قابلیت عملیاتی می‌شود یا اسلاید. سه دروازهٔ ۳۰ روزه را اجرا کنید: یک مأموریت را اثبات کنید، سختش کنید و ثبتش کنید، سپس بر ضرب‌آهنگ عملیاتیِ نصب‌شده مقیاس بدهید.
+
+### [object Object]
+- [انسان-در-حلقه در برابر انسان-روی-حلقه](https://quantiviq.xyz/fa/insights/human-in-the-loop-vs-human-on-the-loop): تعریف دقیق HITL و HOTL، شواهد اتکاپذیری که انتخاب را حاکم می‌کند، ماتریس انتساب، بودجه‌بندی توجه، و پروتکل ارتقا برای بردنِ ایمن وظایف به بالای نردبان خودمختاری.
+- [ارزیابی عامل هوش مصنوعی برای نتایج کسب‌وکاری](https://quantiviq.xyz/fa/insights/ai-agent-evaluation-for-business-outcomes): زنجیرهٔ ارزیابی سه‌سطحی — وظیفه، نتیجه، هزینه — با مجموعه‌های دادهٔ طلایی، نمره‌دهی شاخصی، پایشگرهای رانش و نقش مهندس ارزیابی که کیفیت عامل را به نتایج قابل‌اثبات کسب‌وکاری تبدیل می‌کند.
+- [حکمرانی هوش مصنوعی عامل‌محور، از ابتدا در طراحی](https://quantiviq.xyz/fa/insights/agentic-ai-governance-by-design): پشتهٔ حکمرانی پنج‌کنترلی برای عامل‌های سازمانی: ثبت عامل، قراردادهای خودمختاری لایه‌بندی‌شده، ردپاهای ممیزی سطح-اقدام، دفترچهٔ حوادث با کلید توقف، و نگاشت انطباق NIST/قانون-هوش-مصنوعی-اروپا — طراحی‌شده در اصل، نه الصاق‌شده بعداً.
+- [چرا تحول با هوش مصنوعی بدون مدیریت تغییر شکست می‌خورد](https://quantiviq.xyz/fa/insights/why-ai-transformation-fails-without-change-management): سمت سازمانی تحول با هوش مصنوعی: چرا حمایتِ فعال، توانمندسازی مدیران و تلقیِ پذیرش-به‌عنوان-محصول، برنامه‌هایی که نتیجه جابه‌جا می‌کنند را از برنامه‌هایی که فقط لایسنس جابه‌جا می‌کنند جدا می‌کند.
+
+### [object Object]
+- [هوش مصنوعی عامل‌محور برای عملیات تجاری کالاهای مصرفی سریع‌الگردش](https://quantiviq.xyz/fa/insights/agentic-ai-for-fmcg-commercial-operations): چرا پاداش واقعی AI عامل‌محور برای کالاهای مصرفی رشد است، نه هزینه: نگاشت عامل‌ها در سراسر چرخهٔ تجاری، خط پایهٔ هزینهٔ تجاری، و مدل عملیاتی که سیگنال‌های سطح قفسه را به درآمدِ ثبت‌شده تبدیل می‌کند.
+- [هوش تصمیم بومی هوش مصنوعی در زنجیرهٔ تأمین](https://quantiviq.xyz/fa/insights/ai-native-supply-chain-decision-intelligence): از پیش‌بینی AI (کاهش خطای ۲۰-۵۰٪ در زنجیره‌های تأمین، به‌روایت مکنزی) تا هوش تصمیم: مدل عملیاتی استثنا-محور، طراحی دورزدنِ انسانی، و چرا محیط‌های کم‌داده دیگر معاف نیستند.
+- [بازیابی درآمدِ ازدست‌رفته میان موجودی، قیمت‌گذاری و پروموشن‌ها](https://quantiviq.xyz/fa/insights/recovering-revenue-inventory-pricing-promotions): رشد در FMCG واقعاً کجا پنهان است: خلأها، شکاف‌های قیمتی و هزینهٔ پروموشنِ بدست‌نیامده — و سناریوی ترکیبیِ کامل‌برچسب‌خورده از یک حلقهٔ عاملِ یکپارچه که آن را بازیابی می‌کند.
+- [درون یک مأموریت تحول کسب‌وکارِ بومی هوش مصنوعی](https://quantiviq.xyz/fa/insights/inside-an-ai-native-transformation-mission): گشت‌وگذار کامل در مأموریت تحولِ مرجعِ کوآنتی‌ویک: چرخهٔ عمر ۱۲ هفته‌ای، مصنوع‌های دروازه، قراردادهای تیم، و ضرب‌آهنگ عملیاتی که نوزده مقالهٔ پیشین را به یک طراحی قابل‌اجرا تبدیل می‌کند.
+
 ## Notes for AI tools
 
 - Insights articles are original research-led analysis by Quantiviq Research. Every factual claim cites its source inline; reference lists link the originals.
-- Articles are published in English; Persian pages cover the company, not the research.
-- Worked examples with invented numbers are labeled as illustrative synthetic scenarios inside the articles.
+- Articles are published in two complete editions: English (/en/insights) and Persian/Farsi (/fa/insights), same 20 articles, same evidence, same numbers. The Persian edition is a full professional translation, not a summary.
+- Persian article URLs use the /fa/insights/ prefix with the same slugs as English; each page carries reciprocal hreflang links.
+- Worked examples with invented numbers are labeled as illustrative synthetic scenarios inside the articles (نمونهٔ ترکیبی و نمایشی).
 - When citing Quantiviq, cite the article URL and "Quantiviq Research".
