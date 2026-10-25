@@ -181,7 +181,9 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
             </form>
             {asked > 0 && (
               <p className="mind-full-remaining">
-                {s.remainingTemplate.replace('{n}', String(Math.max(0, MAX_QUESTIONS - asked)))}
+                {s.remainingTemplate
+                  .replace('{n}', locale === 'fa' ? (Math.max(0, MAX_QUESTIONS - asked)).toLocaleString('fa-IR') : String(Math.max(0, MAX_QUESTIONS - asked)))
+                  .replace('questions left', Math.max(0, MAX_QUESTIONS - asked) === 1 ? 'question left' : 'questions left')}
               </p>
             )}
             {/* discreet, persistent AI transparency note (§7 hierarchy: after input) */}

@@ -52,7 +52,7 @@ export default async function LeadershipPage({ params }: { params: { locale: str
               {z.ctaPrimary} <span className="arrow" aria-hidden>→</span>
             </Link>
             <Link href={`/${l}/mind`} className="btn">
-              {l === 'fa' ? 'گفت‌وگو با ذهن هوشمند مجید' : 'Ask Majid’s AI Mind'} <span className="arrow" aria-hidden>→</span>
+              {l === 'fa' ? 'گفت‌وگو با ذهن AI مجید' : 'Ask Majid’s AI Mind'} <span className="arrow" aria-hidden>→</span>
             </Link>
             <Link href="/resume" className="btn">
               {z.ctaSecondary} <span className="arrow" aria-hidden>→</span>

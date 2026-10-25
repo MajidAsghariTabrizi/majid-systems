@@ -96,7 +96,12 @@ await p.locator('.mind-fab').click();
 await p.waitForTimeout(400);
 await p.locator('.mind-sugg-chip').first().click();
 await p.waitForSelector('.mind-msg-ai .mind-bubble', { timeout: 20000 });
-ok('regression: floating panel chat still streams', (await p.locator('.mind-msg-ai .mind-bubble').last().innerText()).length > 60);
+let streamed = '';
+for (let i = 0; i < 20 && streamed.length <= 60; i++) {
+  streamed = (await p.locator('.mind-msg-ai .mind-bubble').last().innerText()).trim();
+  await p.waitForTimeout(500);
+}
+ok('regression: floating panel chat still streams', streamed.length > 60);
 await ctx.close();
 await b.close();
 console.log(results.join('\n'));

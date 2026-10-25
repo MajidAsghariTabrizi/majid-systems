@@ -55,9 +55,9 @@ export const en = {
         'Executive summary for CEOs, founders and hiring teams: the organizational problems Majid leads, what is actually proven, verified career layers, and a direct hiring contact path.',
     },
     mind: {
-      title: "Beyond the Résumé — Ask Majid's AI Mind | Quantiviq",
+      title: "Beyond the Résumé — Ask Majid's AI Mind",
       description:
-        "An AI assistant grounded in Majid Asghari Tabrizi's published projects, articles and frameworks. Ask about product leadership, AI transformation, agentic AI and business operating models — and inspect the evidence behind every answer.",
+        "An AI assistant grounded in Majid Asghari Tabrizi's projects, articles and frameworks. Ask about product leadership, AI transformation and agentic AI.",
     },
   },
   nav: {
