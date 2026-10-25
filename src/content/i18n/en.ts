@@ -54,6 +54,11 @@ export const en = {
       description:
         'Executive summary for CEOs, founders and hiring teams: the organizational problems Majid leads, what is actually proven, verified career layers, and a direct hiring contact path.',
     },
+    mind: {
+      title: "Ask Majid's AI Mind | Quantiviq",
+      description:
+        'An AI assistant grounded in Majid Asghari’s approved professional experience, projects, research and thinking frameworks. Ask about AI transformation, systems and his work — with sources.',
+    },
   },
   nav: {
     insights: 'Insights',
@@ -64,6 +69,7 @@ export const en = {
     about: 'About',
     lab: 'Lab',
     leadership: 'Leadership',
+    mind: 'Mind',
     contact: 'Contact',
     cta: 'Rebuild a Function',
     builder: 'Builder Profile',

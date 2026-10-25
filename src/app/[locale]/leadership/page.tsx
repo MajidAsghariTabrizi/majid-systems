@@ -51,6 +51,9 @@ export default async function LeadershipPage({ params }: { params: { locale: str
             <Link href={`/${l}/contact?intent=hiring`} className="btn btn-primary">
               {z.ctaPrimary} <span className="arrow" aria-hidden>→</span>
             </Link>
+            <Link href={`/${l}/mind`} className="btn">
+              {l === 'fa' ? 'گفت‌وگو با ذهن هوشمند مجید' : 'Ask Majid’s AI Mind'} <span className="arrow" aria-hidden>→</span>
+            </Link>
             <Link href="/resume" className="btn">
               {z.ctaSecondary} <span className="arrow" aria-hidden>→</span>
             </Link>

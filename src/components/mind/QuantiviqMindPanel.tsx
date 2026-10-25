@@ -1,30 +1,17 @@
 'use client';
 
 /**
- * Quantiviq Mind — chat panel. Streams SSE from the same-origin gateway.
+ * Quantiviq Mind — floating chat panel (overlay variant).
+ * Chat state lives in useMindChat, shared with the /mind full page.
  * Markdown is rendered with a minimal safe renderer (no raw HTML, links
  * restricted to the allowlist enforced server-side).
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMindChat, type Msg, type Source } from './useMindChat';
 import type { MindStrings } from './strings';
 
-type Msg = { role: 'user' | 'assistant'; content: string; sources?: Source[] };
-type Source = { id: string; title: string; url: string; type: string; class: string; language: string };
-
-const MAX_QUESTIONS = 6;
-
-function sessionId(): string {
-  if (typeof window === 'undefined') return 'server';
-  let s = sessionStorage.getItem('mind-session');
-  if (!s) {
-    s = (crypto.randomUUID?.() ?? `s-${Date.now()}-${Math.random()}`).replace(/-/g, '').slice(0, 32);
-    sessionStorage.setItem('mind-session', s);
-  }
-  return s;
-}
-
 /** minimal safe inline rendering: **bold**, `code`, allowlisted links */
-function renderInline(text: string) {
+export function renderInline(text: string) {
   const parts: React.ReactNode[] = [];
   const re = /(\*\*[^*]+\*\*|`[^`]+`|https?:\/\/[^\s<>")\]]+)/g;
   let last = 0;
@@ -59,7 +46,7 @@ function renderInline(text: string) {
   return parts;
 }
 
-function MindMessage({ m }: { m: Msg }) {
+export function MindMessage({ m, label = 'Sources' }: { m: Msg; label?: string }) {
   if (m.role === 'user') {
     return (
       <div className="mind-msg mind-msg-user" dir="auto">
@@ -78,9 +65,9 @@ function MindMessage({ m }: { m: Msg }) {
       </div>
       {m.sources && m.sources.length > 0 && (
         <div className="mind-sources">
-          <span className="mind-sources-label">Sources</span>
+          <span className="mind-sources-label">{label}</span>
           <ul>
-            {m.sources.slice(0, 5).map((s) => (
+            {m.sources.slice(0, 5).map((s: Source) => (
               <li key={s.id}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer" dir="ltr">
                   {s.title.slice(0, 64)}
@@ -95,14 +82,9 @@ function MindMessage({ m }: { m: Msg }) {
 }
 
 export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: MindStrings; onClose: () => void }) {
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const { messages, busy, error, notice, asked, send, stop, reset } = useMindChat(locale, s);
   const [input, setInput] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
-  const [asked, setAsked] = useState(0);
   const [copied, setCopied] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -117,82 +99,6 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
     window.addEventListener('keydown', esc);
     return () => window.removeEventListener('keydown', esc);
   }, [onClose]);
-
-  const send = useCallback(
-    async (text: string) => {
-      const q = text.trim();
-      if (!q || busy) return;
-      if (asked >= MAX_QUESTIONS) {
-        setNotice(s.limitReached);
-        return;
-      }
-      setError('');
-      setNotice('');
-      setInput('');
-      setAsked((n) => n + 1);
-      const history = [...messages, { role: 'user' as const, content: q }];
-      setMessages([...history, { role: 'assistant', content: '' }]);
-      setBusy(true);
-
-      const ac = new AbortController();
-      abortRef.current = ac;
-      try {
-        const res = await fetch('/api/public-mind/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            session: sessionId(),
-            locale,
-            messages: history.map((m) => ({ role: m.role, content: m.content })),
-          }),
-          signal: ac.signal,
-        });
-        if (!res.ok) {
-          const j = await res.json().catch(() => ({}));
-          if (j.error === 'disabled') setError(locale === 'fa' ? s.disabledFa : s.disabledEn);
-          else if (j.error === 'session_limit' || j.error === 'budget')
-            setError(locale === 'fa' ? j.message_fa ?? s.limitReached : j.message_en ?? s.limitReached);
-          else setError(s.error);
-          setMessages(history);
-          return;
-        }
-        const reader = res.body!.getReader();
-        const dec = new TextDecoder();
-        let buf = '';
-        let answer = '';
-        let sources: Source[] | undefined;
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buf += dec.decode(value, { stream: true });
-          let idx: number;
-          while ((idx = buf.indexOf('\n\n')) >= 0) {
-            const frame = buf.slice(0, idx);
-            buf = buf.slice(idx + 2);
-            const evLine = frame.split('\n').find((l) => l.startsWith('event: '));
-            const dataLine = frame.split('\n').find((l) => l.startsWith('data: '));
-            if (!evLine || !dataLine) continue;
-            const ev = evLine.slice(7).trim();
-            const data = JSON.parse(dataLine.slice(6));
-            if (ev === 'sources') sources = data.sources;
-            else if (ev === 'delta') answer += data.text;
-            else if (ev === 'done' && data.status === 'error') setError(s.error);
-            setMessages([
-              ...history,
-              { role: 'assistant', content: answer, sources },
-            ]);
-          }
-        }
-      } catch (e) {
-        if ((e as Error).name !== 'AbortError') setError(s.error);
-        setMessages((ms) => (ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
-      } finally {
-        setBusy(false);
-        abortRef.current = null;
-      }
-    },
-    [busy, asked, messages, locale, s]
-  );
 
   const last = messages.at(-1);
   const showContact = !busy && last?.role === 'assistant' && (last.content?.length ?? 0) > 80;
@@ -211,7 +117,15 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             </div>
           </div>
           <div className="mind-head-actions">
-            <button type="button" className="mind-icon-btn" onClick={() => { setMessages([]); setAsked(0); setNotice(''); setError(''); }} aria-label={s.reset}>
+            <a
+              className="mind-icon-btn"
+              href={locale === 'fa' ? '/fa/mind' : '/en/mind'}
+              aria-label={s.openFull}
+              title={s.openFull}
+            >
+              ⤢
+            </a>
+            <button type="button" className="mind-icon-btn" onClick={reset} aria-label={s.reset}>
               ⟳
             </button>
             <button type="button" className="mind-icon-btn" onClick={onClose} aria-label={s.close}>
@@ -223,7 +137,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
         <div className="mind-scroll" ref={scrollRef}>
           {messages.length === 0 && (
             <div className="mind-empty">
-              <p className="mind-empty-title">{locale === 'fa' ? 'با ذهن هوشمند مجید گفت‌وگو کن' : 'Ask Majid’s AI Mind'}</p>
+              <p className="mind-empty-title">{s.emptyTitle}</p>
               <div className="mind-sugg">
                 {s.suggestions.map((sg) => (
                   <button key={sg} type="button" className="mind-sugg-chip" onClick={() => send(sg)}>
@@ -234,7 +148,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             </div>
           )}
           {messages.map((m, i) => (
-            <MindMessage key={i} m={m} />
+            <MindMessage key={i} m={m} label={s.sources} />
           ))}
           {busy && (
             <div className="mind-typing" aria-live="polite">
@@ -272,6 +186,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
           onSubmit={(e) => {
             e.preventDefault();
             send(input);
+            setInput('');
           }}
         >
           <label className="mind-sr" htmlFor="mind-input">
@@ -289,16 +204,17 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 send(input);
+                setInput('');
               }
             }}
-            disabled={asked >= MAX_QUESTIONS && !busy}
+            disabled={asked >= 6 && !busy}
           />
           {busy ? (
-            <button type="button" className="mind-send" onClick={() => abortRef.current?.abort()}>
+            <button type="button" className="mind-send" onClick={stop}>
               {s.stop}
             </button>
           ) : (
-            <button type="submit" className="mind-send" disabled={!input.trim() || asked >= MAX_QUESTIONS}>
+            <button type="submit" className="mind-send" disabled={!input.trim() || asked >= 6}>
               {s.send}
             </button>
           )}

@@ -29,6 +29,7 @@ export function Header({ locale }: { locale?: Locale }) {
         { label: t.nav.method, href: localePath(locale, '/method') },
         { label: t.nav.proof, href: localePath(locale, '/proof') },
         { label: t.nav.leadership, href: localePath(locale, '/leadership') },
+        { label: t.nav.mind, href: localePath(locale, '/mind') },
         { label: t.nav.about, href: localePath(locale, '/about') },
       ]
     : NAV.filter((n) => n.href !== '/journey');

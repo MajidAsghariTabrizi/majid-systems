@@ -20,6 +20,7 @@ import sqlite3
 import sys
 import threading
 import time
+import urllib.error
 import urllib.request
 import urllib.error
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -222,33 +223,59 @@ Answer as Quantiviq Mind per the rules. Answer language: {'Persian (فارسی)'
     return user
 
 # ---------------------------------------------------------------- inference
+def _glm_body(thinking):
+    body = {
+        "model": CFG["model"],
+        "messages": [],
+        "max_tokens": CFG["max_output_tokens"],
+        "temperature": 0.6,
+        "stream": True,
+        "stream_options": {"include_usage": True},
+    }
+    if thinking == "disabled":
+        # verified 2026-10-23 (coding endpoint): ~3x faster, stops reasoning
+        # tokens from silently consuming the entire output budget
+        body["thinking"] = {"type": "disabled"}
+    elif thinking == "enabled":
+        # standard endpoint glm-5.3-flash ALWAYS thinks (code 1210 on
+        # disabled) — verified 2026-10-25; budgets remain the cost guard
+        body["thinking"] = {"type": "enabled"}
+    return body
+
 def call_glm_stream(messages, on_delta):
-    """Returns (full_text, usage). Calls on_delta(text) per chunk."""
-    req = urllib.request.Request(
-        CFG["base_url"].rstrip("/") + "/chat/completions",
-        data=json.dumps(
-            {
-                "model": CFG["model"],
-                "messages": messages,
-                "max_tokens": CFG["max_output_tokens"],
-                "temperature": 0.6,
-                "stream": True,
-                "stream_options": {"include_usage": True},
-                # verified 2026-10-23: cuts latency ~3x and stops reasoning
-                # tokens from silently consuming the entire output budget
-                **({"thinking": {"type": "disabled"}} if CFG.get("disable_thinking") else {}),
-            }
-        ).encode(),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {API_KEY}",
-        },
-        method="POST",
-    )
+    """Returns (full_text, usage). Calls on_delta(text) per chunk.
+    Thinking control is endpoint-adaptive: try disabled, and if this
+    endpoint/model rejects disabling (HTTP 400 code 1210), retry once
+    with thinking enabled — no config change needed at activation."""
+    url = CFG["base_url"].rstrip("/") + "/chat/completions"
+    thinking = "disabled" if CFG.get("disable_thinking", True) else "none"
+
+    def send(thinking_mode):
+        body = _glm_body(thinking_mode)
+        body["messages"] = messages
+        return urllib.request.Request(
+            url,
+            data=json.dumps(body).encode(),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {API_KEY}",
+            },
+            method="POST",
+        )
+
+    req = send(thinking)
     full, usage = [], {}
-    with urllib.request.urlopen(
-        req, timeout=CFG["total_timeout_s"]
-    ) as resp:
+    try:
+        resp_ctx = urllib.request.urlopen(req, timeout=CFG["total_timeout_s"])
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", "replace")[:300]
+        if thinking == "disabled" and e.code == 400 and ("1210" in detail or "cannot be disabled" in detail):
+            # endpoint demands thinking: retry once with it enabled
+            req = send("enabled")
+            resp_ctx = urllib.request.urlopen(req, timeout=CFG["total_timeout_s"])
+        else:
+            raise
+    with resp_ctx as resp:
         for raw in resp:
             line = raw.decode("utf-8", "replace").strip()
             if not line.startswith("data:"):
