@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0d12"/>
+  <g opacity="0.05" stroke="#8fa3b8"><line x1="0" y1="0" x2="0" y2="630"/><line x1="150" y1="0" x2="150" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/><line x1="450" y1="0" x2="450" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/><line x1="750" y1="0" x2="750" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/><line x1="1050" y1="0" x2="1050" y2="630"/><line x1="1200" y1="0" x2="1200" y2="630"/></g>
+  <text x="1104" y="96" text-anchor="end" font-family="Inter, sans-serif" font-size="26" font-weight="700" letter-spacing="7" fill="#8fa3b8">QUANTIVIQ · INSIGHTS</text>
+  <text x="1104" y="140" text-anchor="end" font-family="Estedad, Vazirmatn, Tahoma, system-ui, sans-serif" font-size="21" fill="#f5b968">اقتصاد و ارزش کسب‌وکاری</text>
+  <text x="96" y="150" text-anchor="start" font-family="Inter, sans-serif" font-size="96" font-weight="800" fill="none" stroke="#f5b968" stroke-width="2.5">07</text>
+  <rect x="984" y="168" width="120" height="5" fill="#f5b968"/>
+  <text x="1104" y="270" text-anchor="end" font-family="Estedad, Vazirmatn, Tahoma, system-ui, sans-serif" font-size="50" font-weight="800" fill="#f1f5f9">هزینهٔ واقعی عامل‌های سازمانی هوش</text><text x="1104" y="330" text-anchor="end" font-family="Estedad, Vazirmatn, Tahoma, system-ui, sans-serif" font-size="50" font-weight="800" fill="#f1f5f9">مصنوعی</text>
+  <text x="1104" y="560" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="20" letter-spacing="2" fill="#64748b">quantiviq.xyz/fa/insights</text>
+  <rect x="0.5" y="0.5" width="1199" height="629" fill="none" stroke="#1c2733"/>
+</svg>

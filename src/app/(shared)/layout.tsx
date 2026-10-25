@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { BRAND, SITE } from '@/content/shared';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
 
@@ -46,6 +47,7 @@ export default function SharedLayout({ children }: { children: ReactNode }) {
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <QuantiviqMind locale="en" />
       </body>
     </html>
   );

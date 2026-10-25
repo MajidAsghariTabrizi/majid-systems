@@ -1,0 +1,473 @@
+﻿insights-check against http://127.0.0.1:3219 (EN 20, FA 20)
+  ok  EN GET /en/insights → 200
+  ok  EN GET /en/insights/methodology → 200
+  ok  EN GET /en/insights/author → 200
+  ok  EN 01 GET /en/insights/ai-adoption-is-not-ai-transformation → 200
+  ok  EN 01 canonical
+  ok  EN 01 OG image
+  ok  EN 01 BlogPosting JSON-LD
+  ok  EN 01 BreadcrumbList JSON-LD
+  ok  EN 01 hero SVG referenced
+  ok  EN 01 reciprocal hreflang → fa
+  ok  EN 01 internal links resolve (16)
+  ok  EN 02 GET /en/insights/the-agentic-mission-factory → 200
+  ok  EN 02 canonical
+  ok  EN 02 OG image
+  ok  EN 02 BlogPosting JSON-LD
+  ok  EN 02 BreadcrumbList JSON-LD
+  ok  EN 02 hero SVG referenced
+  ok  EN 02 reciprocal hreflang → fa
+  ok  EN 02 internal links resolve (20)
+  ok  EN 03 GET /en/insights/from-org-charts-to-orchestration-charts → 200
+  ok  EN 03 canonical
+  ok  EN 03 OG image
+  ok  EN 03 BlogPosting JSON-LD
+  ok  EN 03 BreadcrumbList JSON-LD
+  ok  EN 03 hero SVG referenced
+  ok  EN 03 reciprocal hreflang → fa
+  ok  EN 03 internal links resolve (17)
+  ok  EN 04 GET /en/insights/who-owns-ai-transformation → 200
+  ok  EN 04 canonical
+  ok  EN 04 OG image
+  ok  EN 04 BlogPosting JSON-LD
+  ok  EN 04 BreadcrumbList JSON-LD
+  ok  EN 04 hero SVG referenced
+  ok  EN 04 reciprocal hreflang → fa
+  ok  EN 04 internal links resolve (17)
+  ok  EN 05 GET /en/insights/measuring-ai-value-beyond-productivity → 200
+  ok  EN 05 canonical
+  ok  EN 05 OG image
+  ok  EN 05 BlogPosting JSON-LD
+  ok  EN 05 BreadcrumbList JSON-LD
+  ok  EN 05 hero SVG referenced
+  ok  EN 05 reciprocal hreflang → fa
+  ok  EN 05 internal links resolve (17)
+  ok  EN 06 GET /en/insights/the-ai-transformation-value-ledger → 200
+  ok  EN 06 canonical
+  ok  EN 06 OG image
+  ok  EN 06 BlogPosting JSON-LD
+  ok  EN 06 BreadcrumbList JSON-LD
+  ok  EN 06 hero SVG referenced
+  ok  EN 06 reciprocal hreflang → fa
+  ok  EN 06 internal links resolve (17)
+  ok  EN 07 GET /en/insights/the-real-cost-of-enterprise-ai-agents → 200
+  ok  EN 07 canonical
+  ok  EN 07 OG image
+  ok  EN 07 BlogPosting JSON-LD
+  ok  EN 07 BreadcrumbList JSON-LD
+  ok  EN 07 hero SVG referenced
+  ok  EN 07 reciprocal hreflang → fa
+  ok  EN 07 internal links resolve (19)
+  ok  EN 08 GET /en/insights/prioritizing-high-value-ai-missions → 200
+  ok  EN 08 canonical
+  ok  EN 08 OG image
+  ok  EN 08 BlogPosting JSON-LD
+  ok  EN 08 BreadcrumbList JSON-LD
+  ok  EN 08 hero SVG referenced
+  ok  EN 08 reciprocal hreflang → fa
+  ok  EN 08 internal links resolve (20)
+  ok  EN 09 GET /en/insights/the-ai-native-product-operating-model → 200
+  ok  EN 09 canonical
+  ok  EN 09 OG image
+  ok  EN 09 BlogPosting JSON-LD
+  ok  EN 09 BreadcrumbList JSON-LD
+  ok  EN 09 hero SVG referenced
+  ok  EN 09 reciprocal hreflang → fa
+  ok  EN 09 internal links resolve (20)
+  ok  EN 10 GET /en/insights/designing-human-and-ai-product-teams → 200
+  ok  EN 10 canonical
+  ok  EN 10 OG image
+  ok  EN 10 BlogPosting JSON-LD
+  ok  EN 10 BreadcrumbList JSON-LD
+  ok  EN 10 hero SVG referenced
+  ok  EN 10 reciprocal hreflang → fa
+  ok  EN 10 internal links resolve (19)
+  ok  EN 11 GET /en/insights/from-ai-prototype-to-production → 200
+  ok  EN 11 canonical
+  ok  EN 11 OG image
+  ok  EN 11 BlogPosting JSON-LD
+  ok  EN 11 BreadcrumbList JSON-LD
+  ok  EN 11 hero SVG referenced
+  ok  EN 11 reciprocal hreflang → fa
+  ok  EN 11 internal links resolve (19)
+  ok  EN 12 GET /en/insights/the-90-day-ai-transformation-roadmap → 200
+  ok  EN 12 canonical
+  ok  EN 12 OG image
+  ok  EN 12 BlogPosting JSON-LD
+  ok  EN 12 BreadcrumbList JSON-LD
+  ok  EN 12 hero SVG referenced
+  ok  EN 12 reciprocal hreflang → fa
+  ok  EN 12 internal links resolve (17)
+  ok  EN 13 GET /en/insights/human-in-the-loop-vs-human-on-the-loop → 200
+  ok  EN 13 canonical
+  ok  EN 13 OG image
+  ok  EN 13 BlogPosting JSON-LD
+  ok  EN 13 BreadcrumbList JSON-LD
+  ok  EN 13 hero SVG referenced
+  ok  EN 13 reciprocal hreflang → fa
+  ok  EN 13 internal links resolve (18)
+  ok  EN 14 GET /en/insights/ai-agent-evaluation-for-business-outcomes → 200
+  ok  EN 14 canonical
+  ok  EN 14 OG image
+  ok  EN 14 BlogPosting JSON-LD
+  ok  EN 14 BreadcrumbList JSON-LD
+  ok  EN 14 hero SVG referenced
+  ok  EN 14 reciprocal hreflang → fa
+  ok  EN 14 internal links resolve (21)
+  ok  EN 15 GET /en/insights/agentic-ai-governance-by-design → 200
+  ok  EN 15 canonical
+  ok  EN 15 OG image
+  ok  EN 15 BlogPosting JSON-LD
+  ok  EN 15 BreadcrumbList JSON-LD
+  ok  EN 15 hero SVG referenced
+  ok  EN 15 reciprocal hreflang → fa
+  ok  EN 15 internal links resolve (19)
+  ok  EN 16 GET /en/insights/why-ai-transformation-fails-without-change-management → 200
+  ok  EN 16 canonical
+  ok  EN 16 OG image
+  ok  EN 16 BlogPosting JSON-LD
+  ok  EN 16 BreadcrumbList JSON-LD
+  ok  EN 16 hero SVG referenced
+  ok  EN 16 reciprocal hreflang → fa
+  ok  EN 16 internal links resolve (20)
+  ok  EN 17 GET /en/insights/agentic-ai-for-fmcg-commercial-operations → 200
+  ok  EN 17 canonical
+  ok  EN 17 OG image
+  ok  EN 17 BlogPosting JSON-LD
+  ok  EN 17 BreadcrumbList JSON-LD
+  ok  EN 17 hero SVG referenced
+  ok  EN 17 reciprocal hreflang → fa
+  ok  EN 17 internal links resolve (25)
+  ok  EN 18 GET /en/insights/ai-native-supply-chain-decision-intelligence → 200
+  ok  EN 18 canonical
+  ok  EN 18 OG image
+  ok  EN 18 BlogPosting JSON-LD
+  ok  EN 18 BreadcrumbList JSON-LD
+  ok  EN 18 hero SVG referenced
+  ok  EN 18 reciprocal hreflang → fa
+  ok  EN 18 internal links resolve (21)
+  ok  EN 19 GET /en/insights/recovering-revenue-inventory-pricing-promotions → 200
+  ok  EN 19 canonical
+  ok  EN 19 OG image
+  ok  EN 19 BlogPosting JSON-LD
+  ok  EN 19 BreadcrumbList JSON-LD
+  ok  EN 19 hero SVG referenced
+  ok  EN 19 reciprocal hreflang → fa
+  ok  EN 19 internal links resolve (22)
+  ok  EN 20 GET /en/insights/inside-an-ai-native-transformation-mission → 200
+  ok  EN 20 canonical
+  ok  EN 20 OG image
+  ok  EN 20 BlogPosting JSON-LD
+  ok  EN 20 BreadcrumbList JSON-LD
+  ok  EN 20 hero SVG referenced
+  ok  EN 20 reciprocal hreflang → fa
+  ok  EN 20 internal links resolve (27)
+  ok  EN topic transformation-strategy → 200
+  ok  EN topic economics-value → 200
+  ok  EN topic ai-native-operations → 200
+  ok  EN topic trust-governance → 200
+  ok  EN topic applied-industry → 200
+  ok  EN hero SVG 01 → 200
+  ok  EN OG PNG 01 → 200
+  ok  EN hero SVG 02 → 200
+  ok  EN OG PNG 02 → 200
+  ok  EN hero SVG 03 → 200
+  ok  EN OG PNG 03 → 200
+  ok  EN hero SVG 04 → 200
+  ok  EN OG PNG 04 → 200
+  ok  EN hero SVG 05 → 200
+  ok  EN OG PNG 05 → 200
+  ok  EN hero SVG 06 → 200
+  ok  EN OG PNG 06 → 200
+  ok  EN hero SVG 07 → 200
+  ok  EN OG PNG 07 → 200
+  ok  EN hero SVG 08 → 200
+  ok  EN OG PNG 08 → 200
+  ok  EN hero SVG 09 → 200
+  ok  EN OG PNG 09 → 200
+  ok  EN hero SVG 10 → 200
+  ok  EN OG PNG 10 → 200
+  ok  EN hero SVG 11 → 200
+  ok  EN OG PNG 11 → 200
+  ok  EN hero SVG 12 → 200
+  ok  EN OG PNG 12 → 200
+  ok  EN hero SVG 13 → 200
+  ok  EN OG PNG 13 → 200
+  ok  EN hero SVG 14 → 200
+  ok  EN OG PNG 14 → 200
+  ok  EN hero SVG 15 → 200
+  ok  EN OG PNG 15 → 200
+  ok  EN hero SVG 16 → 200
+  ok  EN OG PNG 16 → 200
+  ok  EN hero SVG 17 → 200
+  ok  EN OG PNG 17 → 200
+  ok  EN hero SVG 18 → 200
+  ok  EN OG PNG 18 → 200
+  ok  EN hero SVG 19 → 200
+  ok  EN OG PNG 19 → 200
+  ok  EN hero SVG 20 → 200
+  ok  EN OG PNG 20 → 200
+  ok  EN RSS /insights.xml → 200 with 20 items
+  ok  EN /insights.json → 200
+  ok  GET /sitemap.xml → 200
+  ok  sitemap: all 20 EN articles
+  ok  sitemap: all 20 FA articles
+  ok  sitemap: 40 article URLs total
+  ok  sitemap: FA hreflang reciprocity
+  ok  llms.txt: 20 EN + 20 FA article URLs
+  ok  FA GET /fa/insights → 200
+  ok  FA index: no English-fallback notice
+  ok  FA GET /fa/insights/methodology → 200
+  ok  FA GET /fa/insights/author → 200
+  ok  FA 01 GET /fa/insights/ai-adoption-is-not-ai-transformation → 200
+  ok  FA 01 lang=fa dir=rtl
+  ok  FA 01 canonical (self, FA)
+  ok  FA 01 FA OG image
+  ok  FA 01 reciprocal hreflang → en
+  ok  FA 01 FA hero SVG referenced
+  ok  FA 01 references anchors
+  ok  FA 01 inline citation links
+  ok  FA 01 internal /fa/ links resolve (16)
+  ok  FA 02 GET /fa/insights/the-agentic-mission-factory → 200
+  ok  FA 02 lang=fa dir=rtl
+  ok  FA 02 canonical (self, FA)
+  ok  FA 02 FA OG image
+  ok  FA 02 reciprocal hreflang → en
+  ok  FA 02 FA hero SVG referenced
+  ok  FA 02 references anchors
+  ok  FA 02 inline citation links
+  ok  FA 02 internal /fa/ links resolve (20)
+  ok  FA 03 GET /fa/insights/from-org-charts-to-orchestration-charts → 200
+  ok  FA 03 lang=fa dir=rtl
+  ok  FA 03 canonical (self, FA)
+  ok  FA 03 FA OG image
+  ok  FA 03 reciprocal hreflang → en
+  ok  FA 03 FA hero SVG referenced
+  ok  FA 03 references anchors
+  ok  FA 03 inline citation links
+  ok  FA 03 internal /fa/ links resolve (17)
+  ok  FA 04 GET /fa/insights/who-owns-ai-transformation → 200
+  ok  FA 04 lang=fa dir=rtl
+  ok  FA 04 canonical (self, FA)
+  ok  FA 04 FA OG image
+  ok  FA 04 reciprocal hreflang → en
+  ok  FA 04 FA hero SVG referenced
+  ok  FA 04 references anchors
+  ok  FA 04 inline citation links
+  ok  FA 04 internal /fa/ links resolve (17)
+  ok  FA 05 GET /fa/insights/measuring-ai-value-beyond-productivity → 200
+  ok  FA 05 lang=fa dir=rtl
+  ok  FA 05 canonical (self, FA)
+  ok  FA 05 FA OG image
+  ok  FA 05 reciprocal hreflang → en
+  ok  FA 05 FA hero SVG referenced
+  ok  FA 05 references anchors
+  ok  FA 05 inline citation links
+  ok  FA 05 internal /fa/ links resolve (17)
+  ok  FA 06 GET /fa/insights/the-ai-transformation-value-ledger → 200
+  ok  FA 06 lang=fa dir=rtl
+  ok  FA 06 canonical (self, FA)
+  ok  FA 06 FA OG image
+  ok  FA 06 reciprocal hreflang → en
+  ok  FA 06 FA hero SVG referenced
+  ok  FA 06 references anchors
+  ok  FA 06 inline citation links
+  ok  FA 06 internal /fa/ links resolve (17)
+  ok  FA 07 GET /fa/insights/the-real-cost-of-enterprise-ai-agents → 200
+  ok  FA 07 lang=fa dir=rtl
+  ok  FA 07 canonical (self, FA)
+  ok  FA 07 FA OG image
+  ok  FA 07 reciprocal hreflang → en
+  ok  FA 07 FA hero SVG referenced
+  ok  FA 07 references anchors
+  ok  FA 07 inline citation links
+  ok  FA 07 internal /fa/ links resolve (19)
+  ok  FA 08 GET /fa/insights/prioritizing-high-value-ai-missions → 200
+  ok  FA 08 lang=fa dir=rtl
+  ok  FA 08 canonical (self, FA)
+  ok  FA 08 FA OG image
+  ok  FA 08 reciprocal hreflang → en
+  ok  FA 08 FA hero SVG referenced
+  ok  FA 08 references anchors
+  ok  FA 08 inline citation links
+  ok  FA 08 internal /fa/ links resolve (20)
+  ok  FA 09 GET /fa/insights/the-ai-native-product-operating-model → 200
+  ok  FA 09 lang=fa dir=rtl
+  ok  FA 09 canonical (self, FA)
+  ok  FA 09 FA OG image
+  ok  FA 09 reciprocal hreflang → en
+  ok  FA 09 FA hero SVG referenced
+  ok  FA 09 references anchors
+  ok  FA 09 inline citation links
+  ok  FA 09 internal /fa/ links resolve (20)
+  ok  FA 10 GET /fa/insights/designing-human-and-ai-product-teams → 200
+  ok  FA 10 lang=fa dir=rtl
+  ok  FA 10 canonical (self, FA)
+  ok  FA 10 FA OG image
+  ok  FA 10 reciprocal hreflang → en
+  ok  FA 10 FA hero SVG referenced
+  ok  FA 10 references anchors
+  ok  FA 10 inline citation links
+  ok  FA 10 internal /fa/ links resolve (19)
+  ok  FA 11 GET /fa/insights/from-ai-prototype-to-production → 200
+  ok  FA 11 lang=fa dir=rtl
+  ok  FA 11 canonical (self, FA)
+  ok  FA 11 FA OG image
+  ok  FA 11 reciprocal hreflang → en
+  ok  FA 11 FA hero SVG referenced
+  ok  FA 11 references anchors
+  ok  FA 11 inline citation links
+  ok  FA 11 internal /fa/ links resolve (19)
+  ok  FA 12 GET /fa/insights/the-90-day-ai-transformation-roadmap → 200
+  ok  FA 12 lang=fa dir=rtl
+  ok  FA 12 canonical (self, FA)
+  ok  FA 12 FA OG image
+  ok  FA 12 reciprocal hreflang → en
+  ok  FA 12 FA hero SVG referenced
+  ok  FA 12 references anchors
+  ok  FA 12 inline citation links
+  ok  FA 12 internal /fa/ links resolve (20)
+  ok  FA 13 GET /fa/insights/human-in-the-loop-vs-human-on-the-loop → 200
+  ok  FA 13 lang=fa dir=rtl
+  ok  FA 13 canonical (self, FA)
+  ok  FA 13 FA OG image
+  ok  FA 13 reciprocal hreflang → en
+  ok  FA 13 FA hero SVG referenced
+  ok  FA 13 references anchors
+  ok  FA 13 inline citation links
+  ok  FA 13 internal /fa/ links resolve (18)
+  ok  FA 14 GET /fa/insights/ai-agent-evaluation-for-business-outcomes → 200
+  ok  FA 14 lang=fa dir=rtl
+  ok  FA 14 canonical (self, FA)
+  ok  FA 14 FA OG image
+  ok  FA 14 reciprocal hreflang → en
+  ok  FA 14 FA hero SVG referenced
+  ok  FA 14 references anchors
+  ok  FA 14 inline citation links
+  ok  FA 14 internal /fa/ links resolve (21)
+  ok  FA 15 GET /fa/insights/agentic-ai-governance-by-design → 200
+  ok  FA 15 lang=fa dir=rtl
+  ok  FA 15 canonical (self, FA)
+  ok  FA 15 FA OG image
+  ok  FA 15 reciprocal hreflang → en
+  ok  FA 15 FA hero SVG referenced
+  ok  FA 15 references anchors
+  ok  FA 15 inline citation links
+  ok  FA 15 internal /fa/ links resolve (19)
+  ok  FA 16 GET /fa/insights/why-ai-transformation-fails-without-change-management → 200
+  ok  FA 16 lang=fa dir=rtl
+  ok  FA 16 canonical (self, FA)
+  ok  FA 16 FA OG image
+  ok  FA 16 reciprocal hreflang → en
+  ok  FA 16 FA hero SVG referenced
+  ok  FA 16 references anchors
+  ok  FA 16 inline citation links
+  ok  FA 16 internal /fa/ links resolve (20)
+  ok  FA 17 GET /fa/insights/agentic-ai-for-fmcg-commercial-operations → 200
+  ok  FA 17 lang=fa dir=rtl
+  ok  FA 17 canonical (self, FA)
+  ok  FA 17 FA OG image
+  ok  FA 17 reciprocal hreflang → en
+  ok  FA 17 FA hero SVG referenced
+  ok  FA 17 references anchors
+  ok  FA 17 inline citation links
+  ok  FA 17 internal /fa/ links resolve (25)
+  ok  FA 18 GET /fa/insights/ai-native-supply-chain-decision-intelligence → 200
+  ok  FA 18 lang=fa dir=rtl
+  ok  FA 18 canonical (self, FA)
+  ok  FA 18 FA OG image
+  ok  FA 18 reciprocal hreflang → en
+  ok  FA 18 FA hero SVG referenced
+  ok  FA 18 references anchors
+  ok  FA 18 inline citation links
+  ok  FA 18 internal /fa/ links resolve (21)
+  ok  FA 19 GET /fa/insights/recovering-revenue-inventory-pricing-promotions → 200
+  ok  FA 19 lang=fa dir=rtl
+  ok  FA 19 canonical (self, FA)
+  ok  FA 19 FA OG image
+  ok  FA 19 reciprocal hreflang → en
+  ok  FA 19 FA hero SVG referenced
+  ok  FA 19 references anchors
+  ok  FA 19 inline citation links
+  ok  FA 19 internal /fa/ links resolve (22)
+  ok  FA 20 GET /fa/insights/inside-an-ai-native-transformation-mission → 200
+  ok  FA 20 lang=fa dir=rtl
+  ok  FA 20 canonical (self, FA)
+  ok  FA 20 FA OG image
+  ok  FA 20 reciprocal hreflang → en
+  ok  FA 20 FA hero SVG referenced
+  ok  FA 20 references anchors
+  ok  FA 20 inline citation links
+  ok  FA 20 internal /fa/ links resolve (27)
+  ok  FA topic transformation-strategy → 200
+  ok  FA topic economics-value → 200
+  ok  FA topic ai-native-operations → 200
+  ok  FA topic trust-governance → 200
+  ok  FA topic applied-industry → 200
+  ok  FA hero SVG 01 → 200
+  ok  FA OG PNG 01 → 200
+  ok  FA hero SVG 02 → 200
+  ok  FA OG PNG 02 → 200
+  ok  FA hero SVG 03 → 200
+  ok  FA OG PNG 03 → 200
+  ok  FA hero SVG 04 → 200
+  ok  FA OG PNG 04 → 200
+  ok  FA hero SVG 05 → 200
+  ok  FA OG PNG 05 → 200
+  ok  FA hero SVG 06 → 200
+  ok  FA OG PNG 06 → 200
+  ok  FA hero SVG 07 → 200
+  ok  FA OG PNG 07 → 200
+  ok  FA hero SVG 08 → 200
+  ok  FA OG PNG 08 → 200
+  ok  FA hero SVG 09 → 200
+  ok  FA OG PNG 09 → 200
+  ok  FA hero SVG 10 → 200
+  ok  FA OG PNG 10 → 200
+  ok  FA hero SVG 11 → 200
+  ok  FA OG PNG 11 → 200
+  ok  FA hero SVG 12 → 200
+  ok  FA OG PNG 12 → 200
+  ok  FA hero SVG 13 → 200
+  ok  FA OG PNG 13 → 200
+  ok  FA hero SVG 14 → 200
+  ok  FA OG PNG 14 → 200
+  ok  FA hero SVG 15 → 200
+  ok  FA OG PNG 15 → 200
+  ok  FA hero SVG 16 → 200
+  ok  FA OG PNG 16 → 200
+  ok  FA hero SVG 17 → 200
+  ok  FA OG PNG 17 → 200
+  ok  FA hero SVG 18 → 200
+  ok  FA OG PNG 18 → 200
+  ok  FA hero SVG 19 → 200
+  ok  FA OG PNG 19 → 200
+  ok  FA hero SVG 20 → 200
+  ok  FA OG PNG 20 → 200
+  ok  FA RSS /fa/insights.xml → 200 with 20 items
+  ok  FA /fa/insights.json → 200
+  ok  FA insights.json parses + 20 articles
+  ok  EN index: all 20 articles listed
+  ok  FA index: documentElement lang=fa
+  ok  FA index: documentElement dir=rtl
+  ok  FA index: Persian H1
+  ok  FA index: all 20 articles listed
+  ok  FA index: no fallback notice
+  ok  FA article: lang=fa
+  ok  FA article: dir=rtl
+  ok  FA article: Persian H1
+  ok  FA article: inline figure SVG renders
+  ok  FA article: TOC present
+  ok  EN article: inline figure SVG renders
+  ok  EN article: discussion questions section
+  ok  FA index @360w: no horizontal overflow
+  ok  FA article @360w: no horizontal overflow
+  ok  FA index @390w: no horizontal overflow
+  ok  FA article @390w: no horizontal overflow
+  ok  FA index @768w: no horizontal overflow
+  ok  FA article @768w: no horizontal overflow
+  ok  FA index @1440w: no horizontal overflow
+  ok  FA article @1440w: no horizontal overflow
+  ok  EN mobile: no horizontal overflow
+
+insights-check: 470 passed, 0 failed

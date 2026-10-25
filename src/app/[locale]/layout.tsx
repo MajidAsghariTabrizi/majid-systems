@@ -7,6 +7,7 @@ import { dict, isLocale, LOCALES, type Locale } from '@/content/i18n';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { QuantiviqJsonLd } from '@/components/JsonLd';
+import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
 
@@ -112,6 +113,7 @@ export default async function LocaleLayout({
         <Header locale={locale} />
         <main id="main">{children}</main>
         <Footer locale={locale} />
+        <QuantiviqMind locale={isLocale(locale) ? locale : 'en'} />
       </body>
     </html>
   );
