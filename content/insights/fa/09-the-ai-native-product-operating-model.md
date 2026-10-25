@@ -89,7 +89,7 @@ related_article_ids: ["10", "11", "03"]
 دیدگاه ۲۰۲۶ Deloitte و Google Cloud دربارهٔ مقیاس‌دادن AI عامل‌محور نظم‌های تولیدی — ارکستراسیون، ارزیابی، حفاظ‌ها — را به‌عنوان رویه‌هایی نام می‌برد که عامل‌ها را از پایلوت به ارزش تولیدی می‌برند؛ حلقهٔ یادگیری صرفاً همان نظم‌ها هستند که به‌صورت چرخه چیده شده‌اند، نه چک‌لیست.[[۲]](#ref-deloitte-google-agentic-2026)
 
 <figure>
-  <svg viewBox="0 0 760 330" role="img" aria-label="حلقهٔ یادگیری دایره‌ای با پنج ایستگاه: دریافت سیگنال، ارزیابی، به‌روزرسانی، عرضهٔ حفاظت‌شده و اندازه‌گیری، با دروازهٔ تأیید انسانی پیش از عرضه" xmlns="http://www.w3.org/2000/svg" font-family="Estedad, Inter, system-ui, sans-serif">
+  <svg viewBox="0 0 760 344" role="img" aria-label="حلقهٔ یادگیری دایره‌ای با پنج ایستگاه: دریافت سیگنال، ارزیابی، به‌روزرسانی، عرضهٔ حفاظت‌شده و اندازه‌گیری، با دروازهٔ تأیید انسانی پیش از عرضه" xmlns="http://www.w3.org/2000/svg" font-family="Estedad, Inter, system-ui, sans-serif">
     <defs>
       <marker id="fa9-arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M0,0 L10,5 L0,10 z" fill="#8fa3b8"/>

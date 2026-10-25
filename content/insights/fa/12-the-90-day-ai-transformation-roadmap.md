@@ -169,10 +169,10 @@ related_article_ids: ["08", "11", "20"]
     <path d="M490,166 L498,166" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa12-arw)"/>
     <path d="M40,300 L726,300" stroke="#2a3a4c" stroke-width="2"/>
     <path d="M40,295 L40,305 M267,295 L267,305 M493,295 L493,305 M720,295 L720,305" stroke="#2a3a4c" stroke-width="2"/>
-    <text x="40" y="322" font-size="13" fill="#8fa3b8">روز ۰</text>
+    <text text-anchor="end" x="40" y="322" font-size="13" fill="#8fa3b8">روز ۰</text>
     <text x="267" y="322" font-size="13" fill="#8fa3b8" text-anchor="middle">روز ۳۰</text>
     <text x="493" y="322" font-size="13" fill="#8fa3b8" text-anchor="middle">روز ۶۰</text>
-    <text x="720" y="322" font-size="13" fill="#8fa3b8" text-anchor="end">روز ۹۰</text>
+    <text x="720" y="322" font-size="13" fill="#8fa3b8">روز ۹۰</text>
     <path d="M267,289 L278,300 L267,311 L256,300 Z" fill="#f5b968"/>
     <path d="M493,289 L504,300 L493,311 L482,300 Z" fill="#f5b968"/>
     <path d="M720,289 L731,300 L720,311 L709,300 Z" fill="#f5b968"/>
@@ -180,8 +180,8 @@ related_article_ids: ["08", "11", "20"]
     <text x="267" y="368" font-size="13" fill="#d7e0ea" text-anchor="middle">بستهٔ خط پایه + برو/نرفتن</text>
     <text x="480" y="348" font-size="13" font-weight="bold" fill="#f5b968" text-anchor="middle">دروازهٔ ۲</text>
     <text x="480" y="368" font-size="13" fill="#d7e0ea" text-anchor="middle">مدخل دفتر ارزش</text>
-    <text x="752" y="348" font-size="13" font-weight="bold" fill="#f5b968" text-anchor="end">دروازهٔ ۳</text>
-    <text x="752" y="368" font-size="13" fill="#d7e0ea" text-anchor="end">ضرب‌آهنگ عملیاتی نصب شد</text>
+    <text x="752" y="348" font-size="13" font-weight="bold" fill="#f5b968">دروازهٔ ۳</text>
+    <text x="752" y="368" font-size="13" fill="#d7e0ea">ضرب‌آهنگ عملیاتی نصب شد</text>
   </svg>
   <figcaption>شکل ۱ — نقشهٔ راه ۹۰ روزه به‌صورت سه فاز دروازه‌دار. هر دروازه با مصنوعِ تصمیم بسته می‌شود — دروازهٔ ۱ بستهٔ خط پایه با برو/نرفتن روی اعداد اندازه‌گیری‌شده، دروازهٔ ۲ نخستین مدخل دفتر ارزش زیر بازبینی حامی، دروازهٔ ۳ ضرب‌آهنگ عملیاتیِ نصب‌شده با مأموریت دومِ تأمین‌شده. مصنوع‌ها، نه دموها، همان چیزی‌اند که دروازه‌ها مقیاس می‌دهند یا متوقف می‌کنند.</figcaption>
 </figure>

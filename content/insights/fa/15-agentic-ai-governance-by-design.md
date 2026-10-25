@@ -79,13 +79,13 @@ related_article_ids: ["13", "04", "16"]
     <rect x="170" y="306" width="340" height="30" rx="8" fill="#141f2b" stroke="#2a3a4c" stroke-width="1.5"/>
     <text x="340" y="326" text-anchor="middle" font-size="13" fill="#8fa3b8">مأموریت: مالک · ناوگان · ارزیابی‌ها · دفتر</text>
     <line x1="590" y1="74" x2="620" y2="74" stroke="#8fa3b8" stroke-width="1.5"/>
-    <text x="626" y="78" font-size="13" fill="#8fa3b8">حکمرانی</text>
+    <text text-anchor="end" x="626" y="78" font-size="13" fill="#8fa3b8">حکمرانی</text>
     <line x1="590" y1="124" x2="620" y2="124" stroke="#8fa3b8" stroke-width="1.5"/>
-    <text x="626" y="128" font-size="13" fill="#8fa3b8">نگاشت</text>
+    <text text-anchor="end" x="626" y="128" font-size="13" fill="#8fa3b8">نگاشت</text>
     <line x1="590" y1="174" x2="620" y2="174" stroke="#8fa3b8" stroke-width="1.5"/>
-    <text x="626" y="178" font-size="13" fill="#8fa3b8">سنجش</text>
+    <text text-anchor="end" x="626" y="178" font-size="13" fill="#8fa3b8">سنجش</text>
     <line x1="590" y1="224" x2="620" y2="224" stroke="#8fa3b8" stroke-width="1.5"/>
-    <text x="626" y="228" font-size="13" fill="#8fa3b8">مدیریت</text>
+    <text text-anchor="end" x="626" y="228" font-size="13" fill="#8fa3b8">مدیریت</text>
   </svg>
   <figcaption>شکل ۱ — پشتهٔ پنج‌کنترلی: ثبت، قرارداد خودمختاری، ردپای ممیزی، دفترچهٔ حوادث و نقشهٔ انطباق، هر مأموریت را دربر می‌گیرند و به توابع NIST AI RMF که عملیاتی می‌کنند نگاشت شده‌اند. طراحی‌شده در هفتهٔ یک، نه ممیزی‌شده با حسرت در هفتهٔ دوازده.</figcaption>
 </figure>

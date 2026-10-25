@@ -123,7 +123,7 @@ RACI برای مدیرانی که اخیراً استفاده نکرده‌ان�
 <figure>
   <svg viewBox="0 0 760 430" role="img" aria-label="ماتریس اختیارات تصمیم: شش تصمیم تحول AI نگاشت‌شده به هشت کرسی اجرایی با نشانگرهای RACI، یک مالک پاسخگو در هر سطر" xmlns="http://www.w3.org/2000/svg" font-family="Estedad, Inter, system-ui, sans-serif">
     <rect x="10" y="26" width="740" height="34" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
-    <text x="740" y="48" font-size="13" fill="#8fa3b8" text-anchor="end">حوزهٔ تصمیم</text>
+    <text x="740" y="48" font-size="13" fill="#8fa3b8">حوزهٔ تصمیم</text>
     <text x="225" y="48" font-size="14" fill="#d7e0ea" text-anchor="middle">CEO</text>
     <text x="295" y="48" font-size="14" fill="#d7e0ea" text-anchor="middle">CFO</text>
     <text x="365" y="48" font-size="14" fill="#d7e0ea" text-anchor="middle">COO</text>
@@ -146,16 +146,16 @@ RACI برای مدیرانی که اخیراً استفاده نکرده‌ان�
     <line x1="540" y1="26" x2="540" y2="372" stroke="#2a3a4c" stroke-width="1"/>
     <line x1="610" y1="26" x2="610" y2="372" stroke="#2a3a4c" stroke-width="1"/>
     <line x1="680" y1="26" x2="680" y2="372" stroke="#2a3a4c" stroke-width="1"/>
-    <text x="740" y="91" font-size="14" fill="#d7e0ea" text-anchor="end">انتخاب مأموریت</text>
-    <text x="740" y="136" font-size="13" fill="#d7e0ea" text-anchor="end">تأمین مالی و</text>
-    <text x="740" y="153" font-size="13" fill="#d7e0ea" text-anchor="end">اندازه‌گذاری سرمایه</text>
-    <text x="740" y="188" font-size="13" fill="#d7e0ea" text-anchor="end">استانداردهای</text>
-    <text x="740" y="205" font-size="13" fill="#d7e0ea" text-anchor="end">معماری</text>
-    <text x="740" y="240" font-size="13" fill="#d7e0ea" text-anchor="end">سطوح</text>
-    <text x="740" y="257" font-size="13" fill="#d7e0ea" text-anchor="end">خودمختاری عامل</text>
-    <text x="740" y="299" font-size="14" fill="#d7e0ea" text-anchor="end">راستی‌آزمایی ارزش</text>
-    <text x="740" y="344" font-size="13" fill="#d7e0ea" text-anchor="end">پذیرش و تغییر</text>
-    <text x="740" y="361" font-size="13" fill="#d7e0ea" text-anchor="end">جریان کار</text>
+    <text x="740" y="91" font-size="14" fill="#d7e0ea">انتخاب مأموریت</text>
+    <text x="740" y="136" font-size="13" fill="#d7e0ea">تأمین مالی و</text>
+    <text x="740" y="153" font-size="13" fill="#d7e0ea">اندازه‌گذاری سرمایه</text>
+    <text x="740" y="188" font-size="13" fill="#d7e0ea">استانداردهای</text>
+    <text x="740" y="205" font-size="13" fill="#d7e0ea">معماری</text>
+    <text x="740" y="240" font-size="13" fill="#d7e0ea">سطوح</text>
+    <text x="740" y="257" font-size="13" fill="#d7e0ea">خودمختاری عامل</text>
+    <text x="740" y="299" font-size="14" fill="#d7e0ea">راستی‌آزمایی ارزش</text>
+    <text x="740" y="344" font-size="13" fill="#d7e0ea">پذیرش و تغییر</text>
+    <text x="740" y="361" font-size="13" fill="#d7e0ea">جریان کار</text>
     <text x="225" y="92" font-size="15" font-weight="bold" fill="#f5b968" text-anchor="middle">A</text>
     <text x="295" y="92" font-size="15" fill="#d7e0ea" text-anchor="middle">C</text>
     <text x="365" y="92" font-size="15" fill="#69deb9" text-anchor="middle">R</text>
@@ -204,15 +204,15 @@ RACI برای مدیرانی که اخیراً استفاده نکرده‌ان�
     <text x="575" y="352" font-size="15" fill="#d7e0ea" text-anchor="middle">C</text>
     <text x="645" y="352" font-size="15" fill="#d7e0ea" text-anchor="middle">C</text>
     <text x="715" y="352" font-size="15" fill="#69deb9" text-anchor="middle">R</text>
-    <text x="20" y="402" font-size="15" font-weight="bold" fill="#f5b968">A</text>
-    <text x="36" y="402" font-size="13" fill="#d7e0ea">پاسخگو (یکی برای هر تصمیم)</text>
-    <text x="260" y="402" font-size="15" font-weight="bold" fill="#69deb9">R</text>
-    <text x="276" y="402" font-size="13" fill="#d7e0ea">مسئول</text>
-    <text x="390" y="402" font-size="15" font-weight="bold" fill="#d7e0ea">C</text>
-    <text x="406" y="402" font-size="13" fill="#d7e0ea">مشاور</text>
-    <text x="500" y="402" font-size="15" font-weight="bold" fill="#8fa3b8">I</text>
-    <text x="514" y="402" font-size="13" fill="#d7e0ea">مطلع</text>
-    <text x="20" y="422" font-size="13" fill="#8fa3b8">توصیهٔ خط پایه — کرسی‌ها را با ساختار خودتان تطبیق دهید؛ دقیقاً یک A برای هر تصمیم نگه دارید.</text>
+    <text text-anchor="end" x="20" y="402" font-size="15" font-weight="bold" fill="#f5b968">A</text>
+    <text text-anchor="end" x="36" y="402" font-size="13" fill="#d7e0ea">پاسخگو (یکی برای هر تصمیم)</text>
+    <text text-anchor="end" x="260" y="402" font-size="15" font-weight="bold" fill="#69deb9">R</text>
+    <text text-anchor="end" x="276" y="402" font-size="13" fill="#d7e0ea">مسئول</text>
+    <text text-anchor="end" x="390" y="402" font-size="15" font-weight="bold" fill="#d7e0ea">C</text>
+    <text text-anchor="end" x="406" y="402" font-size="13" fill="#d7e0ea">مشاور</text>
+    <text text-anchor="end" x="500" y="402" font-size="15" font-weight="bold" fill="#8fa3b8">I</text>
+    <text text-anchor="end" x="514" y="402" font-size="13" fill="#d7e0ea">مطلع</text>
+    <text text-anchor="end" x="20" y="422" font-size="13" fill="#8fa3b8">توصیهٔ خط پایه — کرسی‌ها را با ساختار خودتان تطبیق دهید؛ دقیقاً یک A برای هر تصمیم نگه دارید.</text>
   </svg>
   <figcaption>شکل ۱ — ماتریس اختیارات تصمیم: شش تصمیم، هشت کرسی، دقیقاً یک مالکِ پاسخگو (کهربایی) در هر سطر. خط پایه، انتخاب مأموریت را به CEO؛ تأمین مالی و راستی‌آزمایی ارزش را به CFO؛ استانداردهای معماری را به CIO (یا CTO هر جا کرسی استانداردها تجمیع شده)؛ خودمختاری عامل را به CAIO تحت بند غروب؛ و پذیرش را به COO به‌عنوان مالک تحول کسب‌وکار می‌دهد. کارکردی = مدیران کارکردی.</figcaption>
 </figure>

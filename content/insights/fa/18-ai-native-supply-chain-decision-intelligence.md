@@ -75,10 +75,10 @@ related_article_ids: ["17", "19", "14"]
     <text x="290" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="#69deb9">باند خودمختار</text>
     <text x="290" y="176" text-anchor="middle" font-size="13" fill="#8fa3b8">تصمیم‌های روتین درون حفاظ‌های سیاست · صرفاً بازبینی نمونه‌ای</text>
     <line x1="60" y1="220" x2="520" y2="220" stroke="#2a3a4c" stroke-width="2"/>
-    <text x="70" y="242" font-size="13" fill="#8fa3b8">برنامه‌ریزی تقاضا</text>
-    <text x="200" y="242" font-size="13" fill="#8fa3b8">تأمین مجدد</text>
-    <text x="330" y="242" font-size="13" fill="#8fa3b8">تخصیص</text>
-    <text x="430" y="242" font-size="13" fill="#8fa3b8">لجستیک</text>
+    <text text-anchor="end" x="70" y="242" font-size="13" fill="#8fa3b8">برنامه‌ریزی تقاضا</text>
+    <text text-anchor="end" x="200" y="242" font-size="13" fill="#8fa3b8">تأمین مجدد</text>
+    <text text-anchor="end" x="330" y="242" font-size="13" fill="#8fa3b8">تخصیص</text>
+    <text text-anchor="end" x="430" y="242" font-size="13" fill="#8fa3b8">لجستیک</text>
     <path d="M300,130 L300,96" fill="none" stroke="#f5b968" stroke-width="2" marker-end="url(#fa18-arw)"/>
     <rect x="180" y="52" width="240" height="42" rx="8" fill="#0d1420" stroke="#f5b968" stroke-width="2"/>
     <text x="300" y="78" text-anchor="middle" font-size="13" fill="#f5b968">صف استثنا ← انسان تصمیم می‌گیرد</text>

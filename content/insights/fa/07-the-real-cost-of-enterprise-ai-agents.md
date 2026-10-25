@@ -100,14 +100,15 @@ related_article_ids: ["05", "06", "08"]
     <rect x="462" y="60" width="176" height="60" rx="6" fill="#69deb9" opacity="0.85"/>
     <text x="550" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="#d7e0ea">ماه ۹</text>
     <text x="550" y="298" text-anchor="middle" font-size="13" fill="#8fa3b8">سنگین از استنتاج و نظارت</text>
-    <rect x="668" y="70" width="12" height="12" fill="#69deb9"/>
-    <text x="686" y="80" font-size="13" fill="#d7e0ea">استنتاج</text>
-    <rect x="668" y="92" width="12" height="12" fill="#80c9f8"/>
-    <text x="686" y="102" font-size="13" fill="#d7e0ea">ارزیابی</text>
-    <rect x="668" y="114" width="12" height="12" fill="#f5b968"/>
-    <text x="686" y="124" font-size="13" fill="#d7e0ea">نظارت</text>
-    <rect x="668" y="136" width="12" height="12" fill="#a694f7"/>
-    <text x="686" y="146" font-size="13" fill="#d7e0ea">یکپارچه‌سازی / سایر</text>
+    <rect x="644" y="70" width="12" height="12" fill="#69deb9"/>
+    <text text-anchor="end" x="662" y="80" font-size="13" fill="#d7e0ea">استنتاج</text>
+    <rect x="644" y="92" width="12" height="12" fill="#80c9f8"/>
+    <text text-anchor="end" x="662" y="102" font-size="13" fill="#d7e0ea">ارزیابی</text>
+    <rect x="644" y="114" width="12" height="12" fill="#f5b968"/>
+    <text text-anchor="end" x="662" y="124" font-size="13" fill="#d7e0ea">نظارت</text>
+    <rect x="644" y="136" width="12" height="12" fill="#a694f7"/>
+    <text text-anchor="end" x="662" y="146" font-size="13" fill="#d7e0ea">یکپارچه‌سازی</text>
+    <text text-anchor="end" x="662" y="161" font-size="13" fill="#d7e0ea">/ سایر</text>
   </svg>
   <figcaption>شکل ۱ — پشته با عمر بازتنظیم می‌شود: مأموریت جدید عمدتاً روی یکپارچه‌سازی و ارزیابی هزینه می‌کند؛ مأموریت بالغ روی استنتاج و نظارت. سهم‌های نمایشی‌اند، نه دادهٔ نظرسنجی.</figcaption>
 </figure>

@@ -112,9 +112,9 @@ related_article_ids: ["02", "05", "16"]
         <path d="M0,0 L10,5 L0,10 z" fill="#8fa3b8"/>
       </marker>
     </defs>
-    <text x="24" y="64" font-size="15" font-weight="bold" fill="#d7e0ea">پذیرش</text>
-    <text x="24" y="84" font-size="13" fill="#8fa3b8">همان فرایند،</text>
-    <text x="24" y="100" font-size="13" fill="#8fa3b8">AI چسبانده‌شده</text>
+    <text text-anchor="end" x="24" y="64" font-size="15" font-weight="bold" fill="#d7e0ea">پذیرش</text>
+    <text text-anchor="end" x="24" y="84" font-size="13" fill="#8fa3b8">همان فرایند،</text>
+    <text text-anchor="end" x="24" y="100" font-size="13" fill="#8fa3b8">AI چسبانده‌شده</text>
     <rect x="336" y="14" width="28" height="20" rx="4" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="350" y="28" font-size="13" fill="#80c9f8" text-anchor="middle">AI</text>
     <path d="M350,34 L350,50" stroke="#80c9f8" stroke-width="2" stroke-dasharray="4 3"/>
@@ -130,11 +130,11 @@ related_article_ids: ["02", "05", "16"]
     <path d="M412,74 L428,74" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa1-arw)"/>
     <path d="M552,74 L568,74" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa1-arw)"/>
     <path d="M150,134 L690,134" stroke="#f27e85" stroke-width="2.5" fill="none"/>
-    <text x="150" y="158" font-size="13" fill="#f27e85">ارزش محقق‌شده: تخت — دستاوردها در تحویل‌های دست‌نخورده نشت می‌کنند</text>
+    <text text-anchor="end" x="150" y="158" font-size="13" fill="#f27e85">ارزش محقق‌شده: تخت — دستاوردها در تحویل‌های دست‌نخورده نشت می‌کنند</text>
     <path d="M20,188 L740,188" stroke="#2a3a4c" stroke-width="1.5"/>
-    <text x="24" y="236" font-size="15" font-weight="bold" fill="#d7e0ea">تحول</text>
-    <text x="24" y="256" font-size="13" fill="#8fa3b8">فرایند بازطراحی‌شده</text>
-    <text x="24" y="272" font-size="13" fill="#8fa3b8">حول AI اثبات‌شده</text>
+    <text text-anchor="end" x="24" y="236" font-size="15" font-weight="bold" fill="#d7e0ea">تحول</text>
+    <text text-anchor="end" x="24" y="256" font-size="13" fill="#8fa3b8">فرایند بازطراحی‌شده</text>
+    <text text-anchor="end" x="24" y="272" font-size="13" fill="#8fa3b8">حول AI اثبات‌شده</text>
     <rect x="150" y="226" width="120" height="66" rx="10" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <rect x="195" y="232" width="30" height="16" rx="3" fill="#80c9f8"/>
     <text x="210" y="244" font-size="13" fill="#0d1420" text-anchor="middle">AI</text>
@@ -155,7 +155,7 @@ related_article_ids: ["02", "05", "16"]
     <path d="M412,258 L428,258" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa1-arw)"/>
     <path d="M552,258 L568,258" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa1-arw)"/>
     <path d="M150,336 C330,330 520,314 690,300" stroke="#69deb9" stroke-width="2.5" fill="none"/>
-    <text x="150" y="360" font-size="13" fill="#69deb9">ارزش محقق‌شده: انباشته — بازطراحی، بهره‌وری را به سود و زیان تبدیل می‌کند</text>
+    <text text-anchor="end" x="150" y="360" font-size="13" fill="#69deb9">ارزش محقق‌شده: انباشته — بازطراحی، بهره‌وری را به سود و زیان تبدیل می‌کند</text>
   </svg>
   <figcaption>شکل ۱ — مسیر «پذیرش» همان جریان کار چهارگامی را نگه می‌دارد و AI را به یک جعبه می‌چسباند؛ پس دستاوردها به‌صورت صرفه‌جویی محلی جمع می‌شوند و اثر مالی تخت می‌ماند. مسیر «تحول» توالی کار را بازمی‌سازد، AI را در چند گام تعبیه می‌کند و بازبینی انسانی را به موارد استثنا محدود می‌کند؛ پس بهره‌وری به دستاوردهای نتیجه‌ایِ انباشته‌شونده تبدیل می‌شود.</figcaption>
 </figure>

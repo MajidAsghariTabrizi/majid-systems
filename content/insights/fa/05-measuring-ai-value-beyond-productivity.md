@@ -102,9 +102,9 @@ EBIT همان‌جایی است که لایه‌ها به هم می‌رسند،
     </defs>
     <path d="M 50 380 L 50 72" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa5-arw)" fill="none"/>
     <path d="M 50 380 L 736 380" stroke="#8fa3b8" stroke-width="2" marker-end="url(#fa5-arw)" fill="none"/>
-    <text x="58" y="90" font-size="13" fill="#8fa3b8">اعتبار</text>
-    <text x="58" y="108" font-size="13" fill="#8fa3b8">ادعای ارزش</text>
-    <text x="736" y="406" font-size="13" fill="#8fa3b8" text-anchor="end">هزینه و کوشش طراحی</text>
+    <text text-anchor="end" x="58" y="90" font-size="13" fill="#8fa3b8">اعتبار</text>
+    <text text-anchor="end" x="58" y="108" font-size="13" fill="#8fa3b8">ادعای ارزش</text>
+    <text x="736" y="406" font-size="13" fill="#8fa3b8">هزینه و کوشش طراحی</text>
     <rect x="70" y="330" width="150" height="50" rx="10" fill="#0d1420" stroke="#f27e85" stroke-width="2"/>
     <text x="145" y="351" font-size="14" fill="#d7e0ea" text-anchor="middle">۱ · خوداظهاری</text>
     <text x="145" y="369" font-size="13" fill="#8fa3b8" text-anchor="middle">نظرسنجی، روایت‌ها</text>
@@ -170,21 +170,21 @@ EBIT همان‌جایی است که لایه‌ها به هم می‌رسند،
     <path d="M 60 316 L 240 316" stroke="#2a3a4c" stroke-width="2" fill="none"/>
     <path d="M 72 296 L 138 262" stroke="#8fa3b8" stroke-width="2.5" fill="none"/>
     <path d="M 138 96 L 138 316" stroke="#2a3a4c" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
-    <text x="144" y="108" font-size="13" fill="#8fa3b8">شروع AI</text>
+    <text text-anchor="end" x="144" y="108" font-size="13" fill="#8fa3b8">شروع AI</text>
     <path d="M 138 262 L 230 252" stroke="#8fa3b8" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
     <path d="M 138 262 L 230 208" stroke="#69deb9" stroke-width="2.5" fill="none"/>
     <path d="M 222 250 L 222 216" stroke="#f27e85" stroke-width="2" marker-end="url(#fa5b-arw)" fill="none"/>
-    <text x="228" y="238" font-size="15" fill="#f27e85">Δ</text>
+    <text text-anchor="end" x="228" y="238" font-size="15" fill="#f27e85">Δ</text>
     <path d="M 300 316 L 300 92" stroke="#2a3a4c" stroke-width="2" fill="none"/>
     <path d="M 300 316 L 480 316" stroke="#2a3a4c" stroke-width="2" fill="none"/>
     <path d="M 312 298 L 472 212" stroke="#69deb9" stroke-width="2.5" fill="none"/>
     <path d="M 312 298 L 472 284" stroke="#8fa3b8" stroke-width="2.5" fill="none"/>
     <path d="M 478 282 L 478 220" stroke="#f27e85" stroke-width="2" marker-end="url(#fa5b-arw)" fill="none"/>
-    <text x="484" y="256" font-size="15" fill="#f27e85">Δ</text>
+    <text text-anchor="end" x="484" y="256" font-size="15" fill="#f27e85">Δ</text>
     <rect x="312" y="100" width="9" height="9" fill="#69deb9"/>
-    <text x="327" y="109" font-size="13" fill="#d7e0ea">مواجهه‌شده</text>
+    <text text-anchor="end" x="327" y="109" font-size="13" fill="#d7e0ea">مواجهه‌شده</text>
     <rect x="312" y="120" width="9" height="9" fill="#8fa3b8"/>
-    <text x="327" y="129" font-size="13" fill="#d7e0ea">گواه</text>
+    <text text-anchor="end" x="327" y="129" font-size="13" fill="#d7e0ea">گواه</text>
     <path d="M 540 316 L 540 92" stroke="#2a3a4c" stroke-width="2" fill="none"/>
     <path d="M 540 316 L 720 316" stroke="#2a3a4c" stroke-width="2" fill="none"/>
     <path d="M 552 300 L 604 300 L 604 274 L 656 274 L 656 246 L 704 246" stroke="#69deb9" stroke-width="2.5" fill="none"/>

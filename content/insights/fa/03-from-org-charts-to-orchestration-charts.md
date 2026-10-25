@@ -103,27 +103,27 @@ related_article_ids: ["04", "10", "20"]
     <text x="560" y="32" font-size="15" fill="#d7e0ea" text-anchor="middle" font-weight="600">چارت ارکستراسیون</text>
     <text x="560" y="50" font-size="13" fill="#8fa3b8" text-anchor="middle">چه کسی چه چیزی را، با چه خودمختاری، ارکستر می‌کند</text>
     <rect x="402" y="64" width="304" height="40" rx="10" fill="#0d1420" stroke="#8fa3b8" stroke-width="2"/>
-    <text x="690" y="81" font-size="13" fill="#d7e0ea" text-anchor="end">۱ · نتیجه‌ها / مأموریت‌ها</text>
-    <text x="690" y="97" font-size="13" fill="#8fa3b8" text-anchor="end">کارِ مالک‌دار سرتاسری، نه سازمانی</text>
+    <text x="690" y="81" font-size="13" fill="#d7e0ea">۱ · نتیجه‌ها / مأموریت‌ها</text>
+    <text x="690" y="97" font-size="13" fill="#8fa3b8">کارِ مالک‌دار سرتاسری، نه سازمانی</text>
     <rect x="402" y="114" width="304" height="40" rx="10" fill="#0d1420" stroke="#69deb9" stroke-width="2"/>
-    <text x="690" y="131" font-size="13" fill="#d7e0ea" text-anchor="end">۲ · انسان‌ها — سه نقش کاری</text>
-    <text x="690" y="147" font-size="13" fill="#8fa3b8" text-anchor="end">ارکستراتورها · متخصصان · سرپرستان</text>
+    <text x="690" y="131" font-size="13" fill="#d7e0ea">۲ · انسان‌ها — سه نقش کاری</text>
+    <text x="690" y="147" font-size="13" fill="#8fa3b8">ارکستراتورها · متخصصان · سرپرستان</text>
     <rect x="402" y="164" width="304" height="40" rx="10" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
-    <text x="690" y="181" font-size="13" fill="#d7e0ea" text-anchor="end">۳ · ناوگان عامل — قابلیت × خودمختاری</text>
-    <text x="690" y="197" font-size="13" fill="#8fa3b8" text-anchor="end">دارنده و نسخه‌بندی‌شده مانند سیستم‌های تولیدی</text>
+    <text x="690" y="181" font-size="13" fill="#d7e0ea">۳ · ناوگان عامل — قابلیت × خودمختاری</text>
+    <text x="690" y="197" font-size="13" fill="#8fa3b8">دارنده و نسخه‌بندی‌شده مانند سیستم‌های تولیدی</text>
     <rect x="402" y="214" width="304" height="40" rx="10" fill="#0d1420" stroke="#a694f7" stroke-width="2"/>
-    <text x="690" y="231" font-size="13" fill="#d7e0ea" text-anchor="end">۴ · اختیارات تصمیم — دروازه‌ها + آستانه‌ها</text>
-    <text x="690" y="247" font-size="13" fill="#8fa3b8" text-anchor="end">دروازه‌های تأیید · آستانه‌های بازگشت‌پذیری</text>
+    <text x="690" y="231" font-size="13" fill="#d7e0ea">۴ · اختیارات تصمیم — دروازه‌ها + آستانه‌ها</text>
+    <text x="690" y="247" font-size="13" fill="#8fa3b8">دروازه‌های تأیید · آستانه‌های بازگشت‌پذیری</text>
     <rect x="408" y="56" width="64" height="206" rx="8" fill="#f5b968" fill-opacity="0.1" stroke="#f5b968" stroke-width="2" stroke-dasharray="5 4"/>
     <text x="560" y="280" font-size="13" fill="#f5b968" text-anchor="middle">یک مأموریت — سفارش-تا-وصول — برش‌خورده از هر چهار لایه</text>
     <rect x="64" y="322" width="14" height="14" rx="3" fill="#0d1420" stroke="#69deb9" stroke-width="2"/>
-    <text x="86" y="334" font-size="13" fill="#8fa3b8">انسان‌ها</text>
+    <text text-anchor="end" x="86" y="334" font-size="13" fill="#8fa3b8">انسان‌ها</text>
     <rect x="180" y="322" width="14" height="14" rx="3" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
-    <text x="202" y="334" font-size="13" fill="#8fa3b8">عامل‌ها</text>
+    <text text-anchor="end" x="202" y="334" font-size="13" fill="#8fa3b8">عامل‌ها</text>
     <rect x="280" y="322" width="14" height="14" rx="3" fill="#0d1420" stroke="#a694f7" stroke-width="2"/>
-    <text x="302" y="334" font-size="13" fill="#8fa3b8">اختیارات تصمیم</text>
+    <text text-anchor="end" x="302" y="334" font-size="13" fill="#8fa3b8">اختیارات تصمیم</text>
     <rect x="460" y="322" width="14" height="14" rx="3" fill="#0d1420" stroke="#f5b968" stroke-width="2" stroke-dasharray="3 2"/>
-    <text x="482" y="334" font-size="13" fill="#8fa3b8">برش مأموریت</text>
+    <text text-anchor="end" x="482" y="334" font-size="13" fill="#8fa3b8">برش مأموریت</text>
   </svg>
   <figcaption>شکل ۱ — چارت سازمانی (چپ) یک درخت گزارش‌دهی را ثبت می‌کند. چارت ارکستراسیون (راست) چهار لایه را روی هم می‌چیند — نتیجه‌ها، انسان‌ها، عامل‌ها، اختیارات تصمیم — و یک برشِ تک‌مأمیتی را از میان همهٔ آن‌ها عبور می‌دهد: کارِ سفارش-تا-وصول هم‌زمان از هر لایه تغذیه می‌کند.</figcaption>
 </figure>
@@ -158,33 +158,33 @@ related_article_ids: ["04", "10", "20"]
     <rect x="40" y="64" width="680" height="52" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="52" y="74" width="88" height="32" rx="8" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="96" y="95" font-size="13" fill="#80c9f8" text-anchor="middle">سطح ۰</text>
-    <text x="708" y="86" font-size="13" fill="#d7e0ea" text-anchor="end">کمک — عامل پیش‌نویس می‌زند، انسان کار را انجام می‌دهد</text>
-    <text x="708" y="104" font-size="13" fill="#8fa3b8" text-anchor="end">تأیید: بازبینی هر خروجی</text>
-    <text x="156" y="95" font-size="13" fill="#f5b968">دروازه: همه‌چیز</text>
+    <text x="708" y="86" font-size="13" fill="#d7e0ea">کمک — عامل پیش‌نویس می‌زند، انسان کار را انجام می‌دهد</text>
+    <text x="708" y="104" font-size="13" fill="#8fa3b8">تأیید: بازبینی هر خروجی</text>
+    <text text-anchor="end" x="156" y="95" font-size="13" fill="#f5b968">دروازه: همه‌چیز</text>
     <rect x="40" y="124" width="680" height="52" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="52" y="134" width="88" height="32" rx="8" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="96" y="155" font-size="13" fill="#80c9f8" text-anchor="middle">سطح ۱</text>
-    <text x="708" y="146" font-size="13" fill="#d7e0ea" text-anchor="end">پیشنهاد — عامل پیشنهاد می‌دهد، انسان تصمیم می‌گیرد</text>
-    <text x="708" y="164" font-size="13" fill="#8fa3b8" text-anchor="end">تأیید: پیش تأیید هر اقدام</text>
-    <text x="156" y="155" font-size="13" fill="#f5b968">دروازه: هر اقدام</text>
+    <text x="708" y="146" font-size="13" fill="#d7e0ea">پیشنهاد — عامل پیشنهاد می‌دهد، انسان تصمیم می‌گیرد</text>
+    <text x="708" y="164" font-size="13" fill="#8fa3b8">تأیید: پیش تأیید هر اقدام</text>
+    <text text-anchor="end" x="156" y="155" font-size="13" fill="#f5b968">دروازه: هر اقدام</text>
     <rect x="40" y="184" width="680" height="52" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="52" y="194" width="88" height="32" rx="8" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="96" y="215" font-size="13" fill="#80c9f8" text-anchor="middle">سطح ۲</text>
-    <text x="708" y="206" font-size="13" fill="#d7e0ea" text-anchor="end">اقدام محدود — عامل موارد روتین را اجرا می‌کند</text>
-    <text x="708" y="224" font-size="13" fill="#8fa3b8" text-anchor="end">تأیید: فقط استثنائات، در حدود مقرر</text>
-    <text x="156" y="215" font-size="13" fill="#f5b968">دروازه: استثنائات</text>
+    <text x="708" y="206" font-size="13" fill="#d7e0ea">اقدام محدود — عامل موارد روتین را اجرا می‌کند</text>
+    <text x="708" y="224" font-size="13" fill="#8fa3b8">تأیید: فقط استثنائات، در حدود مقرر</text>
+    <text text-anchor="end" x="156" y="215" font-size="13" fill="#f5b968">دروازه: استثنائات</text>
     <rect x="40" y="244" width="680" height="52" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="52" y="254" width="88" height="32" rx="8" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="96" y="275" font-size="13" fill="#80c9f8" text-anchor="middle">سطح ۳</text>
-    <text x="708" y="266" font-size="13" fill="#d7e0ea" text-anchor="end">اجرا و ممیزی — عامل عمل می‌کند، انسان‌ها بازرسی می‌کنند</text>
-    <text x="708" y="284" font-size="13" fill="#8fa3b8" text-anchor="end">تأیید: ممیزی‌های نمونه‌ای پس از وقوع</text>
-    <text x="156" y="275" font-size="13" fill="#f5b968">دروازه: نمونه‌ها</text>
+    <text x="708" y="266" font-size="13" fill="#d7e0ea">اجرا و ممیزی — عامل عمل می‌کند، انسان‌ها بازرسی می‌کنند</text>
+    <text x="708" y="284" font-size="13" fill="#8fa3b8">تأیید: ممیزی‌های نمونه‌ای پس از وقوع</text>
+    <text text-anchor="end" x="156" y="275" font-size="13" fill="#f5b968">دروازه: نمونه‌ها</text>
     <rect x="40" y="304" width="680" height="52" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="52" y="314" width="88" height="32" rx="8" fill="#0d1420" stroke="#80c9f8" stroke-width="2"/>
     <text x="96" y="335" font-size="13" fill="#80c9f8" text-anchor="middle">سطح ۴</text>
-    <text x="708" y="326" font-size="13" fill="#d7e0ea" text-anchor="end">مالکیت نتیجه — عامل حلقه را سرتاسری اجرا می‌کند</text>
-    <text x="708" y="344" font-size="13" fill="#8fa3b8" text-anchor="end">تأیید: تنظیم سیاست و طراحی ارزیابی</text>
-    <text x="156" y="335" font-size="13" fill="#f5b968">دروازه: سیاست + ارزیابی‌ها</text>
+    <text x="708" y="326" font-size="13" fill="#d7e0ea">مالکیت نتیجه — عامل حلقه را سرتاسری اجرا می‌کند</text>
+    <text x="708" y="344" font-size="13" fill="#8fa3b8">تأیید: تنظیم سیاست و طراحی ارزیابی</text>
+    <text text-anchor="end" x="156" y="335" font-size="13" fill="#f5b968">دروازه: سیاست + ارزیابی‌ها</text>
     <text x="390" y="392" font-size="13" fill="#f27e85" text-anchor="middle">حالت شکست: خودمختاری بدون بازکشیدن دروازه، یک سطح بالا می‌خزد — بیشتر شکاف‌های حکمرانی از اینجا شروع می‌شود.</text>
   </svg>
   <figcaption>شکل ۲ — نردبان خودمختاری. هر نقطهٔ تصمیم یک سطح می‌گیرد؛ با بالا رفتن خودمختاری، دروازهٔ انسانی از «همه‌چیز» به «سیاست و طراحی ارزیابی» کوچک می‌شود. بازگشت‌پذیری تعیین می‌کند هر نقطهٔ تصمیم تا چه ارتفاعی مجاز است.</figcaption>

@@ -10,7 +10,8 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test test/*.test.ts"
+    "test": "node --import tsx --test test/*.test.ts",
+    "qa:figures": "node scripts/insights-figcheck.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

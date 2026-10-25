@@ -92,22 +92,22 @@ related_article_ids: ["05", "07", "14"]
 <figure>
   <svg viewBox="0 0 760 430" role="img" aria-label="مدخل پرشدهٔ دفتر ارزش برای مأموریت M-14: خط پایه و ضدواقعی، سه ثبت منفعت درجه‌دار، چهار ثبت هزینه، موقعیت خالص و تصمیم مقیاس" xmlns="http://www.w3.org/2000/svg" font-family="Estedad, Inter, system-ui, sans-serif">
     <rect x="10" y="10" width="740" height="410" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
-    <text x="730" y="44" font-size="15" font-weight="bold" fill="#a694f7" text-anchor="end">مدخل دفتر M-14 — عامل پیگیری مطالبات</text>
-    <text x="730" y="66" font-size="13" fill="#8fa3b8" text-anchor="end">سناریوی ترکیبی نمایشی · توزیع‌کنندهٔ صنعتی · درآمد ۷۳۰M دلار · سال ۱</text>
+    <text x="730" y="44" font-size="15" font-weight="bold" fill="#a694f7">مدخل دفتر M-14 — عامل پیگیری مطالبات</text>
+    <text x="730" y="66" font-size="13" fill="#8fa3b8">سناریوی ترکیبی نمایشی · توزیع‌کنندهٔ صنعتی · درآمد ۷۳۰M دلار · سال ۱</text>
     <rect x="30" y="80" width="700" height="46" rx="8" fill="#0d1420" stroke="#2a3a4c" stroke-width="1"/>
-    <text x="716" y="100" font-size="13" fill="#d7e0ea" text-anchor="end">خط پایه: DSO ۵۲٫۰ روز (۹۰ روز اخیر، ERP) · ضدواقعی: تخت در ۵۲٫۰</text>
-    <text x="716" y="118" font-size="13" fill="#d7e0ea" text-anchor="end">سنجهٔ نتیجه: روزهای فروش جاری (لایهٔ مالی) · نتیجهٔ فصل چهارم: ۴۸٫۰</text>
-    <text x="730" y="152" font-size="13" font-weight="bold" fill="#69deb9" text-anchor="end">ثبت‌های منفعت — سال ۱</text>
-    <text x="730" y="176" font-size="13" fill="#d7e0ea" text-anchor="end">م۱ تأمین‌مالی بر وجه نقدِ آزادشده · ناخالص ۶۴۰K$ · انتساب ۶۰٪ · درجهٔ <tspan fill="#80c9f8">B</tspan> ← ثبت ۳۸۴K$</text>
-    <text x="730" y="200" font-size="13" fill="#d7e0ea" text-anchor="end">م۲ کاهش بدهی سوخته · ناخالص ۷۳۰K$ · انتساب ۵۰٪ · درجهٔ <tspan fill="#f5b968">C</tspan> ← ثبت ۳۶۵K$</text>
-    <text x="730" y="224" font-size="13" fill="#d7e0ea" text-anchor="end">م۳ اجتناب از نیروی موقت فصلی · ناخالص ۱۶۰K$ · انتساب ۹۰٪ · درجهٔ <tspan fill="#69deb9">A</tspan> ← ثبت ۱۴۴K$</text>
-    <text x="730" y="252" font-size="15" font-weight="bold" fill="#69deb9" text-anchor="end">منافع ثبت‌شده: ۸۹۳K$</text>
-    <text x="730" y="284" font-size="13" font-weight="bold" fill="#8fa3b8" text-anchor="end">ثبت‌های هزینه — سال ۱</text>
-    <text x="730" y="308" font-size="13" fill="#d7e0ea" text-anchor="end">ساخت (یک‌باره) ۴۲۰K$ · بهره‌برداری ۹۵K$ · نظارت ۱۴۰K$ · دوباره‌کاری ۶۰K$</text>
-    <text x="730" y="332" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">هزینه‌های ثبت‌شده: ۷۱۵K$</text>
+    <text x="716" y="100" font-size="13" fill="#d7e0ea">خط پایه: DSO ۵۲٫۰ روز (۹۰ روز اخیر، ERP) · ضدواقعی: تخت در ۵۲٫۰</text>
+    <text x="716" y="118" font-size="13" fill="#d7e0ea">سنجهٔ نتیجه: روزهای فروش جاری (لایهٔ مالی) · نتیجهٔ فصل چهارم: ۴۸٫۰</text>
+    <text x="730" y="152" font-size="13" font-weight="bold" fill="#69deb9">ثبت‌های منفعت — سال ۱</text>
+    <text x="730" y="176" font-size="13" fill="#d7e0ea">م۱ تأمین‌مالی بر وجه نقدِ آزادشده · ناخالص ۶۴۰K$ · انتساب ۶۰٪ · درجهٔ <tspan fill="#80c9f8">B</tspan> ← ثبت ۳۸۴K$</text>
+    <text x="730" y="200" font-size="13" fill="#d7e0ea">م۲ کاهش بدهی سوخته · ناخالص ۷۳۰K$ · انتساب ۵۰٪ · درجهٔ <tspan fill="#f5b968">C</tspan> ← ثبت ۳۶۵K$</text>
+    <text x="730" y="224" font-size="13" fill="#d7e0ea">م۳ اجتناب از نیروی موقت فصلی · ناخالص ۱۶۰K$ · انتساب ۹۰٪ · درجهٔ <tspan fill="#69deb9">A</tspan> ← ثبت ۱۴۴K$</text>
+    <text x="730" y="252" font-size="15" font-weight="bold" fill="#69deb9">منافع ثبت‌شده: ۸۹۳K$</text>
+    <text x="730" y="284" font-size="13" font-weight="bold" fill="#8fa3b8">ثبت‌های هزینه — سال ۱</text>
+    <text x="730" y="308" font-size="13" fill="#d7e0ea">ساخت (یک‌باره) ۴۲۰K$ · بهره‌برداری ۹۵K$ · نظارت ۱۴۰K$ · دوباره‌کاری ۶۰K$</text>
+    <text x="730" y="332" font-size="15" font-weight="bold" fill="#d7e0ea">هزینه‌های ثبت‌شده: ۷۱۵K$</text>
     <rect x="30" y="352" width="700" height="52" rx="8" fill="#0d1420" stroke="#2a3a4c" stroke-width="1"/>
-    <text x="716" y="374" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">موقعیت خالص سال ۱: +۱۷۸K$ · نرخ جاری از سال ۲: +۵۹۸K$ در سال</text>
-    <text x="716" y="396" font-size="13" fill="#f5b968" text-anchor="end">تصمیم: مقیاس — گسترش به واحد کسب‌وکار دوم؛ ارتقای م۱ به درجهٔ A با گروه گواه</text>
+    <text x="716" y="374" font-size="15" font-weight="bold" fill="#d7e0ea">موقعیت خالص سال ۱: +۱۷۸K$ · نرخ جاری از سال ۲: +۵۹۸K$ در سال</text>
+    <text x="716" y="396" font-size="13" fill="#f5b968">تصمیم: مقیاس — گسترش به واحد کسب‌وکار دوم؛ ارتقای م۱ به درجهٔ A با گروه گواه</text>
   </svg>
   <figcaption>شکل ۱ — مدخل پرشدهٔ دفتر (سناریوی ترکیبی نمایشی؛ فرض‌ها در متن): خط پایه و ضدواقعی هنگام گشودن، ثبت‌های منفعتِ درجه‌دار، ثبت‌های هزینهٔ صادقانه، موقعیت خالص و تصمیم.</figcaption>
 </figure>
@@ -129,23 +129,23 @@ related_article_ids: ["05", "07", "14"]
     <rect x="20" y="14" width="720" height="78" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="36" y="32" width="46" height="42" rx="8" fill="#69deb9"/>
     <text x="59" y="60" font-size="20" font-weight="bold" fill="#0d1420" text-anchor="middle">A</text>
-    <text x="716" y="50" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">استقرار تصادفی یا مرحله‌ای با گروه گواه</text>
-    <text x="716" y="74" font-size="13" fill="#8fa3b8" text-anchor="end">مجاز می‌کند: «عامل این را باعث شد — خالصِ از عوامل مخدوش‌کننده.» برای ثبت‌های تیتری نگه دارید.</text>
+    <text x="716" y="50" font-size="15" font-weight="bold" fill="#d7e0ea">استقرار تصادفی یا مرحله‌ای با گروه گواه</text>
+    <text x="716" y="74" font-size="13" fill="#8fa3b8">مجاز می‌کند: «عامل این را باعث شد — خالصِ از عوامل مخدوش‌کننده.» برای ثبت‌های تیتری نگه دارید.</text>
     <rect x="20" y="104" width="720" height="78" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="36" y="122" width="46" height="42" rx="8" fill="#80c9f8"/>
     <text x="59" y="150" font-size="20" font-weight="bold" fill="#0d1420" text-anchor="middle">B</text>
-    <text x="716" y="140" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">مقایسهٔ منطبق (ثبت‌شده در برابر ثبت‌نشدهٔ منطبق)</text>
-    <text x="716" y="164" font-size="13" fill="#8fa3b8" text-anchor="end">مجاز می‌کند: «ارزش واقعی است؛ بزرگی تخفیفِ بیان‌شده دارد.»</text>
+    <text x="716" y="140" font-size="15" font-weight="bold" fill="#d7e0ea">مقایسهٔ منطبق (ثبت‌شده در برابر ثبت‌نشدهٔ منطبق)</text>
+    <text x="716" y="164" font-size="13" fill="#8fa3b8">مجاز می‌کند: «ارزش واقعی است؛ بزرگی تخفیفِ بیان‌شده دارد.»</text>
     <rect x="20" y="194" width="720" height="78" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="36" y="212" width="46" height="42" rx="8" fill="#f5b968"/>
     <text x="59" y="240" font-size="20" font-weight="bold" fill="#0d1420" text-anchor="middle">C</text>
-    <text x="716" y="230" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">قبل/بعد با تعدیل روند</text>
-    <text x="716" y="254" font-size="13" fill="#8fa3b8" text-anchor="end">مجاز می‌کند: «به‌احتمال قابل‌انتساب — جهت‌دار تلقی کنید.»</text>
+    <text x="716" y="230" font-size="15" font-weight="bold" fill="#d7e0ea">قبل/بعد با تعدیل روند</text>
+    <text x="716" y="254" font-size="13" fill="#8fa3b8">مجاز می‌کند: «به‌احتمال قابل‌انتساب — جهت‌دار تلقی کنید.»</text>
     <rect x="20" y="284" width="720" height="78" rx="10" fill="#0d1420" stroke="#2a3a4c" stroke-width="2"/>
     <rect x="36" y="302" width="46" height="42" rx="8" fill="#f27e85"/>
     <text x="59" y="330" font-size="20" font-weight="bold" fill="#0d1420" text-anchor="middle">D</text>
-    <text x="716" y="320" font-size="15" font-weight="bold" fill="#d7e0ea" text-anchor="end">برآورد جهت‌دار، بدون ضدواقعی</text>
-    <text x="716" y="344" font-size="13" fill="#8fa3b8" text-anchor="end">به‌عنوان ارزش محقق‌شده هیچ مجاز نمی‌کند — صرفاً ورودی برنامه‌ریزی.</text>
+    <text x="716" y="320" font-size="15" font-weight="bold" fill="#d7e0ea">برآورد جهت‌دار، بدون ضدواقعی</text>
+    <text x="716" y="344" font-size="13" fill="#8fa3b8">به‌عنوان ارزش محقق‌شده هیچ مجاز نمی‌کند — صرفاً ورودی برنامه‌ریزی.</text>
   </svg>
   <figcaption>شکل ۲ — نردبان اطمینان A تا D: درجه، خاصیتِ روش انتسابِ پشت هر سطر ثبت است و تعریف می‌کند آن عدد در جلسهٔ هیئت‌مدیره چه ادعایی مجاز است.</figcaption>
 </figure>
