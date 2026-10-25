@@ -90,7 +90,8 @@ upload(LOCAL_DB, f"{REMOTE_DIR}/public-knowledge.sqlite")
 
 # config + env (never any key value here)
 run(f"cat > /etc/public-mind/config.json <<'EOF'\n{json.dumps(CONFIG, indent=2)}\nEOF")
-run("test -f /etc/public-mind/env || printf 'ZAI_API_KEY=\\n' > /etc/public-mind/env")
+run("test -f /etc/public-mind/env || printf 'ZAI_API_KEY=\\nMIND_CONFIG=/etc/public-mind/config.json\\n' > /etc/public-mind/env")
+run("grep -q '^MIND_CONFIG=' /etc/public-mind/env || printf 'MIND_CONFIG=/etc/public-mind/config.json\\n' >> /etc/public-mind/env")
 run("chmod 600 /etc/public-mind/config.json /etc/public-mind/env")
 
 # unit
