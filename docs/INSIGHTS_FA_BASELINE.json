@@ -1,124 +1,124 @@
-{
-  "generated": "2026-10-25T12:51:18.635Z",
-  "base": "main @ 233ce53",
-  "changelog": [
-    {
-      "at": "2026-10-25T11:09:07.686Z",
-      "files": [
-        "01-ai-adoption-is-not-ai-transformation.md",
-        "12-the-90-day-ai-transformation-roadmap.md"
-      ],
-      "reason": "deliberate fix: blank lines inside <figure> terminated the CommonMark HTML block, rendering part of the inline SVG as a code block in production; removed blank lines only — no content change (verified: parity 20/20, validate ALL PASS)"
-    },
-    {
-      "at": "2026-10-25T12:51:18.636Z",
-      "files": [
-        "07-the-real-cost-of-enterprise-ai-agents.md",
-        "09-the-ai-native-product-operating-model.md"
-      ],
-      "reason": "deliberate fix: blank lines inside <figure> terminated the CommonMark HTML block, rendering part of the inline SVG as a code block in production; removed blank lines only — no content change (verified: parity 20/20, validate ALL PASS)"
-    }
-  ],
-  "en_articles": [
-    {
-      "file": "01-ai-adoption-is-not-ai-transformation.md",
-      "sha256": "992ba04f39f87ee9",
-      "bytes": 23985
-    },
-    {
-      "file": "02-the-agentic-mission-factory.md",
-      "sha256": "60239694ce41073c",
-      "bytes": 22273
-    },
-    {
-      "file": "03-from-org-charts-to-orchestration-charts.md",
-      "sha256": "939bf7537fff4f9d",
-      "bytes": 30801
-    },
-    {
-      "file": "04-who-owns-ai-transformation.md",
-      "sha256": "591e50a0c0cf1692",
-      "bytes": 30777
-    },
-    {
-      "file": "05-measuring-ai-value-beyond-productivity.md",
-      "sha256": "e21fc7f1637bb91f",
-      "bytes": 30414
-    },
-    {
-      "file": "06-the-ai-transformation-value-ledger.md",
-      "sha256": "eaa89bac7eed892a",
-      "bytes": 25900
-    },
-    {
-      "file": "07-the-real-cost-of-enterprise-ai-agents.md",
-      "sha256": "5c7d677ac847bc44",
-      "bytes": 20833
-    },
-    {
-      "file": "08-prioritizing-high-value-ai-missions.md",
-      "sha256": "47764c724e233f95",
-      "bytes": 19705
-    },
-    {
-      "file": "09-the-ai-native-product-operating-model.md",
-      "sha256": "a3c68e9fda671e15",
-      "bytes": 20039
-    },
-    {
-      "file": "10-designing-human-and-ai-product-teams.md",
-      "sha256": "9f8e8f0f73d1c811",
-      "bytes": 20157
-    },
-    {
-      "file": "11-from-ai-prototype-to-production.md",
-      "sha256": "dc4bf44ed8ee7913",
-      "bytes": 19199
-    },
-    {
-      "file": "12-the-90-day-ai-transformation-roadmap.md",
-      "sha256": "9dffb7f4fa1f121c",
-      "bytes": 25290
-    },
-    {
-      "file": "13-human-in-the-loop-vs-human-on-the-loop.md",
-      "sha256": "ecbd81dd8937c79d",
-      "bytes": 19877
-    },
-    {
-      "file": "14-ai-agent-evaluation-for-business-outcomes.md",
-      "sha256": "7871f1c6e27a43ce",
-      "bytes": 17759
-    },
-    {
-      "file": "15-agentic-ai-governance-by-design.md",
-      "sha256": "27b738236255ff24",
-      "bytes": 19649
-    },
-    {
-      "file": "16-why-ai-transformation-fails-without-change-management.md",
-      "sha256": "aa79adf78211244e",
-      "bytes": 19410
-    },
-    {
-      "file": "17-agentic-ai-for-fmcg-commercial-operations.md",
-      "sha256": "c80cf3604ef94591",
-      "bytes": 20243
-    },
-    {
-      "file": "18-ai-native-supply-chain-decision-intelligence.md",
-      "sha256": "c49c53e80b8679d6",
-      "bytes": 19495
-    },
-    {
-      "file": "19-recovering-revenue-inventory-pricing-promotions.md",
-      "sha256": "7ad246ff5117c40e",
-      "bytes": 19758
-    },
-    {
-      "file": "20-inside-an-ai-native-transformation-mission.md",
-      "sha256": "20a6f1165ecf9bb8",
-      "bytes": 22403
-    }
-  ]
+﻿{
+    "generated":  "2026-10-25T12:51:18.635Z",
+    "base":  "main @ 233ce53",
+    "changelog":  [
+                      {
+                          "at":  "2026-10-25T11:09:07.686Z",
+                          "files":  [
+                                        "01-ai-adoption-is-not-ai-transformation.md",
+                                        "12-the-90-day-ai-transformation-roadmap.md"
+                                    ],
+                          "reason":  "deliberate fix: blank lines inside \u003cfigure\u003e terminated the CommonMark HTML block, rendering part of the inline SVG as a code block in production; removed blank lines only — no content change (verified: parity 20/20, validate ALL PASS)"
+                      },
+                      {
+                          "at":  "2026-10-25T12:51:18.636Z",
+                          "files":  [
+                                        "07-the-real-cost-of-enterprise-ai-agents.md",
+                                        "09-the-ai-native-product-operating-model.md"
+                                    ],
+                          "reason":  "deliberate fix: EN 07 legend overflowed viewBox right edge by 36px (label wrapped + block shifted left), EN 09 loop circle clipped 12px at viewBox bottom (viewBox 330-\u003e344); pixel-verified via insights-figcheck"
+                      }
+                  ],
+    "en_articles":  [
+                        {
+                            "file":  "01-ai-adoption-is-not-ai-transformation.md",
+                            "sha256":  "992ba04f39f87ee9",
+                            "bytes":  23985
+                        },
+                        {
+                            "file":  "02-the-agentic-mission-factory.md",
+                            "sha256":  "60239694ce41073c",
+                            "bytes":  22273
+                        },
+                        {
+                            "file":  "03-from-org-charts-to-orchestration-charts.md",
+                            "sha256":  "939bf7537fff4f9d",
+                            "bytes":  30801
+                        },
+                        {
+                            "file":  "04-who-owns-ai-transformation.md",
+                            "sha256":  "591e50a0c0cf1692",
+                            "bytes":  30777
+                        },
+                        {
+                            "file":  "05-measuring-ai-value-beyond-productivity.md",
+                            "sha256":  "e21fc7f1637bb91f",
+                            "bytes":  30414
+                        },
+                        {
+                            "file":  "06-the-ai-transformation-value-ledger.md",
+                            "sha256":  "eaa89bac7eed892a",
+                            "bytes":  25900
+                        },
+                        {
+                            "file":  "07-the-real-cost-of-enterprise-ai-agents.md",
+                            "sha256":  "5c7d677ac847bc44",
+                            "bytes":  20833
+                        },
+                        {
+                            "file":  "08-prioritizing-high-value-ai-missions.md",
+                            "sha256":  "47764c724e233f95",
+                            "bytes":  19705
+                        },
+                        {
+                            "file":  "09-the-ai-native-product-operating-model.md",
+                            "sha256":  "a3c68e9fda671e15",
+                            "bytes":  20039
+                        },
+                        {
+                            "file":  "10-designing-human-and-ai-product-teams.md",
+                            "sha256":  "9f8e8f0f73d1c811",
+                            "bytes":  20157
+                        },
+                        {
+                            "file":  "11-from-ai-prototype-to-production.md",
+                            "sha256":  "dc4bf44ed8ee7913",
+                            "bytes":  19199
+                        },
+                        {
+                            "file":  "12-the-90-day-ai-transformation-roadmap.md",
+                            "sha256":  "9dffb7f4fa1f121c",
+                            "bytes":  25290
+                        },
+                        {
+                            "file":  "13-human-in-the-loop-vs-human-on-the-loop.md",
+                            "sha256":  "ecbd81dd8937c79d",
+                            "bytes":  19877
+                        },
+                        {
+                            "file":  "14-ai-agent-evaluation-for-business-outcomes.md",
+                            "sha256":  "7871f1c6e27a43ce",
+                            "bytes":  17759
+                        },
+                        {
+                            "file":  "15-agentic-ai-governance-by-design.md",
+                            "sha256":  "27b738236255ff24",
+                            "bytes":  19649
+                        },
+                        {
+                            "file":  "16-why-ai-transformation-fails-without-change-management.md",
+                            "sha256":  "aa79adf78211244e",
+                            "bytes":  19410
+                        },
+                        {
+                            "file":  "17-agentic-ai-for-fmcg-commercial-operations.md",
+                            "sha256":  "c80cf3604ef94591",
+                            "bytes":  20243
+                        },
+                        {
+                            "file":  "18-ai-native-supply-chain-decision-intelligence.md",
+                            "sha256":  "c49c53e80b8679d6",
+                            "bytes":  19495
+                        },
+                        {
+                            "file":  "19-recovering-revenue-inventory-pricing-promotions.md",
+                            "sha256":  "7ad246ff5117c40e",
+                            "bytes":  19758
+                        },
+                        {
+                            "file":  "20-inside-an-ai-native-transformation-mission.md",
+                            "sha256":  "20a6f1165ecf9bb8",
+                            "bytes":  22403
+                        }
+                    ]
 }
