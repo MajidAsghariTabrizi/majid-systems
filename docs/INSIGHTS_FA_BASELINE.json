@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25T11:09:07.685Z",
+  "generated": "2026-10-25T12:51:18.635Z",
   "base": "main @ 233ce53",
   "changelog": [
     {
@@ -7,6 +7,14 @@
       "files": [
         "01-ai-adoption-is-not-ai-transformation.md",
         "12-the-90-day-ai-transformation-roadmap.md"
+      ],
+      "reason": "deliberate fix: blank lines inside <figure> terminated the CommonMark HTML block, rendering part of the inline SVG as a code block in production; removed blank lines only — no content change (verified: parity 20/20, validate ALL PASS)"
+    },
+    {
+      "at": "2026-10-25T12:51:18.636Z",
+      "files": [
+        "07-the-real-cost-of-enterprise-ai-agents.md",
+        "09-the-ai-native-product-operating-model.md"
       ],
       "reason": "deliberate fix: blank lines inside <figure> terminated the CommonMark HTML block, rendering part of the inline SVG as a code block in production; removed blank lines only — no content change (verified: parity 20/20, validate ALL PASS)"
     }
@@ -44,8 +52,8 @@
     },
     {
       "file": "07-the-real-cost-of-enterprise-ai-agents.md",
-      "sha256": "9f18fdf33865a5de",
-      "bytes": 20769
+      "sha256": "5c7d677ac847bc44",
+      "bytes": 20833
     },
     {
       "file": "08-prioritizing-high-value-ai-missions.md",
@@ -54,7 +62,7 @@
     },
     {
       "file": "09-the-ai-native-product-operating-model.md",
-      "sha256": "5e47491b3864418c",
+      "sha256": "a3c68e9fda671e15",
       "bytes": 20039
     },
     {

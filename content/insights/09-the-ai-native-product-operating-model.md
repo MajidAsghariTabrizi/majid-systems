@@ -89,7 +89,7 @@ The learning loop is the mechanism that converts usage into improvement. It has 
 Deloitte and Google Cloud's 2026 point of view on scaling agentic AI names the production disciplines — orchestration, evaluation, guardrails — as the practices that move agents from pilot to production value; the learning loop is simply those disciplines arranged as a cycle rather than a checklist.[[2]](#ref-deloitte-google-agentic-2026)
 
 <figure>
-  <svg viewBox="0 0 760 330" role="img" aria-label="Circular learning loop with five stations: signal capture, evaluation, update, guarded rollout and measurement, with a human approval gate before rollout" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <svg viewBox="0 0 760 344" role="img" aria-label="Circular learning loop with five stations: signal capture, evaluation, update, guarded rollout and measurement, with a human approval gate before rollout" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
     <defs>
       <marker id="f9-arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M0,0 L10,5 L0,10 z" fill="#8fa3b8"/>
