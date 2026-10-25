@@ -2,10 +2,12 @@ import type { MetadataRoute } from 'next';
 
 import { PROJECTS } from '@/content/projects';
 import { NOTES } from '@/content/notes';
-import { ARTICLES, PILLARS } from '@/content/insights';
+import { ARTICLES, getArticles, PILLARS } from '@/content/insights';
 import { SITE } from '@/content/shared';
 
 const BASE = SITE.canonicalUrl;
+const FA_ARTICLES = getArticles('fa');
+const faArticleBySlug = new Map(FA_ARTICLES.map((a) => [a.slug, a]));
 
 /** Locale-prefixed routes with EN/FA alternates. */
 function loc(p: string): MetadataRoute.Sitemap[number] {
@@ -30,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     loc(p)
   );
 
-  /* Quantiviq Insights publication (EN primary; FA index localized). */
+  /* Quantiviq Insights publication (bilingual EN + FA, same slugs). */
   items.push(
     {
       url: `${BASE}/en/insights`,
@@ -47,9 +49,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE}/fa/insights`,
-      lastModified: ARTICLES[0] ? new Date(ARTICLES[0].updated_at) : now,
+      lastModified: FA_ARTICLES[0] ? new Date(FA_ARTICLES[0].updated_at) : now,
       changeFrequency: 'weekly',
-      priority: 0.6,
+      priority: 0.9,
       alternates: {
         languages: {
           en: `${BASE}/en/insights`,
@@ -60,6 +62,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE}/en/insights/methodology`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.5,
+      alternates: {
+        languages: {
+          en: `${BASE}/en/insights/methodology`,
+          fa: `${BASE}/fa/insights/methodology`,
+          'x-default': `${BASE}/en/insights/methodology`,
+        },
+      },
+    },
+    {
+      url: `${BASE}/fa/insights/methodology`,
       lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.5,
@@ -84,21 +99,73 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
+    {
+      url: `${BASE}/fa/insights/author`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.4,
+      alternates: {
+        languages: {
+          en: `${BASE}/en/insights/author`,
+          fa: `${BASE}/fa/insights/author`,
+          'x-default': `${BASE}/en/insights/author`,
+        },
+      },
+    },
   );
   for (const p of PILLARS) {
-    items.push({
-      url: `${BASE}/en/insights/topics/${p.id}`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
+    items.push(
+      {
+        url: `${BASE}/en/insights/topics/${p.id}`,
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: {
+            en: `${BASE}/en/insights/topics/${p.id}`,
+            fa: `${BASE}/fa/insights/topics/${p.id}`,
+          },
+        },
+      },
+      {
+        url: `${BASE}/fa/insights/topics/${p.id}`,
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: {
+            en: `${BASE}/en/insights/topics/${p.id}`,
+            fa: `${BASE}/fa/insights/topics/${p.id}`,
+          },
+        },
+      },
+    );
   }
   for (const a of ARTICLES) {
+    // EN article with reciprocal hreflang when the FA counterpart exists.
+    const faUrl = faArticleBySlug.has(a.slug) ? `${BASE}/fa/insights/${a.slug}` : undefined;
     items.push({
       url: `${BASE}/en/insights/${a.slug}`,
       lastModified: new Date(a.updated_at),
       changeFrequency: 'monthly',
       priority: a.featured ? 0.9 : 0.8,
+      ...(faUrl
+        ? { alternates: { languages: { en: `${BASE}/en/insights/${a.slug}`, fa: faUrl } } }
+        : {}),
+    });
+  }
+  for (const a of FA_ARTICLES) {
+    items.push({
+      url: `${BASE}/fa/insights/${a.slug}`,
+      lastModified: new Date(a.updated_at),
+      changeFrequency: 'monthly',
+      priority: a.featured ? 0.9 : 0.8,
+      alternates: {
+        languages: {
+          en: `${BASE}/en/insights/${a.slug}`,
+          fa: `${BASE}/fa/insights/${a.slug}`,
+        },
+      },
     });
   }
 

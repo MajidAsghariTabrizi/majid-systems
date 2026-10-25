@@ -4,14 +4,17 @@ import { marked, type Tokens, type Token } from 'marked';
 import matter from 'gray-matter';
 
 /* ============================================================================
- * Quantiviq Insights — file-based content layer
+ * Quantiviq Insights — file-based content layer (bilingual: EN + FA)
  * ----------------------------------------------------------------------------
- * Articles: content/insights/<id>-<slug>.md  (frontmatter + markdown + inline SVG)
- * Ledger:   content/insights/sources.json, authors.json
+ * Articles (EN): content/insights/<id>-<slug>.md   (frontmatter + markdown + inline SVG)
+ * Articles (FA): content/insights/fa/<id>-<slug>.md (Persian counterparts, same IDs)
+ * Ledger:        content/insights/sources.json, authors.json (shared, language-neutral)
  *
  * Everything is read at module load (build-time under SSG; also fine at server
  * start since the repo checkout ships with the deployment). No CMS, no DB.
  * ========================================================================== */
+
+export type Locale = 'en' | 'fa';
 
 export type ArticleStatus = 'published' | 'draft';
 
@@ -100,6 +103,49 @@ export const PILLARS: PillarDef[] = [
 
 export const PILLAR_BY_ID: Record<string, PillarDef> = Object.fromEntries(PILLARS.map((p) => [p.id, p]));
 
+/** Persian display strings for the five pillars (same ids, stable pairing). */
+export const PILLARS_FA: Record<PillarId, { name: string; tagline: string; description: string }> = {
+  'transformation-strategy': {
+    name: 'استراتژی تحول با هوش مصنوعی',
+    tagline: 'چرا استقرار ابزار، تحول نیست',
+    description:
+      'تفاوت راهبردی میان پذیرش ابزارهای هوش مصنوعی و بازطراحی روش ارزش‌آفرینی، تصمیم‌گیری و کار در سازمان.',
+  },
+  'economics-value': {
+    name: 'اقتصاد و ارزش تجاری',
+    tagline: 'از اثبات بهره‌وری تا اثبات در سود و زیان',
+    description:
+      'سنجش، انتساب و ساختار هزینهٔ واقعی هوش مصنوعی سازمانی — اینکه ارزش چگونه خلق، ردیابی و دفاع می‌شود.',
+  },
+  'ai-native-operations': {
+    name: 'مدل عملیاتی و محصول بومی هوش مصنوعی',
+    tagline: 'مدل‌های عملیاتی ساخته‌شده برای انسان و عامل‌ها',
+    description:
+      'تحویل محصول، طراحی تیم، تولیدی‌سازی و اجرای مرحله‌ای هنگامی که عامل‌ها بخشی از نیروی کار سازمان‌اند.',
+  },
+  'trust-governance': {
+    name: 'اعتماد، ایمنی و تغییر سازمانی',
+    tagline: 'خودمختاری همراه با پاسخگویی',
+    description:
+      'نظارت انسانی، ارزیابی، حکمرانی و مدیریت تغییری که تعیین می‌کند پذیرش واقعاً اتفاق می‌افتد یا نه.',
+  },
+  'applied-industry': {
+    name: 'تحول کاربردی و صنعتی',
+    tagline: 'جایی که ارزش زودتر دیده می‌شود',
+    description:
+      'تحلیل کاربردی برای عملیات تجاری، زنجیرهٔ تأمین و مأموریت‌های تحول سرتاسری، همراه با نمونه‌های محاسبه‌شده.',
+  },
+};
+
+/** Locale-aware pillar display record. */
+export function pillarFor(pillar: PillarId | string, locale: Locale): PillarDef {
+  const base = PILLAR_BY_ID[pillar];
+  if (!base) return undefined as unknown as PillarDef;
+  if (locale !== 'fa') return base;
+  const fa = PILLARS_FA[base.id];
+  return { ...base, ...fa };
+}
+
 /* ------------------------------------------------------------------ sources */
 
 export interface SourceRecord {
@@ -125,11 +171,14 @@ export interface AuthorRecord {
   type: string;
 }
 
-const CONTENT_DIR = path.join(process.cwd(), 'content', 'insights');
+const CONTENT_DIRS: Record<Locale, string> = {
+  en: path.join(process.cwd(), 'content', 'insights'),
+  fa: path.join(process.cwd(), 'content', 'insights', 'fa'),
+};
 
 export const SOURCES: Record<string, SourceRecord> = (() => {
   try {
-    const raw = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'sources.json'), 'utf8'));
+    const raw = JSON.parse(fs.readFileSync(path.join(CONTENT_DIRS.en, 'sources.json'), 'utf8'));
     const map: Record<string, SourceRecord> = {};
     for (const s of raw.sources) map[s.source_id] = s;
     return map;
@@ -140,7 +189,7 @@ export const SOURCES: Record<string, SourceRecord> = (() => {
 
 export const AUTHORS: Record<string, AuthorRecord> = (() => {
   try {
-    const raw = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'authors.json'), 'utf8'));
+    const raw = JSON.parse(fs.readFileSync(path.join(CONTENT_DIRS.en, 'authors.json'), 'utf8'));
     const map: Record<string, AuthorRecord> = {};
     for (const a of raw.authors) map[a.author_id] = a;
     return map;
@@ -151,12 +200,12 @@ export const AUTHORS: Record<string, AuthorRecord> = (() => {
 
 /* ---------------------------------------------------------------- rendering */
 
-/** slugify a heading into a stable anchor */
+/** slugify a heading into a stable anchor (Unicode-aware: keeps Persian letters). */
 function headingId(text: string, seen: Map<string, number>): string {
   const base = text
     .toLowerCase()
     .replace(/<[^>]+>/g, '')
-    .replace(/[^\w\s-]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 64);
@@ -217,13 +266,13 @@ function inlineText(tokens: Token[] | undefined): string {
     .join('');
 }
 
-/** word count of the markdown body (approximate, source-visible words) */
+/** word count of the markdown body (Unicode-aware: Latin and Persian both count). */
 function countWords(md: string): number {
   return md
     .replace(/<svg[\s\S]*?<\/svg>/g, ' ')
     .replace(/```[\s\S]*?```/g, ' ')
     .split(/\s+/)
-    .filter((w) => /[a-zA-Z0-9]/.test(w)).length;
+    .filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 }
 
 export function readingTimeMinutes(words: number): number {
@@ -233,23 +282,24 @@ export function readingTimeMinutes(words: number): number {
 /* ------------------------------------------------------------------ loader */
 
 export interface Article extends ArticleFrontmatter {
+  locale: Locale;
   words: number;
   readingTime: number;
-  /** rendered at module load; key = 'en' for now (single-language publication) */
+  /** rendered at module load */
   html: string;
   headings: HeadingEntry[];
 }
 
-function loadArticles(): Article[] {
+function loadArticles(locale: Locale): Article[] {
   let files: string[] = [];
   try {
-    files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'));
+    files = fs.readdirSync(CONTENT_DIRS[locale]).filter((f) => f.endsWith('.md'));
   } catch {
     return [];
   }
   const articles: Article[] = [];
   for (const file of files) {
-    const raw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf8');
+    const raw = fs.readFileSync(path.join(CONTENT_DIRS[locale], file), 'utf8');
     const { data, content } = matter(raw);
     const fm = data as Partial<ArticleFrontmatter>;
     // minimal hard requirements here; full schema validation runs in
@@ -259,6 +309,7 @@ function loadArticles(): Article[] {
     const words = countWords(content);
     articles.push({
       ...(fm as ArticleFrontmatter),
+      locale,
       words,
       readingTime: readingTimeMinutes(words),
       html,
@@ -269,25 +320,45 @@ function loadArticles(): Article[] {
   return articles;
 }
 
-export const ARTICLES: Article[] = loadArticles();
+/** All articles per locale. */
+export const ARTICLES_BY_LOCALE: Record<Locale, Article[]> = {
+  en: loadArticles('en'),
+  fa: loadArticles('fa'),
+};
+
+/** English corpus — unchanged export for the existing English publication. */
+export const ARTICLES: Article[] = ARTICLES_BY_LOCALE.en;
 export const ARTICLE_BY_SLUG: Record<string, Article> = Object.fromEntries(ARTICLES.map((a) => [a.slug, a]));
 export const ARTICLE_BY_ID: Record<string, Article> = Object.fromEntries(ARTICLES.map((a) => [a.id, a]));
 
-export function articlesByPillar(pillar: string): Article[] {
-  return ARTICLES.filter((a) => a.pillar === pillar);
+/** Locale-aware accessors. */
+export function getArticles(locale: Locale): Article[] {
+  return ARTICLES_BY_LOCALE[locale] ?? [];
 }
 
-/** references for an article, in the order cited */
+export function getArticleBySlug(slug: string, locale: Locale): Article | undefined {
+  return (ARTICLES_BY_LOCALE[locale] ?? []).find((a) => a.slug === slug);
+}
+
+export function getArticleById(id: string, locale: Locale): Article | undefined {
+  return (ARTICLES_BY_LOCALE[locale] ?? []).find((a) => a.id === id);
+}
+
+export function articlesByPillar(pillar: string, locale: Locale = 'en'): Article[] {
+  return getArticles(locale).filter((a) => a.pillar === pillar);
+}
+
+/** references for an article, in the order cited (ledger is shared across locales) */
 export function sourcesFor(article: Article): SourceRecord[] {
   return (article.source_ids ?? []).map((id) => SOURCES[id]).filter(Boolean);
 }
 
 export function articlePath(article: Article): string {
-  return `/en/insights/${article.slug}`;
+  return `/${article.locale}/insights/${article.slug}`;
 }
 
-export function topicPath(pillar: string): string {
-  return `/en/insights/topics/${pillar}`;
+export function topicPath(pillar: string, locale: Locale = 'en'): string {
+  return `/${locale}/insights/topics/${pillar}`;
 }
 
 export const INSIGHTS_STATS = {
@@ -296,3 +367,13 @@ export const INSIGHTS_STATS = {
   sources: Object.keys(SOURCES).length,
   words: ARTICLES.reduce((n, a) => n + a.words, 0),
 };
+
+export function insightsStats(locale: Locale) {
+  const list = getArticles(locale);
+  return {
+    articles: list.length,
+    pillars: PILLARS.length,
+    sources: Object.keys(SOURCES).length,
+    words: list.reduce((n, a) => n + a.words, 0),
+  };
+}

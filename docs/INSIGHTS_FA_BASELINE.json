@@ -1,0 +1,111 @@
+{
+  "generated": "2026-10-25T09:32:07.246Z",
+  "base": "main @ 233ce53",
+  "en_articles": [
+    {
+      "file": "01-ai-adoption-is-not-ai-transformation.md",
+      "sha256": "821ceb1f147cb538",
+      "bytes": 23896
+    },
+    {
+      "file": "02-the-agentic-mission-factory.md",
+      "sha256": "60239694ce41073c",
+      "bytes": 22139
+    },
+    {
+      "file": "03-from-org-charts-to-orchestration-charts.md",
+      "sha256": "939bf7537fff4f9d",
+      "bytes": 30670
+    },
+    {
+      "file": "04-who-owns-ai-transformation.md",
+      "sha256": "591e50a0c0cf1692",
+      "bytes": 30654
+    },
+    {
+      "file": "05-measuring-ai-value-beyond-productivity.md",
+      "sha256": "e21fc7f1637bb91f",
+      "bytes": 30280
+    },
+    {
+      "file": "06-the-ai-transformation-value-ledger.md",
+      "sha256": "eaa89bac7eed892a",
+      "bytes": 25719
+    },
+    {
+      "file": "07-the-real-cost-of-enterprise-ai-agents.md",
+      "sha256": "9f18fdf33865a5de",
+      "bytes": 20669
+    },
+    {
+      "file": "08-prioritizing-high-value-ai-missions.md",
+      "sha256": "47764c724e233f95",
+      "bytes": 19577
+    },
+    {
+      "file": "09-the-ai-native-product-operating-model.md",
+      "sha256": "5e47491b3864418c",
+      "bytes": 19923
+    },
+    {
+      "file": "10-designing-human-and-ai-product-teams.md",
+      "sha256": "9f8e8f0f73d1c811",
+      "bytes": 20061
+    },
+    {
+      "file": "11-from-ai-prototype-to-production.md",
+      "sha256": "dc4bf44ed8ee7913",
+      "bytes": 19108
+    },
+    {
+      "file": "12-the-90-day-ai-transformation-roadmap.md",
+      "sha256": "ee237f672eee6b7c",
+      "bytes": 25122
+    },
+    {
+      "file": "13-human-in-the-loop-vs-human-on-the-loop.md",
+      "sha256": "ecbd81dd8937c79d",
+      "bytes": 19736
+    },
+    {
+      "file": "14-ai-agent-evaluation-for-business-outcomes.md",
+      "sha256": "7871f1c6e27a43ce",
+      "bytes": 17635
+    },
+    {
+      "file": "15-agentic-ai-governance-by-design.md",
+      "sha256": "27b738236255ff24",
+      "bytes": 19521
+    },
+    {
+      "file": "16-why-ai-transformation-fails-without-change-management.md",
+      "sha256": "aa79adf78211244e",
+      "bytes": 19277
+    },
+    {
+      "file": "17-agentic-ai-for-fmcg-commercial-operations.md",
+      "sha256": "c80cf3604ef94591",
+      "bytes": 20125
+    },
+    {
+      "file": "18-ai-native-supply-chain-decision-intelligence.md",
+      "sha256": "c49c53e80b8679d6",
+      "bytes": 19394
+    },
+    {
+      "file": "19-recovering-revenue-inventory-pricing-promotions.md",
+      "sha256": "7ad246ff5117c40e",
+      "bytes": 19632
+    },
+    {
+      "file": "20-inside-an-ai-native-transformation-mission.md",
+      "sha256": "20a6f1165ecf9bb8",
+      "bytes": 22241
+    },
+    {
+      "file": "TEMPLATE.md",
+      "sha256": "59fa650314f61f15",
+      "bytes": 7662
+    }
+  ]
+}
