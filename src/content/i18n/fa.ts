@@ -56,6 +56,7 @@ export const fa = {
     },
   },
   nav: {
+    insights: 'تحلیل‌ها',
     services: 'خدمات',
     system: 'سیستم',
     method: 'روش',

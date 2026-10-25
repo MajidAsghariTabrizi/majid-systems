@@ -22,6 +22,7 @@ export function Header({ locale }: { locale?: Locale }) {
 
   const links = locale
     ? [
+        { label: t.nav.insights, href: localePath(locale, '/insights') },
         { label: t.nav.services, href: localePath(locale, '/services') },
         { label: t.nav.system, href: localePath(locale, '/system') },
         { label: t.nav.lab, href: localePath(locale, '/lab') },

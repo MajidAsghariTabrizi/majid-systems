@@ -56,6 +56,7 @@ export const en = {
     },
   },
   nav: {
+    insights: 'Insights',
     services: 'Services',
     system: 'System',
     method: 'Method',
