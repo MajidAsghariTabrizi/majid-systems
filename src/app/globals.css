@@ -6139,6 +6139,26 @@ html[dir='rtl'] .os-index-num {
   font-display: swap;
 }
 
+/* Self-hosted Inter + JetBrains Mono (variable, latin subset) — replaces the
+   render-blocking fonts.googleapis.com stylesheet. Same families and weights
+   the Google CSS served (Inter 400-800, JBM 400-600), now served locally:
+   removes a ~340-800ms external round-trip from EVERY page's first paint. */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable-latin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Variable-latin.woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ---- Workstream A: Persian locale typography ---------------------- */
 
 html[lang='fa'] {
