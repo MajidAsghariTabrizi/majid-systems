@@ -1,0 +1,13 @@
+{
+  "$schema_note": "Author records for Quantiviq Insights. Attribution policy: articles are published under the collective 'Quantiviq Research' byline — research-led synthesis by the Quantiviq team with AI-assisted drafting and human editorial verification (disclosed on the methodology page). No personal bylines are used unless a named author has reviewed and approved their article.",
+  "authors": [
+    {
+      "author_id": "quantiviq-research",
+      "name": "Quantiviq Research",
+      "role": "Research & Editorial Collective",
+      "bio": "Quantiviq Research publishes original analysis on AI-native business transformation — operating models, economics, governance and execution. Our analysis is grounded in verified primary research (McKinsey, BCG, Gartner, Deloitte, NIST, peer-reviewed studies) and in Quantiviq's own demonstrated engineering work on agentic systems and organizational simulators. Every claim traces to a cited source; every framework is original synthesis.",
+      "url": "https://quantiviq.xyz/en/insights/author",
+      "type": "Organization"
+    }
+  ]
+}

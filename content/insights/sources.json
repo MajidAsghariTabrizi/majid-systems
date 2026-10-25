@@ -1,0 +1,497 @@
+{
+  "$schema_note": "Quantiviq Insights research ledger. Every quantitative or attributable claim in the publication must trace to a source_id here. Secondary coverage is marked in limitations. accessed_at = last verification date (YYYY-MM-DD). article_ids_using_source is maintained by scripts/insights-validate.mjs.",
+  "accessed_at": "2026-10-23",
+  "sources": [
+    {
+      "source_id": "mck-2026-org",
+      "title": "AI is changing work. Now it has to change the organization",
+      "publisher": "McKinsey & Company",
+      "author": "McKinsey People & Organizational Performance",
+      "publication_date": "2026-10-05",
+      "source_url": "https://www.mckinsey.com/no/our-insights/ai-is-changing-work-now-it-has-to-change-the-organization",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Work itself — tasks, workflows, roles — is changing faster than the organizational structures around it (superunits, planning, budgeting, performance management, decision rights).",
+        "The argument that AI value at scale requires redesigning how the organization operates (teams, management processes, governance), not just deploying tools.",
+        "Organizations that pair AI deployment with operating-model redesign outperform tool-only adopters (article's central framing; magnitude behind paywall)."
+      ],
+      "methodology_notes": "Essay/insight piece tied to McKinsey's 2026 State of AI survey research and client practice. Regional mirror URL (mckinsey.com/no) used because the practice-path URL is region-dependent; article existence verified via indexed mirrors and multiple independent secondary reports.",
+      "limitations": "Primary page exists (verified via mckinsey.com regional mirrors and multiple independent secondary reports); exact exhibit figures are behind the page and not re-quoted here.",
+      "article_ids_using_source": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "08",
+        "09",
+        "10",
+        "12",
+        "16",
+        "20"
+      ]
+    },
+    {
+      "source_id": "mck-soai-2026",
+      "title": "The State of AI, 2026 survey (as reported by ET CIO / ANI / Jornal Económico)",
+      "publisher": "McKinsey & Company (survey); Economic Times CIO, ANI, Jornal Económico (coverage)",
+      "author": "McKinsey survey; secondary reporting",
+      "publication_date": "2026-10-16",
+      "source_url": "https://cio.economictimes.indiatimes.com/news/artificial-intelligence/only-6-of-companies-see-significant-financial-gains-from-ai/134990221",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Only about 6% of surveyed companies report significant financial gains from AI (ET CIO, ANI, Lokmat coverage of the McKinsey survey, Oct 2026).",
+        "Roughly 80% of employees report productivity gains from AI, but only about 37% of companies report revenue improvement (Jornal Económico coverage of the same survey).",
+        "The productivity-to-profit gap is the defining measurement problem of AI transformation."
+      ],
+      "methodology_notes": "Global enterprise survey; sample size and sector mix not fully visible from secondary coverage.",
+      "limitations": "Figures come from independent secondary coverage of the McKinsey survey (ET, ANI, Jornal Económico); the primary survey page was not directly retrieved. Treat as directional magnitudes, not precise benchmarks.",
+      "article_ids_using_source": [
+        "01",
+        "04",
+        "05",
+        "06",
+        "12",
+        "20"
+      ]
+    },
+    {
+      "source_id": "bcg-2026-formula",
+      "title": "The Formula for Agentic AI Value",
+      "publisher": "Boston Consulting Group",
+      "author": "BCG (Applied AI / GAMMA)",
+      "publication_date": "2026-09-30",
+      "source_url": "https://www.bcg.com/publications/2026/the-formula-for-agentic-ai-value",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Enterprises that exercise systematic control over agents (governance, evaluation, proof of value) report on the order of three times the value from agentic AI versus uncontrolled deployments (validant.ai signal analysis of the BCG report).",
+        "The report frames a multi-step formula (five steps in secondary summaries) for moving AI value from productivity proof to P&L proof ('into the profit statement').",
+        "Roughly half of enterprises report measurable value from AI (secondary summaries of the report)."
+      ],
+      "methodology_notes": "BCG survey of several hundred executives (secondary summaries mention ~398 respondents) plus BCG client analysis.",
+      "limitations": "Multiplier and step-count figures are from secondary summaries (validant.ai, 53AI, sgpjbg); the primary exhibit values were not directly retrieved. Attribute as 'BCG research as summarized by [secondary]'.",
+      "article_ids_using_source": [
+        "02",
+        "05",
+        "06",
+        "08",
+        "12",
+        "14",
+        "17",
+        "20"
+      ]
+    },
+    {
+      "source_id": "bcg-2026-econ",
+      "title": "How AI Is Reshaping the Economics of Technology",
+      "publisher": "Boston Consulting Group",
+      "author": "BCG",
+      "publication_date": "2026-10-02",
+      "source_url": "https://www.bcg.com/publications/2026/ai-share-it-budgets-rising-fast",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Enterprise AI investment roughly doubled in about a year, to around 3.3% of company revenues (Jornal Económico coverage of the BCG report).",
+        "AI spending is shifting outside IT budgets, testing CIO-CFO decision rights (TechTarget; BusinessDay coverage).",
+        "Banks are among the heaviest AI spenders; telecom operators struggle most to show returns (TechCentral coverage)."
+      ],
+      "methodology_notes": "BCG analysis of enterprise technology budgets across sectors.",
+      "limitations": "Headline ratios come from independent secondary coverage (Jornal Económico, BusinessDay, TechTarget, TechCentral) of the BCG publication; primary exhibit detail is behind BCG's page.",
+      "article_ids_using_source": [
+        "04",
+        "07"
+      ]
+    },
+    {
+      "source_id": "mck-2026-cpg",
+      "title": "For CPG companies, agentic AI's real payoff is growth",
+      "publisher": "McKinsey & Company",
+      "author": "McKinsey Consumer Packaged Goods practice",
+      "publication_date": "2026-10-09",
+      "source_url": "https://www.mckinsey.com/industries/consumer-packaged-goods/our-insights/for-cpg-companies-agentic-ais-real-payoff-is-growth",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "For CPG companies the primary payoff of agentic AI is growth (revenue), not only cost reduction.",
+        "FMCG companies leave revenue on the table by applying AI mainly to cost programs (RetailDetail dossier coverage of the piece).",
+        "Agentic AI applies across commercial operations — planning, promotions, pricing, retail execution — not just analytics support functions."
+      ],
+      "methodology_notes": "Industry insight piece with McKinsey commercial-excellence research base; verified via mckinsey.com regional mirrors and RetailDetail NL/FR coverage.",
+      "limitations": "Primary exhibit numbers behind the page; claims above are the article's framing as confirmed by regional mirrors and independent retail-press coverage.",
+      "article_ids_using_source": [
+        "17",
+        "18",
+        "19"
+      ]
+    },
+    {
+      "source_id": "mit-nanda-2025",
+      "title": "The GenAI Divide: State of AI in Business 2025 (MIT Media Lab / Project NANDA)",
+      "publisher": "MIT (Media Lab, Project NANDA)",
+      "author": "Project NANDA research team",
+      "publication_date": "2025-08-18",
+      "source_url": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "About 95% of organizations' generative-AI pilots produced no measurable P&L return at the time of the study (widely reported headline figure).",
+        "Attributed failure causes: purchases without workflow integration, poor task-to-model fit, insufficient adoption support, and measurement gaps.",
+        "A small minority of firms ('inners' in the report's framing) captured most of the realized value."
+      ],
+      "methodology_notes": "Report based on interviews and surveys across enterprises plus open-source data; methodological critiques followed (selection and definition of 'pilot').",
+      "limitations": "Cited via Fortune and other independent coverage of the MIT NANDA report; the report itself was not directly retrieved. The 95% figure is contested in scope (pilots vs all deployments) — always pair with the caveat.",
+      "article_ids_using_source": [
+        "01",
+        "02",
+        "06",
+        "08",
+        "11",
+        "16"
+      ]
+    },
+    {
+      "source_id": "gartner-2025-agentic",
+      "title": "Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027",
+      "publisher": "Gartner",
+      "author": "Gartner Newsroom",
+      "publication_date": "2025-06-25",
+      "source_url": "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Gartner predicts more than 40% of agentic AI projects will be canceled by end of 2027 — cited causes: escalating costs, unclear business value, inadequate risk controls.",
+        "Gartner also flagged 'agent washing': only about a third of vendor 'agentic AI' claims met basic agent-definition criteria at the time.",
+        "Rising agent autonomy raises organizational risk faster than most governance programs mature (Gartner framing)."
+      ],
+      "methodology_notes": "Analyst prediction (forecast), not a survey result — Gartner methodology is proprietary; treat as expert forecast.",
+      "limitations": "Forecast; the cancellation figure is a prediction with stated timeframe, not an observed outcome.",
+      "article_ids_using_source": [
+        "01",
+        "06",
+        "07",
+        "08",
+        "11",
+        "12",
+        "15"
+      ]
+    },
+    {
+      "source_id": "dellacqua-2023",
+      "title": "Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality",
+      "publisher": "Harvard Business School working paper 24-013; later Organization Science (INFORMS 10.1287/orsc.2025.21838)",
+      "author": "Fabrizio Dell'Acqua, Edward McFowland III, Ethan Mollick, Raffaella Sadun, Lisa Kishore, Willy C. Jiang, Kai Zhang, Letian Larcom, Alex 'Sandy' Pentland, Daniel Rock",
+      "publication_date": "2023-09 (working paper); journal version 2025",
+      "source_url": "https://pubsonline.informs.org/doi/10.1287/orsc.2025.21838",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "In a field experiment with 758 BCG consultants, consultants with AI completed 12.2% more tasks, 25.1% faster, with more than 40% higher quality than the control group on tasks inside the AI's capability frontier.",
+        "The 'jagged frontier': AI capability is uneven — strong on some tasks adjacent to tasks it fails; invisible boundaries mislead users.",
+        "Two integration strategies emerged — 'centaurs' (human/AI task split) and 'cyborgs' (deep interleaving) — with different performance profiles."
+      ],
+      "methodology_notes": "Randomized field experiment, 758 consultants, 18 realistic consulting tasks, preregistered; the journal version is peer-reviewed.",
+      "limitations": "Single firm (consulting), one frontier model generation; effect sizes should not be extrapolated to all knowledge work or all models.",
+      "article_ids_using_source": [
+        "01",
+        "05",
+        "08",
+        "09",
+        "10",
+        "13"
+      ]
+    },
+    {
+      "source_id": "brynjolfsson-2023",
+      "title": "Generative AI at Work",
+      "publisher": "NBER Working Paper 31161 (also arXiv:2304.11771)",
+      "author": "Erik Brynjolfsson, Danielle Li, Lindsey R. Raymond",
+      "publication_date": "2023-04 (revised 2025)",
+      "source_url": "https://www.nber.org/papers/w31161",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Staggered rollout of an AI conversational assistant to 5,179 customer-support agents increased issues resolved per hour by about 15% on average.",
+        "Gains were largest for less-experienced (novice) workers — roughly 30%+ — and minimal for the most experienced.",
+        "Value came from the assistant's ability to encode tacit knowledge of top performers and diffuse it to others."
+      ],
+      "methodology_notes": "Quasi-experimental staggered rollout design in one firm; peer-reviewed and widely replicated in direction.",
+      "limitations": "Single firm (software support), text-centric task; causality strong internally but external validity to all functions is limited.",
+      "article_ids_using_source": [
+        "03",
+        "05",
+        "10"
+      ]
+    },
+    {
+      "source_id": "nist-airmf-2023",
+      "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1",
+      "publisher": "National Institute of Standards and Technology (NIST), U.S. Department of Commerce",
+      "author": "NIST",
+      "publication_date": "2023-01-26",
+      "source_url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "The AI RMF Core organizes AI risk management into four functions: GOVERN, MAP, MEASURE, MANAGE.",
+        "Risk management should be continuous and proportional to risk tier, integrated into organizational processes rather than one-off reviews.",
+        "NIST positions the RMF as a voluntary, rights-preserving framework adoptable by organizations of any size."
+      ],
+      "methodology_notes": "Consensus framework developed through multi-stakeholder process; U.S. federal alignment via subsequent OMB guidance.",
+      "limitations": "Voluntary guidance, not regulation; no enforcement mechanism.",
+      "article_ids_using_source": [
+        "13",
+        "14",
+        "15",
+        "20"
+      ]
+    },
+    {
+      "source_id": "eu-ai-act",
+      "title": "EU Artificial Intelligence Act (Regulation (EU) 2024/1689) — implementation timeline",
+      "publisher": "European Union; compliance timelines via Dastra, Trilateral Research, Freshfields",
+      "author": "EU legislator; law-firm/consultancy summaries",
+      "publication_date": "2024-08-01 (in force); staged application 2025-2027",
+      "source_url": "https://trilateralresearch.com/responsible-ai/eu-ai-act-implementation-timeline-mapping-your-models-to-the-new-risk-tiers",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "The AI Act entered into force August 1, 2024, with obligations phasing in through 2026-2027 (GPAI obligations from August 2025; most high-risk system obligations follow in 2026-2027).",
+        "The Act is risk-tiered: unacceptable-risk practices banned, high-risk systems face conformity assessment, transparency duties for limited-risk and GPAI models.",
+        "2026 'Digital Omnibus' discussions propose adjustments to some AI Act deadlines (vanberings/Dastra coverage) — compliance planning should track this."
+      ],
+      "methodology_notes": "Regulation text plus reputable legal-summary timelines.",
+      "limitations": "Timeline specifics for later phases remain subject to ongoing EU legislative adjustment (Digital Omnibus); verify current dates before compliance decisions.",
+      "article_ids_using_source": [
+        "15"
+      ]
+    },
+    {
+      "source_id": "msft-wti-2025",
+      "title": "Microsoft Work Trend Index 2025 — 'Frontier Firms'",
+      "publisher": "Microsoft (WorkLab)",
+      "author": "Microsoft Work Trend Index team",
+      "publication_date": "2025-04-24",
+      "source_url": "https://www.theguardian.com/technology/2025/apr/25/microsoft-says-everyone-will-be-a-boss-in-the-future-of-ai-employees",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Microsoft's 2025 Work Trend Index describes the emergence of 'frontier firms' — companies rebuilding work around human + agent teams, with every employee effectively becoming an agent supervisor ('agent boss').",
+        "The report argues org charts and work charts converge as agents enter workflows; leadership shifts from directing people to orchestrating outcomes through humans and agents.",
+        "Survey base: tens of thousands of workers across countries (per report methodology; exact figures on the primary page)."
+      ],
+      "methodology_notes": "Large-scale recurring worker survey by Microsoft; vendor-sponsored research.",
+      "limitations": "Vendor research with product agenda (Copilot ecosystem); directional, not independent. Cited via Guardian coverage + Microsoft newsroom mirrors.",
+      "article_ids_using_source": [
+        "02",
+        "03",
+        "09",
+        "10",
+        "16"
+      ]
+    },
+    {
+      "source_id": "deloitte-genai-q4",
+      "title": "The State of Generative AI in the Enterprise, Q4 report (wave 4)",
+      "publisher": "Deloitte",
+      "author": "Deloitte Center for Technology, Media & Telecommunications",
+      "publication_date": "2025-01 (wave 4)",
+      "source_url": "https://www.deloitte.com/ca/en/services/consulting/perspectives/the-state-of-generative-ai-in-the-enterprise-q4-report.html",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Enterprises moved from experimentation toward scaling, but ROI remains the most persistent challenge in AI adoption.",
+        "Sustainable value balances 'passion, pragmatism and patience' — governance, talent and data foundations predict who sustains value.",
+        "A majority of organizations remained in early stages of AI maturity across waves."
+      ],
+      "methodology_notes": "Deloitte's longitudinal survey series of enterprise leaders (quarterly waves).",
+      "limitations": "Consultancy survey; self-reported maturity and ROI.",
+      "article_ids_using_source": [
+        "07"
+      ]
+    },
+    {
+      "source_id": "deloitte-roi-2026",
+      "title": "AI ROI: The paradox of rising investment and elusive returns",
+      "publisher": "Deloitte",
+      "author": "Deloitte Insights",
+      "publication_date": "2026",
+      "source_url": "https://www.deloitte.com/it/it/issues/generative-ai/ai-roi-the-paradox-of-rising-investment-and-elusive-returns.html",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "AI investment keeps rising while measurable returns stay concentrated in a minority of programs — the central ROI paradox of the 2026 cycle.",
+        "Disciplined measurement (baselines, attribution, benefits tracking) separates programs that report value from those that cannot."
+      ],
+      "methodology_notes": "Deloitte Issues/Insights analysis drawing on the State of GenAI series.",
+      "limitations": "Consultancy analysis; headline framing verified, exhibit specifics not retrieved.",
+      "article_ids_using_source": [
+        "05",
+        "06"
+      ]
+    },
+    {
+      "source_id": "deloitte-google-agentic-2026",
+      "title": "Scaling Agentic AI to Realize Business Value (Deloitte + Google Cloud POV)",
+      "publisher": "Deloitte (with Google Cloud)",
+      "author": "Deloitte & Google Cloud alliance",
+      "publication_date": "2026",
+      "source_url": "https://www.deloitte.com/content/dam/assets-shared/docs/alliances/google/2026/scaling-agentic-ai-pov.pdf",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Multi-agent systems demand new operational practices (agent orchestration, evaluation, guardrails) to move from pilots to production value.",
+        "Scaling value depends on pairing agents with workflow redesign and governance, not model choice alone."
+      ],
+      "methodology_notes": "Vendor-alliance point of view informed by client work.",
+      "limitations": "Vendor POV; directional guidance rather than independent research.",
+      "article_ids_using_source": [
+        "02",
+        "09",
+        "11"
+      ]
+    },
+    {
+      "source_id": "metr-2025",
+      "title": "Measuring AI Ability to Complete Long Tasks",
+      "publisher": "METR (arXiv:2503.14499)",
+      "author": "METR research team (Kwa et al.)",
+      "publication_date": "2025-03 (revised 2025)",
+      "source_url": "https://arxiv.org/html/2503.14499v2",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "The length of software tasks AI agents complete with 50% reliability has been doubling roughly every seven months.",
+        "Agent reliability falls sharply with task length — success is high on short tasks and collapses beyond a horizon; delegation design must respect this reliability cliff."
+      ],
+      "methodology_notes": "Time-horizon measurement methodology across frontier models and HCAST/RE-Bench task suites; follow-up METR work shows horizon varies by domain.",
+      "limitations": "Measured on software/agentic benchmarks; horizon in business domains differs (METR's own domain-variation follow-up). Use for the reliability-vs-autonomy argument, not for business-task predictions.",
+      "article_ids_using_source": [
+        "13",
+        "14",
+        "18"
+      ]
+    },
+    {
+      "source_id": "mck-forecast-datalight",
+      "title": "AI-driven operations forecasting in data-light environments",
+      "publisher": "McKinsey & Company (Operations practice)",
+      "author": "McKinsey Operations",
+      "publication_date": "2021 (McKinsey research series)",
+      "source_url": "https://www.mckinsey.com/~/media/mckinsey/business%20functions/operations/our%20insights/ai%20driven%20operations%20forecasting%20in%20data%20light%20environments/ai-driven-operations-forecasting-in-data-light-environments_vf.pdf",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "McKinsey research reports AI-driven forecasting reducing errors by 20-50% in supply-chain contexts (with corresponding inventory reductions), including data-light environments when models incorporate external signals.",
+        "Forecast value concentrates in exception handling and external-signal integration rather than baseline statistical fit alone."
+      ],
+      "methodology_notes": "McKinsey operations research series (client benchmarks).",
+      "limitations": "Consultancy research; ranges are cross-client benchmarks, not a controlled study. Cite as McKinsey-reported range.",
+      "article_ids_using_source": [
+        "18",
+        "19"
+      ]
+    },
+    {
+      "source_id": "techtarget-2026-cio",
+      "title": "AI spending shifts beyond IT, testing CIO-CFO decision rights",
+      "publisher": "TechTarget",
+      "author": "TechTarget editorial",
+      "publication_date": "2026-10",
+      "source_url": "https://www.techtarget.com/it-strategy/news/366651960/AI-spending-shifts-beyond-IT-testing-CIO-CFO-decision-rights",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "As AI budgets move outside IT, enterprises are renegotiating CIO vs CFO decision rights over AI investment.",
+        "Business-unit-led AI spending raises questions of architecture standards, security and value accounting that neither the CIO's nor CFO's mandate alone covers."
+      ],
+      "methodology_notes": "Trade-press analysis reporting on BCG's technology-economics research and CIO interviews.",
+      "limitations": "Journalistic synthesis; useful for decision-rights framing rather than statistics.",
+      "article_ids_using_source": [
+        "04"
+      ]
+    },
+    {
+      "source_id": "prosci-cm",
+      "title": "Prosci Best Practices in Change Management (research series)",
+      "publisher": "Prosci",
+      "author": "Prosci research",
+      "publication_date": "rolling series (latest editions 2023+)",
+      "source_url": "http://www.prosci.com/hubfs/Website_English/2.downloads/thought-leadership/Best-Practices-in-Change-Management-TL-Article.pdf",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Active and visible executive sponsorship is the top driver of change success across Prosci's longitudinal studies.",
+        "Structured change management correlates strongly with meeting project objectives versus unstructured approaches.",
+        "Manager capability (communications, coaching, resistance management) is a recurring weak link in adoption."
+      ],
+      "methodology_notes": "Longitudinal practitioner survey series (thousands of change programs over two decades).",
+      "limitations": "Practitioner self-report survey; correlation-based. Vendor (training firm) research — use for directional claims about sponsorship and structure.",
+      "article_ids_using_source": [
+        "12",
+        "16",
+        "20"
+      ]
+    },
+    {
+      "source_id": "gartner-agent-reality",
+      "title": "AI Agent Success Hinges on Reliability, Not Autonomy",
+      "publisher": "Gartner",
+      "author": "Gartner",
+      "publication_date": "2025-2026",
+      "source_url": "https://www.gartner.com/en/articles/ai-agent-reality-check",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Agent success in enterprises depends more on reliability, evaluation and error handling than on maximizing autonomy.",
+        "Gartner advises scoping agent autonomy to task criticality and reversibility."
+      ],
+      "methodology_notes": "Analyst guidance article.",
+      "limitations": "Analyst opinion informed by client inquiries; not a survey.",
+      "article_ids_using_source": [
+        "07",
+        "11",
+        "13",
+        "14",
+        "18"
+      ]
+    },
+    {
+      "source_id": "validant-2026-bcg",
+      "title": "Controlling Agents Triples Their Value. Proving It Is What Makes It Count.",
+      "publisher": "validant.ai (signal analysis of BCG's Formula for Agentic AI Value)",
+      "author": "validant.ai",
+      "publication_date": "2026-10",
+      "source_url": "https://validant.ai/signal/controlling-agents-triples-their-value",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Per BCG research as analyzed by validant.ai: enterprises with systematic agent control report ~3x the value from agentic AI.",
+        "Self-reported control maturity overstates actual control — verified evaluation and audit trails are the differentiator (validant's analysis point)."
+      ],
+      "methodology_notes": "Third-party analysis of the BCG report.",
+      "limitations": "Secondary analysis; always attribute as 'BCG research, as analyzed by validant.ai'.",
+      "article_ids_using_source": [
+        "15"
+      ]
+    },
+    {
+      "source_id": "retaildetail-2026-cpg",
+      "title": "[Dossier AI & Retail] FMCG laat omzet liggen: AI kan méér doen dan kosten besparen",
+      "publisher": "RetailDetail (Belgium retail/FMCG press)",
+      "author": "RetailDetail editorial",
+      "publication_date": "2026-10",
+      "source_url": "https://www.retaildetail.be/nl/news/retaildossier/dossier-ai-retail-fmcg-laat-omzet-liggen-ai-kan-meer-doen-dan-kosten-besparen/",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Independent FMCG-sector coverage of McKinsey's CPG agentic-AI analysis: FMCG leaves revenue unrealized by concentrating AI on cost cutting.",
+        "European retail context for agentic AI in commercial operations."
+      ],
+      "methodology_notes": "Trade-press dossier summarizing McKinsey's CPG piece.",
+      "limitations": "Secondary trade coverage (Dutch/French); use for framing and European context.",
+      "article_ids_using_source": [
+        "17",
+        "19"
+      ]
+    },
+    {
+      "source_id": "strategyand-trade",
+      "title": "Boosting the Bottom Line Through Trade Promotion Management (Strategy&, PwC)",
+      "publisher": "Strategy& (PwC)",
+      "author": "Strategy&",
+      "publication_date": "2013 (classic trade-promotion research)",
+      "source_url": "https://www.strategyand.pwc.com/gx/en/insights/2002-2013/boosting-the-bottom-line/strategyand-boosting-the-bottom.pdf",
+      "accessed_at": "2026-10-23",
+      "supported_claims": [
+        "Trade promotion is among the largest discretionary spends in CPG (commonly ~15-20%+ of gross revenue), historically managed with weak measurement.",
+        "A large share of trade promotions historically failed to break even; measurement and post-event analysis were rare in the industry."
+      ],
+      "methodology_notes": "Strategy& cross-client analysis of trade-promotion programs.",
+      "limitations": "Dated (2013) industry baseline; current industry averages differ by market and category — use as the historical baseline for why promotion ROI discipline matters, always with the date.",
+      "article_ids_using_source": [
+        "17",
+        "19"
+      ]
+    }
+  ]
+}

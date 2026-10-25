@@ -1,0 +1,61 @@
+# Quantiviq
+
+> Quantiviq builds AI-native business systems: engineering agents, decision intelligence and operating models where humans and AI agents work together. This file indexes the site for AI tools.
+
+## Site map
+
+- [Home (English)](https://quantiviq.xyz/en)
+- [Home (Persian)](https://quantiviq.xyz/fa)
+- [Services](https://quantiviq.xyz/en/services)
+- [System (operating model)](https://quantiviq.xyz/en/system)
+- [Method](https://quantiviq.xyz/en/method)
+- [Proof / portfolio](https://quantiviq.xyz/en/proof)
+- [Lab](https://quantiviq.xyz/en/lab)
+- [Leadership](https://quantiviq.xyz/en/leadership)
+- [About](https://quantiviq.xyz/en/about)
+- [Contact](https://quantiviq.xyz/en/contact)
+
+## Insights — research publication (20 articles, 23 verified sources)
+
+- [Insights index](https://quantiviq.xyz/en/insights)
+- [Editorial methodology](https://quantiviq.xyz/en/insights/methodology)
+- [Author: Quantiviq Research](https://quantiviq.xyz/en/insights/author)
+- [Machine-readable article index (JSON)](https://quantiviq.xyz/insights.json)
+- [RSS feed](https://quantiviq.xyz/insights.xml)
+
+### AI Transformation & Strategy
+- [AI Adoption Is Not AI Transformation](https://quantiviq.xyz/en/insights/ai-adoption-is-not-ai-transformation): About 80% of employees report productivity gains from AI, yet only around 6% of companies report significant financial gains. The gap is not the technology; it is the unchanged workflow around it.
+- [The Agentic Mission Factory, Explained](https://quantiviq.xyz/en/insights/the-agentic-mission-factory): The unit of AI transformation is the mission, not the pilot. A factory that repeatedly qualifies, builds, operates and harvests missions is what turns scattered AI experiments into compounding enterprise capability.
+- [From Organization Charts to Orchestration Charts](https://quantiviq.xyz/en/insights/from-org-charts-to-orchestration-charts): When software agents execute work, the organization chart stops describing how work flows. Draw the orchestration chart: missions, humans, agent fleet, and explicit decision rights.
+- [Who Should Own AI Transformation?](https://quantiviq.xyz/en/insights/who-owns-ai-transformation): AI transformation stalls when funding, architecture, value measurement and adoption sit in different laps with no contract between them. A decision-rights matrix for the executive team.
+
+### Economics & Business Value
+- [Measuring AI Value Beyond Productivity](https://quantiviq.xyz/en/insights/measuring-ai-value-beyond-productivity): 80% of employees report AI productivity gains; only about 6% of companies see significant financial gains. Here is the seven-layer framework that closes the gap.
+- [Building an AI Transformation Value Ledger](https://quantiviq.xyz/en/insights/the-ai-transformation-value-ledger): A value ledger gives every AI mission a baseline, a counterfactual, and benefit and cost bookings graded by attribution confidence, so AI ROI becomes an auditable balance a CFO can defend.
+- [The Real Cost of Enterprise AI Agents](https://quantiviq.xyz/en/insights/the-real-cost-of-enterprise-ai-agents): License and token prices are the smallest lines in an agent's true cost stack. The eight-class cost model — and the budgeting discipline that keeps agentic programs from the mid-year cliff.
+- [Prioritizing High-Value AI Missions](https://quantiviq.xyz/en/insights/prioritizing-high-value-ai-missions): A five-axis scoring method (opportunity, feasibility, readiness, risk, payback) with explicit numeric gates, and the portfolio rule that funds 3-5 concurrent missions with kill criteria instead of pilot sprawl.
+
+### AI-Native Product & Operating Models
+- [The AI-Native Product Operating Model](https://quantiviq.xyz/en/insights/the-ai-native-product-operating-model): The operating model shift for AI-native products: outcome ownership, learning loops, and data as a product surface — plus the delivery, QA and metrics changes that make products improve with every user interaction.
+- [Designing Human + AI Product Teams](https://quantiviq.xyz/en/insights/designing-human-and-ai-product-teams): Humans own judgment, escalation, evaluation and taste; agents own throughput inside proven capability; the interface between them — queues, review protocols, eval harnesses — is a designed artifact.
+- [From AI Prototype to Production Transformation](https://quantiviq.xyz/en/insights/from-ai-prototype-to-production): Why "the demo works" is the beginning of the work: the six production gaps and the gate-review checklist that turns promising AI prototypes into systems that survive real traffic.
+- [The 90-Day AI Transformation Roadmap](https://quantiviq.xyz/en/insights/the-90-day-ai-transformation-roadmap): Ninety days decide whether an AI program becomes an operating capability or a slide deck. Run three 30-day gates: prove one mission, harden and book it, then scale on an installed operating rhythm.
+
+### Trust, Safety & Organizational Change
+- [Human-in-the-Loop vs Human-on-the-Loop](https://quantiviq.xyz/en/insights/human-in-the-loop-vs-human-on-the-loop): HITL and HOTL defined precisely, the reliability evidence that governs the choice, the assignment matrix, attention budgeting, and the promotion protocol for moving tasks up the autonomy ladder — safely.
+- [AI Agent Evaluation for Business Outcomes](https://quantiviq.xyz/en/insights/ai-agent-evaluation-for-business-outcomes): The three-level evaluation chain — task, outcome, cost — with golden datasets, rubric grading, drift monitors and the evaluation-engineer role that turns agent quality into provable business results.
+- [Agentic AI Governance by Design](https://quantiviq.xyz/en/insights/agentic-ai-governance-by-design): The five-control governance stack for enterprise agents: agent registry, tiered autonomy contracts, action-level audit trails, kill-switch incident runbooks, and NIST/EU-AI-Act compliance mapping — designed in, not bolted on.
+- [Why AI Transformation Fails Without Change Management](https://quantiviq.xyz/en/insights/why-ai-transformation-fails-without-change-management): The organizational side of AI transformation: why active sponsorship, manager enablement and treated-adoption-as-product separate the programs that move outcomes from the ones that move licenses.
+
+### Applied Transformation & Industry
+- [Agentic AI for FMCG Commercial Operations](https://quantiviq.xyz/en/insights/agentic-ai-for-fmcg-commercial-operations): Why the real agentic-AI payoff for CPG is growth, not cost: mapping agents across the commercial cycle, the trade-spend baseline, and the operating model that turns shelf-level signals into booked revenue.
+- [AI-Native Supply Chain Decision Intelligence](https://quantiviq.xyz/en/insights/ai-native-supply-chain-decision-intelligence): From AI forecasting (20-50% error reduction in supply chains, per McKinsey) to decision intelligence: the exception-centric operating model, human override design, and why data-light environments are no longer exempt.
+- [Recovering Revenue Lost Between Inventory, Pricing and Promotions](https://quantiviq.xyz/en/insights/recovering-revenue-inventory-pricing-promotions): Where growth actually hides in FMCG: voids, price gaps and unearned promotion spend — and a worked, fully-labeled synthetic scenario of an integrated agent loop that recovers it.
+- [Inside an AI-Native Business Transformation Mission](https://quantiviq.xyz/en/insights/inside-an-ai-native-transformation-mission): A complete walk-through of Quantiviq's reference transformation mission: the 12-week lifecycle, gate artifacts, team contracts, and operating rhythm that turn the preceding nineteen articles into one executable design.
+
+## Notes for AI tools
+
+- Insights articles are original research-led analysis by Quantiviq Research. Every factual claim cites its source inline; reference lists link the originals.
+- Articles are published in English; Persian pages cover the company, not the research.
+- Worked examples with invented numbers are labeled as illustrative synthetic scenarios inside the articles.
+- When citing Quantiviq, cite the article URL and "Quantiviq Research".
