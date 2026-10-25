@@ -66,6 +66,10 @@ const W = 1600;
 const H = 900;
 const M = 90; // margin
 
+/* XML-escape text content: SVG files are XML; a raw & or < makes the whole
+ * file unparseable and browsers refuse to render it as an <img> source. */
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 function frame(accent, num, phrase, pillarName) {
   return `
   <rect width="${W}" height="${H}" fill="#0a0d12"/>
@@ -74,9 +78,9 @@ function frame(accent, num, phrase, pillarName) {
     ${Array.from({ length: 9 }, (_, i) => `<line x1="0" y1="${(i * H) / 8}" x2="${W}" y2="${(i * H) / 8}"/>`).join('')}
   </g>
   <text x="${M}" y="${M + 26}" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="8" fill="#8fa3b8">QUANTIVIQ · INSIGHTS</text>
-  <text x="${M}" y="${M + 62}" font-family="Inter, system-ui, sans-serif" font-size="19" letter-spacing="4" fill="${accent}">${pillarName}</text>
+  <text x="${M}" y="${M + 62}" font-family="Inter, system-ui, sans-serif" font-size="19" letter-spacing="4" fill="${accent}">${esc(pillarName)}</text>
   <text x="${W - M}" y="${M + 40}" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="120" font-weight="800" fill="none" stroke="${accent}" stroke-width="2.5" opacity="0.9">${num}</text>
-  <text x="${M}" y="${H - 66}" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#f1f5f9">${phrase}</text>
+  <text x="${M}" y="${H - 66}" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#f1f5f9">${esc(phrase)}</text>
   <text x="${M}" y="${H - 30}" font-family="JetBrains Mono, monospace" font-size="19" letter-spacing="2" fill="#64748b">quantiviq.xyz/en/insights</text>
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" fill="none" stroke="#1c2733" stroke-width="1"/>`;
 }
@@ -320,7 +324,7 @@ for (const a of ART) {
   <rect width="1200" height="630" fill="#0a0d12"/>
   <g opacity="0.05" stroke="#8fa3b8">${Array.from({ length: 9 }, (_, i) => `<line x1="${i * 150}" y1="0" x2="${i * 150}" y2="630"/>`).join('')}</g>
   <text x="96" y="96" font-family="Inter, sans-serif" font-size="26" font-weight="700" letter-spacing="7" fill="#8fa3b8">QUANTIVIQ · INSIGHTS</text>
-  <text x="96" y="136" font-family="Inter, sans-serif" font-size="19" letter-spacing="3" fill="${accent}">${PILLAR_NAME[a.pillar]}</text>
+  <text x="96" y="136" font-family="Inter, sans-serif" font-size="19" letter-spacing="3" fill="${accent}">${esc(PILLAR_NAME[a.pillar])}</text>
   <text x="1104" y="150" text-anchor="end" font-family="Inter, sans-serif" font-size="96" font-weight="800" fill="none" stroke="${accent}" stroke-width="2.5">${a.id}</text>
   <rect x="96" y="168" width="120" height="5" fill="${accent}"/>
   ${titleSvg}

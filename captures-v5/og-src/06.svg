@@ -2,7 +2,7 @@
   <rect width="1200" height="630" fill="#0a0d12"/>
   <g opacity="0.05" stroke="#8fa3b8"><line x1="0" y1="0" x2="0" y2="630"/><line x1="150" y1="0" x2="150" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/><line x1="450" y1="0" x2="450" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/><line x1="750" y1="0" x2="750" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/><line x1="1050" y1="0" x2="1050" y2="630"/><line x1="1200" y1="0" x2="1200" y2="630"/></g>
   <text x="96" y="96" font-family="Inter, sans-serif" font-size="26" font-weight="700" letter-spacing="7" fill="#8fa3b8">QUANTIVIQ · INSIGHTS</text>
-  <text x="96" y="136" font-family="Inter, sans-serif" font-size="19" letter-spacing="3" fill="#f5b968">ECONOMICS & BUSINESS VALUE</text>
+  <text x="96" y="136" font-family="Inter, sans-serif" font-size="19" letter-spacing="3" fill="#f5b968">ECONOMICS &amp; BUSINESS VALUE</text>
   <text x="1104" y="150" text-anchor="end" font-family="Inter, sans-serif" font-size="96" font-weight="800" fill="none" stroke="#f5b968" stroke-width="2.5">06</text>
   <rect x="96" y="168" width="120" height="5" fill="#f5b968"/>
   <text x="96" y="300" font-family="Inter, system-ui, sans-serif" font-size="62" font-weight="800" fill="#f1f5f9">Building an AI Transformation Value Ledger</text>

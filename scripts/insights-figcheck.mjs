@@ -57,6 +57,10 @@ for (const loc of ['en', 'fa']) {
           // 1. hero image
           const heroImg = document.querySelector('.ins-hero img');
           if (heroImg) {
+            // a broken image (e.g. XML-invalid SVG served as image/svg+xml)
+            // still reserves its aspect box but never paints — naturalWidth
+            // stays 0. Containment alone would pass; assert the load too.
+            if (!heroImg.complete || heroImg.naturalWidth === 0) res.issues.push('hero-img-failed-to-load');
             const img = heroImg.getBoundingClientRect();
             const box = heroImg.parentElement.getBoundingClientRect();
             if (!contained(img, box)) res.issues.push(`hero-img-outside-container`);

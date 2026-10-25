@@ -11,7 +11,7 @@
     <line x1="0" y1="0" x2="1600" y2="0"/><line x1="0" y1="112.5" x2="1600" y2="112.5"/><line x1="0" y1="225" x2="1600" y2="225"/><line x1="0" y1="337.5" x2="1600" y2="337.5"/><line x1="0" y1="450" x2="1600" y2="450"/><line x1="0" y1="562.5" x2="1600" y2="562.5"/><line x1="0" y1="675" x2="1600" y2="675"/><line x1="0" y1="787.5" x2="1600" y2="787.5"/><line x1="0" y1="900" x2="1600" y2="900"/>
   </g>
   <text x="90" y="116" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="8" fill="#8fa3b8">QUANTIVIQ · INSIGHTS</text>
-  <text x="90" y="152" font-family="Inter, system-ui, sans-serif" font-size="19" letter-spacing="4" fill="#f5b968">ECONOMICS & BUSINESS VALUE</text>
+  <text x="90" y="152" font-family="Inter, system-ui, sans-serif" font-size="19" letter-spacing="4" fill="#f5b968">ECONOMICS &amp; BUSINESS VALUE</text>
   <text x="1510" y="130" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="120" font-weight="800" fill="none" stroke="#f5b968" stroke-width="2.5" opacity="0.9">08</text>
   <text x="90" y="834" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#f1f5f9">Mission portfolio</text>
   <text x="90" y="870" font-family="JetBrains Mono, monospace" font-size="19" letter-spacing="2" fill="#64748b">quantiviq.xyz/en/insights</text>
