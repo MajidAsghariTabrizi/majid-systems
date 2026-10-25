@@ -83,6 +83,8 @@ def upload(local, remote):
 
 import json
 print(run("mkdir -p /opt/public-mind /etc/public-mind"))
+# keep the previous snapshot for one-step knowledge rollback
+run(f"test -f {REMOTE_DIR}/public-knowledge.sqlite && cp {REMOTE_DIR}/public-knowledge.sqlite {REMOTE_DIR}/public-knowledge.sqlite.prev || true")
 upload(os.path.join(LOCAL_SERVICE, "mind_service.py"), f"{REMOTE_DIR}/mind_service.py")
 upload(LOCAL_DB, f"{REMOTE_DIR}/public-knowledge.sqlite")
 

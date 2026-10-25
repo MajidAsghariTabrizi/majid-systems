@@ -133,18 +133,28 @@ for (const g of caps.CAPABILITIES) {
     type: 'capability',
     title: g.title ?? g.name,
     language: 'en',
-    content: `${g.title ?? g.name}\n${(g.summary ?? g.description ?? '').toString()}\nSkills: ${items.join(', ')}`,
+    // cross-language tech vocabulary so FA queries reach these records
+    content: `${g.title ?? g.name}\n${(g.summary ?? g.description ?? '').toString()}\nSkills: ${items.join(', ')}\nAliases: زبان‌ها فناوری مهارت typescript python rust go solidity`,
     source_url: `${SITE}/en/about`,
     source_hash: sha(g.title ?? ''),
   });
 }
 
+const ALIASES = {
+  // cross-language proper nouns so Persian queries reach EN records (and vice versa)
+  phoenix: 'فینیکس فینیکس Phoenix',
+  'free-best-router': 'روتر مسیریاب مدل Free Best Router روتر رایگان',
+  'smart-trader': 'تریدر هوشمند معامله‌گر Smart Trader',
+  'universal-engineering-agent': 'ایجنت مهندسی عمومی Universal Engineering Agent',
+  quantiviq: 'کوانتیویک',
+};
 for (const p of projs.PROJECTS) {
   const detail = [
     p.name, p.oneLiner, p.thesis, p.whyItMatters,
     `Status: ${p.statusLabel || p.status}`,
     p.languages ? `Languages: ${p.languages.join(', ')}` : '',
     p.githubUrl ? `Repo: ${p.githubUrl}` : '',
+    ALIASES[p.slug] ? `Aliases: ${ALIASES[p.slug]}` : '',
   ].filter(Boolean).join('\n\n');
   add({
     id: `project-${p.slug}-en`,

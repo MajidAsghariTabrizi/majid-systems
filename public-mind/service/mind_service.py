@@ -159,28 +159,34 @@ def _fts_query(q):
     return [strict, prefix_and, prefix_or]
 
 def retrieve(query, locale, top_k):
+    # Single ranked pass across BOTH locales: the corpus is small, Persian
+    # terms naturally rank Persian content higher, and EN records now carry
+    # Persian alias lines — a hard language filter was hiding them
+    # (eval fa-pro-12/21 root cause, 2026-10-23).
     out, seen = [], set()
-    for lang in (locale, "fa" if locale == "en" else "en"):
-        for mq in _fts_query(query):
-            try:
-                rows = KDB.execute(
-                    """SELECT r.*, rank FROM records_fts f
-                       JOIN records r ON r.rowid = f.rowid
-                       WHERE records_fts MATCH ? AND r.language = ?
-                       ORDER BY rank LIMIT ?""",
-                    (mq, lang, top_k),
-                ).fetchall()
-            except sqlite3.OperationalError:
-                rows = []
-            for r in rows:
-                if r["id"] not in seen:
-                    seen.add(r["id"])
-                    out.append(dict(r))
-            if len(out) >= top_k:
-                break
+    for mq in _fts_query(query):
+        try:
+            rows = KDB.execute(
+                """SELECT r.*, rank FROM records_fts f
+                   JOIN records r ON r.rowid = f.rowid
+                   WHERE records_fts MATCH ?
+                   ORDER BY rank LIMIT ?""",
+                (mq, top_k * 3),
+            ).fetchall()
+        except sqlite3.OperationalError:
+            rows = []
+        for r in rows:
+            if r["id"] not in seen:
+                seen.add(r["id"])
+                out.append(dict(r))
         if len(out) >= top_k:
             break
-    return out[:top_k]
+    # language preference as a soft boost: query-locale records first within type
+    out.sort(key=lambda r: (0 if r["language"] == locale else 1, 0))
+    # type-diversity: cap insight chunks so page-level records surface
+    insights = [r for r in out if r["type"] == "insight"][:3]
+    others = [r for r in out if r["type"] != "insight"]
+    return (insights + others)[:top_k] if len(others) >= 2 else out[:top_k]
 
 # ---------------------------------------------------------------- prompt
 SYSTEM_PROMPT = """You are Quantiviq Mind — an AI assistant that represents the DOCUMENTED PUBLIC professional perspectives of Majid Asghari Tabrizi (quantiviq.xyz). You are an AI representation, NOT Majid himself. Never claim to be him. Never speak in first person as Majid; refer to him in the third person.
