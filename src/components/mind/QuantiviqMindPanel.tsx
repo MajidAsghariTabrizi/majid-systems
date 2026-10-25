@@ -82,11 +82,16 @@ export function MindMessage({ m, label = 'Sources' }: { m: Msg; label?: string }
 }
 
 export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: MindStrings; onClose: () => void }) {
-  const { messages, busy, error, notice, asked, send, stop, reset } = useMindChat(locale, s);
+  const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset } = useMindChat(locale, s);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // restore a failed question for one-tap retry (429/5xx/network only)
+  useEffect(() => {
+    if (retryQuestion) setInput(retryQuestion);
+  }, [retryQuestion]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -155,7 +160,12 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
               <span /> <span /> <span />
             </div>
           )}
-          {error && <div className="mind-error" role="alert">{error}</div>}
+          {error && (
+            <div className="mind-error" role="alert">
+              {error}
+              {retryQuestion && <span className="mind-retry-hint"> · {s.retryHint}</span>}
+            </div>
+          )}
           {notice && <div className="mind-notice" role="status">{notice}</div>}
           {showContact && (
             <div className="mind-contact">

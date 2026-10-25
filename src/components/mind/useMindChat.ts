@@ -29,6 +29,9 @@ export function useMindChat(locale: string, s: MindStrings) {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [asked, setAsked] = useState(0);
+  /** set when a RETRYABLE failure lost the user's question, so the surface
+   *  can restore it into the composer for one-tap retry */
+  const [retryQuestion, setRetryQuestion] = useState('');
   const abortRef = useRef<AbortController | null>(null);
 
   const stop = useCallback(() => abortRef.current?.abort(), []);
@@ -38,6 +41,18 @@ export function useMindChat(locale: string, s: MindStrings) {
     setAsked(0);
     setNotice('');
     setError('');
+    setRetryQuestion('');
+  }, []);
+
+  /** Errors are NEVER appended to the conversation — role integrity is
+   *  preserved (history keeps only user + assistant turns). 429/5xx/network
+   *  are shown as retryable service errors; the failed question is restored
+   *  and does NOT count against the session limit. */
+  const fail = useCallback((message: string, question: string, retryable: boolean) => {
+    setError(message);
+    setRetryQuestion(retryable ? question : '');
+    setAsked((n) => Math.max(0, n - 1)); // failed ask must not burn the limit
+    setMessages((ms) => (ms.at(-1)?.role === 'assistant' && ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
   }, []);
 
   const send = useCallback(
@@ -50,6 +65,7 @@ export function useMindChat(locale: string, s: MindStrings) {
       }
       setError('');
       setNotice('');
+      setRetryQuestion('');
       setAsked((n) => n + 1);
       const history = [...messages, { role: 'user' as const, content: q }];
       setMessages([...history, { role: 'assistant', content: '' }]);
@@ -57,6 +73,7 @@ export function useMindChat(locale: string, s: MindStrings) {
 
       const ac = new AbortController();
       abortRef.current = ac;
+      let streamFailed = false;
       try {
         const res = await fetch('/api/public-mind/chat', {
           method: 'POST',
@@ -70,10 +87,20 @@ export function useMindChat(locale: string, s: MindStrings) {
         });
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
-          if (j.error === 'disabled') setError(locale === 'fa' ? s.disabledFa : s.disabledEn);
-          else if (j.error === 'session_limit' || j.error === 'budget')
-            setError(locale === 'fa' ? j.message_fa ?? s.limitReached : j.message_en ?? s.limitReached);
-          else setError(s.error);
+          if (j.error === 'disabled') {
+            fail(locale === 'fa' ? s.disabledFa : s.disabledEn, q, false);
+          } else if (j.error === 'session_limit' || j.error === 'budget') {
+            fail(locale === 'fa' ? j.message_fa ?? s.limitReached : j.message_en ?? s.limitReached, q, false);
+          } else if (res.status === 429 || res.status >= 500) {
+            // upstream overload / gateway down: retryable service error
+            fail(
+              locale === 'fa' ? j.message_fa ?? s.serviceUnavailable : j.message_en ?? s.serviceUnavailable,
+              q,
+              true
+            );
+          } else {
+            fail(s.error, q, true);
+          }
           setMessages(history);
           return;
         }
@@ -97,20 +124,31 @@ export function useMindChat(locale: string, s: MindStrings) {
             const data = JSON.parse(dataLine.slice(6));
             if (ev === 'sources') sources = data.sources;
             else if (ev === 'delta') answer += data.text;
-            else if (ev === 'done' && data.status === 'error') setError(s.error);
-            setMessages([...history, { role: 'assistant', content: answer, sources }]);
+            else if (ev === 'done' && data.status === 'error') {
+              streamFailed = true;
+              fail(s.serviceUnavailable, q, true);
+            }
+            if (!streamFailed) {
+              setMessages([...history, { role: 'assistant', content: answer, sources }]);
+            }
           }
         }
+        if (streamFailed) setMessages(history);
       } catch (e) {
-        if ((e as Error).name !== 'AbortError') setError(s.error);
-        setMessages((ms) => (ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
+        if ((e as Error).name !== 'AbortError') {
+          // network failure: retryable, question preserved
+          fail(s.serviceUnavailable, q, true);
+          setMessages(history);
+        } else {
+          setMessages((ms) => (ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
+        }
       } finally {
         setBusy(false);
         abortRef.current = null;
       }
     },
-    [busy, asked, messages, locale, s]
+    [busy, asked, messages, locale, s, fail]
   );
 
-  return { messages, busy, error, notice, asked, send, stop, reset, setError, setNotice };
+  return { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, setError, setNotice };
 }

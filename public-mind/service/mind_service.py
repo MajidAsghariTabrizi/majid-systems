@@ -61,6 +61,8 @@ def load_config():
     cfg["api_key"] = os.environ.get("ZAI_API_KEY", "")
     if os.environ.get("MIND_BASE_URL"):
         cfg["base_url"] = os.environ["MIND_BASE_URL"]
+    if os.environ.get("MIND_MODEL"):
+        cfg["model"] = os.environ["MIND_MODEL"]
     cfg["version"] = "1.0.0"
     return cfg
 
@@ -519,9 +521,30 @@ class Handler(BaseHTTPRequestHandler):
 
 # The handler performs exactly ONE streamed generation per request.
 
+# ---------------------------------------------------------------- keepalive
+def _keepalive_loop(interval_s):
+    """glm-4.5-flash on the standard endpoint has a ~40s cold-start penalty
+    on the first request after idle (measured 2026-10-25: 42-47s vs 1-9s
+    warm). A tiny periodic ping keeps the route warm: ~15 tokens per ping,
+    240s interval -> ~$0.001/day, negligible against the $0.50/day cap."""
+    while True:
+        time.sleep(interval_s)
+        try:
+            if not chat_enabled() or MOCK or not API_KEY:
+                continue
+            call_glm_stream(
+                [{"role": "user", "content": "ping"}],
+                lambda d: None,
+            )
+        except Exception:
+            pass  # keepalive must never crash or log secrets
+
 def main():
     addr = (CFG["host"], CFG["port"])
     httpd = ThreadingHTTPServer(addr, Handler)
+    ka = CFG.get("keepalive_s", 240)
+    if ka and ka > 0:
+        threading.Thread(target=_keepalive_loop, args=(ka,), daemon=True).start()
     print(
         f"quantiviq-public-mind {CFG['version']} on {addr[0]}:{addr[1]} "
         f"mock={MOCK} chat_enabled={chat_enabled()} records={MANIFEST.get('counts', {}).get('total', 0)}",

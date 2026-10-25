@@ -8748,3 +8748,6 @@ html[dir='rtl'] .mind-full-starter { line-height: 1.9; }
   .mind-full-head-row { flex-direction: column; }
   .mind-full-head-actions { flex-direction: row; align-items: center; }
 }
+
+/* retryable service-error hint (2026-10-25) */
+.mind-retry-hint { color: #9fc6b3; font-size: 0.92em; }

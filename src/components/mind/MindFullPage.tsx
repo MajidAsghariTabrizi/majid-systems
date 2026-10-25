@@ -17,7 +17,7 @@ import type { MindStrings } from './strings';
 
 function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const params = useSearchParams();
-  const { messages, busy, error, notice, asked, send, stop, reset } = useMindChat(locale, s);
+  const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset } = useMindChat(locale, s);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -28,6 +28,11 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
     const q = params.get('q');
     if (q) setInput(q.replace(/[\u0000-\u001f\u007f]/g, ' ').slice(0, 2000));
   }, [params]);
+
+  // restore a failed question for one-tap retry (429/5xx/network only)
+  useEffect(() => {
+    if (retryQuestion) setInput(retryQuestion);
+  }, [retryQuestion]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
@@ -99,6 +104,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                   {error && (
                     <div className="mind-error" role="alert">
                       {error}
+                      {retryQuestion && <span className="mind-retry-hint"> · {s.retryHint}</span>}
                     </div>
                   )}
                   {notice && (

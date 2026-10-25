@@ -19,6 +19,8 @@ export type MindStrings = {
   contactLink: string;
   limitReached: string;
   error: string;
+  serviceUnavailable: string;
+  retryHint: string;
   disabledEn: string;
   disabledFa: string;
   suggestions: string[];
@@ -55,6 +57,9 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
     contactLink: 'Talk to Majid directly',
     limitReached: 'You have reached this session’s question limit. The conversation stays available — or reach out directly.',
     error: 'Something went wrong. Please try again in a moment.',
+    serviceUnavailable:
+      'The assistant is briefly unavailable. Your question is kept below — please send it again in a moment.',
+    retryHint: 'Your question is ready to resend',
     disabledEn: 'Quantiviq Mind is currently switched off. Please use the contact page instead.',
     disabledFa: 'Quantiviq Mind در حال حاضر خاموش است. لطفاً از صفحهٔ تماس استفاده کنید.',
     suggestions: [
@@ -103,6 +108,9 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
     contactLink: 'گفت‌وگوی مستقیم با مجید',
     limitReached: 'به سقف پرسش‌های این نشست رسیده‌اید. گفت‌وگو در دسترس است — یا مستقیماً تماس بگیرید.',
     error: 'خطایی رخ داد. لطفاً کمی بعد دوباره تلاش کنید.',
+    serviceUnavailable:
+      'دستیار موقتاً در دسترس نیست. پرسش شما در پایین حفظ شده است — لطفاً چند لحظه بعد دوباره ارسال کنید.',
+    retryHint: 'پرسش شما آمادهٔ ارسال مجدد است',
     disabledEn: 'Quantiviq Mind is currently switched off. Please use the contact page instead.',
     disabledFa: 'Quantiviq Mind در حال حاضر خاموش است. لطفاً از صفحهٔ تماس استفاده کنید.',
     suggestions: [
