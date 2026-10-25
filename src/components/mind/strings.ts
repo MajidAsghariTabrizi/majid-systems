@@ -26,115 +26,132 @@ export type MindStrings = {
   suggestions: string[];
   /* full-page (/mind) surface */
   headline: string;
+  headlineSecond?: string; // EN two-line cadence; FA leaves empty
   subtitle: string;
   aiNote: string;
+  aiNoteDetail: string;
   startersTitle: string;
   starters: string[];
   switchLabel: string;
   remainingTemplate: string;
 };
 
+/**
+ * Quantiviq Mind — editorial voice (2026-10-25)
+ * Positioning: "A résumé tells you what someone has done. A conversation
+ * explores how they think." Sell intellectual clarity, not AI novelty.
+ * The SITE speaks in Majid's first person; the ASSISTANT is always
+ * described in third person and never impersonates him. Persian is native
+ * editorial Iranian Persian — no translationese, no brochure tone.
+ */
 export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
   en: {
-    invite: 'Curious how I approach AI Transformation? Ask my AI Mind.',
+    invite: 'Curious about the decisions behind the work? Ask here.',
     close: 'Close',
     openLabel: 'Open Quantiviq Mind — AI assistant',
-    openFull: 'Open the full Mind page',
-    fab: 'Mind',
+    openFull: 'Open the full conversation',
+    fab: 'Ask',
     title: 'Quantiviq Mind',
-    emptyTitle: 'Ask Majid’s AI Mind',
+    emptyTitle: 'What would you like to explore?',
     disclosure:
-      'An AI assistant grounded in Majid’s approved professional knowledge, projects and writing. It is not Majid himself.',
+      "Answers draw on Majid's published work and professional evidence. This is an AI assistant, not a direct conversation with Majid.",
     inputLabel: 'Your question',
-    placeholder: 'Ask about AI transformation, systems, or Majid’s work…',
+    placeholder: 'Ask about a project, decision, or approach…',
     send: 'Send',
     stop: 'Stop',
     copy: 'Copy answer',
     copied: 'Copied',
     reset: 'New conversation',
     sources: 'Sources',
-    contactCta: 'Want to discuss a transformation challenge with Majid directly?',
-    contactLink: 'Talk to Majid directly',
-    limitReached: 'You have reached this session’s question limit. The conversation stays available — or reach out directly.',
+    contactCta: 'Have a specific challenge worth discussing?',
+    contactLink: 'Contact Majid',
+    limitReached:
+      "You've reached the question limit for this conversation. You can review the answers above — or contact Majid directly.",
     error: 'Something went wrong. Please try again in a moment.',
     serviceUnavailable:
-      'The assistant is briefly unavailable. Your question is kept below — please send it again in a moment.',
-    retryHint: 'Your question is ready to resend',
-    disabledEn: 'Quantiviq Mind is currently switched off. Please use the contact page instead.',
+      "I couldn't complete that answer. Your question is still here — resend it to try again.",
+    retryHint: 'ready to resend',
+    disabledEn: 'Quantiviq Mind is switched off at the moment. Please use the contact page instead.',
     disabledFa: 'Quantiviq Mind در حال حاضر خاموش است. لطفاً از صفحهٔ تماس استفاده کنید.',
     suggestions: [
-      'How would Majid lead AI Transformation?',
-      'Why does AI adoption fail to produce ROI?',
-      'Which systems has Majid built?',
-      'How does he evaluate complex decisions?',
-      'What books shaped his thinking?',
-      'What is his AI-native operating model?',
+      'Where would Majid start our AI transformation?',
+      "Why doesn't AI adoption pay off by itself?",
+      'Which systems has he actually shipped?',
+      'How does he connect product and engineering?',
+      "Where is his line on AI autonomy?",
+      'What does the public evidence show?',
     ],
-    headline: 'Explore How Majid Thinks',
+    headline: 'Beyond the résumé.',
+    headlineSecond: 'Explore the thinking behind the work.',
     subtitle:
-      'An AI assistant grounded in Majid’s approved professional experience, projects, research and thinking frameworks.',
-    aiNote: 'This is an AI representation, not Majid himself.',
+      'Ask about the decisions, principles and real projects behind my approach to product leadership, AI systems and business transformation. Explore the evidence — and challenge the reasoning.',
+    aiNote:
+      "Answers draw on Majid's published work and professional evidence. This is an AI assistant, not a direct conversation with Majid.",
+    aiNoteDetail: 'Responses may be incomplete or inaccurate — check the linked sources for important claims.',
     startersTitle: 'Start the conversation',
     starters: [
-      'How would Majid lead AI Transformation in our organization?',
-      'What makes Majid’s approach different from simply adopting AI tools?',
-      'Which projects demonstrate his capabilities?',
-      'How does he connect Product, Engineering, AI and measurable business outcomes?',
-      'What are his core thinking principles?',
-      'How would he approach an FMCG transformation during the first 90 days?',
+      'Where would Majid begin an AI transformation inside our business?',
+      "Why doesn't adding AI tools automatically create business value?",
+      "Which of Majid's projects show he can turn ideas into working systems?",
+      'How does he connect product, engineering and economic outcomes?',
+      'Where does he draw the line between AI autonomy and human accountability?',
+      'What does the public evidence actually support about his leadership fit?',
     ],
     switchLabel: 'فارسی',
-    remainingTemplate: '{n} questions left this session',
+    remainingTemplate: '{n} questions left in this conversation',
   },
   fa: {
-    invite: 'دوست داری بدونی چطور به تحول AI فکر می‌کنم؟ از ذهن هوشمند من بپرس.',
+    invite: 'پشت این پروژه‌ها چه تصمیم‌هایی بوده؟ اینجا بپرس.',
     close: 'بستن',
     openLabel: 'باز کردن Quantiviq Mind — دستیار هوشمند',
-    openFull: 'باز کردن صفحهٔ کامل ذهن هوشمند',
-    fab: 'ذهن',
+    openFull: 'گفت‌وگوی کامل',
+    fab: 'گفت‌وگو',
     title: 'Quantiviq Mind',
-    emptyTitle: 'با ذهن هوشمند مجید گفت‌وگو کن',
+    emptyTitle: 'دوست داری درباره کدام تصمیم یا تجربه بیشتر بدانی؟',
     disclosure:
-      'این دستیار هوشمند بر اساس دانش حرفه‌ای، پروژه‌ها و نوشته‌های تأییدشدهٔ مجید پاسخ می‌دهد. خودِ مجید نیست.',
-    inputLabel: 'پرسش شما',
-    placeholder: 'دربارهٔ تحول هوش مصنوعی، سیستم‌ها یا کار مجید بپرس…',
+      'پاسخ‌ها بر پایهٔ نوشته‌ها، پروژه‌ها و اطلاعات حرفه‌ای منتشرشدهٔ مجید است؛ این دستیار AI است، نه گفت‌وگوی مستقیم با او.',
+    inputLabel: 'سؤال شما',
+    placeholder: 'سؤالت را درباره پروژه‌ها یا رویکرد مجید بنویس…',
     send: 'ارسال',
     stop: 'توقف',
     copy: 'کپی پاسخ',
     copied: 'کپی شد',
     reset: 'گفت‌وگوی جدید',
     sources: 'منابع',
-    contactCta: 'می‌خوای دربارهٔ مسئلهٔ کسب‌وکارت مستقیماً با مجید صحبت کنی؟',
-    contactLink: 'گفت‌وگوی مستقیم با مجید',
-    limitReached: 'به سقف پرسش‌های این نشست رسیده‌اید. گفت‌وگو در دسترس است — یا مستقیماً تماس بگیرید.',
+    contactCta: 'مسئله مشخصی برای همکاری داری؟ می‌توانیم مستقیم گفت‌وگو کنیم.',
+    contactLink: 'تماس با مجید',
+    limitReached:
+      'سهمیه پرسش‌های این گفت‌وگو تمام شده است. می‌توانی پاسخ‌های قبلی را مرور کنی یا مستقیماً با مجید در تماس باشی.',
     error: 'خطایی رخ داد. لطفاً کمی بعد دوباره تلاش کنید.',
-    serviceUnavailable:
-      'دستیار موقتاً در دسترس نیست. پرسش شما در پایین حفظ شده است — لطفاً چند لحظه بعد دوباره ارسال کنید.',
-    retryHint: 'پرسش شما آمادهٔ ارسال مجدد است',
+    serviceUnavailable: 'الان پاسخ کامل نشد. سؤالت حفظ شده است؛ می‌توانی دوباره امتحان کنی.',
+    retryHint: 'آمادهٔ ارسال مجدد',
     disabledEn: 'Quantiviq Mind is currently switched off. Please use the contact page instead.',
     disabledFa: 'Quantiviq Mind در حال حاضر خاموش است. لطفاً از صفحهٔ تماس استفاده کنید.',
     suggestions: [
-      'مجید تحول هوش مصنوعی را از کجا شروع می‌کند؟',
-      'چرا استفاده از AI همیشه ارزش اقتصادی ایجاد نمی‌کند؟',
-      'مجید چه سیستم‌هایی ساخته است؟',
-      'چطور دربارهٔ مسائل پیچیده تصمیم می‌گیرد؟',
-      'چه کتاب‌هایی روی طرز فکر او اثر گذاشته‌اند؟',
-      'مدل عملیاتی AI-Native از نگاه او چیست؟',
+      'مجید تحول AI را از کجا شروع می‌کند؟',
+      'چرا ابزارهای AI خودبه‌خود نتیجه نمی‌دهند؟',
+      'کدام سیستم‌ها را واقعاً ساخته است؟',
+      'محصول و مهندسی را چطور به نتیجه وصل می‌کند؟',
+      'مرز خودمختاری AI از نظر او کجاست؟',
+      'شواهد عمومی چه چیزی را نشان می‌دهند؟',
     ],
-    headline: 'با ذهن هوشمند مجید گفت‌وگو کن',
+    headline: 'رزومه می‌گوید چه کرده‌ام؛',
+    headlineSecond: 'اینجا بپرس چطور فکر می‌کنم.',
     subtitle:
-      'دستیاری هوشمند که بر پایهٔ تجربهٔ حرفه‌ای، پروژه‌ها، پژوهش‌ها و چارچوب‌های فکری تأییدشدهٔ مجید پاسخ می‌دهد.',
-    aiNote: 'این یک بازنمایی هوش مصنوعی است، نه خودِ مجید.',
+      'از رهبری محصول و ساخت سیستم‌های هوش مصنوعی تا بازطراحی فرایندهای کسب‌وکار؛ درباره رویکرد من به مسائل پیچیده، تصمیم‌های دشوار و سنجش نتیجه سؤال کن. پاسخ‌ها بر اساس پروژه‌ها، نوشته‌ها و شواهد حرفه‌ای منتشرشده‌اند.',
+    aiNote:
+      'پاسخ‌ها بر پایهٔ نوشته‌ها، پروژه‌ها و اطلاعات حرفه‌ای منتشرشدهٔ مجید است؛ این دستیار AI است، نه گفت‌وگوی مستقیم با او.',
+    aiNoteDetail: 'پاسخ‌ها ممکن است ناقص یا نادرست باشند؛ برای ادعاهای مهم، منابع پیوندشده را بررسی کنید.',
     startersTitle: 'گفت‌وگو را شروع کن',
     starters: [
-      'اگر مجید مسئول تحول هوش مصنوعی سازمان ما بود، از کجا شروع می‌کرد؟',
-      'رویکرد مجید چه تفاوتی با صرفاً استفاده از ابزارهای هوش مصنوعی دارد؟',
-      'کدام پروژه‌ها توانایی‌های او را نشان می‌دهند؟',
-      'او محصول، مهندسی، هوش مصنوعی و نتایج قابل‌اندازه‌گیری کسب‌وکار را چطور به هم وصل می‌کند؟',
-      'اصول فکری اصلی او چیست؟',
-      'در ۹۰ روز اولِ تحول یک هلدینگ مصرفی (FMCG) چه می‌کرد؟',
+      'اگر مجید هدایت تحول AI شرکت ما را بر عهده بگیرد، از کجا شروع می‌کند؟',
+      'چرا اضافه‌کردن ابزارهای AI لزوماً به نتیجه تجاری بهتر منجر نمی‌شود؟',
+      'کدام پروژه‌های مجید نشان می‌دهند می‌تواند ایده را به سیستم اجرایی تبدیل کند؟',
+      'مجید محصول، مهندسی و نتیجه اقتصادی را چگونه به هم مرتبط می‌کند؟',
+      'در تصمیم‌های پرریسک، مجید چه اختیاری به AI می‌دهد و چه چیزی را انسانی نگه می‌دارد؟',
+      'بر اساس شواهد منتشرشده، نقاط قوت و محدودیت‌های مجید برای یک نقش رهبری چیست؟',
     ],
     switchLabel: 'English',
-    remainingTemplate: '{n} پرسش دیگر در این نشست باقی مانده است',
+    remainingTemplate: '{n} پرسش دیگر در این گفت‌وگو باقی مانده است',
   },
 };

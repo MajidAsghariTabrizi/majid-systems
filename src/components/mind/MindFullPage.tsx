@@ -55,11 +55,11 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
           <div className="mind-full-head-row">
             <div className="mind-full-head-l">
               <span className="eyebrow sig">Quantiviq Mind</span>
-              <h1 className="q-display mind-full-h1">{s.headline}</h1>
+              <h1 className="q-display mind-full-h1">
+                <span className="h1-line">{s.headline}</span>
+                {s.headlineSecond && <span className="h1-line">{s.headlineSecond}</span>}
+              </h1>
               <p className="mind-full-sub">{s.subtitle}</p>
-              <p className="mind-full-ai-note">
-                <span aria-hidden>✦</span> {s.aiNote}
-              </p>
             </div>
             <div className="mind-full-head-actions">
               <Link href={other} className="mind-full-switch" lang={locale === 'fa' ? 'en' : 'fa'}>
@@ -184,6 +184,10 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                 {s.remainingTemplate.replace('{n}', String(Math.max(0, MAX_QUESTIONS - asked)))}
               </p>
             )}
+            {/* discreet, persistent AI transparency note (§7 hierarchy: after input) */}
+            <p className="mind-full-disclosure">
+              <span aria-hidden>✦</span> {s.aiNote} <span className="mind-full-disclosure-detail">{s.aiNoteDetail}</span>
+            </p>
           </div>
         </div>
       </div>

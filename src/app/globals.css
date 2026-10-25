@@ -8751,3 +8751,23 @@ html[dir='rtl'] .mind-full-starter { line-height: 1.9; }
 
 /* retryable service-error hint (2026-10-25) */
 .mind-retry-hint { color: #9fc6b3; font-size: 0.92em; }
+
+/* ================================================================
+   MIND full-page — executive copy adjustments (2026-10-25)
+   ================================================================ */
+
+.mind-full-h1 .h1-line { display: block; }
+.mind-full-h1 .h1-line + .h1-line { color: var(--fg-muted); }
+
+/* discreet, persistent AI transparency note under the composer */
+.mind-full-disclosure {
+  margin: 0; padding: 0.55rem 1.2rem 0.85rem;
+  font-size: 0.72rem; line-height: 1.65; color: var(--fg-subtle);
+  border-block-start: 1px solid var(--border);
+  display: flex; gap: 0.45rem; align-items: baseline; justify-content: center;
+  text-align: center; flex-wrap: wrap;
+}
+.mind-full-disclosure[aria-hidden] { display: none; }
+.mind-full-disclosure > span[aria-hidden] { color: rgba(240, 168, 104, 0.75); }
+.mind-full-disclosure-detail { color: var(--fg-subtle); opacity: 0.85; }
+html[dir='rtl'] .mind-full-disclosure { line-height: 1.9; font-size: 0.75rem; }

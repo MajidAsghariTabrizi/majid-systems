@@ -6,7 +6,7 @@ const b = await chromium.launch({ channel: 'msedge', headless: true });
 const results = [];
 const ok = (name, cond) => { results.push(`${cond ? 'PASS' : 'FAIL'} ${name}`); if (!cond) process.exitCode = 1; };
 
-for (const [locale, headline] of [['en', 'Explore How Majid Thinks'], ['fa', 'با ذهن هوشمند مجید گفت‌وگو کن']]) {
+for (const [locale, headline] of [['en', 'Beyond the résumé'], ['fa', 'رزومه می‌گوید چه کرده‌ام']]) {
   const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
   const p = await ctx.newPage();
   const api = [];
@@ -14,9 +14,10 @@ for (const [locale, headline] of [['en', 'Explore How Majid Thinks'], ['fa', 'ب
   await p.goto(`${BASE}/${locale}/mind`, { waitUntil: 'load' });
   await p.waitForTimeout(800);
 
-  ok(`${locale}: headline`, /explore how majid thinks|با ذهن هوشمند مجید گفت‌وگو کن/i.test(await p.locator('.mind-full-h1').innerText()));
+  ok(`${locale}: headline`, /beyond the résumé|رزومه می‌گوید چه کرده‌ام/i.test(await p.locator('.mind-full-h1').innerText()));
   ok(`${locale}: subtitle visible`, (await p.locator('.mind-full-sub').innerText()).length > 40);
-  ok(`${locale}: AI note`, /AI representation|بازنمایی هوش مصنوعی/.test(await p.locator('.mind-full-ai-note').innerText()));
+  ok(`${locale}: AI disclosure under composer`, /not a direct conversation with Majid|نه گفت‌وگوی مستقیم با او/.test(await p.locator('.mind-full-disclosure').innerText()));
+  ok(`${locale}: disclosure incompleteness note`, /incomplete or inaccurate|ناقص یا نادرست/.test(await p.locator('.mind-full-disclosure').innerText()));
   ok(`${locale}: 6 executive starters`, (await p.locator('.mind-full-starter').count()) === 6);
   ok(`${locale}: NO floating fab on /mind`, !(await p.locator('.mind-fab').isVisible().catch(() => false)));
   ok(`${locale}: no API call on load`, api.length === 0);
@@ -24,7 +25,7 @@ for (const [locale, headline] of [['en', 'Explore How Majid Thinks'], ['fa', 'ب
 
   // metadata
   const title = await p.title();
-  ok(`${locale}: title`, /Ask Majid|ذهن هوشمند مجید/.test(title));
+  ok(`${locale}: title`, /Beyond the Résumé|فراتر از رزومه/.test(title));
   const canonical = await p.locator('link[rel="canonical"]').getAttribute('href');
   ok(`${locale}: canonical`, canonical === `https://quantiviq.xyz/${locale}/mind`);
   const hreflangs = await p.locator('link[rel="alternate"][hreflang]').evaluateAll((els) => els.map((e) => e.getAttribute('hreflang')));
