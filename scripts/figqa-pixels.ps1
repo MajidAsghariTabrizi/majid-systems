@@ -3,7 +3,7 @@
 # Compares production "before" crops with fixed-build "after" crops.
 param(
   [string]$BeforeDir = "captures-figqa/before",
-  [string]$AfterDir = "captures-figqa/after"
+  [string]$AfterDir = "captures-figqa/prod-after"
 )
 Add-Type -AssemblyName System.Drawing
 
@@ -37,12 +37,11 @@ function Get-InkStats([string]$path) {
 }
 
 $pairs = @(
-  @{ name = "EN01 codeblock bug"; before = "$BeforeDir/crop-en-ai-adoption-is-not.png"; after = "$AfterDir/crop-en-ai-adoption-is-not.png" },
-  @{ name = "EN07 legend"; before = "$BeforeDir/prod-fig07-legend-overflow.png"; after = "$AfterDir/crop-en-the-real-cost-of-e.png" },
-  @{ name = "EN09 circle"; before = "$BeforeDir/prod-fig09-circle-clipped.png"; after = "$AfterDir/crop-en-the-ai-native-prod.png" },
-  @{ name = "FA01 anchors"; before = "$BeforeDir/prod-fig01-anchor-flip.png"; after = "$AfterDir/crop-fa-ai-adoption-is-not.png" },
-  @{ name = "FA04 anchors"; before = "$BeforeDir/prod-fig04-anchor-flip.png"; after = "$AfterDir/crop-fa-who-owns-ai-transf.png" },
-  @{ name = "FA06 anchors"; before = "$BeforeDir/prod-fig06-anchor-flip.png"; after = "$AfterDir/crop-fa-the-ai-transformat.png" }
+  @{ name = "EN07 legend"; before = "$BeforeDir/prod-fig07-legend-overflow.png"; after = "$AfterDir/crop-fig07.png" },
+  @{ name = "EN09 circle"; before = "$BeforeDir/prod-fig09-circle-clipped.png"; after = "$AfterDir/crop-fig09.png" },
+  @{ name = "FA01 anchors"; before = "$BeforeDir/prod-fig01-anchor-flip.png"; after = "$AfterDir/crop-fig01.png" },
+  @{ name = "FA04 anchors"; before = "$BeforeDir/prod-fig04-anchor-flip.png"; after = "$AfterDir/crop-fig04.png" },
+  @{ name = "FA06 anchors"; before = "$BeforeDir/prod-fig06-anchor-flip.png"; after = "$AfterDir/crop-fig06.png" }
 )
 
 foreach ($p in $pairs) {
