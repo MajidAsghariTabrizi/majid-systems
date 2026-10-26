@@ -183,6 +183,16 @@
 .explore-ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 2.6rem 0 3rem; }
 .explore-ctas .btn { min-height: 44px; display: inline-flex; align-items: center; }
 
+/* founder identity (SEO/AI discoverability — crawlable text, minimal styling) */
+.founder-identity { margin-top: 2.4rem; padding: 1.1rem 1.3rem; border: 1px solid var(--border); border-inline-start: 3px solid var(--accent); border-radius: 10px; background: var(--bg-card); display: inline-flex; flex-direction: column; gap: 0.3rem; }
+.founder-name { margin: 0; color: var(--fg); font-weight: 600; font-size: 1.02rem; }
+.founder-title { margin: 0; color: var(--fg-muted); font-size: 0.9rem; }
+.founder-linkedin { color: var(--accent); font-size: 0.9rem; text-decoration: underline; text-underline-offset: 2px; min-height: 44px; display: inline-flex; align-items: center; }
+.footer-founder { margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.8rem; }
+.footer-founder-name { color: var(--fg-muted); }
+.footer-founder-title { color: var(--fg-muted); }
+.footer-founder a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
 /* mind scope switch (silver-bullet) */
 .mind-scope-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); }
 .mind-scope-row-composer { border-bottom: none; border-top: 1px solid var(--border); background: var(--bg-elevated); }

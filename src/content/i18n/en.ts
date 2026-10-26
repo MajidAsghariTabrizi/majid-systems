@@ -170,6 +170,7 @@ export const en = {
   },
   footer: {
     tagline: 'AI-native organization transformation.',
+    founderTitle: 'Founder & AI Transformation Architect',
     product: 'Product',
     company: 'Company',
     builder: 'Builder',
@@ -445,6 +446,8 @@ export const en = {
     p1: 'Quantiviq is an operator-led practice, not an agency. It was built by Majid Asghari — a product and marketplace operator who spent years inside real companies, then years building production AI systems that could not afford to lie about their own state.',
     p2: 'The two careers converge here: restructuring functions from the inside, and building the machinery an AI-native company runs on — brains, agent runtimes, routers, harnesses.',
     p3: 'What you will not find: invented client logos, a staff roster, or claims of outcomes that were never measured. What you will find: working systems, honest negative results, and a method that starts small on purpose.',
+    founderTitle: 'Founder & AI Transformation Architect',
+    founderLinkedIn: 'LinkedIn profile',
     journeyCta: 'Read the journey',
     profileCta: 'See the builder profile',
   },
