@@ -1,0 +1,251 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/explore",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/explore",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/insights/books",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/insights/books",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/insights/books/rewired",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/insights/books/competing-in-the-age-of-ai",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/insights/books/ai-snake-oil",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/insights/enterprise-ai-stack",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/insights/enterprise-ai-stack",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/mind/flows",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/mind/flows",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/mind",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/fa/mind",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/insights",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/lab",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/about",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/en/contact",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/journey",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/notes/production-is-part-of-the-product",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/sitemap.xml",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/robots.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/manifest.webmanifest",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "functional": {
+    "/en/explore": {
+      "consoleErrors": 0,
+      "coversOK": 0,
+      "coversTotal": 0,
+      "cards": 0,
+      "flows": 0,
+      "stackNodes": 0,
+      "scopeChips": 0,
+      "fallbacks": 0
+    },
+    "/en/insights/books": {
+      "consoleErrors": 0,
+      "coversOK": 7,
+      "coversTotal": 7,
+      "cards": 10,
+      "flows": 0,
+      "stackNodes": 0,
+      "scopeChips": 0,
+      "fallbacks": 3
+    },
+    "/en/insights/books/rewired": {
+      "consoleErrors": 0,
+      "coversOK": 0,
+      "coversTotal": 0,
+      "cards": 0,
+      "flows": 0,
+      "stackNodes": 0,
+      "scopeChips": 0,
+      "fallbacks": 1
+    },
+    "/en/insights/enterprise-ai-stack": {
+      "consoleErrors": 0,
+      "coversOK": 0,
+      "coversTotal": 0,
+      "cards": 0,
+      "flows": 0,
+      "stackNodes": 5,
+      "scopeChips": 0,
+      "fallbacks": 0
+    },
+    "/en/mind/flows": {
+      "consoleErrors": 0,
+      "coversOK": 0,
+      "coversTotal": 0,
+      "cards": 0,
+      "flows": 12,
+      "stackNodes": 0,
+      "scopeChips": 0,
+      "fallbacks": 0
+    },
+    "/fa/mind/flows": {
+      "consoleErrors": 0,
+      "coversOK": 0,
+      "coversTotal": 0,
+      "cards": 0,
+      "flows": 12,
+      "stackNodes": 0,
+      "scopeChips": 0,
+      "fallbacks": 0
+    },
+    "heroCTA": "/en/explore"
+  },
+  "mind": {
+    "scopeBooks": {
+      "status": 200,
+      "types": [
+        "book"
+      ],
+      "done": true,
+      "len": 730,
+      "urls": [
+        "https://quantiviq.xyz/en/insights/books/the-alignment-problem",
+        "https://quantiviq.xyz/en/insights/books/human-plus-machine"
+      ]
+    },
+    "default": {
+      "status": 200,
+      "done": true,
+      "len": 1143,
+      "sources": 5,
+      "tokens": 1915
+    }
+  },
+  "sitemap": [
+    {
+      "u": "/en/explore",
+      "present": true
+    },
+    {
+      "u": "/fa/explore",
+      "present": true
+    },
+    {
+      "u": "/en/insights/books",
+      "present": true
+    },
+    {
+      "u": "/fa/insights/books",
+      "present": true
+    },
+    {
+      "u": "/en/insights/books/rewired",
+      "present": true
+    },
+    {
+      "u": "/en/insights/enterprise-ai-stack",
+      "present": true
+    },
+    {
+      "u": "/fa/insights/enterprise-ai-stack",
+      "present": true
+    },
+    {
+      "u": "/en/mind/flows",
+      "present": true
+    },
+    {
+      "u": "/fa/mind/flows",
+      "present": true
+    }
+  ]
+}
