@@ -1,6 +1,11 @@
 export const SITE = {
   name: 'Majid Asghari',
   shortName: 'Majid',
+  /** Full legal name — crawlable identity (SEO/AI discoverability, 2026-10-26). */
+  fullName: 'Majid Asghari Tabrizi',
+  fullNameFa: 'مجید اصغری تبریزی',
+  founderTitle: 'Founder & AI Transformation Architect',
+  founderTitleFa: 'بنیان‌گذار و معمار تحول هوش مصنوعی',
   tagline: 'Product strategist. Systems builder. AI engineer.',
   description:
     'Personal engineering portfolio of Majid Asghari — production-grade systems, decision infrastructure, and AI engineering.',
@@ -9,7 +14,7 @@ export const SITE = {
   email: 'majid@quantiviq.xyz',
   githubUser: 'MajidAsghariTabrizi',
   githubUrl: 'https://github.com/MajidAsghariTabrizi',
-  linkedinUrl: 'https://www.linkedin.com/in/majid-asghari',
+  linkedinUrl: 'https://www.linkedin.com/in/majid-asghari/',
   twitterHandle: '',
   location: 'Iran',
   establishedYear: 2020,

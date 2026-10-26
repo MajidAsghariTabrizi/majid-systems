@@ -19,12 +19,19 @@ export function HomeJsonLd() {
   const personData = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: SITE.name,
-    alternateName: SITE.shortName,
+    '@id': `${SITE.canonicalUrl}/#founder`,
+    name: SITE.fullName,
+    alternateName: [SITE.fullNameFa, SITE.name],
     url: SITE.canonicalUrl,
     image: `${SITE.canonicalUrl}${SITE.ogImage}`,
     sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
-    jobTitle: 'AI Product & Transformation Leader',
+    jobTitle: SITE.founderTitle,
+    worksFor: {
+      '@id': `${SITE.canonicalUrl}/#organization`,
+      '@type': 'Organization',
+      name: 'Quantiviq',
+      url: SITE.canonicalUrl,
+    },
     knowsAbout: [
       'Product strategy',
       'Marketplace systems',
@@ -73,39 +80,56 @@ export function HomeJsonLd() {
 }
 
 export function QuantiviqJsonLd() {
-  const org = {
+  // One @graph, two @id-linked entities: the founder and the organization
+  // reference each other (Organization.founder <-> Person.worksFor), so any
+  // consumer resolves the connection unambiguously. No duplicate Person or
+  // Organization nodes are emitted anywhere else on locale pages.
+  const ORG_ID = `${SITE.canonicalUrl}/#organization`;
+  const FOUNDER_ID = `${SITE.canonicalUrl}/#founder`;
+  const graph = {
     '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    name: 'Quantiviq',
-    url: SITE.canonicalUrl,
-    description:
-      'AI-native organization transformation: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
-    slogan: 'Rebuild the company.',
-    founder: {
-      '@type': 'Person',
-      name: SITE.name,
-      url: `${SITE.canonicalUrl}/profile`,
-      jobTitle: 'AI Product & Transformation Leader',
-      sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
-    },
-    areaServed: 'Worldwide',
-    serviceType: [
-      'AI-native organization design',
-      'Function restructuring',
-      'Company brain implementation',
-      'Agent runtime and workflow design',
-    ],
-    knowsAbout: [
-      'AI-native organizations',
-      'Organizational design',
-      'Company brain',
-      'Agent runtime',
-      'Model routing',
-      'Decision systems',
-      'Workflow design',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': FOUNDER_ID,
+        name: SITE.fullName,
+        alternateName: [SITE.fullNameFa, SITE.name],
+        jobTitle: SITE.founderTitle,
+        url: `${SITE.canonicalUrl}/profile`,
+        image: `${SITE.canonicalUrl}${SITE.ogImage}`,
+        sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
+        worksFor: { '@id': ORG_ID },
+        address: { '@type': 'PostalAddress', addressCountry: SITE.location },
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': ORG_ID,
+        name: 'Quantiviq',
+        url: SITE.canonicalUrl,
+        description:
+          'AI-native organization transformation: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
+        slogan: 'Rebuild the company.',
+        founder: { '@id': FOUNDER_ID },
+        areaServed: 'Worldwide',
+        serviceType: [
+          'AI-native organization design',
+          'Function restructuring',
+          'Company brain implementation',
+          'Agent runtime and workflow design',
+        ],
+        knowsAbout: [
+          'AI-native organizations',
+          'Organizational design',
+          'Company brain',
+          'Agent runtime',
+          'Model routing',
+          'Decision systems',
+          'Workflow design',
+        ],
+      },
     ],
   };
-  return <JsonLdScript data={org} />;
+  return <JsonLdScript data={graph} />;
 }
 
 export function ProjectJsonLd({ project: p }: { project: Project }) {

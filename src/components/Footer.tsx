@@ -15,6 +15,17 @@ export function Footer({ locale }: { locale?: Locale }) {
           <div style={{ marginTop: '0.3rem' }}>
             {locale ? t.footer.tagline : `${SITE.tagline} · ${SITE.location}`}
           </div>
+          <div className="footer-founder">
+            <span className="footer-founder-name">
+              {SITE.fullName} <span aria-hidden="true">·</span> {SITE.fullNameFa}
+            </span>
+            <span className="footer-founder-title">
+              {locale ? t.footer.founderTitle : SITE.founderTitle}
+            </span>
+            <a href={SITE.linkedinUrl} rel="me noopener" target="_blank">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
         {locale ? (
           <ul>

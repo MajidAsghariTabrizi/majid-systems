@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
+import { SITE } from '@/content/shared';
 import { socialMeta } from '@/lib/social';
 import { Reveal } from '@/components/Reveal';
 
@@ -43,6 +44,22 @@ export default async function AboutPage({ params }: { params: { locale: string }
               <p className="q-founder-p">{p}</p>
             </Reveal>
           ))}
+          <Reveal>
+            <div className="founder-identity" data-founder="majid-asghari-tabrizi">
+              <p className="founder-name">
+                {SITE.fullName} <span aria-hidden="true">·</span> {SITE.fullNameFa}
+              </p>
+              <p className="founder-title">{t.founderTitle}</p>
+              <a
+                className="founder-linkedin"
+                href={SITE.linkedinUrl}
+                rel="me noopener"
+                target="_blank"
+              >
+                {t.founderLinkedIn} <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </Reveal>
           <Reveal>
             <div className="hero-actions" style={{ marginTop: '2.5rem' }}>
               <Link href="/journey" className="btn btn-primary">{t.journeyCta} <span className="arrow" aria-hidden>→</span></Link>
