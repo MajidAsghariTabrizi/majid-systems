@@ -23,9 +23,12 @@ export function sessionId(): string {
   return s;
 }
 
+export type MindScope = 'all' | 'books' | 'oss' | 'flows' | 'concepts' | 'articles';
+
 export function useMindChat(locale: string, s: MindStrings) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [busy, setBusy] = useState(false);
+  const [scope, setScope] = useState<MindScope>('all');
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [asked, setAsked] = useState(0);
@@ -81,6 +84,7 @@ export function useMindChat(locale: string, s: MindStrings) {
           body: JSON.stringify({
             session: sessionId(),
             locale,
+            scope,
             messages: history.map((m) => ({ role: m.role, content: m.content })),
           }),
           signal: ac.signal,
@@ -147,8 +151,8 @@ export function useMindChat(locale: string, s: MindStrings) {
         abortRef.current = null;
       }
     },
-    [busy, asked, messages, locale, s, fail]
+    [busy, asked, messages, locale, s, fail, scope]
   );
 
-  return { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, setError, setNotice };
+  return { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, setError, setNotice, scope, setScope };
 }

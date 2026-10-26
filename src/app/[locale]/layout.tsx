@@ -10,6 +10,7 @@ import { QuantiviqJsonLd } from '@/components/JsonLd';
 import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
+import '../silver-bullet.css';
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

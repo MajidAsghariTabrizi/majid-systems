@@ -46,8 +46,8 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-hero-body">{t.hero.bodyP2}</p>
             <p className="q-hero-promise">{t.hero.promise}</p>
             <div className="hero-actions">
-              <Link href={`/${l}#simulator`} className="btn btn-primary">
-                {t.hero.ctaPrimary} <span className="arrow" aria-hidden>↓</span>
+              <Link href={`/${l}/explore`} className="btn btn-primary">
+                {t.hero.ctaPrimary} <span className="arrow" aria-hidden>→</span>
               </Link>
               <Link href={`/${l}/contact`} className="btn">
                 {t.hero.ctaSecondary} <span className="arrow" aria-hidden>→</span>

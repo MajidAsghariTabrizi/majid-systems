@@ -17,7 +17,7 @@ import type { MindStrings } from './strings';
 
 function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const params = useSearchParams();
-  const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset } = useMindChat(locale, s);
+  const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, scope, setScope } = useMindChat(locale, s);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -139,6 +139,21 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                   )}
                 </>
               )}
+            </div>
+
+            {/* ===== SCOPE SWITCH (always visible) ===== */}
+            <div className="mind-scope-row mind-scope-row-composer" role="group" aria-label={s.scopeTitle}>
+              {s.scopes.map((sc) => (
+                <button
+                  key={sc.id}
+                  type="button"
+                  className={`chip chip-btn mind-scope-chip ${scope === sc.id ? 'on' : ''}`}
+                  aria-pressed={scope === sc.id}
+                  onClick={() => setScope(sc.id as typeof scope)}
+                >
+                  {sc.label}
+                </button>
+              ))}
             </div>
 
             {/* ===== COMPOSER (sticky) ===== */}

@@ -161,7 +161,17 @@ def _fts_query(q):
     prefix_or = " OR ".join(f'"{w}"*' for w in words[:10])
     return [strict, prefix_and, prefix_or]
 
-def retrieve(query, locale, top_k):
+# corpus scopes exposed to the public UI (backward compatible: absent = all)
+SCOPE_TYPES = {
+    "all": None,
+    "books": ("book",),
+    "oss": ("repo",),
+    "flows": ("org_flow",),
+    "concepts": ("concept",),
+    "articles": ("insight",),
+}
+
+def retrieve(query, locale, top_k, types=None):
     # Single ranked pass across BOTH locales: the corpus is small, Persian
     # terms naturally rank Persian content higher, and EN records now carry
     # Persian alias lines — a hard language filter was hiding them
@@ -184,6 +194,9 @@ def retrieve(query, locale, top_k):
                 out.append(dict(r))
         if len(out) >= top_k:
             break
+    # corpus scope filter (public scope selector): restrict to allowed types
+    if types:
+        out = [r for r in out if r["type"] in types]
     # language preference as a soft boost: query-locale records first within type
     out.sort(key=lambda r: (0 if r["language"] == locale else 1, 0))
     # type-diversity: cap insight chunks so page-level records surface
@@ -399,6 +412,9 @@ class Handler(BaseHTTPRequestHandler):
         locale = body.get("locale") or detect_language(query)
         if locale not in ("en", "fa"):
             locale = detect_language(query)
+        scope = body.get("scope") or "all"
+        if scope not in SCOPE_TYPES:
+            scope = "all"
 
         # ---- limits
         if not chat_enabled():
@@ -441,7 +457,7 @@ class Handler(BaseHTTPRequestHandler):
 
         # ---- retrieval
         t0 = time.time()
-        evidence = retrieve(query, locale, CFG["top_k"])
+        evidence = retrieve(query, locale, CFG["top_k"], SCOPE_TYPES[scope])
         retrieval_ms = int((time.time() - t0) * 1000)
 
         sources = [

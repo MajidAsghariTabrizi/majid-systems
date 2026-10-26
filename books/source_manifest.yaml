@@ -1,0 +1,129 @@
+# Book-to-Skill source manifest — permission & rights ledger
+# Managed per mission §6. Every entry states what may be published and what may NOT.
+# Statuses: catalog-only | owner-synthesis | source-excerpt-verified | full-text-authorized
+manifest_version: 1
+reviewed_at: "2026-10-26"
+tool_upstream:
+  repo: https://github.com/virgiliojr94/book-to-skill
+  tool_license: MIT  # tool license only — grants NO rights over book content
+  installed_locally: false
+  corpus_58_books_found: false   # filesystem + Personal Brain searched 2026-10-26; not present
+ingestion_policy:
+  rule_1: "No book full text, chapter text, or chapter/page citations are published without a legally supplied source."
+  rule_2: "Catalog cards (metadata + owner-authored editorial briefs) MAY publish with source link and cover credit."
+  rule_3: "Skill generation (SKILL.md etc.) runs ONLY on authorized local files, in a scratch staging path, output staged PROPOSED for owner review."
+  rule_4: "The public site and any public agent MUST NOT run brain_learn or modify private Brain packs."
+books:
+  - isbn13: "9781394381906"
+    slug: rewired
+    edition: "2nd edition, April 2026, Wiley"
+    ownership_permission: "none (no local file)"
+    source_rights: "publisher metadata + Open Library cover display"
+    public_page: https://www.wiley.com/en-fr/Edition-p-9781394381906
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9781633697621"
+    slug: competing-in-the-age-of-ai
+    edition: "2020, Harvard Business Review Press"
+    ownership_permission: "none"
+    source_rights: "retail ISBN record + Open Library cover display"
+    public_page: https://www.harvard.com/book/9781633697621
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9781647824198"
+    slug: power-and-prediction
+    edition: "2022, Harvard Business Review Press"
+    ownership_permission: "none"
+    source_rights: "publisher metadata + Open Library cover display"
+    public_page: https://store.hbr.org/product/power-and-prediction-the-disruptive-economics-of-artificial-intelligence/10580
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9780593716717"
+    slug: co-intelligence
+    edition: "2024, Portfolio/Penguin Random House"
+    ownership_permission: "none"
+    source_rights: "publisher metadata + Open Library cover display"
+    public_page: https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/9780593716717/
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9781647826239"
+    slug: the-ai-savvy-leader
+    edition: "2024, Harvard Business Review Press"
+    ownership_permission: "none"
+    source_rights: "publisher metadata + Open Library cover display"
+    public_page: https://store.hbr.org/product/the-ai-savvy-leader-nine-ways-to-take-back-control-and-make-ai-work/10688
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only; the nine ways are NOT enumerated"
+    reviewed: "2026-10-26"
+  - isbn13: "9781647827205"
+    slug: human-plus-machine
+    edition: "Updated and Expanded, September 2024, Harvard Business Review Press"
+    ownership_permission: "none"
+    source_rights: "publisher metadata + Open Library cover display"
+    public_page: https://store.hbr.org/product/human-machine-updated-and-expanded-reimagining-work-in-the-age-of-ai/10724
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9781098166304"
+    slug: ai-engineering
+    edition: "2025, O'Reilly Media (print)"
+    ownership_permission: "none"
+    source_rights: "distributor metadata + Open Library cover display"
+    public_page: https://ingramacademic.com/products/ai-engineering-9781098166304
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9781098107963"
+    slug: designing-machine-learning-systems
+    edition: "2022, O'Reilly Media (print)"
+    ownership_permission: "none"
+    source_rights: "retail ISBN record + Open Library cover display"
+    public_page: https://www.harvard.com/book/9781098107963
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only; print ISBN shown explicitly"
+    reviewed: "2026-10-26"
+  - isbn13: "9780393635829"
+    slug: the-alignment-problem
+    edition: "2020, W. W. Norton & Company (hardcover)"
+    ownership_permission: "none"
+    source_rights: "library record + Open Library cover display"
+    public_page: https://openlibrary.org/books/OL28126189M/The_Alignment_Problem
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+  - isbn13: "9780691249131"
+    slug: ai-snake-oil
+    edition: "2024, Princeton University Press (hardcover)"
+    ownership_permission: "none"
+    source_rights: "distributor metadata + Open Library cover display"
+    public_page: https://ingramacademic.com/products/ai-snake-oil-9780691249131
+    cover_source: "openlibrary covers API (hotlinked, credited)"
+    ingestion_tier: catalog-only
+    source_sha256: null
+    citation_granularity: "bibliographic only"
+    reviewed: "2026-10-26"
+deduplication:
+  checked_against: "Personal Brain (4536 facts, 0 book-synthesis) + repo content tree — no prior records"
+  duplicates_found: 0

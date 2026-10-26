@@ -1,0 +1,101 @@
+{
+  "capturedAt": "2026-10-26T08:06:19.476Z",
+  "sites": [
+    {
+      "id": "palantir-aip",
+      "url": "https://www.palantir.com/platforms/aip/",
+      "status": 200,
+      "title": "Palantir Artificial Intelligence Platform",
+      "h1": "Explore AIP, our artificial intelligence platform. Integrate AI into Operational Decision Making.",
+      "shots": [
+        "palantir-aip-desktop.png",
+        "palantir-aip-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "linear",
+      "url": "https://linear.app/homepage",
+      "status": 200,
+      "title": "Linear – The system for product development",
+      "h1": "The product development system for teams and agentsThe product developmentsystem for teams and agentsThe product development system for team",
+      "shots": [
+        "linear-desktop.png",
+        "linear-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "stripe",
+      "url": "https://stripe.com/",
+      "status": 200,
+      "title": "Stripe | Financial Infrastructure to Grow Your Revenue",
+      "h1": "Financial infrastructure to grow your revenue. Accept payments, handle business banking,1 and implement custom revenue models—from your firs",
+      "shots": [
+        "stripe-desktop.png",
+        "stripe-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "notion-ai",
+      "url": "https://www.notion.com/product/ai",
+      "status": 200,
+      "title": "Meet your AI team | Notion",
+      "h1": "Meet your 24/7 AI team",
+      "shots": [
+        "notion-ai-desktop.png",
+        "notion-ai-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "vercel",
+      "url": "https://vercel.com/",
+      "status": 200,
+      "title": "Agentic Infrastructure - Vercel",
+      "h1": "Agentic Infrastructure",
+      "shots": [
+        "vercel-desktop.png",
+        "vercel-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "mckinsey-qb",
+      "url": "https://www.mckinsey.com/capabilities/quantumblack/how-we-help-clients",
+      "status": 403,
+      "title": "Access Denied",
+      "h1": "Access Denied",
+      "shots": [
+        "mckinsey-qb-desktop.png",
+        "mckinsey-qb-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "figma",
+      "url": "https://www.figma.com/",
+      "status": 200,
+      "title": "Figma: The collaborative canvas for design, code, and AI",
+      "h1": "The full-stack creative canvas",
+      "shots": [
+        "figma-desktop.png",
+        "figma-mobile.png"
+      ],
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "url": "https://www.anthropic.com/",
+      "status": 200,
+      "title": "Home \\ Anthropic",
+      "h1": "AI research and products that put safety at the frontier. AI will have a vast impact on the world. Anthropic is a public benefit corporation",
+      "shots": [
+        "anthropic-desktop.png",
+        "anthropic-mobile.png"
+      ],
+      "error": null
+    }
+  ]
+}

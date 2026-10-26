@@ -5646,7 +5646,7 @@ section:first-of-type {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: var(--fg-subtle);
+  color: var(--fg-muted);
   background: transparent;
   border: 0;
   padding: 9px 13px;
@@ -8703,6 +8703,7 @@ html[dir='rtl'] .mind-full-ai-note { line-height: 1.8; }
 .mind-full-reset:hover { color: var(--fg); border-color: var(--border-strong); }
 
 .mind-full-body { flex: 1; display: flex; padding-block: 2rem 2.6rem; }
+.mind-full-body .container-wide { min-width: 0; }
 .mind-full-card {
   display: flex; flex-direction: column; width: 100%;
   max-width: 860px; margin-inline: auto;
@@ -8717,10 +8718,10 @@ html[dir='rtl'] .mind-full-ai-note { line-height: 1.8; }
 .mind-full-empty { display: flex; flex-direction: column; gap: 1.1rem; padding-block: 1.4rem; }
 .mind-full-starters-title {
   font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--fg-subtle); text-align: center; margin: 0;
+  text-transform: uppercase; color: var(--fg-muted); text-align: center; margin: 0;
 }
 html[dir='rtl'] .mind-full-starters-title { letter-spacing: 0; font-size: 0.8rem; }
-.mind-full-starters { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.7rem; }
+.mind-full-starters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0.7rem; }
 @media (max-width: 640px) { .mind-full-starters { grid-template-columns: 1fr; } }
 .mind-full-starter {
   text-align: start; background: rgba(255, 255, 255, 0.025);
@@ -8762,12 +8763,12 @@ html[dir='rtl'] .mind-full-starter { line-height: 1.9; }
 /* discreet, persistent AI transparency note under the composer */
 .mind-full-disclosure {
   margin: 0; padding: 0.55rem 1.2rem 0.85rem;
-  font-size: 0.72rem; line-height: 1.65; color: var(--fg-subtle);
+  font-size: 0.72rem; line-height: 1.65; color: var(--fg-muted);
   border-block-start: 1px solid var(--border);
   display: flex; gap: 0.45rem; align-items: baseline; justify-content: center;
   text-align: center; flex-wrap: wrap;
 }
 .mind-full-disclosure[aria-hidden] { display: none; }
 .mind-full-disclosure > span[aria-hidden] { color: rgba(240, 168, 104, 0.75); }
-.mind-full-disclosure-detail { color: var(--fg-subtle); opacity: 0.85; }
+.mind-full-disclosure-detail { color: var(--fg-muted); opacity: 0.95; }
 html[dir='rtl'] .mind-full-disclosure { line-height: 1.9; font-size: 0.75rem; }

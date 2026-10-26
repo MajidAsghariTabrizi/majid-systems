@@ -1,0 +1,762 @@
+{
+  "base": "https://quantiviq.xyz",
+  "startedAt": "2026-10-26T08:04:58.523Z",
+  "routes": {
+    "/en": {
+      "route": "/en",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Quantiviq — Rebuild the Company for the Agentic Era",
+      "h1": "REBUILD THE COMPANY.",
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1024": 74,
+        "1440": 0
+      },
+      "shots": [
+        "home-en-1440.png",
+        "home-en-1024.png",
+        "home-en-768.png",
+        "home-en-390.png",
+        "home-en-320.png"
+      ]
+    },
+    "/fa": {
+      "route": "/fa",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Quantiviq — شرکت را برای عصر ایجنت‌ها از نو بسازید",
+      "h1": "شرکت را از نو بسازید.",
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1024": 0,
+        "1440": 0
+      },
+      "shots": [
+        "home-fa-1440.png",
+        "home-fa-1024.png",
+        "home-fa-768.png",
+        "home-fa-390.png",
+        "home-fa-320.png"
+      ]
+    },
+    "/en/insights": {
+      "route": "/en/insights",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Quantiviq Insights — AI-Native Business Transformation Research · Quantiviq",
+      "h1": "Insights",
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1024": 74,
+        "1440": 0
+      },
+      "shots": [
+        "en_insights-1440.png",
+        "en_insights-1024.png",
+        "en_insights-768.png",
+        "en_insights-390.png",
+        "en_insights-320.png"
+      ]
+    },
+    "/fa/insights": {
+      "route": "/fa/insights",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "تحلیل‌های کوانتی‌ویک — پژوهش تحول کسب‌وکار بومی هوش مصنوعی · Quantiviq",
+      "h1": "تحلیل‌ها",
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1024": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_insights-1440.png",
+        "fa_insights-1024.png",
+        "fa_insights-768.png",
+        "fa_insights-390.png",
+        "fa_insights-320.png"
+      ]
+    },
+    "/en/lab": {
+      "route": "/en/lab",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "AI Decision Intelligence Laboratory — Real System, Measured Honesty · Quantiviq",
+      "h1": "Watch a machine decide — and refuse.",
+      "overflow": {
+        "320": 51,
+        "390": 0,
+        "768": 0,
+        "1024": 74,
+        "1440": 0
+      },
+      "shots": [
+        "en_lab-1440.png",
+        "en_lab-1024.png",
+        "en_lab-768.png",
+        "en_lab-390.png",
+        "en_lab-320.png"
+      ]
+    },
+    "/fa/lab": {
+      "route": "/fa/lab",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "آزمایشگاه هوش تصمیم — سیستم واقعی، صداقت اندازه‌گرفته · Quantiviq",
+      "h1": "تماشا کنید ماشین تصمیم می‌گیرد — و امتناع می‌کند.",
+      "overflow": {
+        "320": 42,
+        "390": 0,
+        "768": 0,
+        "1024": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_lab-1440.png",
+        "fa_lab-1024.png",
+        "fa_lab-768.png",
+        "fa_lab-390.png",
+        "fa_lab-320.png"
+      ]
+    },
+    "/en/mind": {
+      "route": "/en/mind",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Beyond the Résumé — Ask Majid's AI Mind · Quantiviq",
+      "h1": "Beyond the résumé.Explore the thinking behind the work.",
+      "overflow": {
+        "320": 46,
+        "390": 0,
+        "768": 0,
+        "1024": 74,
+        "1440": 0
+      },
+      "shots": [
+        "en_mind-1440.png",
+        "en_mind-1024.png",
+        "en_mind-768.png",
+        "en_mind-390.png",
+        "en_mind-320.png"
+      ]
+    },
+    "/fa/mind": {
+      "route": "/fa/mind",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "فراتر از رزومه — گفت‌وگو با ذهن AI مجید · Quantiviq",
+      "h1": "رزومه می‌گوید چه کرده‌ام؛اینجا بپرس چطور فکر می‌کنم.",
+      "overflow": {
+        "320": 36,
+        "390": 0,
+        "768": 0,
+        "1024": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_mind-1440.png",
+        "fa_mind-1024.png",
+        "fa_mind-768.png",
+        "fa_mind-390.png",
+        "fa_mind-320.png"
+      ]
+    },
+    "/en/about": {
+      "route": "/en/about",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "About — Operator First, Systems Architect by Necessity · Quantiviq",
+      "h1": "Operator first. Systems architect by necessity.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_about-1440.png",
+        "en_about-390.png"
+      ]
+    },
+    "/fa/about": {
+      "route": "/fa/about",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "درباره — اول اپراتور، معمار سیستم از سرِ ضرورت · Quantiviq",
+      "h1": "اول اپراتور. معمار سیستم از سرِ ضرورت.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_about-1440.png",
+        "fa_about-390.png"
+      ]
+    },
+    "/en/leadership": {
+      "route": "/en/leadership",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Majid Asghari Tabrizi — AI Product & Transformation Leadership · Quantiviq",
+      "h1": "AI Product & Transformation Leadership.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_leadership-1440.png",
+        "en_leadership-390.png"
+      ]
+    },
+    "/fa/leadership": {
+      "route": "/fa/leadership",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "مجید اصغری تبریزی — رهبری محصول و تحول با هوش مصنوعی · Quantiviq",
+      "h1": "رهبری محصول و تحول با هوش مصنوعی.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_leadership-1440.png",
+        "fa_leadership-390.png"
+      ]
+    },
+    "/en/proof": {
+      "route": "/en/proof",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Proof — Primitives Built Before the Thesis Had a Name · Quantiviq",
+      "h1": "Built before the thesis had a name.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_proof-1440.png",
+        "en_proof-390.png"
+      ]
+    },
+    "/fa/proof": {
+      "route": "/fa/proof",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "شواهد — سازه‌هایی که پیش از نام‌گرفتنِ این تز ساخته شدند · Quantiviq",
+      "h1": "ساخته شد پیش از آنکه تز نامی داشته باشد.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_proof-1440.png",
+        "fa_proof-390.png"
+      ]
+    },
+    "/en/system": {
+      "route": "/en/system",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "The System — AI-native Organization OS · Quantiviq",
+      "h1": "The AI-native Organization OS.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_system-1440.png",
+        "en_system-390.png"
+      ]
+    },
+    "/fa/system": {
+      "route": "/fa/system",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "سیستم — سیستم‌عامل سازمان بومی هوش مصنوعی · Quantiviq",
+      "h1": "سیستم‌عامل سازمان بومی هوش مصنوعی.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_system-1440.png",
+        "fa_system-390.png"
+      ]
+    },
+    "/en/method": {
+      "route": "/en/method",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Method — Start With One Function · Quantiviq",
+      "h1": "Start with one function.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_method-1440.png",
+        "en_method-390.png"
+      ]
+    },
+    "/fa/method": {
+      "route": "/fa/method",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "روش — از یک بخش شروع کنید · Quantiviq",
+      "h1": "از یک بخش شروع کنید.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_method-1440.png",
+        "fa_method-390.png"
+      ]
+    },
+    "/en/services": {
+      "route": "/en/services",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Services — From Diagnostic to Transformation Partnership · Quantiviq",
+      "h1": "Four ways to rebuild.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_services-1440.png",
+        "en_services-390.png"
+      ]
+    },
+    "/fa/services": {
+      "route": "/fa/services",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "خدمات — از تشخیص فرصت تا مشارکت در تحول · Quantiviq",
+      "h1": "چهار راه بازسازی.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_services-1440.png",
+        "fa_services-390.png"
+      ]
+    },
+    "/en/contact": {
+      "route": "/en/contact",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Contact — Start a Conversation · Quantiviq",
+      "h1": "Start a conversation.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_contact-1440.png",
+        "en_contact-390.png"
+      ]
+    },
+    "/fa/contact": {
+      "route": "/fa/contact",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "تماس — گفت‌وگو را آغاز کنید · Quantiviq",
+      "h1": "گفت‌وگو را آغاز کنید.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_contact-1440.png",
+        "fa_contact-390.png"
+      ]
+    },
+    "/en/privacy": {
+      "route": "/en/privacy",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "Privacy — How Inquiry Data Is Handled · Quantiviq",
+      "h1": "How inquiry data is handled.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_privacy-1440.png",
+        "en_privacy-390.png"
+      ]
+    },
+    "/fa/privacy": {
+      "route": "/fa/privacy",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "حریم خصوصی — داده‌های استعلام چگونه مدیریت می‌شوند · Quantiviq",
+      "h1": "داده‌های استعلام چگونه مدیریت می‌شوند.",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_privacy-1440.png",
+        "fa_privacy-390.png"
+      ]
+    },
+    "/en/insights/ai-adoption-is-not-ai-transformation": {
+      "route": "/en/insights/ai-adoption-is-not-ai-transformation",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "AI Adoption vs AI Transformation: The ROI Gap · Quantiviq",
+      "h1": "AI Adoption Is Not AI Transformation",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_insights_ai-adoption-is-not-ai-transformation-1440.png",
+        "en_insights_ai-adoption-is-not-ai-transformation-390.png"
+      ]
+    },
+    "/fa/insights/ai-adoption-is-not-ai-transformation": {
+      "route": "/fa/insights/ai-adoption-is-not-ai-transformation",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "تفاوت پذیرش و تحول هوش مصنوعی: شکاف بازگشت سرمایه · Quantiviq",
+      "h1": "پذیرش هوش مصنوعی همان تحول با هوش مصنوعی نیست",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "fa_insights_ai-adoption-is-not-ai-transformation-1440.png",
+        "fa_insights_ai-adoption-is-not-ai-transformation-390.png"
+      ]
+    },
+    "/en/insights/who-owns-ai-transformation": {
+      "route": "/en/insights/who-owns-ai-transformation",
+      "status": 200,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "title": "AI Transformation Ownership: The Decision-Rights Answer · Quantiviq",
+      "h1": "Who Should Own AI Transformation?",
+      "overflow": {
+        "390": 96,
+        "1440": 0
+      },
+      "shots": [
+        "en_insights_who-owns-ai-transformation-1440.png",
+        "en_insights_who-owns-ai-transformation-390.png"
+      ]
+    },
+    "/en/journey": {
+      "route": "/en/journey",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/journey"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_journey-1440.png",
+        "en_journey-390.png"
+      ]
+    },
+    "/en/notes": {
+      "route": "/en/notes",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/notes"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_notes-1440.png",
+        "en_notes-390.png"
+      ]
+    },
+    "/en/open-source": {
+      "route": "/en/open-source",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/open-source"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_open-source-1440.png",
+        "en_open-source-390.png"
+      ]
+    },
+    "/en/work": {
+      "route": "/en/work",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/work"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_work-1440.png",
+        "en_work-390.png"
+      ]
+    },
+    "/en/resume": {
+      "route": "/en/resume",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/resume"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_resume-1440.png",
+        "en_resume-390.png"
+      ]
+    },
+    "/en/engineering": {
+      "route": "/en/engineering",
+      "status": 404,
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [
+        "404 https://quantiviq.xyz/en/engineering"
+      ],
+      "brokenImages": [],
+      "title": "404: This page could not be found.",
+      "h1": "404",
+      "overflow": {
+        "390": 0,
+        "1440": 0
+      },
+      "shots": [
+        "en_engineering-1440.png",
+        "en_engineering-390.png"
+      ]
+    }
+  },
+  "screenshots": [
+    "home-en-1440.png",
+    "home-en-1024.png",
+    "home-en-768.png",
+    "home-en-390.png",
+    "home-en-320.png",
+    "home-fa-1440.png",
+    "home-fa-1024.png",
+    "home-fa-768.png",
+    "home-fa-390.png",
+    "home-fa-320.png",
+    "en_insights-1440.png",
+    "en_insights-1024.png",
+    "en_insights-768.png",
+    "en_insights-390.png",
+    "en_insights-320.png",
+    "fa_insights-1440.png",
+    "fa_insights-1024.png",
+    "fa_insights-768.png",
+    "fa_insights-390.png",
+    "fa_insights-320.png",
+    "en_lab-1440.png",
+    "en_lab-1024.png",
+    "en_lab-768.png",
+    "en_lab-390.png",
+    "en_lab-320.png",
+    "fa_lab-1440.png",
+    "fa_lab-1024.png",
+    "fa_lab-768.png",
+    "fa_lab-390.png",
+    "fa_lab-320.png",
+    "en_mind-1440.png",
+    "en_mind-1024.png",
+    "en_mind-768.png",
+    "en_mind-390.png",
+    "en_mind-320.png",
+    "fa_mind-1440.png",
+    "fa_mind-1024.png",
+    "fa_mind-768.png",
+    "fa_mind-390.png",
+    "fa_mind-320.png",
+    "en_about-1440.png",
+    "en_about-390.png",
+    "fa_about-1440.png",
+    "fa_about-390.png",
+    "en_leadership-1440.png",
+    "en_leadership-390.png",
+    "fa_leadership-1440.png",
+    "fa_leadership-390.png",
+    "en_proof-1440.png",
+    "en_proof-390.png",
+    "fa_proof-1440.png",
+    "fa_proof-390.png",
+    "en_system-1440.png",
+    "en_system-390.png",
+    "fa_system-1440.png",
+    "fa_system-390.png",
+    "en_method-1440.png",
+    "en_method-390.png",
+    "fa_method-1440.png",
+    "fa_method-390.png",
+    "en_services-1440.png",
+    "en_services-390.png",
+    "fa_services-1440.png",
+    "fa_services-390.png",
+    "en_contact-1440.png",
+    "en_contact-390.png",
+    "fa_contact-1440.png",
+    "fa_contact-390.png",
+    "en_privacy-1440.png",
+    "en_privacy-390.png",
+    "fa_privacy-1440.png",
+    "fa_privacy-390.png",
+    "en_insights_ai-adoption-is-not-ai-transformation-1440.png",
+    "en_insights_ai-adoption-is-not-ai-transformation-390.png",
+    "fa_insights_ai-adoption-is-not-ai-transformation-1440.png",
+    "fa_insights_ai-adoption-is-not-ai-transformation-390.png",
+    "en_insights_who-owns-ai-transformation-1440.png",
+    "en_insights_who-owns-ai-transformation-390.png",
+    "en_journey-1440.png",
+    "en_journey-390.png",
+    "en_notes-1440.png",
+    "en_notes-390.png",
+    "en_open-source-1440.png",
+    "en_open-source-390.png",
+    "en_work-1440.png",
+    "en_work-390.png",
+    "en_resume-1440.png",
+    "en_resume-390.png",
+    "en_engineering-1440.png",
+    "en_engineering-390.png"
+  ],
+  "discoveredExtraLinks": [
+    "/en/contact?intent=diagnostic"
+  ],
+  "insightsCollisionProbe": [],
+  "finishedAt": "2026-10-26T08:06:43.992Z",
+  "summary": {
+    "routesCrawled": 33,
+    "routesWithErrors": 6,
+    "brokenImagesTotal": 0,
+    "overflowPositive": [
+      "/en@1024:74",
+      "/en/insights@1024:74",
+      "/en/lab@320:51",
+      "/en/lab@1024:74",
+      "/fa/lab@320:42",
+      "/en/mind@320:46",
+      "/en/mind@1024:74",
+      "/fa/mind@320:36",
+      "/en/insights/who-owns-ai-transformation@390:96"
+    ],
+    "consoleErrors": [
+      "/en/journey :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/journey :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/notes :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/open-source :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/work :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/resume :: Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "/en/engineering :: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  }
+}

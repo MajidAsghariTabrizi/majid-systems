@@ -1,0 +1,485 @@
+{
+  "summary": {
+    "at": "2026-10-26T09:15:14.240Z",
+    "mode": "mock",
+    "pass": 44,
+    "fail": 0,
+    "manual": 0,
+    "total": 44
+  },
+  "results": [
+    {
+      "id": "en-g01",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g02",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g03",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g04",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g05",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g06",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g07",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g08",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g09",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g10",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g11",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "org_flow"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g12",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "org_flow"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g13",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "org_flow"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g14",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "org_flow"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g15",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "concept"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g16",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "insight"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g17",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "insight"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-g18",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "insight"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-p01",
+      "cls": "partial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-p02",
+      "cls": "partial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "en-u01",
+      "cls": "unknown",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity)"
+    },
+    {
+      "id": "en-u02",
+      "cls": "unknown",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity)"
+    },
+    {
+      "id": "en-u03",
+      "cls": "unknown",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity)"
+    },
+    {
+      "id": "fa-g01",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g02",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g03",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g04",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g05",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g06",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "org_flow"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g07",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "concept"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-g08",
+      "cls": "grounded",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "insight"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-p01",
+      "cls": "partial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "fa-u01",
+      "cls": "unknown",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity)"
+    },
+    {
+      "id": "fa-u02",
+      "cls": "unknown",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity)"
+    },
+    {
+      "id": "adv-01",
+      "cls": "adversarial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    },
+    {
+      "id": "adv-02",
+      "cls": "adversarial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    },
+    {
+      "id": "adv-03",
+      "cls": "adversarial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    },
+    {
+      "id": "adv-04",
+      "cls": "adversarial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    },
+    {
+      "id": "adv-05",
+      "cls": "adversarial",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    },
+    {
+      "id": "tmp-01",
+      "cls": "temporal",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "tmp-02",
+      "cls": "temporal",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "repo"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "tmp-03",
+      "cls": "temporal",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "tmp-04",
+      "cls": "temporal",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "types": [
+        "book"
+      ],
+      "g1_typeOk": true,
+      "g1_urlOk": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "tmp-05",
+      "cls": "temporal",
+      "http": 200,
+      "g2_allUrlsWhitelisted": true,
+      "verdict": "PASS(integrity; answer-level pending chat activation)"
+    }
+  ]
+}

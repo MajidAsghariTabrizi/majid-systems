@@ -1,0 +1,1058 @@
+{
+  "$schema": "quantiviq-knowledge-flows/1.0",
+  "verifiedAt": "2026-10-26",
+  "status": "reviewed generic templates — sanitized archetypes, never a disclosure of any specific employer",
+  "flows": [
+    {
+      "id": "strategy-to-okrs",
+      "domain": "business",
+      "order": 1,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Strategy → Portfolio → Funding → OKRs",
+        "fa": "استراتژی ← سبد ابتکارها ← تأمین بودجه ← OKRها"
+      },
+      "inputTrigger": {
+        "en": "Market signal, executive intent or quarterly planning cadence.",
+        "fa": "سیگنال بازار، قصد مدیریت یا چرخه برنامه‌ریزی فصلی."
+      },
+      "actors": {
+        "en": "CEO office, strategy lead, finance, product/tech leads.",
+        "fa": "دفتر مدیرعامل، راهبر استراتژی، مالی، راهبران محصول/فناوری."
+      },
+      "accountableOwner": {
+        "en": "Chief of Staff / VP Strategy.",
+        "fa": "رئیس دفتر / معاون استراتژی."
+      },
+      "decisionRights": {
+        "en": "Exec committee approves portfolio shifts >10% budget; strategy lead ranks within envelope.",
+        "fa": "کمیته اجرایی جابجایی‌های سبد بیش از ۱۰٪ بودجه را تأیید می‌کند؛ راهبر استراتژی درون سقف رتبه‌بندی می‌کند."
+      },
+      "policies": {
+        "en": "Investment policy, risk appetite statement, data classification for market inputs.",
+        "fa": "سیاست سرمایه‌گذاری، بیانیه اشتهای ریسک، طبقه‌بندی داده ورودی‌های بازار."
+      },
+      "prerequisites": {
+        "en": "Sized opportunities, constraint list, prior-quarter outcome review.",
+        "fa": "فرصت‌های اندازه‌گیری‌شده، فهرست محدودیت‌ها، بازبینی نتیجه فصل قبل."
+      },
+      "evidenceSources": {
+        "en": "Market research, win/loss, metric owner sign-offs.",
+        "fa": "تحقیق بازار، برد/باخت، تأیید مالکان متریک."
+      },
+      "steps": {
+        "en": "Signal → opportunity sizing → constraints → portfolio construction → funding gates → OKR cascade → experiment gates → outcome & reversal review.",
+        "fa": "سیگنال ← اندازه‌گیری فرصت ← محدودیت‌ها ← ساخت سبد ← دروازه‌های بودجه ← آبشار OKR ← دروازه‌های آزمایش ← بازبینی نتیجه و بازگشت."
+      },
+      "dataAssets": {
+        "en": "Opportunity model, budget ledger, OKR tree.",
+        "fa": "مدل فرصت، دفتر بودجه، درخت OKR."
+      },
+      "tools": {
+        "en": "Planning sheets; optional: OpenMetadata for metric definitions.",
+        "fa": "برگه‌های برنامه‌ریزی؛ اختیاری: OpenMetadata برای تعریف متریک‌ها."
+      },
+      "metrics": {
+        "en": "Portfolio value at stake, % initiatives past gates, reversal rate.",
+        "fa": "ارزش سبد، درصد ابتکارهای عبورکرده از دروازه‌ها، نرخ بازگشت."
+      },
+      "outcomes": {
+        "en": "Funded portfolio with named owners and kill criteria.",
+        "fa": "سبد تأمین‌شده با مالکان مشخص و معیارهای توقف."
+      },
+      "humanGates": {
+        "en": "Executive authority at funding; review at each experiment gate.",
+        "fa": "اختیار اجرایی در تأمین بودجه؛ بازبینی در هر دروازه آزمایش."
+      },
+      "failureModes": {
+        "en": "Pet projects bypass gates; metrics without owners; no reversal path.",
+        "fa": "پروژه‌های محبوب از دروازه عبور می‌کنند؛ متریک بدون مالک؛ نبود مسیر بازگشت."
+      },
+      "rollback": {
+        "en": "Stage-gated funding releases; kill criteria pre-agreed.",
+        "fa": "آزادسازی مرحله‌ای بودجه؛ معیار توقف از پیش توافق‌شده."
+      },
+      "observability": {
+        "en": "Decision log with version, owner and evidence links.",
+        "fa": "گزارش تصمیم با نسخه، مالک و پیوندهای شواهد."
+      },
+      "lessons": {
+        "en": "Versioned decisions and reversibility beat annual lock-in.",
+        "fa": "تصمیم نسخه‌بندی‌شده و برگشت‌پذیری بهتر از قفل سالانه است."
+      },
+      "relatedBooks": [
+        "rewired",
+        "the-ai-savvy-leader"
+      ],
+      "relatedRepos": [
+        "open-metadata"
+      ]
+    },
+    {
+      "id": "discovery-to-release",
+      "domain": "product",
+      "order": 2,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Discovery → PRD → Design → Build → Release",
+        "fa": "کشف ← PRD ← طراحی ← ساخت ← انتشار"
+      },
+      "inputTrigger": {
+        "en": "Customer need, usage signal or roadmap commitment.",
+        "fa": "نیاز مشتری، سیگنال استفاده یا تعهد نقشه راه."
+      },
+      "actors": {
+        "en": "PM, design, engineering, QA, stakeholders.",
+        "fa": "مدیر محصول، طراحی، مهندسی، تضمین کیفیت، ذی‌نفعان."
+      },
+      "accountableOwner": {
+        "en": "Product Manager.",
+        "fa": "مدیر محصول."
+      },
+      "decisionRights": {
+        "en": "PM approves scope; change control board approves late scope shifts.",
+        "fa": "مدیر محصول دامنه را تأیید می‌کند؛ هیئت کنترل تغییر، تغییرات دیرهنگام را."
+      },
+      "policies": {
+        "en": "Privacy review, accessibility standard, release policy.",
+        "fa": "بازبینی حریم خصوصی، استاندارد دسترس‌پذیری، سیاست انتشار."
+      },
+      "prerequisites": {
+        "en": "User research, prioritization score, capacity plan.",
+        "fa": "تحقیق کاربر، امتیاز اولویت‌بندی، برنامه ظرفیت."
+      },
+      "evidenceSources": {
+        "en": "Voice-of-customer notes, telemetry, usability tests.",
+        "fa": "یادداشت‌های صدای مشتری، تلمتری، تست کاربردپذیری."
+      },
+      "steps": {
+        "en": "Voice of customer → hypotheses → RICE/ICE prioritization → research → design decision records → acceptance tests → change approval → release.",
+        "fa": "صدای مشتری ← فرضیه‌ها ← اولویت‌بندی RICE/ICE ← تحقیق ← سوابق تصمیم طراحی ← تست‌های پذیرش ← تأیید تغییر ← انتشار."
+      },
+      "dataAssets": {
+        "en": "PRD, design decision records, acceptance suite.",
+        "fa": "PRD، سوابق تصمیم طراحی، مجموعه پذیرش."
+      },
+      "tools": {
+        "en": "Docs/repo; optional: Onyx for prior art retrieval.",
+        "fa": "اسناد/مخزن؛ اختیاری: Onyx برای بازیابی نمونه‌های پیشین."
+      },
+      "metrics": {
+        "en": "Activation, task success, defect escape rate.",
+        "fa": "فعال‌سازی، موفقیت وظیفه، نرخ فرار نقص."
+      },
+      "outcomes": {
+        "en": "Released increment meeting acceptance criteria with audit trail.",
+        "fa": "افزوده منتشرشده منطبق بر معیارهای پذیرش با رد حسابرسی."
+      },
+      "humanGates": {
+        "en": "Change approval before release; privacy/a11y sign-off.",
+        "fa": "تأیید تغییر پیش از انتشار؛ تأیید حریم خصوصی/دسترس‌پذیری."
+      },
+      "failureModes": {
+        "en": "Scope creep; untracked design decisions; skipped acceptance.",
+        "fa": "تورم دامنه؛ تصمیم‌های طراحی ثبت‌نشده؛ رد شدن پذیرش."
+      },
+      "rollback": {
+        "en": "Feature flags; staged rollout.",
+        "fa": "پرچم‌های ویژگی؛ انتشار مرحله‌ای."
+      },
+      "observability": {
+        "en": "Release checklist traceable to PRD items.",
+        "fa": "چک‌لیست انتشار قابل‌ردیابی به اقلام PRD."
+      },
+      "lessons": {
+        "en": "Design decisions are records, not chats.",
+        "fa": "تصمیم‌های طراحی سند هستند، نه گفت‌وگو."
+      },
+      "relatedBooks": [
+        "human-plus-machine",
+        "ai-engineering"
+      ],
+      "relatedRepos": [
+        "onyx"
+      ]
+    },
+    {
+      "id": "growth-funnel",
+      "domain": "business",
+      "order": 3,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Lead → Conversion → Retention / Growth",
+        "fa": "سرنخ ← تبدیل ← نگهداشت / رشد"
+      },
+      "inputTrigger": {
+        "en": "Funnel drop or growth target.",
+        "fa": "افت قیف یا هدف رشد."
+      },
+      "actors": {
+        "en": "Growth PM, marketing ops, data analyst, support.",
+        "fa": "مدیر محصول رشد، عملیات بازاریابی، تحلیلگر داده، پشتیبانی."
+      },
+      "accountableOwner": {
+        "en": "Growth Lead.",
+        "fa": "راهبر رشد."
+      },
+      "decisionRights": {
+        "en": "Growth lead approves experiments; legal approves messaging/privacy.",
+        "fa": "راهبر رشد آزمایش‌ها را تأیید می‌کند؛ حقوقی پیام‌ها/حریم خصوصی را."
+      },
+      "policies": {
+        "en": "Privacy consent, experimentation policy, abuse controls.",
+        "fa": "رضایت حریم خصوصی، سیاست آزمایش، کنترل سوءاستفاده."
+      },
+      "prerequisites": {
+        "en": "Instrumented funnel, cohort baselines.",
+        "fa": "قیف ابزارگذاری‌شده، baselineهای هم‌گروه."
+      },
+      "evidenceSources": {
+        "en": "Acquisition source data, funnel analytics, support feedback.",
+        "fa": "داده منبع جذب، تحلیل قیف، بازخورد پشتیبانی."
+      },
+      "steps": {
+        "en": "Acquisition source mapping → funnel instrumentation → hypothesis → experiment → review → scale/kill.",
+        "fa": "نگاشت منبع جذب ← ابزارگذاری قیف ← فرضیه ← آزمایش ← بازبینی ← مقیاس/توقف."
+      },
+      "dataAssets": {
+        "en": "Event stream, cohort tables, experiment ledger.",
+        "fa": "جریان رخداد، جدول‌های هم‌گروه، دفتر آزمایش."
+      },
+      "tools": {
+        "en": "Analytics; optional: WrenAI for certified metric queries.",
+        "fa": "تحلیل؛ اختیاری: WrenAI برای کوئری متریک تأییدشده."
+      },
+      "metrics": {
+        "en": "Conversion by source, retention curves, CAC/LTV.",
+        "fa": "نرخ تبدیل به تفکیک منبع، منحنی‌های نگهداشت، CAC/LTV."
+      },
+      "outcomes": {
+        "en": "Validated growth lever with measured effect.",
+        "fa": "اهرم رشد اعتبارسنجی‌شده با اثر اندازه‌گیری‌شده."
+      },
+      "humanGates": {
+        "en": "Experiment review; privacy sign-off on targeting.",
+        "fa": "بازبینی آزمایش؛ تأیید حریم خصوصی در هدف‌گیری."
+      },
+      "failureModes": {
+        "en": "Peeking; unaccounted novelty; privacy violations.",
+        "fa": "نگاه زودهنگام؛ اثر تازگی لحاظ‌نشده؛ نقض حریم خصوصی."
+      },
+      "rollback": {
+        "en": "Experiment kill switch; audience cap.",
+        "fa": "کلید توقف آزمایش؛ سقف مخاطب."
+      },
+      "observability": {
+        "en": "Experiment dashboard with guardrail metrics.",
+        "fa": "داشبورد آزمایش با متریک‌های محافظ."
+      },
+      "lessons": {
+        "en": "One lever per experiment; guardrails before wins.",
+        "fa": "یک اهرم در هر آزمایش؛ محافظ‌ها پیش از برد‌ها."
+      },
+      "relatedBooks": [
+        "ai-snake-oil",
+        "competing-in-the-age-of-ai"
+      ],
+      "relatedRepos": [
+        "wren-ai"
+      ]
+    },
+    {
+      "id": "marketplace-supply",
+      "domain": "operations",
+      "order": 4,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Marketplace Supply: Onboarding → Catalog → Discovery → Checkout → Fulfillment → Reconciliation",
+        "fa": "عرضه مارکت‌پلیس: ورود فروشنده ← کاتالوگ ← کشف محصول ← پرداخت ← ارسال ← تسویه"
+      },
+      "inputTrigger": {
+        "en": "Supply gap or catalog/ops defect.",
+        "fa": "شکاف عرضه یا نقص کاتالوگ/عملیات."
+      },
+      "actors": {
+        "en": "Supply lead, catalog ops, pricing, logistics, finance.",
+        "fa": "راهبر عرضه، عملیات کاتالوگ، قیمت‌گذاری، لجستیک، مالی."
+      },
+      "accountableOwner": {
+        "en": "Marketplace Operations Lead.",
+        "fa": "راهبر عملیات مارکت‌پلیس."
+      },
+      "decisionRights": {
+        "en": "Supply lead approves onboarding; pricing approves price/availability rules; finance owns settlement.",
+        "fa": "راهبر عرضه ورود را تأیید می‌کند؛ قیمت‌گذاری قواعد قیمت/موجودی را؛ مالی مالک تسویه است."
+      },
+      "policies": {
+        "en": "Vendor terms, content policy, data classification (sanitized archetype — no production endpoints or IDs).",
+        "fa": "شرایط فروشنده، سیاست محتوا، طبقه‌بندی داده (گونهٔ پاک‌سازی‌شده — بدون endpoint یا شناسه تولیدی)."
+      },
+      "prerequisites": {
+        "en": "Vendor agreement, catalog schema, inventory sync.",
+        "fa": "توافق فروشنده، اسکیمای کاتالوگ، همگام‌سازی موجودی."
+      },
+      "evidenceSources": {
+        "en": "Vendor onboarding records, catalog audit, order events, reconciliation reports.",
+        "fa": "سوابق ورود فروشنده، حسابرسی کاتالوگ، رخدادهای سفارش، گزارش‌های تسویه."
+      },
+      "steps": {
+        "en": "Vendor onboarding → catalog/content → inventory/price/availability → product discovery/search → cart/checkout → order fulfillment/delivery → reconciliation.",
+        "fa": "ورود فروشنده ← کاتالوگ/محتوا ← موجودی/قیمت/در دسترس ← کشف/جست‌وجوی محصول ← سبد/پرداخت ← انجام/تحویل سفارش ← تسویه."
+      },
+      "dataAssets": {
+        "en": "Vendor master, product catalog, inventory snapshots, order ledger.",
+        "fa": "اصلی فروشنده، کاتالوگ محصول، snapshot موجودی، دفتر سفارش."
+      },
+      "tools": {
+        "en": "OMS/catalog systems; optional: OpenMetadata lineage, WrenAI metric queries.",
+        "fa": "سیستم‌های OMS/کاتالوگ؛ اختیاری: شجره‌نامه OpenMetadata، کوئری متریک WrenAI."
+      },
+      "metrics": {
+        "en": "Fill rate, catalog coverage, checkout conversion, OTD delivery, reconciliation delta.",
+        "fa": "نرخ پرکردن، پوشش کاتالوگ، تبدیل پرداخت، تحویل به‌موقع، اختلاف تسویه."
+      },
+      "outcomes": {
+        "en": "Reliable supply-to-cash loop with measurable defect points.",
+        "fa": "حلقه عرضه-تا-دریافت قابل‌اتکا با نقص‌های قابل‌اندازه‌گیری."
+      },
+      "humanGates": {
+        "en": "Vendor approval; pricing exceptions; write-off approvals.",
+        "fa": "تأیید فروشنده؛ استثناهای قیمت؛ تأیید حذف از دارایی."
+      },
+      "failureModes": {
+        "en": "Catalog drift, inventory oversell, reconciliation breaks.",
+        "fa": "drift کاتالوگ، فروش بیش از موجودی، شکست تسویه."
+      },
+      "rollback": {
+        "en": "Listing suspension; order cancel path; settlement retry.",
+        "fa": "تعلیق آگهی؛ مسیر لغو سفارش؛ تلاش مجدد تسویه."
+      },
+      "observability": {
+        "en": "Stage-level funnel + reconciliation dashboards.",
+        "fa": "قیف مرحله‌ای + داشبوردهای تسویه."
+      },
+      "lessons": {
+        "en": "Every stage needs an owner and a defect metric before automation.",
+        "fa": "هر مرحله پیش از اتوماسیون به مالک و متریک نقص نیاز دارد."
+      },
+      "relatedBooks": [
+        "rewired",
+        "designing-machine-learning-systems"
+      ],
+      "relatedRepos": [
+        "open-metadata",
+        "wren-ai"
+      ]
+    },
+    {
+      "id": "data-to-decision",
+      "domain": "data",
+      "order": 5,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Data → Metric → Analysis → Decision",
+        "fa": "داده ← متریک ← تحلیل ← تصمیم"
+      },
+      "inputTrigger": {
+        "en": "Business question or metric anomaly.",
+        "fa": "سؤال کسب‌وکار یا ناهنجاری متریک."
+      },
+      "actors": {
+        "en": "Data engineer, analyst, metric owner, decision owner.",
+        "fa": "مهندس داده، تحلیلگر، مالک متریک، مالک تصمیم."
+      },
+      "accountableOwner": {
+        "en": "Metric Owner (per metric).",
+        "fa": "مالک متریک (به ازای هر متریک)."
+      },
+      "decisionRights": {
+        "en": "Metric owner certifies definitions; decision owner accepts/rejects analysis.",
+        "fa": "مالک متریک تعریف‌ها را تأیید می‌کند؛ مالک تصمیم تحلیل را می‌پذیرد/رد می‌کند."
+      },
+      "policies": {
+        "en": "Data classification, access policy, semantic-layer change control.",
+        "fa": "طبقه‌بندی داده، سیاست دسترسی، کنترل تغییر لایه معنایی."
+      },
+      "prerequisites": {
+        "en": "Ingestion SLAs, lineage, glossary.",
+        "fa": "SLAهای دریافت، شجره‌نامه، واژه‌نامه."
+      },
+      "evidenceSources": {
+        "en": "Catalog metadata, quality tests, certified metric definitions.",
+        "fa": "فراداده کاتالوگ، تست‌های کیفیت، تعریف‌های تأییدشده متریک."
+      },
+      "steps": {
+        "en": "Ingestion → lineage capture → quality gate → glossary/semantic metric approval → read-only analysis → explanation → human acceptance.",
+        "fa": "دریافت ← ثبت شجره‌نامه ← دروازه کیفیت ← تأیید متریک معنایی ← تحلیل فقط‌خواندنی ← توضیح ← پذیرش انسانی."
+      },
+      "dataAssets": {
+        "en": "Warehouse tables, semantic model, metric registry.",
+        "fa": "جدول‌های انبار داده، مدل معنایی، ثبت متریک."
+      },
+      "tools": {
+        "en": "OpenMetadata (context/lineage), WrenAI (governed queries).",
+        "fa": "OpenMetadata (زمینه/شجره‌نامه)، WrenAI (کوئری حاکمیت‌شده)."
+      },
+      "metrics": {
+        "en": "Freshness, quality pass rate, definition coverage.",
+        "fa": "تازگی، نرخ قبولی کیفیت، پوشش تعریف."
+      },
+      "outcomes": {
+        "en": "Decision backed by a certified metric with traceable lineage.",
+        "fa": "تصمیم پشتیبان‌شده با متریک تأییدشده و شجره‌نامه قابل‌ردیابی."
+      },
+      "humanGates": {
+        "en": "Semantic approval; decision acceptance.",
+        "fa": "تأیید معنایی؛ پذیرش تصمیم."
+      },
+      "failureModes": {
+        "en": "Two dashboards, two 'revenues'; stale data silently used.",
+        "fa": "دو داشبورد، دو «درآمد»؛ استفاده بی‌صدای داده کهنه."
+      },
+      "rollback": {
+        "en": "Metric versioning; supersede not overwrite.",
+        "fa": "نسخه‌بندی متریک؛ جانشینی نه بازنویسی."
+      },
+      "observability": {
+        "en": "Lineage graph + freshness monitors.",
+        "fa": "نمودار شجره‌نامه + پایش تازگی."
+      },
+      "lessons": {
+        "en": "Every metric has owner, grain, time window and definition.",
+        "fa": "هر متریک مالک، دانه، بازه زمانی و تعریف دارد."
+      },
+      "relatedBooks": [
+        "designing-machine-learning-systems",
+        "competing-in-the-age-of-ai"
+      ],
+      "relatedRepos": [
+        "open-metadata",
+        "wren-ai",
+        "graphiti"
+      ]
+    },
+    {
+      "id": "engineering-incident",
+      "domain": "technology",
+      "order": 6,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Engineering Incident: Alert → Triage → RCA → Postmortem",
+        "fa": "رخداد مهندسی: هشدار ← سه‌گانه‌بندی ← RCA ← مرور پس از حادثه"
+      },
+      "inputTrigger": {
+        "en": "Alert fires (latency, errors, saturation).",
+        "fa": "هشدار (تأخیر، خطا، اشباع)."
+      },
+      "actors": {
+        "en": "On-call engineer, incident commander, service owner.",
+        "fa": "مهندس روی‌دست، فرمانده رخداد، مالک سرویس."
+      },
+      "accountableOwner": {
+        "en": "Incident Commander (rotation).",
+        "fa": "فرمانده رخداد (چرخشی)."
+      },
+      "decisionRights": {
+        "en": "IC approves mitigations; service owner approves permanent fixes.",
+        "fa": "فرمانده رخداد کاهش‌ها را تأیید می‌کند؛ مالک سرویس اصلاح دائم را."
+      },
+      "policies": {
+        "en": "On-call policy, change freeze rules, blameless postmortem standard.",
+        "fa": "سیاست روی‌دست، قواعد توقف تغییر، استاندارد مرور بدون سرزنش."
+      },
+      "prerequisites": {
+        "en": "Instrumented services, runbooks, alert routing.",
+        "fa": "سرویس‌های ابزارگذاری‌شده، ران‌بوک، مسیریابی هشدار."
+      },
+      "evidenceSources": {
+        "en": "Metrics, logs, change events, alert history.",
+        "fa": "متریک‌ها، لاگ‌ها، رخدادهای تغییر، تاریخچه هشدار."
+      },
+      "steps": {
+        "en": "Alert → triage → context assembly → impact hypothesis → mitigation proposal → approved action → postmortem → knowledge revision.",
+        "fa": "هشدار ← سه‌گانه‌بندی ← جمع‌آوری زمینه ← فرضیه اثر ← پیشنهاد کاهش ← اقدام تأییدشده ← مرور پس از حادثه ← بازنگری دانش."
+      },
+      "dataAssets": {
+        "en": "Telemetry, incident timeline, postmortem docs.",
+        "fa": "تلمتری، خط زمانی رخداد، اسناد مرور."
+      },
+      "tools": {
+        "en": "Observability stack; optional: HolmesGPT for evidence-correlated RCA (read-only).",
+        "fa": "استک مشاهده‌پذیری؛ اختیاری: HolmesGPT برای RCA همبسته با شواهد (فقط‌خواندنی)."
+      },
+      "metrics": {
+        "en": "MTTA/MTTR, change-failure rate, repeat-incident rate.",
+        "fa": "MTTA/MTTR، نرخ شکست تغییر، نرخ تکرار رخداد."
+      },
+      "outcomes": {
+        "en": "Mitigated incident + causal knowledge retained.",
+        "fa": "رخداد کاهش‌یافته + دانش علّی حفظ‌شده."
+      },
+      "humanGates": {
+        "en": "Approval before any write-back/remediation action.",
+        "fa": "تأیید پیش از هر اقدام نوشتنی/اصلاحی."
+      },
+      "failureModes": {
+        "en": "Alert fatigue; mitigation without diagnosis; postmortems that change nothing.",
+        "fa": "خستگی هشدار؛ کاهش بدون تشخیص؛ مرورهایی که چیزی را تغییر نمی‌دهند."
+      },
+      "rollback": {
+        "en": "Change revert path; feature flags.",
+        "fa": "مسیر بازگردانی تغییر؛ پرچم‌های ویژگی."
+      },
+      "observability": {
+        "en": "Incident timeline correlated with deploys/config changes.",
+        "fa": "خط زمانی رخداد همبسته با استقرارها/تغییرات پیکربندی."
+      },
+      "lessons": {
+        "en": "Correlate change with symptom first; keep learning loop closed.",
+        "fa": "ابتدا تغییر را با نشانه همبسته کن؛ حلقه یادگیری را بسته نگه دار."
+      },
+      "relatedBooks": [
+        "designing-machine-learning-systems",
+        "the-alignment-problem"
+      ],
+      "relatedRepos": [
+        "holmesgpt"
+      ]
+    },
+    {
+      "id": "agent-lifecycle",
+      "domain": "technology",
+      "order": 7,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Agent Lifecycle: Intake → Authorization → Planning → Execution → Eval → Approval → Learning",
+        "fa": "چرخه حیات عامل: دریافت ← مجوزدهی ← برنامه‌ریزی ← اجرا ← ارزیابی ← تأیید ← یادگیری"
+      },
+      "inputTrigger": {
+        "en": "Task assigned to an AI agent.",
+        "fa": "تکلیف واگذارشده به عامل AI."
+      },
+      "actors": {
+        "en": "Operator, agent runtime owner, reviewer.",
+        "fa": "اپراتور، مالک زمان‌اجرای عامل، بازبین."
+      },
+      "accountableOwner": {
+        "en": "Operator (human).",
+        "fa": "اپراتور (انسان)."
+      },
+      "decisionRights": {
+        "en": "Bounded, revocable tool permissions; operator approves consequential actions.",
+        "fa": "مجوزهای ابزار محدود و قابل‌لغو؛ اپراتور اقدامات پیامددار را تأیید می‌کند."
+      },
+      "policies": {
+        "en": "Least privilege, read-first default, no-write without explicit gate.",
+        "fa": "حداقل امتیاز، پیش‌فرض ابتدا-خواندن، بدون نوشتن بدون دروازه صریح."
+      },
+      "prerequisites": {
+        "en": "Tool allowlist, context budget, eval harness.",
+        "fa": "فهرست مجاز ابزار، بودجه زمینه، سازوکار ارزیابی."
+      },
+      "evidenceSources": {
+        "en": "Tool call logs, retrieved sources, eval results.",
+        "fa": "گزارش فراخوانی ابزار، منابع بازیابی‌شده، نتایج ارزیابی."
+      },
+      "steps": {
+        "en": "Task intake → context & tool authorization → bounded planning → execution → eval → operator approval → incident response → learning/rollback.",
+        "fa": "دریافت تکلیف ← مجوزدهی زمینه و ابزار ← برنامه‌ریزی محدود ← اجرا ← ارزیابی ← تأیید اپراتور ← پاسخ به رخداد ← یادگیری/بازگشت."
+      },
+      "dataAssets": {
+        "en": "Permission registry, trace log, eval set.",
+        "fa": "ثبت مجوز، گزارش ردیابی، مجموعه ارزیابی."
+      },
+      "tools": {
+        "en": "Orchestrator; Onyx (retrieval), WrenAI (queries) as bounded tools.",
+        "fa": "هماهنگ‌کننده؛ Onyx (بازیابی)، WrenAI (کوئری) به‌عنوان ابزارهای محدود."
+      },
+      "metrics": {
+        "en": "Task success rate, gate rejection rate, rollback rate.",
+        "fa": "نرخ موفقیت تکلیف، نرخ رد دروازه، نرخ بازگشت."
+      },
+      "outcomes": {
+        "en": "Completed task with traceable evidence and versioned learning.",
+        "fa": "تکلیف کامل‌شده با شواهد قابل‌ردیابی و یادگیری نسخه‌بندی‌شده."
+      },
+      "humanGates": {
+        "en": "Operator approval before consequential writes.",
+        "fa": "تأیید اپراتور پیش از نوشتن‌های پیامددار."
+      },
+      "failureModes": {
+        "en": "Permission sprawl; unbounded planning; silent eval skips.",
+        "fa": "پراکندگی مجوز؛ برنامه‌ریزی نامحدود؛ رد شدن بی‌صدای ارزیابی."
+      },
+      "rollback": {
+        "en": "Action journal + compensating transactions.",
+        "fa": "دفتر اقدام + تراکنش‌های جبرانی."
+      },
+      "observability": {
+        "en": "Every tool call logged with inputs, outputs and authority level.",
+        "fa": "هر فراخوانی ابزار با ورودی، خروجی و سطح اختیار ثبت می‌شود."
+      },
+      "lessons": {
+        "en": "Intelligence ≠ authority; permissions are bounded and revocable.",
+        "fa": "هوشمندی ≠ اختیار؛ مجوزها محدود و قابل‌لغورند."
+      },
+      "relatedBooks": [
+        "power-and-prediction",
+        "co-intelligence"
+      ],
+      "relatedRepos": [
+        "onyx",
+        "wren-ai",
+        "holmesgpt"
+      ]
+    },
+    {
+      "id": "finance-monetization",
+      "domain": "business",
+      "order": 8,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Finance & Monetization: Pricing → Budget → Measurement → Reconciliation → Anomaly",
+        "fa": "مالی و درآمدزایی: قیمت‌گذاری ← بودجه ← سنجش ← تسویه ← ناهنجاری"
+      },
+      "inputTrigger": {
+        "en": "Pricing decision, campaign launch or accounting close.",
+        "fa": "تصمیم قیمت‌گذاری، اجرای کمپین یا بستن حساب."
+      },
+      "actors": {
+        "en": "Finance lead, pricing, marketing, accounting.",
+        "fa": "راهبر مالی، قیمت‌گذاری، بازاریابی، حسابداری."
+      },
+      "accountableOwner": {
+        "en": "Finance Controller.",
+        "fa": "کنترلر مالی."
+      },
+      "decisionRights": {
+        "en": "Controller approves budget and write-offs; pricing approves list changes.",
+        "fa": "کنترلر بودجه و حذف‌ها را تأیید می‌کند؛ قیمت‌گذاری تغییرات فهرست را."
+      },
+      "policies": {
+        "en": "Fiscal calendar, revenue recognition rules, promotion policy, data handling gates.",
+        "fa": "تقویم مالی، قواعد شناسایی درآمد، سیاست تخفیف، دروازه‌های مدیریت داده."
+      },
+      "prerequisites": {
+        "en": "Certified revenue metric, cost model.",
+        "fa": "متریک درآمد تأییدشده، مدل هزینه."
+      },
+      "evidenceSources": {
+        "en": "Order ledger, campaign spend, accounting records.",
+        "fa": "دفتر سفارش، هزینه کمپین، اسناد حسابداری."
+      },
+      "steps": {
+        "en": "Pricing/promotion design → budget approval → campaign execution → measurement → accounting reconciliation → anomaly investigation.",
+        "fa": "طراحی قیمت/تخفیف ← تأیید بودجه ← اجرای کمپین ← سنجش ← تسویه حسابداری ← بررسی ناهنجاری."
+      },
+      "dataAssets": {
+        "en": "Price book, budget, spend ledger, GL entries.",
+        "fa": "کتاب قیمت، بودجه، دفتر هزینه، اسناد حسابداری."
+      },
+      "tools": {
+        "en": "ERP; optional: WrenAI certified revenue queries.",
+        "fa": "ERP؛ اختیاری: کوئری درآمد تأییدشده با WrenAI."
+      },
+      "metrics": {
+        "en": "Margin, promo ROI, reconciliation delta.",
+        "fa": "حاشیه، ROI تخفیف، اختلاف تسویه."
+      },
+      "outcomes": {
+        "en": "Books that reconcile to certified metrics.",
+        "fa": "دفترهایی که با متریک‌های تأییدشده تسویه می‌شوند."
+      },
+      "humanGates": {
+        "en": "Budget approval; write-off approval.",
+        "fa": "تأیید بودجه؛ تأیید حذف."
+      },
+      "failureModes": {
+        "en": "Uncertified revenue definitions; unreconciled promos.",
+        "fa": "تعریف‌های درآمد تأییدنشده؛ تخفیف‌های تسویه‌نشده."
+      },
+      "rollback": {
+        "en": "Promotion expiry; GL reversing entries.",
+        "fa": "انقضای تخفیف؛ اسناد برگشت حسابداری."
+      },
+      "observability": {
+        "en": "Daily reconciliation dashboard.",
+        "fa": "داشبورد تسویه روزانه."
+      },
+      "lessons": {
+        "en": "Automate the repetitive work, never the accountability.",
+        "fa": "کار تکراری را خودکار کنید، نه پاسخگویی را."
+      },
+      "relatedBooks": [
+        "rewired",
+        "ai-snake-oil"
+      ],
+      "relatedRepos": [
+        "open-metadata",
+        "wren-ai"
+      ]
+    },
+    {
+      "id": "customer-support",
+      "domain": "operations",
+      "order": 9,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Customer Support: Issue → Classify → Knowledge Search → Policy Decision → Resolution → Learning",
+        "fa": "پشتیبانی مشتری: مسئله ← طبقه‌بندی ← جست‌وجوی دانش ← تصمیم سیاستی ← حل ← یادگیری"
+      },
+      "inputTrigger": {
+        "en": "Customer issue arrives.",
+        "fa": "رسیدن مسئله مشتری."
+      },
+      "actors": {
+        "en": "Support agent, policy owner, product team.",
+        "fa": "ایجنت پشتیبانی، مالک سیاست، تیم محصول."
+      },
+      "accountableOwner": {
+        "en": "Support Operations Lead.",
+        "fa": "راهبر عملیات پشتیبانی."
+      },
+      "decisionRights": {
+        "en": "Agents resolve within policy; policy owner handles exceptions.",
+        "fa": "ایجنت‌ها درون سیاست حل می‌کنند؛ مالک سیاست استثناها را."
+      },
+      "policies": {
+        "en": "Refund/escalation policy, consent rules, tone standards.",
+        "fa": "سیاست بازپرداخت/تشدید، قواعد رضایت، استانداردهای لحن."
+      },
+      "prerequisites": {
+        "en": "Curated knowledge base, classification taxonomy.",
+        "fa": "پایگاه دانش منتخب، رده‌بندی طبقه‌بندی."
+      },
+      "evidenceSources": {
+        "en": "Ticket history, policy docs, satisfaction surveys.",
+        "fa": "تاریخچه تیکت، اسناد سیاست، نظرسنجی رضایت."
+      },
+      "steps": {
+        "en": "Issue → classification → knowledge search → policy decision → escalation/consent → resolution → satisfaction/learning.",
+        "fa": "مسئله ← طبقه‌بندی ← جست‌وجوی دانش ← تصمیم سیاستی ← تشدید/رضایت ← حل ← رضایت/یادگیری."
+      },
+      "dataAssets": {
+        "en": "Ticket ledger, KB articles, CSAT logs.",
+        "fa": "دفتر تیکت، مقالات پایگاه دانش، ثبت رضایت."
+      },
+      "tools": {
+        "en": "Helpdesk; optional: Onyx for cited KB retrieval.",
+        "fa": "میز کمک؛ اختیاری: Onyx برای بازیابی مستند پایگاه دانش."
+      },
+      "metrics": {
+        "en": "First-contact resolution, handle time, CSAT, policy-exception rate.",
+        "fa": "حل در تماس اول، زمان رسیدگی، رضایت، نرخ استثنای سیاستی."
+      },
+      "outcomes": {
+        "en": "Resolved issue + policy feedback loop.",
+        "fa": "مسئله حل‌شده + حلقه بازخورد سیاست."
+      },
+      "humanGates": {
+        "en": "Consent for data use; exception approvals.",
+        "fa": "رضایت برای استفاده داده؛ تأیید استثناها."
+      },
+      "failureModes": {
+        "en": "Uncited AI answers; silent policy drift.",
+        "fa": "پاسخ‌های AI بدون استناد؛ انحراف بی‌صدای سیاست."
+      },
+      "rollback": {
+        "en": "Escalation path to human; answer withdrawal.",
+        "fa": "مسیر تشدید به انسان؛ پس‌گرفتن پاسخ."
+      },
+      "observability": {
+        "en": "Citation rate on AI-assisted answers.",
+        "fa": "نرخ استناد پاسخ‌های کمک‌گرفته از AI."
+      },
+      "lessons": {
+        "en": "Search output ≠ truth; require citations and policy links.",
+        "fa": "خروجی جست‌وجو ≠ حقیقت؛ استناد و پیوند سیاست لازم است."
+      },
+      "relatedBooks": [
+        "co-intelligence",
+        "ai-snake-oil"
+      ],
+      "relatedRepos": [
+        "onyx"
+      ]
+    },
+    {
+      "id": "people-and-change",
+      "domain": "governance",
+      "order": 10,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "People & Change: Capability Map → Gaps → Adoption → Training → Feedback",
+        "fa": "مردم و تغییر: نقشه توانمندی ← شکاف‌ها ← پذیرش ← آموزش ← بازخورد"
+      },
+      "inputTrigger": {
+        "en": "Transformation program kickoff or skills review.",
+        "fa": "شروع برنامه تحول یا بازبینی مهارت‌ها."
+      },
+      "actors": {
+        "en": "HR lead, line managers, enablement, employees.",
+        "fa": "راهبر منابع انسانی، مدیران خط، توانمندسازی، کارکنان."
+      },
+      "accountableOwner": {
+        "en": "Change Lead / HR Business Partner.",
+        "fa": "راهبر تغییر / شریک منابع انسانی."
+      },
+      "decisionRights": {
+        "en": "Line managers own role design; program owns adoption plan.",
+        "fa": "مدیران خط مالک طراحی نقش‌اند؛ برنامه مالک طرح پذیرش."
+      },
+      "policies": {
+        "en": "Role architecture, incentive policy, responsibility matrix (human-in-the-loop duties).",
+        "fa": "معماری نقش، سیاست مشوق، ماتریس مسئولیت (وظایف انسان-در-حلقه)."
+      },
+      "prerequisites": {
+        "en": "Capability map, baseline adoption metrics.",
+        "fa": "نقشه توانمندی، متریک‌های پایه پذیرش."
+      },
+      "evidenceSources": {
+        "en": "Skill assessments, usage data, pulse surveys.",
+        "fa": "ارزیابی مهارت، داده استفاده، نظرسنجی ضربانی."
+      },
+      "steps": {
+        "en": "Capability map → skill gaps → adoption plan → training → human-in-the-loop responsibility → feedback and incentives.",
+        "fa": "نقشه توانمندی ← شکاف مهارت ← طرح پذیرش ← آموزش ← مسئولیت انسان-در-حلقه ← بازخورد و مشوق‌ها."
+      },
+      "dataAssets": {
+        "en": "Skills inventory, training records.",
+        "fa": "فهرست مهارت، سوابق آموزش."
+      },
+      "tools": {
+        "en": "LMS; surveys.",
+        "fa": "سامانه آموزش؛ نظرسنجی."
+      },
+      "metrics": {
+        "en": "Adoption rate, time-to-competence, retention of trained staff.",
+        "fa": "نرخ پذیرش، زمان تا صلاحیت، نگهداشت کارکنان آموزش‌دیده."
+      },
+      "outcomes": {
+        "en": "Adoption with named human responsibility at each gate.",
+        "fa": "پذیرش با مسئولیت انسانی مشخص در هر دروازه."
+      },
+      "humanGates": {
+        "en": "Role-change approvals; incentive changes.",
+        "fa": "تأیید تغییر نقش؛ تغییر مشوق‌ها."
+      },
+      "failureModes": {
+        "en": "Training without role redesign; incentives contradicting the change.",
+        "fa": "آموزش بدون بازطراحی نقش؛ مشوق‌های ناسازگار با تغییر."
+      },
+      "rollback": {
+        "en": "Phased rollout with pilot cohorts.",
+        "fa": "اجرای مرحله‌ای با هم‌گروه‌های پایلوت."
+      },
+      "observability": {
+        "en": "Adoption dashboards by function.",
+        "fa": "داشبورد پذیرش به تفکیک وظیفه."
+      },
+      "lessons": {
+        "en": "Design around value streams and human agency.",
+        "fa": "بر پایه جریان ارزش و عاملیت انسانی طراحی کنید."
+      },
+      "relatedBooks": [
+        "the-ai-savvy-leader",
+        "human-plus-machine"
+      ],
+      "relatedRepos": []
+    },
+    {
+      "id": "risk-security-legal",
+      "domain": "governance",
+      "order": 11,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Risk / Security / Legal: Classify → Threat Model → Policy → Approve → Audit → Review",
+        "fa": "ریسک / امنیت / حقوقی: طبقه‌بندی ← مدل تهدید ← سیاست ← تأیید ← حسابرسی ← بازبینی"
+      },
+      "inputTrigger": {
+        "en": "New data use, system or vendor.",
+        "fa": "کاربرد داده جدید، سیستم یا فروشنده جدید."
+      },
+      "actors": {
+        "en": "Security lead, legal, DPO, system owner.",
+        "fa": "راهبر امنیت، حقوقی، افسر داده، مالک سیستم."
+      },
+      "accountableOwner": {
+        "en": "Risk Committee chair.",
+        "fa": "رئیس کمیته ریسک."
+      },
+      "decisionRights": {
+        "en": "Risk committee approves high-impact processing; DPO can veto.",
+        "fa": "کمیته ریسک پردازش‌های پربلای اثر را تأیید می‌کند؛ افسر داده حق وتو دارد."
+      },
+      "policies": {
+        "en": "Data classification standard, threat modeling method, permission policy.",
+        "fa": "استاندارد طبقه‌بندی داده، روش مدل‌سازی تهدید، سیاست مجوز."
+      },
+      "prerequisites": {
+        "en": "Asset inventory, legal basis mapping.",
+        "fa": "فهرست دارایی، نگاشت مبنای حقوقی."
+      },
+      "evidenceSources": {
+        "en": "Classification records, audit logs, review minutes.",
+        "fa": "سوابق طبقه‌بندی، گزارش حسابرسی، صورت‌جلسات."
+      },
+      "steps": {
+        "en": "Data classification → threat model → permission policy → approval → audit trail → expiry/review.",
+        "fa": "طبقه‌بندی داده ← مدل تهدید ← سیاست مجوز ← تأیید ← رد حسابرسی ← انقضا/بازبینی."
+      },
+      "dataAssets": {
+        "en": "Asset register, permission registry, audit log.",
+        "fa": "ثبت دارایی، ثبت مجوز، گزارش حسابرسی."
+      },
+      "tools": {
+        "en": "GRC tooling; audit store.",
+        "fa": "ابزار GRC؛ مخزن حسابرسی."
+      },
+      "metrics": {
+        "en": "% assets classified, review SLA adherence, findings closure rate.",
+        "fa": "درصد دارایی طبقه‌بندی‌شده، پایبندی SLA بازبینی، نرخ بستن یافته‌ها."
+      },
+      "outcomes": {
+        "en": "Approved processing with auditable trail and expiry.",
+        "fa": "پردازش تأییدشده با رد قابل‌حسابرسی و انقضا."
+      },
+      "humanGates": {
+        "en": "Approval step mandatory for high-class data.",
+        "fa": "گام تأیید برای داده‌های طبقه بالا الزامی است."
+      },
+      "failureModes": {
+        "en": "Classification theatre; permissions granted forever.",
+        "fa": "طبقه‌بندی نمایشی؛ مجوزهای ابدی."
+      },
+      "rollback": {
+        "en": "Permission expiry + periodic re-authorization.",
+        "fa": "انقضای مجوز + بازمجوزدهی دوره‌ای."
+      },
+      "observability": {
+        "en": "Audit trail with approver identity and scope.",
+        "fa": "رد حسابرسی با هویت تأییدکننده و دامنه."
+      },
+      "lessons": {
+        "en": "INDEXED ≠ RETRIEVABLE ≠ RETURNED ≠ VISIBLE.",
+        "fa": "ایندکس‌شده ≠ بازیابی‌پذیر ≠ بازگردانده‌شده ≠ قابل‌مشاهده."
+      },
+      "relatedBooks": [
+        "the-alignment-problem",
+        "the-ai-savvy-leader"
+      ],
+      "relatedRepos": [
+        "onyx",
+        "graphiti"
+      ]
+    },
+    {
+      "id": "research-and-model-improvement",
+      "domain": "data",
+      "order": 12,
+      "version": "1.0",
+      "approvedStatus": "approved-template",
+      "publicSafe": true,
+      "name": {
+        "en": "Research & Model Improvement: Claim → Experiment → Controls → Metrics → Critique → Versioned Decision",
+        "fa": "پژوهش و بهبود مدل: ادعا ← آزمایش ← کنترل‌ها ← متریک‌ها ← نقادی ← تصمیم نسخه‌بندی‌شده"
+      },
+      "inputTrigger": {
+        "en": "Improvement claim or observed regression.",
+        "fa": "ادعای بهبود یا پسرفت مشاهده‌شده."
+      },
+      "actors": {
+        "en": "Researcher/engineer, reviewer, system owner.",
+        "fa": "پژوهشگر/مهندس، بازبین، مالک سیستم."
+      },
+      "accountableOwner": {
+        "en": "Model/System Owner.",
+        "fa": "مالک مدل/سیستم."
+      },
+      "decisionRights": {
+        "en": "Owner promotes/rejects versions; reviewer blocks on evidence gaps.",
+        "fa": "مالک نسخه‌ها را ترویج/رد می‌کند؛ بازبین به دلیل کمبود شواهد مسدود می‌کند."
+      },
+      "policies": {
+        "en": "Experiment hygiene, holdout protection, documentation standard.",
+        "fa": "بهداشت آزمایش، حفاظت holdout، استاندارد مستندسازی."
+      },
+      "prerequisites": {
+        "en": "Baseline, eval set, ablation tooling.",
+        "fa": "baseline، مجموعه ارزیابی، ابزار ablation."
+      },
+      "evidenceSources": {
+        "en": "Experiment ledger, ablation results, critique notes.",
+        "fa": "دفتر آزمایش، نتایج ablation، یادداشت‌های نقادی."
+      },
+      "steps": {
+        "en": "Claim → experiment design → controls → metrics → failure/ablation → critique → versioned decision to promote/reject.",
+        "fa": "ادعا ← طراحی آزمایش ← کنترل‌ها ← متریک‌ها ← شکست/ablation ← نقادی ← تصمیم نسخه‌بندی‌شده برای ترویج/رد."
+      },
+      "dataAssets": {
+        "en": "Eval sets, experiment tracker, model registry.",
+        "fa": "مجموعه‌های ارزیابی، ردیاب آزمایش، ثبت مدل."
+      },
+      "tools": {
+        "en": "Eval harness; registries.",
+        "fa": "سازوکار ارزیابی؛ ثبت‌ها."
+      },
+      "metrics": {
+        "en": "Primary metric lift, robustness, cost, drift post-deploy.",
+        "fa": "بهبود متریک اصلی، استحکام، هزینه، drift پس از استقرار."
+      },
+      "outcomes": {
+        "en": "Versioned promote/reject decision with evidence.",
+        "fa": "تصمیم ترویج/رد نسخه‌بندی‌شده با شواهد."
+      },
+      "humanGates": {
+        "en": "Critique/review before promotion.",
+        "fa": "نقادی/بازبینی پیش از ترویج."
+      },
+      "failureModes": {
+        "en": "Overfitting to eval; missing ablation; hype-driven promotion.",
+        "fa": "برازش بیش‌ازحد به ارزیابی؛ نبود ablation؛ ترویج هیجان‌محور."
+      },
+      "rollback": {
+        "en": "Model versioning with previous-version fallback.",
+        "fa": "نسخه‌بندی مدل با بازگشت به نسخه قبل."
+      },
+      "observability": {
+        "en": "Post-deploy drift monitors tied to the decision record.",
+        "fa": "پایش drift پس از استقرار متصل به سند تصمیم."
+      },
+      "lessons": {
+        "en": "Disconfirmation is a strength; simpler baselines first.",
+        "fa": "ردکردن فرضیه فضیلت است؛ ابتدا baseline ساده‌تر."
+      },
+      "relatedBooks": [
+        "ai-engineering",
+        "designing-machine-learning-systems",
+        "ai-snake-oil"
+      ],
+      "relatedRepos": [
+        "open-metadata",
+        "holmesgpt"
+      ]
+    }
+  ]
+}
