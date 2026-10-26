@@ -21,7 +21,9 @@ export async function POST(req: NextRequest) {
     session?: unknown;
     locale?: unknown;
     messages?: unknown;
+    scope?: unknown;
   };
+  const SCOPES = new Set(['all', 'books', 'oss', 'flows', 'concepts', 'articles']);
   if (
     typeof b.session !== 'string' ||
     b.session.length < 8 ||
@@ -43,13 +45,16 @@ export async function POST(req: NextRequest) {
   if (b.locale !== undefined && b.locale !== 'en' && b.locale !== 'fa') {
     return Response.json({ error: 'bad request' }, { status: 400 });
   }
+  if (b.scope !== undefined && !SCOPES.has(b.scope as string)) {
+    return Response.json({ error: 'bad request' }, { status: 400 });
+  }
 
   let upstream: Response;
   try {
     upstream = await fetch(`${UPSTREAM}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session: b.session, locale: b.locale, messages: b.messages }),
+      body: JSON.stringify({ session: b.session, locale: b.locale, scope: b.scope, messages: b.messages }),
       signal: AbortSignal.timeout(70_000),
     });
   } catch {

@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next';
 import { PROJECTS } from '@/content/projects';
 import { NOTES } from '@/content/notes';
 import { ARTICLES, getArticles, PILLARS } from '@/content/insights';
+import { BOOKS } from '@/content/knowledge';
 import { SITE } from '@/content/shared';
 
 const BASE = SITE.canonicalUrl;
@@ -28,8 +29,27 @@ function loc(p: string): MetadataRoute.Sitemap[number] {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const items: MetadataRoute.Sitemap = ['', '/services', '/system', '/lab', '/method', '/proof', '/about', '/contact', '/privacy', '/mind'].map((p) =>
+  const items: MetadataRoute.Sitemap = ['', '/explore', '/services', '/system', '/lab', '/method', '/proof', '/about', '/contact', '/privacy', '/mind', '/mind/flows', '/insights/enterprise-ai-stack', '/insights/books'].map((p) =>
     loc(p)
+  );
+
+  /* Silver-bullet knowledge library: 10 book detail pages (bilingual). */
+  items.push(
+    ...BOOKS.flatMap((b) => [
+      {
+        url: `${BASE}/en/insights/books/${b.slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+        alternates: {
+          languages: {
+            en: `${BASE}/en/insights/books/${b.slug}`,
+            fa: `${BASE}/fa/insights/books/${b.slug}`,
+            'x-default': `${BASE}/en/insights/books/${b.slug}`,
+          },
+        },
+      },
+    ]),
   );
 
   /* Quantiviq Insights publication (bilingual EN + FA, same slugs). */

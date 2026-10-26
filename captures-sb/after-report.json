@@ -1,0 +1,321 @@
+{
+  "pages": [
+    {
+      "id": "explore-en",
+      "route": "/en/explore",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "Don't just read about the AI-native enterprise. Step inside one."
+    },
+    {
+      "id": "explore-fa",
+      "route": "/fa/explore",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "فقط درباره سازمان AI-Native نخوانید؛ وارد یک نمونه زنده شوید.",
+      "dir": "rtl"
+    },
+    {
+      "id": "books-en",
+      "route": "/en/insights/books",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [
+        {
+          "src": "b/isbn/9781633697621-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781647824198-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9780593716717-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781647826239-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781098166304-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781098107963-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9780393635829-M.jpg?default=false",
+          "ok": true
+        }
+      ],
+      "h1": "The Library"
+    },
+    {
+      "id": "books-fa",
+      "route": "/fa/insights/books",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [
+        {
+          "src": "b/isbn/9781633697621-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781647824198-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9780593716717-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781647826239-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781098166304-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9781098107963-M.jpg?default=false",
+          "ok": true
+        },
+        {
+          "src": "b/isbn/9780393635829-M.jpg?default=false",
+          "ok": true
+        }
+      ],
+      "h1": "کتابخانه",
+      "dir": "rtl"
+    },
+    {
+      "id": "book-rewired-en",
+      "route": "/en/insights/books/rewired",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "Rewired: McKinsey's Playbook on How Leading Companies Win with Technology and AI"
+    },
+    {
+      "id": "book-rewired-fa",
+      "route": "/fa/insights/books/rewired",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "بازآرایی سازمان: راهنمای مک‌کنزی برای رقابت با فناوری و هوش مصنوعی",
+      "dir": "rtl"
+    },
+    {
+      "id": "book-competing-en",
+      "route": "/en/insights/books/competing-in-the-age-of-ai",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [
+        {
+          "src": "b/isbn/9781633697621-L.jpg?default=false",
+          "ok": true
+        }
+      ],
+      "h1": "Competing in the Age of AI: Strategy and Leadership When Algorithms and Networks Run the W"
+    },
+    {
+      "id": "stack-en",
+      "route": "/en/insights/enterprise-ai-stack",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "The Enterprise AI Stack"
+    },
+    {
+      "id": "stack-fa",
+      "route": "/fa/insights/enterprise-ai-stack",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "استک هوش مصنوعی سازمانی",
+      "dir": "rtl"
+    },
+    {
+      "id": "flows-en",
+      "route": "/en/mind/flows",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 44,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "The Workflow Atlas"
+    },
+    {
+      "id": "flows-fa",
+      "route": "/fa/mind/flows",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "اطلس جریان‌های کاری",
+      "dir": "rtl"
+    },
+    {
+      "id": "mind-en",
+      "route": "/en/mind",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 46,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "Beyond the résumé.Explore the thinking behind the work."
+    },
+    {
+      "id": "home-en",
+      "route": "/en",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "REBUILD THE COMPANY."
+    },
+    {
+      "id": "home-fa",
+      "route": "/fa",
+      "consoleErrors": [],
+      "failedRequests": [],
+      "brokenImages": [],
+      "overflow": {
+        "320": 0,
+        "390": 0,
+        "768": 0,
+        "1440": 0
+      },
+      "status": 200,
+      "coverImages": [],
+      "h1": "شرکت را از نو بسازید.",
+      "dir": "rtl"
+    }
+  ],
+  "functional": {
+    "booksFilter": {
+      "before": 10,
+      "afterEngineering": 2
+    },
+    "stackTabs": {
+      "first": "Onyx — Document & Enterprise Knowledge Retrieval",
+      "afterClick5": "HolmesGPT — Observability / Incident Intelligence"
+    },
+    "flows": {
+      "openAfterClick": 1,
+      "listModeItems": 12
+    },
+    "exploreGate": {
+      "approveText": "Mitigation (rollback of the last deploy) is executed; HolmesGPT-style evidence c",
+      "rejectText": "No write action is allowed. The incident escalates to a human on-call; the timel",
+      "changed": true,
+      "logShown": true
+    },
+    "transcriptVisible": true,
+    "sourceDrawerVisible": true,
+    "mindScopeChips": 6,
+    "mindPrefill": "Which claims on this site are hypotheses?"
+  }
+}

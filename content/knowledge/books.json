@@ -1,0 +1,569 @@
+{
+  "$schema": "quantiviq-knowledge-books/1.0",
+  "notes": "Catalog-only bibliographic records + owner-authored editorial briefs (seed copy re-edited 2026-10-26). No book full text ingested; no chapter-level claims. Covers: Open Library Covers API hotlink with designed text fallback (see cover-receipts.json + docs 05).",
+  "coverPolicy": {
+    "primaryPattern": "https://covers.openlibrary.org/b/isbn/{isbn13}-L.jpg?default=false",
+    "creditPattern": "https://openlibrary.org/isbn/{isbn13}",
+    "credit": {
+      "en": "Cover via Open Library",
+      "fa": "تصویر جلد از Open Library"
+    },
+    "fallback": "designed text-only card (title/author/publisher/ISBN) — never a generated facsimile"
+  },
+  "books": [
+    {
+      "id": "book-01",
+      "slug": "rewired",
+      "num": "01",
+      "isbn13": "9781394381906",
+      "edition": "Revised and expanded, 2nd edition (April 2026)",
+      "year": 2026,
+      "publisher": "Wiley",
+      "authors": [
+        "Eric Lamarre",
+        "Kate Smaje",
+        "Robert Levin",
+        "Alex Singla",
+        "Alexander Sukharevsky"
+      ],
+      "officialSourceUrl": "https://www.wiley.com/en-fr/Edition-p-9781394381906",
+      "title": {
+        "en": "Rewired: McKinsey's Playbook on How Leading Companies Win with Technology and AI",
+        "fa": "بازآرایی سازمان: راهنمای مک‌کنزی برای رقابت با فناوری و هوش مصنوعی"
+      },
+      "brief": {
+        "en": "A leadership playbook for rewiring a company's operating capabilities around technology and AI — not merely launching pilots. Its value here is the transition from strategic intent to teams, architecture, data, talent, governance and measurable changes to a business function. Useful for executives who have several AI pilots but no clear line from pilot to value stream.",
+        "fa": "این کتاب تحول AI را یک پروژه نصب ابزار نمی‌بیند؛ مسئله، بازآرایی توانمندی‌های سازمان در مقیاس واقعی است. ارزش اصلی آن پیوند استراتژی، طراحی مدل عملیاتی، معماری فناوری، داده، استعدادها و شیوه سنجش اثر است. برای مدیرانی مفید است که چند پایلوت AI دارند ولی نمی‌دانند چگونه آن‌ها را به جریان ارزش سازمان متصل کنند."
+      },
+      "takeaway": {
+        "en": "Use at work: frame the transformation roadmap as an operating-model change with executive trade-offs — never as a technology shopping list, and never as a promise of instant ROI.",
+        "fa": "کاربرد در کار: نقشه راه تحول را به‌عنوان تغییر مدل عملیاتی با انتخاب‌های مدیریتی بیان کنید؛ نه چک‌لیست خرید فناوری و نه وعده بازگشت سرمایه فوری."
+      },
+      "domains": [
+        "strategy",
+        "leadership"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; Book-to-Skill requires a legally supplied source. Bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "operating-model",
+        "capability-building",
+        "transformation-roadmap",
+        "use-case-portfolio"
+      ],
+      "relatedFlow": "strategy-to-okrs",
+      "relatedRepos": [],
+      "questions": {
+        "en": [
+          "What is the difference between AI adoption and rewiring the operating model?",
+          "Which Quantiviq insight connects transformation strategy to measurable function-level change?",
+          "What does catalog-only mean for what I can ask about this book?"
+        ],
+        "fa": [
+          "تفاوت پذیرش AI با بازآرایی مدل عملیاتی چیست؟",
+          "کدام بینش کوانتیویک استراتژی تحول را به تغییر قابل‌اندازه‌گیری یک عملکرد وصل می‌کند؟",
+          "وضعیت catalog-only برای پرسش‌های من درباره این کتاب یعنی چه؟"
+        ]
+      }
+    },
+    {
+      "id": "book-02",
+      "slug": "competing-in-the-age-of-ai",
+      "num": "02",
+      "isbn13": "9781633697621",
+      "edition": "First edition (2020)",
+      "year": 2020,
+      "publisher": "Harvard Business Review Press",
+      "authors": [
+        "Marco Iansiti",
+        "Karim R. Lakhani"
+      ],
+      "officialSourceUrl": "https://www.harvard.com/book/9781633697621",
+      "title": {
+        "en": "Competing in the Age of AI: Strategy and Leadership When Algorithms and Networks Run the World",
+        "fa": "رقابت در عصر AI: استراتژی و رهبری وقتی الگوریتم‌ها و شبکه‌ها بازی را تغییر می‌دهند"
+      },
+      "brief": {
+        "en": "A strategic account of why AI-centric operating architectures alter scale, scope and learning. When decision and data flows are designed as one continuous system, the logic of competition changes — but only with a coherent operating architecture underneath.",
+        "fa": "این کتاب سازمان AI-محور را از منظر مقیاس، دامنه فعالیت و یادگیری بررسی می‌کند. وقتی جریان‌های تصمیم و داده به‌صورت پیوسته طراحی شوند، منطق رقابت تغییر می‌کند؛ اما این نتیجه نیازمند معماری عملیاتی منسجم است."
+      },
+      "takeaway": {
+        "en": "Use at work: distinguish an 'AI feature' from an AI-native operating model, and design the learning loop of the business as an inspectable artifact — while keeping the authors' conceptual claims separate from any measured project outcome.",
+        "fa": "کاربرد در کار: میان «قابلیت AI» و «مدل عملیاتی AI-Native» تمایز بگذارید و حلقه یادگیری کسب‌وکار را به یک artefact قابل‌بررسی تبدیل کنید؛ مرز ادعای مفهومی نویسندگان و اثر اندازه‌گیری‌شده پروژه‌های خودتان را حفظ کنید."
+      },
+      "domains": [
+        "strategy",
+        "economics"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "ai-centric-firm",
+        "scale-scope-learning",
+        "operating-loops"
+      ],
+      "relatedFlow": "data-to-decision",
+      "relatedRepos": [
+        "graphiti"
+      ],
+      "questions": {
+        "en": [
+          "How would an AI-native firm treat a revenue-drop signal differently from a traditional one?",
+          "What is the difference between an AI feature and an AI-native operating model?",
+          "Which layer of the enterprise AI stack records when a decision changed and why?"
+        ],
+        "fa": [
+          "سازمان AI-Native با سازمان سنتی در مواجهه با سیگنال افت فروش چه تفاوتی دارد؟",
+          "تفاوت قابلیت AI با مدل عملیاتی AI-Native چیست؟",
+          "کدام لایه استک هوش مصنوعی سازمانی ثبت می‌کند که یک تصمیم کِی و چرا تغییر کرد؟"
+        ]
+      }
+    },
+    {
+      "id": "book-03",
+      "slug": "power-and-prediction",
+      "num": "03",
+      "isbn13": "9781647824198",
+      "edition": "First edition (2022)",
+      "year": 2022,
+      "publisher": "Harvard Business Review Press",
+      "authors": [
+        "Ajay Agrawal",
+        "Joshua Gans",
+        "Avi Goldfarb"
+      ],
+      "officialSourceUrl": "https://store.hbr.org/product/power-and-prediction-the-disruptive-economics-of-artificial-intelligence/10580",
+      "title": {
+        "en": "Power and Prediction: The Disruptive Economics of Artificial Intelligence",
+        "fa": "قدرت و پیش‌بینی: اقتصاد تحول‌آفرین هوش مصنوعی"
+      },
+      "brief": {
+        "en": "Separates prediction from judgment and shows why cheaper prediction can force redesign of entire interdependent decision systems. Better prediction alone is not enough; the decision chain and its process dependencies must be re-examined.",
+        "fa": "تمایز میان «پیش‌بینی» و «قضاوت» کمک می‌کند بفهمیم AI دقیقاً در کدام قسمت تصمیم نقش دارد و چه بخشی باید زیر مسئولیت انسان بماند. ایده کلیدی برای طراحی محصول این است که بهترشدن یک پیش‌بینی به‌تنهایی کافی نیست؛ زنجیره تصمیم‌ها و وابستگی‌های فرایند را باید از نو بررسی کرد."
+      },
+      "takeaway": {
+        "en": "Use at work: map AI's predictions, human judgment, decision rights and cost-of-error as visibly distinct stages — decision economics, not blanket automation advocacy.",
+        "fa": "کاربرد در کار: پیش‌بینی AI، قضاوت انسانی، مالکیت تصمیم و هزینه خطا را به‌صورت مراحل مجزای قابل‌مشاهده ترسیم کنید؛ این اقتصادِ تصمیم است، نه دفاع همه‌جانبه از اتوماسیون."
+      },
+      "domains": [
+        "economics",
+        "governance"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "prediction-vs-judgment",
+        "decision-architecture",
+        "human-authority"
+      ],
+      "relatedFlow": "agent-lifecycle",
+      "relatedRepos": [
+        "wren-ai"
+      ],
+      "questions": {
+        "en": [
+          "Where does prediction end and judgment begin in an approval workflow?",
+          "Who owns the decision when an AI prediction is wrong?",
+          "How does the Living Organization make the human authority gate visible?"
+        ],
+        "fa": [
+          "در یک جریان تأیید، مرز پیش‌بینی و قضاوت کجاست؟",
+          "وقتی پیش‌بینی AI اشتباه باشد، مالک تصمیم کیست؟",
+          "سازمان زنده گیت مجوز انسانی را چگونه قابل‌مشاهده می‌کند؟"
+        ]
+      }
+    },
+    {
+      "id": "book-04",
+      "slug": "co-intelligence",
+      "num": "04",
+      "isbn13": "9780593716717",
+      "edition": "First edition (2024)",
+      "year": 2024,
+      "publisher": "Portfolio / Penguin Random House",
+      "authors": [
+        "Ethan Mollick"
+      ],
+      "officialSourceUrl": "https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/9780593716717/",
+      "title": {
+        "en": "Co-Intelligence: Living and Working with AI",
+        "fa": "هوش همکار: زندگی و کار در کنار هوش مصنوعی"
+      },
+      "brief": {
+        "en": "A practical lens on working and learning with generative AI as a collaborator, not an unquestionable oracle. Instead of assuming the model is always right — or that it replaces the person — design the AI's role, its failure points, how to interrogate it and how outputs get reviewed.",
+        "fa": "تمرکز این کتاب بر کیفیت همکاری انسان و AI در کار و یادگیری است. به‌جای فرض اینکه مدل همیشه درست است یا جای فرد را می‌گیرد، باید نقش AI، نقاط خطا، شیوه پرسش‌گری و بازبینی خروجی را طراحی کنیم."
+      },
+      "takeaway": {
+        "en": "Use at work: treat AI as a challengeable colleague — in the Mind experience you can question an answer, demand its sources, and keep the final decision yourself.",
+        "fa": "کاربرد در کار: با AI مثل همکارِ قابل‌چالش رفتار کنید — در تجربه Mind می‌توانید پاسخ را زیر سؤال ببرید، منبع بخواهید و تصمیم نهایی را خودتان بگیرید."
+      },
+      "domains": [
+        "human-collaboration"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "human-ai-collaboration",
+        "review",
+        "prompting-verification"
+      ],
+      "relatedFlow": "customer-support",
+      "relatedRepos": [
+        "onyx"
+      ],
+      "questions": {
+        "en": [
+          "How should a team review AI-generated analysis before acting on it?",
+          "What does 'challengeable AI' mean in the Quantiviq Mind interface?",
+          "Which stack layer gives document-backed evidence for a policy question?"
+        ],
+        "fa": [
+          "یک تیم پیش از اقدام بر تحلیل تولیدشده توسط AI چگونه باید آن را بازبینی کند؟",
+          "«AI قابل‌چالش» در رابط Mind کوانتیویک یعنی چه؟",
+          "کدام لایه استک برای یک سؤال سیاستی، سند پشتیبان می‌دهد؟"
+        ]
+      }
+    },
+    {
+      "id": "book-05",
+      "slug": "the-ai-savvy-leader",
+      "num": "05",
+      "isbn13": "9781647826239",
+      "edition": "First edition (2024)",
+      "year": 2024,
+      "publisher": "Harvard Business Review Press",
+      "authors": [
+        "David De Cremer"
+      ],
+      "officialSourceUrl": "https://store.hbr.org/product/the-ai-savvy-leader-nine-ways-to-take-back-control-and-make-ai-work/10688",
+      "title": {
+        "en": "The AI-Savvy Leader: Nine Ways to Take Back Control and Make AI Work",
+        "fa": "رهبر آگاه از AI: نه راه برای هدایت مسئولانه تحول"
+      },
+      "brief": {
+        "en": "A leadership-centered guide to making AI a strategic management responsibility rather than delegating the transformation to technology teams. Leaders must decide on purpose, business value, the human role, controls and organizational adoption. The book's nine actions are referenced only as far as its public description goes — this site does not enumerate them from guesswork.",
+        "fa": "تحول هوش مصنوعی را نمی‌توان فقط به واحد فناوری واگذار کرد. مدیران باید درباره هدف، ارزش کسب‌وکار، نقش انسان، کنترل‌ها و پذیرش سازمانی تصمیم بگیرند. این کتاب برای روایت نقش رهبری محصول و کسب‌وکار در تحول AI مهم است؛ فهرست نه اقدام آن فقط تا سطح توضیح عمومی کتاب ارجاع می‌شود و از حدس بازسازی نمی‌شود."
+      },
+      "takeaway": {
+        "en": "Use at work: pair executive sponsorship with explicit decision rights — the 'questions a CEO should ask' panel on this site is exactly that pattern.",
+        "fa": "کاربرد در کار: حامی اجرایی را با حقوق تصمیم صریح جفت کنید؛ پنل «سؤال‌هایی که مدیرعامل باید بپرسد» در همین سایت دقیقاً همین الگوست."
+      },
+      "domains": [
+        "leadership",
+        "governance"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only. The 'nine ways' are NOT enumerated on this site."
+      },
+      "mindConcepts": [
+        "executive-ownership",
+        "change-leadership",
+        "governance"
+      ],
+      "relatedFlow": "people-and-change",
+      "relatedRepos": [],
+      "questions": {
+        "en": [
+          "Why can't AI transformation be delegated entirely to the technology team?",
+          "What questions should a CEO ask before approving an AI initiative?",
+          "Where do decision rights live in the workflow atlas?"
+        ],
+        "fa": [
+          "چرا تحول AI را نمی‌توان تماماً به تیم فناوری واگذار کرد؟",
+          "مدیرعامل پیش از تأیید یک ابتکار AI چه سؤال‌هایی باید بپرسد؟",
+          "در اطلس جریان‌های کاری، حقوق تصمیم کجا تعریف شده است؟"
+        ]
+      }
+    },
+    {
+      "id": "book-06",
+      "slug": "human-plus-machine",
+      "num": "06",
+      "isbn13": "9781647827205",
+      "edition": "Updated and Expanded (September 2024)",
+      "year": 2024,
+      "publisher": "Harvard Business Review Press",
+      "authors": [
+        "Paul R. Daugherty",
+        "H. James Wilson"
+      ],
+      "officialSourceUrl": "https://store.hbr.org/product/human-machine-updated-and-expanded-reimagining-work-in-the-age-of-ai/10724",
+      "title": {
+        "en": "Human + Machine, Updated and Expanded: Reimagining Work in the Age of AI",
+        "fa": "انسان + ماشین: بازاندیشی در کار در عصر AI (ویرایش توسعه‌یافته)"
+      },
+      "brief": {
+        "en": "The important question is not 'which jobs disappear?' but 'how is the work itself redesigned?'. Updated with a generative-AI context, it examines hybrid human-machine capability, new roles, shared decisions and process change. This card is our analytical summary and does not replace the book's content.",
+        "fa": "مهم‌ترین سؤال این کتاب «کدام شغل حذف می‌شود؟» نیست، بلکه «چگونه خود کار بازطراحی می‌شود؟» است. با زمینه AI مولد، از ترکیب قابلیت‌های انسانی و ماشین برای تعریف نقش‌های تازه، تصمیم‌های مشترک و تغییر فرایند سخن می‌گوید. این توضیح خلاصه تحلیلی ماست و جای محتوای کامل کتاب را نمی‌گیرد."
+      },
+      "takeaway": {
+        "en": "Use at work: distinguish assistance, augmentation, delegated tasks and approval — and make the fictional-demo vs observed-deployment boundary explicit when you design the human roles.",
+        "fa": "کاربرد در کار: میان کمک، توانمندسازی، وظایف واگذارشده و تأیید تمایز بگذارید و هنگام طراحی نقش‌های انسانی، مرز دموی ساختگی و استقرار واقعی را شفاف نگه دارید."
+      },
+      "domains": [
+        "human-collaboration",
+        "leadership"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "work-redesign",
+        "augmentation",
+        "human-roles"
+      ],
+      "relatedFlow": "discovery-to-release",
+      "relatedRepos": [],
+      "questions": {
+        "en": [
+          "How do you redesign a workflow instead of just automating tasks in it?",
+          "What human roles appear when agents execute more of the work?",
+          "Where in the simulator does human responsibility sit at sensitive points?"
+        ],
+        "fa": [
+          "چگونه به‌جای اتوماسیون تک‌تک وظایف، خود جریان کار را بازطراحی کنیم؟",
+          "وقتی عامل‌ها بخش بیشتری از کار را اجرا می‌کنند، چه نقش‌های انسانی پدید می‌آید؟",
+          "در شبیه‌ساز، مسئولیت انسان در نقاط حساس کجاست؟"
+        ]
+      }
+    },
+    {
+      "id": "book-07",
+      "slug": "ai-engineering",
+      "num": "07",
+      "isbn13": "9781098166304",
+      "edition": "First edition (2025)",
+      "year": 2025,
+      "publisher": "O'Reilly Media",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "officialSourceUrl": "https://ingramacademic.com/products/ai-engineering-9781098166304",
+      "title": {
+        "en": "AI Engineering: Building Applications with Foundation Models",
+        "fa": "مهندسی AI: ساخت اپلیکیشن با مدل‌های بنیادین"
+      },
+      "brief": {
+        "en": "Turning a powerful model into a dependable product is an engineering problem: data quality and retrieval, model selection, evaluation, cost, latency, tooling and control mechanisms. A systems-oriented guide to foundation-model applications — attached here to testable runtime and quality gates, not 'smart AI' marketing.",
+        "fa": "تبدیل یک مدل قدرتمند به محصول قابل‌اتکا، مسئله مهندسی است: کیفیت داده و بازیابی، انتخاب مدل، ارزیابی، هزینه، تأخیر، ابزارها و سازوکار کنترل. این کتاب دید سیستمی می‌دهد تا پیش از استقرار، چرخه عمر مدل و داده را طراحی کنیم."
+      },
+      "takeaway": {
+        "en": "Use at work: connect AI concepts to an architecture diagram and a test scenario; never claim accuracy or performance for your own system without real experiment data.",
+        "fa": "کاربرد در کار: مفاهیم AI را به دیاگرام معماری و سناریوی تست وصل کنید؛ درباره دقت یا کارایی سیستم خودتان بدون داده آزمایش واقعی ادعایی مطرح نکنید."
+      },
+      "domains": [
+        "engineering"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "context-engineering",
+        "rag",
+        "evaluation",
+        "latency-cost"
+      ],
+      "relatedFlow": "research-and-model-improvement",
+      "relatedRepos": [
+        "onyx",
+        "wren-ai"
+      ],
+      "questions": {
+        "en": [
+          "What are the engineering gates between an AI prototype and production?",
+          "How does retrieval quality shape answer trustworthiness?",
+          "Which open-source layer provides governed text-to-SQL and what are its limits?"
+        ],
+        "fa": [
+          "دروازه‌های مهندسی میان نمونه اولیه AI و محصول عملیاتی کدام‌اند؟",
+          "کیفیت بازیابی چگونه بر اعتمادپذیری پاسخ اثر می‌گذارد؟",
+          "کدام لایه متن‌باز، Text-to-SQL حاکمیت‌شده می‌دهد و محدودیت‌هایش چیست؟"
+        ]
+      }
+    },
+    {
+      "id": "book-08",
+      "slug": "designing-machine-learning-systems",
+      "num": "08",
+      "isbn13": "9781098107963",
+      "edition": "First edition (2022, print)",
+      "year": 2022,
+      "publisher": "O'Reilly Media",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "officialSourceUrl": "https://www.harvard.com/book/9781098107963",
+      "title": {
+        "en": "Designing Machine Learning Systems: An Iterative Process for Production-Ready Applications",
+        "fa": "طراحی سیستم‌های یادگیری ماشین: فرایند تکرارشونده برای محصول عملیاتی"
+      },
+      "brief": {
+        "en": "A model's value is not its offline score; it depends on data stability, problem framing, monitoring, scalability and adaptation to change. A production-oriented systems approach from business and data objectives to reliable deployment, monitoring, updates and trade-offs. Note: print and digital ISBNs can differ — exact edition metadata is shown so the two are never confused.",
+        "fa": "ارزش یک مدل فقط به امتیاز آفلاین آن نیست؛ به پایداری داده، تعریف مسئله، مانیتورینگ، مقیاس‌پذیری و سازگاری با تغییر نیز وابسته است. این کتاب دید سیستمی می‌دهد تا پیش از استقرار، چرخه عمر مدل و داده را طراحی کنیم. توجه: شماره ISBN نسخه چاپی با نسخه دیجیتال ممکن است متفاوت باشد."
+      },
+      "takeaway": {
+        "en": "Use at work: in the Mind, connect this to the evaluation flow — data quality, metric ownership, drift and incident response.",
+        "fa": "کاربرد در کار: در Mind این کتاب را به جریان ارزیابی وصل کنید — کیفیت داده، مالک متریک، Drift و پاسخ به رخداد."
+      },
+      "domains": [
+        "engineering",
+        "governance"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only. ISBN shown is the print edition."
+      },
+      "mindConcepts": [
+        "model-lifecycle",
+        "monitoring",
+        "data-quality",
+        "drift"
+      ],
+      "relatedFlow": "engineering-incident",
+      "relatedRepos": [
+        "open-metadata",
+        "holmesgpt"
+      ],
+      "questions": {
+        "en": [
+          "What must be monitored after a model reaches production?",
+          "Who owns a metric definition and its lineage?",
+          "How does the stack detect drift and relate it to incidents?"
+        ],
+        "fa": [
+          "پس از رسیدن مدل به محصول عملیاتی، چه چیزهایی باید پایش شود؟",
+          "مالک تعریف یک متریک و شجره‌نامه آن کیست؟",
+          "استک چگونه Drift را تشخیص می‌دهد و به رخدادها پیوند می‌دهد؟"
+        ]
+      }
+    },
+    {
+      "id": "book-09",
+      "slug": "the-alignment-problem",
+      "num": "09",
+      "isbn13": "9780393635829",
+      "edition": "First edition (2020, hardcover)",
+      "year": 2020,
+      "publisher": "W. W. Norton & Company",
+      "authors": [
+        "Brian Christian"
+      ],
+      "officialSourceUrl": "https://openlibrary.org/books/OL28126189M/The_Alignment_Problem",
+      "title": {
+        "en": "The Alignment Problem: Machine Learning and Human Values",
+        "fa": "مسئله هم‌راستایی: یادگیری ماشین و ارزش‌های انسانی"
+      },
+      "brief": {
+        "en": "AI systems can optimize metrics that do not match what humans actually intend. An accessible exploration of the gap between machine-learning objectives and human values — grounding the governance and risk layer: why metrics, rewards and delegated authority cannot be blindly equated with human intent. The interactive demo stays educational and fully synthetic.",
+        "fa": "سیستم‌های AI ممکن است معیارهایی را بهینه کنند که با هدف واقعی انسان سازگار نیست. این کتاب برای طراحی نقاط کنترل، تعریف هدف، پیشگیری از اثرات ناخواسته و ارزیابی مسئولیت‌پذیری مهم است؛ چرا که معیار، پاداش و اختیار واگذارشده را نمی‌توان کورکورانه با قصد انسان یکی گرفت."
+      },
+      "takeaway": {
+        "en": "Use at work: in the Living Organization, let the visitor see the consequence of choosing the wrong metric or removing the human confirmation — as a clearly fictional, educational scenario.",
+        "fa": "کاربرد در کار: در سازمان زنده، کاربر باید پیامد انتخاب معیار اشتباه یا حذف تأیید انسانی را ببیند؛ به‌صورت سناریویی کاملاً ساختگی و آموزشی."
+      },
+      "domains": [
+        "governance"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "alignment",
+        "specification",
+        "risk-oversight"
+      ],
+      "relatedFlow": "risk-security-legal",
+      "relatedRepos": [
+        "graphiti",
+        "holmesgpt"
+      ],
+      "questions": {
+        "en": [
+          "Why can a perfectly optimized metric still be wrong?",
+          "What happens in the demo when human approval is skipped?",
+          "Where do risk gates and review live in the workflow atlas?"
+        ],
+        "fa": [
+          "چرا یک متریک کاملاً بهینه‌شده همچنان می‌تواند غلط باشد؟",
+          "وقتی تأیید انسانی حذف شود، در دمو چه اتفاقی می‌افتد؟",
+          "دروازه‌های ریسک و بازبینی در اطلس جریان‌ها کجا هستند؟"
+        ]
+      }
+    },
+    {
+      "id": "book-10",
+      "slug": "ai-snake-oil",
+      "num": "10",
+      "isbn13": "9780691249131",
+      "edition": "First edition (2024, hardcover)",
+      "year": 2024,
+      "publisher": "Princeton University Press",
+      "authors": [
+        "Arvind Narayanan",
+        "Sayash Kapoor"
+      ],
+      "officialSourceUrl": "https://ingramacademic.com/products/ai-snake-oil-9780691249131",
+      "title": {
+        "en": "AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference",
+        "fa": "روغن مار AI: تشخیص قابلیت واقعی از ادعای اغراق‌آمیز"
+      },
+      "brief": {
+        "en": "A skeptical, evidence-first guide to separating useful AI capabilities from inflated or misleading claims: judge the problem type, the evidence quality, the failure modes and the marketing incentives. This site treats it as its built-in critical reviewer — is this use really better than a simpler solution? What does an error cost? What independent evidence exists?",
+        "fa": "این کتاب یک صدای انتقادی لازم در میان روایت‌های خوش‌بینانه AI است. تأکید می‌کند نوع مسئله، کیفیت شواهد، خطاها و انگیزه‌های تبلیغاتی را جدا از هم سنجید. برای کوانتیویک، چالش‌گر تمام ادعاهای خودمان است: آیا این کاربرد واقعاً بهتر از راه‌حل ساده‌تر است؟ هزینه خطا چقدر است؟ شواهد مستقل کدام‌اند؟"
+      },
+      "takeaway": {
+        "en": "Use at work: run anti-hypothesis questions and expose confidence levels before believing any AI claim — including this site's own.",
+        "fa": "کاربرد در کار: پیش از باور هر ادعای AI — از جمله ادعاهای همین سایت — سؤال‌های ضدفرضیه بپرسید و سطح اطمینان را آشکار کنید."
+      },
+      "domains": [
+        "governance",
+        "economics"
+      ],
+      "sourceStatus": "catalog-only",
+      "skillStatus": {
+        "state": "not-generated",
+        "note": "No authorized full text available; bibliographic Q&A only."
+      },
+      "mindConcepts": [
+        "evidence-quality",
+        "hype-detection",
+        "failure-modes"
+      ],
+      "relatedFlow": "research-and-model-improvement",
+      "relatedRepos": [],
+      "questions": {
+        "en": [
+          "Which claims on this site are hypotheses and which have real evidence?",
+          "How do you test an AI claim against a simpler baseline?",
+          "What failure modes should a buyer ask about before trusting an AI vendor?"
+        ],
+        "fa": [
+          "کدام ادعاهای این سایت فرضیه است و کدام شواهد واقعی دارد؟",
+          "یک ادعای AI را چگونه با baseline ساده‌تر مقایسه می‌کنید؟",
+          "خریدار پیش از اعتماد به فروشنده AI باید درباره چه حالت‌های شکستی بپرسد؟"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "$schema": "quantiviq-knowledge-sources/1.0",
+  "accessedAt": "2026-10-26",
+  "sources": [
+    {
+      "source_id": "book-wiley-rewired2e",
+      "kind": "publisher-page",
+      "title": "Rewired, 2nd edition — Wiley product page",
+      "url": "https://www.wiley.com/en-fr/Edition-p-9781394381906",
+      "supports": [
+        "isbn13:9781394381906",
+        "edition:2nd-April-2026",
+        "authors"
+      ],
+      "note": "Publisher record for the exact edition."
+    },
+    {
+      "source_id": "book-hbr-competing",
+      "kind": "retail-record",
+      "title": "Competing in the Age of AI — ISBN record",
+      "url": "https://www.harvard.com/book/9781633697621",
+      "supports": [
+        "isbn13:9781633697621"
+      ],
+      "note": "Retail ISBN record corroborating HBR Press edition."
+    },
+    {
+      "source_id": "book-hbr-power-prediction",
+      "kind": "publisher-page",
+      "title": "Power and Prediction — HBR store",
+      "url": "https://store.hbr.org/product/power-and-prediction-the-disruptive-economics-of-artificial-intelligence/10580",
+      "supports": [
+        "isbn13:9781647824198"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "book-prh-co-intelligence",
+      "kind": "publisher-page",
+      "title": "Co-Intelligence — Penguin Random House",
+      "url": "https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/9780593716717/",
+      "supports": [
+        "isbn13:9780593716717"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "book-hbr-ai-savvy",
+      "kind": "publisher-page",
+      "title": "The AI-Savvy Leader — HBR store",
+      "url": "https://store.hbr.org/product/the-ai-savvy-leader-nine-ways-to-take-back-control-and-make-ai-work/10688",
+      "supports": [
+        "isbn13:9781647826239"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "book-hbr-human-machine",
+      "kind": "publisher-page",
+      "title": "Human + Machine, Updated and Expanded — HBR store",
+      "url": "https://store.hbr.org/product/human-machine-updated-and-expanded-reimagining-work-in-the-age-of-ai/10724",
+      "supports": [
+        "isbn13:9781647827205",
+        "edition:updated-expanded-sep-2024"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "book-oreilly-ai-engineering",
+      "kind": "distributor-record",
+      "title": "AI Engineering — Ingram Academic",
+      "url": "https://ingramacademic.com/products/ai-engineering-9781098166304",
+      "supports": [
+        "isbn13:9781098166304",
+        "year:2025"
+      ],
+      "note": "O'Reilly print distribution record."
+    },
+    {
+      "source_id": "book-oreilly-dmls",
+      "kind": "retail-record",
+      "title": "Designing Machine Learning Systems — ISBN record",
+      "url": "https://www.harvard.com/book/9781098107963",
+      "supports": [
+        "isbn13:9781098107963"
+      ],
+      "note": "Print ISBN; digital edition may differ."
+    },
+    {
+      "source_id": "book-ol-alignment",
+      "kind": "library-record",
+      "title": "The Alignment Problem — Open Library edition record",
+      "url": "https://openlibrary.org/books/OL28126189M/The_Alignment_Problem",
+      "supports": [
+        "isbn13:9780393635829"
+      ],
+      "note": "Library record for the hardcover edition."
+    },
+    {
+      "source_id": "book-pup-snake-oil",
+      "kind": "distributor-record",
+      "title": "AI Snake Oil — Princeton University Press via Ingram",
+      "url": "https://ingramacademic.com/products/ai-snake-oil-9780691249131",
+      "supports": [
+        "isbn13:9780691249131"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "ol-covers-api",
+      "kind": "api-documentation",
+      "title": "Open Library Covers API",
+      "url": "https://openlibrary.org/dev/docs/api/covers",
+      "supports": [
+        "cover-availability"
+      ],
+      "note": "Public cover thumbnails; hotlinked with credit, not stored copies."
+    },
+    {
+      "source_id": "repo-onyx",
+      "kind": "repository",
+      "title": "Onyx (Community Edition)",
+      "url": "https://github.com/onyx-dot-app/onyx",
+      "supports": [
+        "license:MIT-CE",
+        "capability:RAG/search/agents"
+      ],
+      "note": "EE permission distinctions confirmed from repo README/license."
+    },
+    {
+      "source_id": "repo-openmetadata",
+      "kind": "repository",
+      "title": "OpenMetadata",
+      "url": "https://github.com/open-metadata/OpenMetadata",
+      "supports": [
+        "license:Apache-2.0",
+        "capability:glossary/lineage/quality"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "repo-wrenai",
+      "kind": "repository",
+      "title": "WrenAI (maintained core)",
+      "url": "https://github.com/Canner/WrenAI",
+      "supports": [
+        "license:Apache-2.0-core",
+        "boundary:OSS-vs-commercial",
+        "legacy:legacy/v1-unmaintained"
+      ],
+      "note": "Open-core boundary documented in README; Wren Engine merged May 2026."
+    },
+    {
+      "source_id": "repo-wrenai-license",
+      "kind": "license-file",
+      "title": "WrenAI LICENSE / legal map",
+      "url": "https://github.com/Canner/WrenAI/blob/main/LICENSE",
+      "supports": [
+        "license-map"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "repo-graphiti",
+      "kind": "repository",
+      "title": "Graphiti",
+      "url": "https://github.com/getzep/graphiti",
+      "supports": [
+        "license:Apache-2.0",
+        "capability:temporal-knowledge-graph"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "repo-holmesgpt",
+      "kind": "repository",
+      "title": "HolmesGPT",
+      "url": "https://github.com/HolmesGPT/holmesgpt",
+      "supports": [
+        "license:Apache-2.0",
+        "capability:incident-RCA",
+        "caveat:operator-mode-can-write"
+      ],
+      "note": "Operator Mode / write-back integrations exist; not all features read-only."
+    },
+    {
+      "source_id": "cncf-holmesgpt",
+      "kind": "foundation-page",
+      "title": "CNCF Sandbox — HolmesGPT (accepted 2025-10-08)",
+      "url": "https://www.cncf.io/projects/holmesgpt/",
+      "supports": [
+        "cncf-sandbox-status"
+      ],
+      "note": ""
+    },
+    {
+      "source_id": "tool-book-to-skill",
+      "kind": "repository",
+      "title": "book-to-skill (MIT tool)",
+      "url": "https://github.com/virgiliojr94/book-to-skill",
+      "supports": [
+        "tool-license:MIT",
+        "note:tool-license-is-not-book-content-license"
+      ],
+      "note": "Not installed locally; no ingestion run."
+    }
+  ]
+}

@@ -1,0 +1,325 @@
+{
+  "verifiedAt": "2026-10-26T08:47:53.383Z",
+  "method": "openlibrary isbn API + covers API + google books cross-check; no bytes stored",
+  "receipts": [
+    {
+      "isbn13": "9781394381906",
+      "slug": "rewired",
+      "expected": {
+        "title": "Rewired: McKinsey's Playbook on How Leading Companies Win with Technology and AI",
+        "publisher": "Wiley",
+        "year": 2026
+      },
+      "openLibrary": {
+        "status": 404,
+        "title": null,
+        "publishers": null,
+        "publishDate": null,
+        "covers": 0
+      },
+      "titleMatchOL": false,
+      "cover": {
+        "status": 404,
+        "mime": null,
+        "bytes": 0,
+        "width": null,
+        "height": null,
+        "blank": null
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "FALLBACK-REQUIRED (edition not yet in Open Library; bibliographic basis = Wiley publisher page; designed text card renders)"
+    },
+    {
+      "isbn13": "9781633697621",
+      "slug": "competing-in-the-age-of-ai",
+      "expected": {
+        "title": "Competing in the Age of AI: Strategy and Leadership When Algorithms and Networks Run the World",
+        "publisher": "Harvard Business Review Press",
+        "year": 2020
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "Competing in the Age of AI",
+        "publishers": [
+          "Harvard Business Review Press"
+        ],
+        "publishDate": "2020",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 64550,
+        "width": 332,
+        "height": 500,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9781647824198",
+      "slug": "power-and-prediction",
+      "expected": {
+        "title": "Power and Prediction: The Disruptive Economics of Artificial Intelligence",
+        "publisher": "Harvard Business Review Press",
+        "year": 2022
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "Power and Prediction",
+        "publishers": [
+          "Harvard Business Review Press"
+        ],
+        "publishDate": "2022",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 28651,
+        "width": 332,
+        "height": 500,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9780593716717",
+      "slug": "co-intelligence",
+      "expected": {
+        "title": "Co-Intelligence: Living and Working with AI",
+        "publisher": "Portfolio / Penguin Random House",
+        "year": 2024
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "Co-Intelligence",
+        "publishers": [
+          "Penguin Publishing Group"
+        ],
+        "publishDate": "2024",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 30082,
+        "width": 199,
+        "height": 300,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9781647826239",
+      "slug": "the-ai-savvy-leader",
+      "expected": {
+        "title": "The AI-Savvy Leader: Nine Ways to Take Back Control and Make AI Work",
+        "publisher": "Harvard Business Review Press",
+        "year": 2024
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "AI-Savvy Leader",
+        "publishers": [
+          "Harvard Business Review Press"
+        ],
+        "publishDate": "2024",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 21567,
+        "width": 265,
+        "height": 400,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9781647827205",
+      "slug": "human-plus-machine",
+      "expected": {
+        "title": "Human + Machine, Updated and Expanded: Reimagining Work in the Age of AI",
+        "publisher": "Harvard Business Review Press",
+        "year": 2024
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "Human + Machine, Updated and Expanded",
+        "publishers": [
+          "Harvard Business Review Press"
+        ],
+        "publishDate": "2024-09-10",
+        "covers": 0
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 404,
+        "mime": null,
+        "bytes": 0,
+        "width": null,
+        "height": null,
+        "blank": null
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "FALLBACK-WITH-VERIFIED-RECORD (Open Library bibliographic record matches exactly; cover asset absent — designed text card renders)"
+    },
+    {
+      "isbn13": "9781098166304",
+      "slug": "ai-engineering",
+      "expected": {
+        "title": "AI Engineering: Building Applications with Foundation Models",
+        "publisher": "O'Reilly Media",
+        "year": 2025
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "AI Engineering",
+        "publishers": [
+          "O'Reilly Media, Incorporated"
+        ],
+        "publishDate": "2024",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 47729,
+        "width": 381,
+        "height": 500,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9781098107963",
+      "slug": "designing-machine-learning-systems",
+      "expected": {
+        "title": "Designing Machine Learning Systems: An Iterative Process for Production-Ready Applications",
+        "publisher": "O'Reilly Media",
+        "year": 2022
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "Designing Machine Learning Systems",
+        "publishers": [
+          "O'Reilly Media, Incorporated",
+          "O'Reilly Media"
+        ],
+        "publishDate": "2022",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 44540,
+        "width": 381,
+        "height": 500,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9780393635829",
+      "slug": "the-alignment-problem",
+      "expected": {
+        "title": "The Alignment Problem: Machine Learning and Human Values",
+        "publisher": "W. W. Norton & Company",
+        "year": 2020
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "The Alignment Problem",
+        "publishers": [
+          "W. W. Norton & Company"
+        ],
+        "publishDate": "Oct 06, 2020",
+        "covers": 1
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 200,
+        "mime": "image/jpeg",
+        "bytes": 63665,
+        "width": 323,
+        "height": 500,
+        "blank": false
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "VERIFIED (cover OK + bibliographic title match)"
+    },
+    {
+      "isbn13": "9780691249131",
+      "slug": "ai-snake-oil",
+      "expected": {
+        "title": "AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference",
+        "publisher": "Princeton University Press",
+        "year": 2024
+      },
+      "openLibrary": {
+        "status": 200,
+        "title": "AI Snake Oil",
+        "publishers": [
+          "Princeton University Press"
+        ],
+        "publishDate": "2024",
+        "covers": 0
+      },
+      "titleMatchOL": true,
+      "cover": {
+        "status": 404,
+        "mime": null,
+        "bytes": 0,
+        "width": null,
+        "height": null,
+        "blank": null
+      },
+      "googleBooks": {
+        "status": 429
+      },
+      "titleMatchGB": false,
+      "verdict": "FALLBACK-WITH-VERIFIED-RECORD (Open Library bibliographic record matches exactly; cover asset absent — designed text card renders)"
+    }
+  ]
+}

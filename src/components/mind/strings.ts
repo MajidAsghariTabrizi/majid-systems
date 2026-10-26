@@ -32,6 +32,8 @@ export type MindStrings = {
   aiNoteDetail: string;
   startersTitle: string;
   starters: string[];
+  scopeTitle: string;
+  scopes: { id: string; label: string }[];
   switchLabel: string;
   remainingTemplate: string;
 };
@@ -96,6 +98,15 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
       'Where does he draw the line between AI autonomy and human accountability?',
       'What does the public evidence actually support about his leadership fit?',
     ],
+    scopeTitle: 'Search scope',
+    scopes: [
+      { id: 'all', label: 'Everything' },
+      { id: 'books', label: 'Library' },
+      { id: 'oss', label: 'Open-source stack' },
+      { id: 'flows', label: 'Workflow atlas' },
+      { id: 'concepts', label: 'Mindsets' },
+      { id: 'articles', label: 'Insights' },
+    ],
     switchLabel: 'فارسی',
     remainingTemplate: '{n} questions left in this conversation',
   },
@@ -149,6 +160,15 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
       'مجید محصول، مهندسی و نتیجه اقتصادی را چگونه به هم مرتبط می‌کند؟',
       'در تصمیم‌های پرریسک، مجید چه اختیاری به AI می‌دهد و چه چیزی را انسانی نگه می‌دارد؟',
       'بر اساس شواهد منتشرشده، نقاط قوت و محدودیت‌های مجید برای یک نقش رهبری چیست؟',
+    ],
+    scopeTitle: 'دامنه جست‌وجو',
+    scopes: [
+      { id: 'all', label: 'همه چیز' },
+      { id: 'books', label: 'کتابخانه' },
+      { id: 'oss', label: 'استک متن‌باز' },
+      { id: 'flows', label: 'اطلس جریان‌ها' },
+      { id: 'concepts', label: 'ذهنیت‌ها' },
+      { id: 'articles', label: 'تحلیل‌ها' },
     ],
     switchLabel: 'English',
     remainingTemplate: '{n} پرسش دیگر در این گفت‌وگو باقی مانده است',

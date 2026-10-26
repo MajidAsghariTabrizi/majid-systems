@@ -1,0 +1,193 @@
+{
+  "$schema": "quantiviq-knowledge-concepts/1.0",
+  "verifiedAt": "2026-10-26",
+  "status": "reviewed foundational mindsets — navigable concepts in the Mind and the flow atlas",
+  "concepts": [
+    {
+      "id": "outcome-before-model",
+      "name": {
+        "en": "Business outcome before model choice",
+        "fa": "پیامد کسب‌وکار پیش از انتخاب مدل"
+      },
+      "body": {
+        "en": "Systems over AI wrappers: start from the value stream and the decision to be improved, then choose the tool.",
+        "fa": "سیستم به‌جای پوشش AI: از جریان ارزش و تصمیمی که باید بهبود یابد شروع کنید، بعد ابزار را انتخاب کنید."
+      },
+      "relatedBooks": [
+        "rewired",
+        "ai-snake-oil"
+      ],
+      "relatedRepos": []
+    },
+    {
+      "id": "map-redesign-build-govern",
+      "name": {
+        "en": "Map → Redesign → Build → Govern → Measure → Learn → Expand",
+        "fa": "نگاشت ← بازطراحی ← ساخت ← حاکمیت ← سنجش ← یادگیری ← گسترش"
+      },
+      "body": {
+        "en": "The transformation sequence; skipping redesign is why pilots never scale.",
+        "fa": "توالی تحول؛ رد کردن بازطراحی دلیل این است که پایلوت‌ها هرگز مقیاس نمی‌گیرند."
+      },
+      "relatedBooks": [
+        "rewired"
+      ],
+      "relatedRepos": []
+    },
+    {
+      "id": "indexed-vs-visible",
+      "name": {
+        "en": "INDEXED ≠ RETRIEVABLE ≠ RETURNED ≠ VISIBLE",
+        "fa": "ایندکس‌شده ≠ بازیابی‌پذیر ≠ بازگردانده‌شده ≠ قابل‌مشاهده"
+      },
+      "body": {
+        "en": "A generic search/system design principle about access boundaries — not a claim about any internal data.",
+        "fa": "اصلی عام در طراحی جست‌وجو/سیستم درباره مرزهای دسترسی — نه ادعایی درباره داده داخلی هیچ سازمان خاصی."
+      },
+      "relatedBooks": [
+        "co-intelligence"
+      ],
+      "relatedRepos": [
+        "onyx"
+      ]
+    },
+    {
+      "id": "search-not-truth",
+      "name": {
+        "en": "Search output ≠ truth",
+        "fa": "خروجی جست‌وجو ≠ حقیقت"
+      },
+      "body": {
+        "en": "Query results need semantic contracts and access rights explained before they are trusted.",
+        "fa": "نتایج پرس‌وجو پیش از اعتماد به قرارداد معنایی و حقوق دسترسی شفاف نیاز دارند."
+      },
+      "relatedBooks": [
+        "ai-snake-oil"
+      ],
+      "relatedRepos": [
+        "wren-ai",
+        "onyx"
+      ]
+    },
+    {
+      "id": "intelligence-not-authority",
+      "name": {
+        "en": "Intelligence ≠ authority",
+        "fa": "هوشمندی ≠ اختیار"
+      },
+      "body": {
+        "en": "Capabilities get bounded, revocable permissions; final authority stays human where consequences matter.",
+        "fa": "قابلیت‌ها مجوزهای محدود و قابل‌لغو می‌گیرند؛ اختیار نهایی جایی که پیامد مهم است، انسان می‌ماند."
+      },
+      "relatedBooks": [
+        "power-and-prediction",
+        "the-alignment-problem"
+      ],
+      "relatedRepos": [
+        "holmesgpt"
+      ]
+    },
+    {
+      "id": "metric-ownership",
+      "name": {
+        "en": "Every metric has owner, grain, time window and definition",
+        "fa": "هر متریک مالک، دانه، بازه زمانی و تعریف دارد"
+      },
+      "body": {
+        "en": "Without certified definitions, two dashboards will disagree and both will be right.",
+        "fa": "بدون تعریف تأییدشده، دو داشبورد اختلاف خواهند داشت و هر دو درست خواهند بود."
+      },
+      "relatedBooks": [
+        "designing-machine-learning-systems"
+      ],
+      "relatedRepos": [
+        "open-metadata",
+        "wren-ai"
+      ]
+    },
+    {
+      "id": "uncertainty-is-strength",
+      "name": {
+        "en": "Uncertainty, counterevidence and abstention are strengths",
+        "fa": "عدم‌قطعیت، شواهد خلاف و خودداری فضیلت‌اند"
+      },
+      "body": {
+        "en": "A system that can say 'I don't know' or 'both sources conflict' is more trustworthy than one that always answers.",
+        "fa": "سیستمی که بگوید «نمی‌دانم» یا «دو منبع تضاد دارند» از سیستمی که همیشه پاسخ می‌دهد قابل‌اعتمادتر است."
+      },
+      "relatedBooks": [
+        "ai-snake-oil",
+        "co-intelligence"
+      ],
+      "relatedRepos": []
+    },
+    {
+      "id": "evidence-vs-inference",
+      "name": {
+        "en": "Separate evidence from inference and narrative",
+        "fa": "شاهد را از استنتاج و روایت جدا کنید"
+      },
+      "body": {
+        "en": "Source evidence, hypotheses, narrative and retrospective revision are different record types.",
+        "fa": "شاهد منبع، فرضیه، روایت و بازنگری پسینی نوع‌های رکورد متفاوت‌اند."
+      },
+      "relatedBooks": [
+        "the-alignment-problem"
+      ],
+      "relatedRepos": [
+        "graphiti"
+      ]
+    },
+    {
+      "id": "versioned-decisions",
+      "name": {
+        "en": "Versioned decisions, reversibility, progressive rollout",
+        "fa": "تصمیم‌های نسخه‌بندی‌شده، برگشت‌پذیری، اجرای تدریجی"
+      },
+      "body": {
+        "en": "Experiment before large-scale claims; keep a reversal path.",
+        "fa": "پیش از ادعای بزرگ آزمایش کنید؛ مسیر بازگشت را نگه دارید."
+      },
+      "relatedBooks": [
+        "competing-in-the-age-of-ai"
+      ],
+      "relatedRepos": [
+        "graphiti"
+      ]
+    },
+    {
+      "id": "robustness-over-demos",
+      "name": {
+        "en": "Robustness, evaluation, observability, economics beat token-heavy demos",
+        "fa": "استحکام، ارزیابی، مشاهده‌پذیری و اقتصاد بر دموی توکن‌سنگین برتری دارند"
+      },
+      "body": {
+        "en": "Production quality is measured under drift, load and cost caps.",
+        "fa": "کیفیت محصول در شرایط drift، بار و سقف هزینه سنجیده می‌شود."
+      },
+      "relatedBooks": [
+        "ai-engineering",
+        "designing-machine-learning-systems"
+      ],
+      "relatedRepos": [
+        "holmesgpt"
+      ]
+    },
+    {
+      "id": "value-streams-and-agency",
+      "name": {
+        "en": "Design around value streams and human agency",
+        "fa": "بر پایه جریان ارزش و عاملیت انسانی طراحی کنید"
+      },
+      "body": {
+        "en": "Automate repetitive work, never accountability.",
+        "fa": "کار تکراری را خودکار کنید، هرگز پاسخگویی را."
+      },
+      "relatedBooks": [
+        "human-plus-machine",
+        "the-ai-savvy-leader"
+      ],
+      "relatedRepos": []
+    }
+  ]
+}

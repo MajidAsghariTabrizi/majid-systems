@@ -243,6 +243,114 @@ if (S) {
   });
 }
 
+/* ---------- 6. Silver-bullet knowledge library (books / OSS / flows / concepts) ----------
+ * Same files that render the public pages (content/knowledge/*.json) feed the
+ * Mind corpus — one source of truth. Bibliographic and license facts are
+ * VERIFIED_FACT (checked against the linked sources, see
+ * content/knowledge/sources.json); flows/concepts are the owner's published
+ * viewpoints/templates. Book records carry an explicit ingestion-status line so
+ * the model can never imply chapter-level knowledge. */
+const KJ = (name) => JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'knowledge', name), 'utf8'));
+
+const booksFile = KJ('books.json');
+for (const b of booksFile.books) {
+  for (const L of ['en', 'fa']) {
+    const status = L === 'fa'
+      ? 'وضعیت: رکورد کتاب‌شناختی — متن کامل کتاب دریافت نشده است؛ نقل‌قول فصل/صفحه ارائه نمی‌شود.'
+      : 'Status: catalog-only record — the full book text has NOT been ingested; no chapter/page quotations are available.';
+    add({
+      id: `book-${b.slug}-${L}`, canonical_id: `book-${b.slug}`, type: 'book',
+      title: b.title[L],
+      language: L,
+      content: [
+        `${b.title[L]}`,
+        `Authors: ${b.authors.join(', ')}`,
+        `Publisher: ${b.publisher} · Year: ${b.year} · Edition: ${b.edition} · ISBN-13: ${b.isbn13}`,
+        `${b.brief[L]}`,
+        `${b.takeaway[L]}`,
+        `Domains: ${b.domains.join(', ')}`,
+        `Mind concepts: ${b.mindConcepts.join(', ')}`,
+        status,
+        `Reference: ${b.officialSourceUrl}`,
+        L === 'fa' ? `Aliases: ${b.title.en} ${b.authors.join(' ')}` : '',
+      ].filter(Boolean).join('\n'),
+      source_url: `${SITE}/${L}/insights/books/${b.slug}`,
+      source_hash: sha(b.slug + L),
+      related_frameworks: b.mindConcepts,
+      evidence_class: 'VERIFIED_FACT',
+    });
+  }
+}
+
+const ossFile = KJ('oss.json');
+for (const layer of ossFile.layers) {
+  for (const L of ['en', 'fa']) {
+    add({
+      id: `oss-${layer.id}-${L}`, canonical_id: `oss-${layer.id}`, type: 'repo',
+      title: layer.name[L],
+      language: L,
+      content: [
+        layer.name[L],
+        `GitHub: ${layer.githubUrl}`,
+        `License: ${layer.license.label}. ${layer.license.note}`,
+        `Inputs: ${layer.inputs[L]}`,
+        `Outputs: ${layer.outputs[L]}`,
+        `Guard: ${layer.guard[L]}`,
+        `When NOT to use: ${layer.whenNot[L]}`,
+        layer.brief[L],
+        'Integration status on quantiviq.xyz: research/recommendation reference — not a deployed service.',
+        L === 'fa' ? `Aliases: ${layer.name.en} ${layer.id}` : '',
+      ].filter(Boolean).join('\n'),
+      source_url: `${SITE}/${L}/insights/enterprise-ai-stack`,
+      source_hash: sha(layer.id + L),
+      related_frameworks: layer.mindConcepts,
+      evidence_class: 'VERIFIED_FACT',
+    });
+  }
+}
+
+const flowsFile = KJ('flows.json');
+for (const f of flowsFile.flows) {
+  for (const L of ['en', 'fa']) {
+    add({
+      id: `flow-${f.id}-${L}`, canonical_id: `flow-${f.id}`, type: 'org_flow',
+      title: f.name[L],
+      language: L,
+      content: [
+        `${f.name[L]} (generic template, public-safe)`,
+        `Trigger: ${f.inputTrigger[L]}`,
+        `Owner: ${f.accountableOwner[L]}`,
+        `Decision rights: ${f.decisionRights[L]}`,
+        `Steps: ${f.steps[L]}`,
+        `Human gates: ${f.humanGates[L]}`,
+        `Metrics: ${f.metrics[L]}`,
+        `Failure modes: ${f.failureModes[L]}`,
+        `Rollback: ${f.rollback[L]}`,
+        `Lesson: ${f.lessons[L]}`,
+        L === 'fa' ? `Aliases: ${f.name.en} ${f.id}` : '',
+      ].filter(Boolean).join('\n'),
+      source_url: `${SITE}/${L}/mind/flows`,
+      source_hash: sha(f.id + L),
+      evidence_class: 'PUBLISHED_VIEWPOINT',
+    });
+  }
+}
+
+const conceptsFile = KJ('concepts.json');
+for (const c of conceptsFile.concepts) {
+  for (const L of ['en', 'fa']) {
+    add({
+      id: `concept-${c.id}-${L}`, canonical_id: `concept-${c.id}`, type: 'concept',
+      title: c.name[L],
+      language: L,
+      content: `${c.name[L]}\n\n${c.body[L]}`,
+      source_url: `${SITE}/${L}/mind/flows`,
+      source_hash: sha(c.id + L),
+      evidence_class: 'PUBLISHED_VIEWPOINT',
+    });
+  }
+}
+
 /* ---------- 5. GitHub public repos (from the site's cached data) ---------- */
 const gh = await loadTs('src/content/github.ts');
 const FALLBACK = gh.FALLBACK_REPOS || [];
