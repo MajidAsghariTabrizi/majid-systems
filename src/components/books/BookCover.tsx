@@ -23,7 +23,7 @@ export default function BookCover({
 
   if (failed) {
     return (
-      <div className="book-cover-fallback" dir={locale === 'fa' ? 'rtl' : 'ltr'} aria-label={book.title[locale]}>
+      <div className="book-cover-fallback" dir={locale === 'fa' ? 'rtl' : 'ltr'}>
         <span className="bcf-publisher">{book.publisher}</span>
         <span className="bcf-title">{book.title[locale]}</span>
         <span className="bcf-authors">{book.authors.join(' · ')}</span>

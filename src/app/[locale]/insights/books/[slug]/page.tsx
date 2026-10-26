@@ -60,7 +60,7 @@ export default async function BookDetailPage({ params }: { params: Params }) {
   const t = dict(l).booksPage;
 
   return (
-    <main className="book-detail" dir={l === 'fa' ? 'rtl' : 'ltr'}>
+    <div className="book-detail" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-narrow">
       <nav className="breadcrumb" aria-label={l === 'fa' ? 'مسیر' : 'Breadcrumb'}>
         <Link href={`/${l}/insights/books`}>← {t.backToLibrary}</Link>
@@ -176,6 +176,6 @@ export default async function BookDetailPage({ params }: { params: Params }) {
         )}
       </section>
       </div>
-    </main>
+    </div>
   );
 }

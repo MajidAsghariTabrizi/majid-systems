@@ -43,7 +43,7 @@ export default async function FlowsPage({ params }: { params: Params }) {
   const t = dict(l).flowsPage;
 
   return (
-    <main className="flows-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
+    <div className="flows-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
       <header className="stack-head">
         <p className="eyebrow">{l === 'fa' ? 'ذهن سازمان' : 'THE ORGANIZATION MIND'}</p>
@@ -52,6 +52,6 @@ export default async function FlowsPage({ params }: { params: Params }) {
       </header>
       <FlowAtlas locale={l} />
       </div>
-    </main>
+    </div>
   );
 }

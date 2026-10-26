@@ -1,0 +1,239 @@
+﻿quantiviq.xyz/en
+quantiviq.xyz/en" />
+
+quantiviq.xyz/en/about
+quantiviq.xyz/en/about" />
+
+quantiviq.xyz/en/contact
+quantiviq.xyz/en/contact" />
+
+quantiviq.xyz/en/insights
+quantiviq.xyz/en/insights" />
+
+quantiviq.xyz/en/insights/agentic-ai-for-fmcg-commercial-operations
+quantiviq.xyz/en/insights/agentic-ai-for-fmcg-commercial-operations" />
+
+quantiviq.xyz/en/insights/agentic-ai-governance-by-design
+quantiviq.xyz/en/insights/agentic-ai-governance-by-design" />
+
+quantiviq.xyz/en/insights/ai-adoption-is-not-ai-transformation
+quantiviq.xyz/en/insights/ai-adoption-is-not-ai-transformation" />
+
+quantiviq.xyz/en/insights/ai-agent-evaluation-for-business-outcomes
+quantiviq.xyz/en/insights/ai-agent-evaluation-for-business-outcomes" />
+
+quantiviq.xyz/en/insights/ai-native-supply-chain-decision-intelligence
+quantiviq.xyz/en/insights/ai-native-supply-chain-decision-intelligence" />
+
+quantiviq.xyz/en/insights/author
+quantiviq.xyz/en/insights/author" />
+
+quantiviq.xyz/en/insights/designing-human-and-ai-product-teams
+quantiviq.xyz/en/insights/designing-human-and-ai-product-teams" />
+
+quantiviq.xyz/en/insights/from-ai-prototype-to-production
+quantiviq.xyz/en/insights/from-ai-prototype-to-production" />
+
+quantiviq.xyz/en/insights/from-org-charts-to-orchestration-charts
+quantiviq.xyz/en/insights/from-org-charts-to-orchestration-charts" />
+
+quantiviq.xyz/en/insights/human-in-the-loop-vs-human-on-the-loop
+quantiviq.xyz/en/insights/human-in-the-loop-vs-human-on-the-loop" />
+
+quantiviq.xyz/en/insights/inside-an-ai-native-transformation-mission
+quantiviq.xyz/en/insights/inside-an-ai-native-transformation-mission" />
+
+quantiviq.xyz/en/insights/measuring-ai-value-beyond-productivity
+quantiviq.xyz/en/insights/measuring-ai-value-beyond-productivity" />
+
+quantiviq.xyz/en/insights/methodology
+quantiviq.xyz/en/insights/methodology" />
+
+quantiviq.xyz/en/insights/prioritizing-high-value-ai-missions
+quantiviq.xyz/en/insights/prioritizing-high-value-ai-missions" />
+
+quantiviq.xyz/en/insights/recovering-revenue-inventory-pricing-promotions
+quantiviq.xyz/en/insights/recovering-revenue-inventory-pricing-promotions" />
+
+quantiviq.xyz/en/insights/the-90-day-ai-transformation-roadmap
+quantiviq.xyz/en/insights/the-90-day-ai-transformation-roadmap" />
+
+quantiviq.xyz/en/insights/the-agentic-mission-factory
+quantiviq.xyz/en/insights/the-agentic-mission-factory" />
+
+quantiviq.xyz/en/insights/the-ai-native-product-operating-model
+quantiviq.xyz/en/insights/the-ai-native-product-operating-model" />
+
+quantiviq.xyz/en/insights/the-ai-transformation-value-ledger
+quantiviq.xyz/en/insights/the-ai-transformation-value-ledger" />
+
+quantiviq.xyz/en/insights/the-real-cost-of-enterprise-ai-agents
+quantiviq.xyz/en/insights/the-real-cost-of-enterprise-ai-agents" />
+
+quantiviq.xyz/en/insights/topics/ai-native-operations
+quantiviq.xyz/en/insights/topics/ai-native-operations" />
+
+quantiviq.xyz/en/insights/topics/applied-industry
+quantiviq.xyz/en/insights/topics/applied-industry" />
+
+quantiviq.xyz/en/insights/topics/economics-value
+quantiviq.xyz/en/insights/topics/economics-value" />
+
+quantiviq.xyz/en/insights/topics/transformation-strategy
+quantiviq.xyz/en/insights/topics/transformation-strategy" />
+
+quantiviq.xyz/en/insights/topics/trust-governance
+quantiviq.xyz/en/insights/topics/trust-governance" />
+
+quantiviq.xyz/en/insights/who-owns-ai-transformation
+quantiviq.xyz/en/insights/who-owns-ai-transformation" />
+
+quantiviq.xyz/en/insights/why-ai-transformation-fails-without-change-management
+quantiviq.xyz/en/insights/why-ai-transformation-fails-without-change-management" />
+
+quantiviq.xyz/en/lab
+quantiviq.xyz/en/lab" />
+
+quantiviq.xyz/en/method
+quantiviq.xyz/en/method" />
+
+quantiviq.xyz/en/mind
+quantiviq.xyz/en/mind" />
+
+quantiviq.xyz/en/privacy
+quantiviq.xyz/en/privacy" />
+
+quantiviq.xyz/en/proof
+quantiviq.xyz/en/proof" />
+
+quantiviq.xyz/en/services
+quantiviq.xyz/en/services" />
+
+quantiviq.xyz/en/system
+quantiviq.xyz/en/system" />
+
+quantiviq.xyz/engineering
+quantiviq.xyz/fa" />
+
+quantiviq.xyz/fa/about" />
+
+quantiviq.xyz/fa/contact" />
+
+quantiviq.xyz/fa/insights
+quantiviq.xyz/fa/insights" />
+
+quantiviq.xyz/fa/insights/agentic-ai-for-fmcg-commercial-operations
+quantiviq.xyz/fa/insights/agentic-ai-for-fmcg-commercial-operations" />
+
+quantiviq.xyz/fa/insights/agentic-ai-governance-by-design
+quantiviq.xyz/fa/insights/agentic-ai-governance-by-design" />
+
+quantiviq.xyz/fa/insights/ai-adoption-is-not-ai-transformation
+quantiviq.xyz/fa/insights/ai-adoption-is-not-ai-transformation" />
+
+quantiviq.xyz/fa/insights/ai-agent-evaluation-for-business-outcomes
+quantiviq.xyz/fa/insights/ai-agent-evaluation-for-business-outcomes" />
+
+quantiviq.xyz/fa/insights/ai-native-supply-chain-decision-intelligence
+quantiviq.xyz/fa/insights/ai-native-supply-chain-decision-intelligence" />
+
+quantiviq.xyz/fa/insights/author
+quantiviq.xyz/fa/insights/author" />
+
+quantiviq.xyz/fa/insights/designing-human-and-ai-product-teams
+quantiviq.xyz/fa/insights/designing-human-and-ai-product-teams" />
+
+quantiviq.xyz/fa/insights/from-ai-prototype-to-production
+quantiviq.xyz/fa/insights/from-ai-prototype-to-production" />
+
+quantiviq.xyz/fa/insights/from-org-charts-to-orchestration-charts
+quantiviq.xyz/fa/insights/from-org-charts-to-orchestration-charts" />
+
+quantiviq.xyz/fa/insights/human-in-the-loop-vs-human-on-the-loop
+quantiviq.xyz/fa/insights/human-in-the-loop-vs-human-on-the-loop" />
+
+quantiviq.xyz/fa/insights/inside-an-ai-native-transformation-mission
+quantiviq.xyz/fa/insights/inside-an-ai-native-transformation-mission" />
+
+quantiviq.xyz/fa/insights/measuring-ai-value-beyond-productivity
+quantiviq.xyz/fa/insights/measuring-ai-value-beyond-productivity" />
+
+quantiviq.xyz/fa/insights/methodology
+quantiviq.xyz/fa/insights/methodology" />
+
+quantiviq.xyz/fa/insights/prioritizing-high-value-ai-missions
+quantiviq.xyz/fa/insights/prioritizing-high-value-ai-missions" />
+
+quantiviq.xyz/fa/insights/recovering-revenue-inventory-pricing-promotions
+quantiviq.xyz/fa/insights/recovering-revenue-inventory-pricing-promotions" />
+
+quantiviq.xyz/fa/insights/the-90-day-ai-transformation-roadmap
+quantiviq.xyz/fa/insights/the-90-day-ai-transformation-roadmap" />
+
+quantiviq.xyz/fa/insights/the-agentic-mission-factory
+quantiviq.xyz/fa/insights/the-agentic-mission-factory" />
+
+quantiviq.xyz/fa/insights/the-ai-native-product-operating-model
+quantiviq.xyz/fa/insights/the-ai-native-product-operating-model" />
+
+quantiviq.xyz/fa/insights/the-ai-transformation-value-ledger
+quantiviq.xyz/fa/insights/the-ai-transformation-value-ledger" />
+
+quantiviq.xyz/fa/insights/the-real-cost-of-enterprise-ai-agents
+quantiviq.xyz/fa/insights/the-real-cost-of-enterprise-ai-agents" />
+
+quantiviq.xyz/fa/insights/topics/ai-native-operations
+quantiviq.xyz/fa/insights/topics/ai-native-operations" />
+
+quantiviq.xyz/fa/insights/topics/applied-industry
+quantiviq.xyz/fa/insights/topics/applied-industry" />
+
+quantiviq.xyz/fa/insights/topics/economics-value
+quantiviq.xyz/fa/insights/topics/economics-value" />
+
+quantiviq.xyz/fa/insights/topics/transformation-strategy
+quantiviq.xyz/fa/insights/topics/transformation-strategy" />
+
+quantiviq.xyz/fa/insights/topics/trust-governance
+quantiviq.xyz/fa/insights/topics/trust-governance" />
+
+quantiviq.xyz/fa/insights/who-owns-ai-transformation
+quantiviq.xyz/fa/insights/who-owns-ai-transformation" />
+
+quantiviq.xyz/fa/insights/why-ai-transformation-fails-without-change-management
+quantiviq.xyz/fa/insights/why-ai-transformation-fails-without-change-management" />
+
+quantiviq.xyz/fa/lab" />
+
+quantiviq.xyz/fa/method" />
+
+quantiviq.xyz/fa/mind" />
+
+quantiviq.xyz/fa/privacy" />
+
+quantiviq.xyz/fa/proof" />
+
+quantiviq.xyz/fa/services" />
+
+quantiviq.xyz/fa/system" />
+
+quantiviq.xyz/journey
+quantiviq.xyz/notes
+quantiviq.xyz/notes/agents-need-a-kernel
+quantiviq.xyz/notes/ai-needs-infrastructure
+quantiviq.xyz/notes/economic-correctness-matters
+quantiviq.xyz/notes/fail-closed-is-not-fast
+quantiviq.xyz/notes/one-stable-interface
+quantiviq.xyz/notes/production-is-part-of-the-product
+quantiviq.xyz/notes/product-thinking-changes-engineering
+quantiviq.xyz/notes/reliability-beats-cleverness
+quantiviq.xyz/notes/small-kernel-large-surface
+quantiviq.xyz/notes/trust-is-a-product
+quantiviq.xyz/open-source
+quantiviq.xyz/profile
+quantiviq.xyz/resume
+quantiviq.xyz/work
+quantiviq.xyz/work/free-best-router
+quantiviq.xyz/work/phoenix
+quantiviq.xyz/work/smart-trader
+quantiviq.xyz/work/universal-engineering-agent

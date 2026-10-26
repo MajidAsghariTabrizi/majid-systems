@@ -43,7 +43,7 @@ export default async function StackPage({ params }: { params: Params }) {
   const t = dict(l).stackPage;
 
   return (
-    <main className="stack-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
+    <div className="stack-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
       <header className="stack-head">
         <p className="eyebrow">{l === 'fa' ? 'اطلس متن‌باز' : 'OPEN-SOURCE ATLAS'}</p>
@@ -57,6 +57,6 @@ export default async function StackPage({ params }: { params: Params }) {
       </header>
       <StackAtlas locale={l} />
       </div>
-    </main>
+    </div>
   );
 }

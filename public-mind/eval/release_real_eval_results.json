@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-26T09:47:26.698Z",
+  "model": "glm-4.5-flash",
+  "live": true,
+  "pass": 7,
+  "total": 8,
+  "rows": [
+    {
+      "id": "R1",
+      "http": 200,
+      "types": [
+        "book"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": false,
+      "len": 0,
+      "tokens": null,
+      "ms": 60395,
+      "verdict": "FAIL"
+    },
+    {
+      "id": "R2",
+      "http": 200,
+      "types": [
+        "repo"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 1032,
+      "tokens": 1792,
+      "ms": 7575,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R3",
+      "http": 200,
+      "types": [
+        "org_flow"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 911,
+      "tokens": 1645,
+      "ms": 10260,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R4",
+      "http": 200,
+      "types": [
+        "concept"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 944,
+      "tokens": 716,
+      "ms": 11704,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R5",
+      "http": 200,
+      "types": [
+        "book"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 818,
+      "tokens": 2723,
+      "ms": 15629,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R6",
+      "http": 200,
+      "types": [
+        "insight",
+        "identity",
+        "leadership"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 672,
+      "tokens": 2135,
+      "ms": 9397,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R7",
+      "http": 200,
+      "types": [
+        "repo"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 642,
+      "tokens": 1963,
+      "ms": 11536,
+      "verdict": "PASS"
+    },
+    {
+      "id": "R8",
+      "http": 200,
+      "types": [
+        "insight",
+        "book",
+        "org_flow"
+      ],
+      "grounded": true,
+      "whitelisted": true,
+      "answerOk": true,
+      "len": 673,
+      "tokens": 2164,
+      "ms": 4402,
+      "verdict": "PASS"
+    }
+  ]
+}

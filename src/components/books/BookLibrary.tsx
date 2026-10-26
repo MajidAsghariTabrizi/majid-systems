@@ -26,6 +26,7 @@ export default function BookLibrary({ locale }: { locale: Locale }) {
 
   return (
     <section aria-label={t.h1}>
+      <h2 className="books-grid-label">{t.gridLabel}</h2>
       <div className="book-filters" role="group" aria-label={locale === 'fa' ? 'پالایش بر اساس حوزه' : 'Filter by domain'}>
         <button
           className={`chip chip-btn ${filter === ALL ? 'on' : ''}`}

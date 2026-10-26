@@ -45,6 +45,7 @@ export const en = {
     h1: 'The Library',
     sub: 'Ten editions that shaped this thinking — catalog records first, honest about what has and has not been read.',
     filterAll: 'All',
+    gridLabel: 'The ten editions',
     ingestionTitle: 'Ingestion status',
     askBook: 'Ask about this book',
     useAtWork: 'Use at work',

@@ -1163,7 +1163,7 @@ export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
     <svg
       viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
       className="sim-svg"
-      role="img"
+      role="group"
       aria-label={S.a11y.simAria}
       onClick={(e) => {
         if ((e.target as Element).classList.contains('sim-bg') && inspecting) {

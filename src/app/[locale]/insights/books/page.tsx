@@ -46,7 +46,7 @@ export default async function BooksPage({ params }: { params: Params }) {
   const t = dict(l).booksPage;
 
   return (
-    <main className="books-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
+    <div className="books-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
       <header className="stack-head">
         <p className="eyebrow">{l === 'fa' ? 'کتابخانه کوانتیویک' : 'QUANTIVIQ LIBRARY'}</p>
@@ -60,6 +60,6 @@ export default async function BooksPage({ params }: { params: Params }) {
           : 'Covers are displayed from Open Library with credit; no generated or reproduced artwork is used.'}
       </p>
       </div>
-    </main>
+    </div>
   );
 }

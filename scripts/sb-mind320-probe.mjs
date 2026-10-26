@@ -3,16 +3,11 @@ const browser = await chromium.launch({ channel: 'msedge', headless: true });
 const pg = await (await browser.newContext({ viewport: { width: 320, height: 690 } })).newPage();
 await pg.goto('http://127.0.0.1:3219/en/mind', { waitUntil: 'networkidle', timeout: 60000 });
 const out = await pg.evaluate(() => {
-  const doc = document.documentElement;
-  const bad = [];
-  for (const el of doc.querySelectorAll('.mind-full-card *')) {
-    const cs = getComputedStyle(el);
-    const minw = el.getBoundingClientRect().width;
-    if (minw > 318 && minw < 500) {
-      bad.push({ tag: el.tagName, cls: String(el.className).slice(0, 40), w: Math.round(minw), ws: cs.whiteSpace, mw: cs.minWidth, txt: (el.textContent || '').trim().slice(0, 40) });
-    }
-  }
-  return bad.slice(0, 10);
+  const body = document.querySelector('.mind-full-body');
+  const kids = [...body.children].map(c => ({ tag: c.tagName, cls: String(c.className).slice(0, 30), w: Math.round(c.getBoundingClientRect().width), sw: c.scrollWidth, cw: c.clientWidth }));
+  const card = document.querySelector('.mind-full-card');
+  const ck = card ? [...card.children].map(c => ({ tag: c.tagName, cls: String(c.className).slice(0, 30), w: Math.round(c.getBoundingClientRect().width), sw: c.scrollWidth, cw: c.clientWidth })) : [];
+  return { kids, ck };
 });
 console.log(JSON.stringify(out, null, 1));
 await browser.close();

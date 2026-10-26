@@ -41,10 +41,10 @@ export default async function ExplorePage({ params }: { params: Params }) {
   if (!isLocale(locale)) notFound();
   const l = locale as Locale;
   return (
-    <main className="explore-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
+    <div className="explore-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
         <ExploreExperience locale={l} />
       </div>
-    </main>
+    </div>
   );
 }
