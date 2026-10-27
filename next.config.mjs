@@ -41,6 +41,17 @@ const nextConfig = {
         source: '/_next/static/(.*)',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      {
+        // unlisted executive experience: excluded from search + archival at the
+        // response-header level as well (metadata robots covers crawlers that
+        // honor it; robots.txt is deliberately NOT used so the path is not
+        // advertised in a public file)
+        source: '/meet-majid',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
     ];
   },
 };
