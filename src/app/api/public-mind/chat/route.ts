@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     locale?: unknown;
     messages?: unknown;
     scope?: unknown;
+    persona?: unknown;
   };
   const SCOPES = new Set(['all', 'books', 'oss', 'flows', 'concepts', 'articles']);
   if (
@@ -48,13 +49,18 @@ export async function POST(req: NextRequest) {
   if (b.scope !== undefined && !SCOPES.has(b.scope as string)) {
     return Response.json({ error: 'bad request' }, { status: 400 });
   }
+  // executive persona (unlisted /meet-majid surface): validated, forwarded;
+  // absent or unknown → 'default' upstream so existing clients are unchanged
+  const PERSONAS = new Set(['default', 'executive']);
+  const persona =
+    typeof b.persona === 'string' && PERSONAS.has(b.persona) ? b.persona : 'default';
 
   let upstream: Response;
   try {
     upstream = await fetch(`${UPSTREAM}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session: b.session, locale: b.locale, scope: b.scope, messages: b.messages }),
+      body: JSON.stringify({ session: b.session, locale: b.locale, scope: b.scope, persona, messages: b.messages }),
       signal: AbortSignal.timeout(70_000),
     });
   } catch {

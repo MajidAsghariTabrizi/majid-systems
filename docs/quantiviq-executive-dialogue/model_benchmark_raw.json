@@ -1,0 +1,410 @@
+{
+  "glm-4.5-flash": {
+    "passed": 5,
+    "rows": [
+      {
+        "id": "work",
+        "pass": true,
+        "len": 1559,
+        "sources": 7,
+        "ttfa": 13698,
+        "total": 13699,
+        "tokens": 2738,
+        "cost": "0.00082"
+      },
+      {
+        "id": "strategy",
+        "pass": true,
+        "len": 1463,
+        "sources": 5,
+        "ttfa": 10677,
+        "total": 10678,
+        "tokens": 2256,
+        "cost": "0.00070"
+      },
+      {
+        "id": "adversarial",
+        "pass": true,
+        "len": 2127,
+        "sources": 7,
+        "ttfa": 26148,
+        "total": 26149,
+        "tokens": 2737,
+        "cost": "0.00088"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 1708,
+        "sources": 7,
+        "ttfa": 26176,
+        "total": 26177,
+        "tokens": 4220,
+        "cost": "0.00117"
+      },
+      {
+        "id": "privacy",
+        "pass": true,
+        "len": 680,
+        "sources": 7,
+        "ttfa": 6169,
+        "total": 6169,
+        "tokens": 2524,
+        "cost": "0.00061"
+      },
+      {
+        "id": "arch",
+        "pass": true,
+        "len": 2179,
+        "sources": 7,
+        "ttfa": 18265,
+        "total": 18265,
+        "tokens": 2943,
+        "cost": "0.00100"
+      }
+    ],
+    "medianMs": 18265,
+    "p95proxyMs": 26177,
+    "estCostUsd": "0.0052"
+  },
+  "glm-4.5-air": {
+    "passed": 0,
+    "rows": [
+      {
+        "id": "work",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 874,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "strategy",
+        "pass": false,
+        "len": 0,
+        "sources": 5,
+        "ttfa": null,
+        "total": 593,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "adversarial",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 617,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 814,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "privacy",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 602,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "arch",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 646,
+        "tokens": 0,
+        "cost": "0.00000"
+      }
+    ],
+    "medianMs": 646,
+    "p95proxyMs": 874,
+    "estCostUsd": "0.0000"
+  },
+  "glm-4.6": {
+    "passed": 0,
+    "rows": [
+      {
+        "id": "work",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 651,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "strategy",
+        "pass": false,
+        "len": 0,
+        "sources": 5,
+        "ttfa": null,
+        "total": 624,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "adversarial",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 610,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 783,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "privacy",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 625,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "arch",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 607,
+        "tokens": 0,
+        "cost": "0.00000"
+      }
+    ],
+    "medianMs": 625,
+    "p95proxyMs": 783,
+    "estCostUsd": "0.0000"
+  },
+  "glm-4.7": {
+    "passed": 0,
+    "rows": [
+      {
+        "id": "work",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 970,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "strategy",
+        "pass": false,
+        "len": 0,
+        "sources": 5,
+        "ttfa": null,
+        "total": 643,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "adversarial",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 641,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 826,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "privacy",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 580,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "arch",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 795,
+        "tokens": 0,
+        "cost": "0.00000"
+      }
+    ],
+    "medianMs": 795,
+    "p95proxyMs": 970,
+    "estCostUsd": "0.0000"
+  },
+  "glm-5.3-flash": {
+    "passed": 0,
+    "rows": [
+      {
+        "id": "work",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 1288,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "strategy",
+        "pass": false,
+        "len": 0,
+        "sources": 5,
+        "ttfa": null,
+        "total": 1220,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "adversarial",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 1170,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 1683,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "privacy",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 1292,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "arch",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 1182,
+        "tokens": 0,
+        "cost": "0.00000"
+      }
+    ],
+    "medianMs": 1288,
+    "p95proxyMs": 1683,
+    "estCostUsd": "0.0000"
+  },
+  "glm-5.2": {
+    "passed": 0,
+    "rows": [
+      {
+        "id": "work",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 768,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "strategy",
+        "pass": false,
+        "len": 0,
+        "sources": 5,
+        "ttfa": null,
+        "total": 638,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "adversarial",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 654,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "fa",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 781,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "privacy",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 585,
+        "tokens": 0,
+        "cost": "0.00000"
+      },
+      {
+        "id": "arch",
+        "pass": false,
+        "len": 0,
+        "sources": 7,
+        "ttfa": null,
+        "total": 653,
+        "tokens": 0,
+        "cost": "0.00000"
+      }
+    ],
+    "medianMs": 654,
+    "p95proxyMs": 781,
+    "estCostUsd": "0.0000"
+  }
+}

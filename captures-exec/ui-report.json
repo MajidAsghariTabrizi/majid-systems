@@ -1,0 +1,61 @@
+{
+  "viewports": {
+    "en-320": {
+      "overflow": 0,
+      "dir": "ltr",
+      "consoleErrors": 0
+    },
+    "en-390": {
+      "overflow": 0,
+      "dir": "ltr",
+      "consoleErrors": 0
+    },
+    "en-768": {
+      "overflow": 0,
+      "dir": "ltr",
+      "consoleErrors": 0
+    },
+    "en-1024": {
+      "overflow": 0,
+      "dir": "ltr",
+      "consoleErrors": 0
+    },
+    "en-1440": {
+      "overflow": 0,
+      "dir": "ltr",
+      "consoleErrors": 0
+    },
+    "fa-320": {
+      "overflow": 0,
+      "dir": "rtl",
+      "consoleErrors": 0
+    },
+    "fa-390": {
+      "overflow": 0,
+      "dir": "rtl",
+      "consoleErrors": 0
+    },
+    "fa-768": {
+      "overflow": 0,
+      "dir": "rtl",
+      "consoleErrors": 0
+    },
+    "fa-1024": {
+      "overflow": 0,
+      "dir": "rtl",
+      "consoleErrors": 0
+    },
+    "fa-1440": {
+      "overflow": 0,
+      "dir": "rtl",
+      "consoleErrors": 0
+    }
+  },
+  "axe": [],
+  "functional": {
+    "suggestions": 3,
+    "cancel": true,
+    "cites": 8,
+    "evidenceItems": 0
+  }
+}
