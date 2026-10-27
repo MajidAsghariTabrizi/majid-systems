@@ -22,7 +22,7 @@
 .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.2rem; }
 .book-card { display: flex; gap: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; box-shadow: var(--shadow); }
 .book-card-cover { flex: 0 0 96px; display: block; }
-.book-cover { width: 96px; height: auto; max-height: 190px; object-fit: contain; border-radius: 4px; background: #0e1014; display: block; }
+.book-cover { width: 96px; height: auto; max-height: 190px; object-fit: contain; border-radius: 4px; background: var(--bg-elevated); display: block; }
 .book-card-body { min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; }
 .book-card-domains { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .book-card-title { font-size: 1.02rem; line-height: 1.35; margin: 0.15rem 0 0; }

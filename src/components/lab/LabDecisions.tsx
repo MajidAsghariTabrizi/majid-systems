@@ -48,7 +48,7 @@ export function LabDecisions({ snap, locale }: { snap: LabSnapshot; locale: LabL
           <div className="lab-dec-list">
             <h3 className="lab-h3">{t.decisions.listTitle}</h3>
             <p className="lab-dec-hint">{t.decisions.pickHint}</p>
-            <ul className="lab-dec-rows" role="listbox" aria-label={t.decisions.listTitle}>
+            <ul className="lab-dec-rows" aria-label={t.decisions.listTitle}>
               {[...rows]
                 .map((r, i) => ({ r, i }))
                 .reverse()
@@ -59,11 +59,10 @@ export function LabDecisions({ snap, locale }: { snap: LabSnapshot; locale: LabL
                   return (
                     <li key={i}>
                       <button
-                        role="option"
-                        aria-selected={sel === i}
+                        aria-pressed={sel === i}
                         className={sel === i ? 'on' : ''}
                         onClick={() => setSel(i)}
-                      >
+                     >
                         <span className="lab-mono">{utcShort(r.t).slice(5)}</span>
                         <span className="lab-mono">h{r.horizon}</span>
                         <span className="lab-dec-state">{r.market_state}</span>

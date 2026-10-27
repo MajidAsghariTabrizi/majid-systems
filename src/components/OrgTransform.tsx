@@ -36,17 +36,19 @@ const PHASE_DUR = [3000, 6400, 3200, 4200, 3400];
 const TOTAL = PHASE_DUR.reduce((a, p) => a + p, 0);
 
 const C = {
-  edge: 'rgba(255,255,255,0.13)',
-  edgeSoft: 'rgba(255,255,255,0.07)',
-  nodeFill: '#15181d',
-  nodeBorder: 'rgba(255,255,255,0.22)',
-  nodeText: '#c5cad3',
-  muted: '#8b919b',
-  path: '#8ab4f8',
-  warn: '#f0a868',
-  ok: '#7cd9b7',
-  bandFill: 'rgba(255,255,255,0.028)',
-  text: '#e8eaed',
+  // Boardroom Ivory canvas palette (2026-10-26 design migration).
+  // Canvas API takes literal colors only - no CSS vars here.
+  edge: 'rgba(29, 26, 22, 0.30)',
+  edgeSoft: 'rgba(29, 26, 22, 0.16)',
+  nodeFill: '#fdfbf6',
+  nodeBorder: 'rgba(29, 26, 22, 0.35)',
+  nodeText: '#1d1a16',
+  muted: '#665d4f',
+  path: '#1f5c45',
+  warn: '#a8894f',
+  ok: '#1f5c45',
+  bandFill: 'rgba(29, 26, 22, 0.04)',
+  text: '#1d1a16',
 };
 
 function clamp01(x: number) {
@@ -485,7 +487,7 @@ function drawScene(
     if (showMetrics > 0.01) {
       ctx.globalAlpha = tradAlpha * showMetrics;
       for (const m of L.metrics) {
-        ctx.fillStyle = 'rgba(255,255,255,0.028)';
+        ctx.fillStyle = 'rgba(29, 26, 22, 0.045)';
         ctx.strokeStyle = C.edge;
         roundRect(ctx, { x: m.x, y: m.y, w: W - m.x - 18, h: s.mobile ? 22 : 30 }, 6);
         ctx.fill();
