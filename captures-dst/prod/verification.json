@@ -1,0 +1,12 @@
+{
+ "ivory": {
+  "bg": "rgb(247, 244, 236)",
+  "fg": "rgb(29, 26, 22)",
+  "headerBg": "rgba(247, 245, 237, 0.92)"
+ },
+ "meet": {
+  "status": 200,
+  "robots": "noindex, nofollow, noarchive",
+  "noindex": true
+ }
+}
