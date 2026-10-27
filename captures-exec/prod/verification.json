@@ -1,0 +1,45 @@
+{
+ "route": {
+  "status": 200,
+  "robots": "noindex, nofollow, noarchive",
+  "cache": "no-store"
+ },
+ "content": {
+  "noindexMeta": true,
+  "hasName": true,
+  "hasHeadline": true,
+  "noPublicNav": true
+ },
+ "sitemapClean": true,
+ "turn1": {
+  "done": "ok",
+  "len": 1447,
+  "sources": 7,
+  "namesProjects": false
+ },
+ "turn2": {
+  "done": "ok",
+  "len": 1443,
+  "referencesContext": true,
+  "sources": 7
+ },
+ "turn3": {
+  "done": "ok",
+  "len": 1371,
+  "challenges": true
+ },
+ "turnFA": {
+  "done": "ok",
+  "len": 1098,
+  "persian": true,
+  "sources": 7
+ },
+ "badUrls": [],
+ "citeUrlsValid": true,
+ "mindRegression": {
+  "status": 200,
+  "done": "ok",
+  "len": 1290,
+  "sources": 5
+ }
+}

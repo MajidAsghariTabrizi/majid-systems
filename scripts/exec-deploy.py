@@ -24,7 +24,8 @@ def run(cmd, t=300):
     return code, out
 
 print("== pre-state ==")
-_, pre = run("cat /etc/public-mind/config.json && systemctl is-active public-mind && cd /opt/majid-systems && git log --oneline -1")
+_, pre = run("cat /etc/public-mind/config.json")
+run("systemctl is-active public-mind && cd /opt/majid-systems && git log --oneline -1")
 
 print("== upload persona-capable service (backup first) ==")
 sftp = c.open_sftp()
