@@ -33,7 +33,7 @@ body.ex-body {
 .ex-fa body.ex-body, body.ex-body.ex-rtl {
   font-family: 'Estedad', 'Inter', Tahoma, sans-serif;
 }
-.ex-root { min-height: 100vh; display: flex; flex-direction: column; }
+.ex-root { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 [dir="rtl"] .ex-root { text-align: right; }
 
 /* ---------- header strip ---------- */
@@ -204,7 +204,7 @@ body.ex-body {
 .ex-top-right { display: flex; align-items: center; gap: 18px; }
 [dir="rtl"] .ex2-brand-tag { letter-spacing: 0.02em; }
 
-.ex2-landing { flex: 1; width: 100%; max-width: 1160px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 56px) 40px; }
+.ex2-landing { flex: 1; min-height: 0; overflow-y: auto; width: 100%; max-width: 1160px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 56px) 40px; }
 .ex2-hero { display: grid; grid-template-columns: minmax(0, 55fr) minmax(0, 45fr); gap: clamp(28px, 4vw, 56px); align-items: center; padding-bottom: clamp(36px, 6vw, 72px); }
 .ex2-headline { font-size: clamp(30px, 4.2vw, 50px); line-height: 1.12; letter-spacing: -0.01em; margin: 14px 0 16px; color: var(--ex-ink); font-weight: 700; }
 .ex2-desc { font-size: clamp(15.5px, 1.4vw, 18px); line-height: 1.65; color: var(--ex-ink-soft); margin: 0 0 14px; max-width: 54ch; }
@@ -274,9 +274,16 @@ body.ex-body {
 .mx-inspect-label { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ex-ink-mute); border: 1px solid var(--ex-brass-soft); border-radius: 5px; padding: 3px 8px; }
 [dir="rtl"] .mx-inspect-label { letter-spacing: 0; }
 
-/* chat: one bounded scroll owner at every breakpoint */
-.ex2-chat { display: block; max-width: 880px; }
-.ex2-thread { height: calc(100dvh - 78px - 58px); min-height: 420px; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; padding: 18px 2px 8px; }
+/* chat FRAME (2026-10-30): toolbar / transcript / composer siblings.
+   The transcript is the ONLY message scroller; the composer is stable. */
+.ex2-chat { flex: 1; display: flex; min-height: 0; }
+.ex2-frame { flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%; max-width: 800px; margin: 0 auto; padding: 0 clamp(14px, 3vw, 28px); }
+.ex2-toolbar { flex: none; display: flex; align-items: center; gap: 14px; padding: 12px 0 10px; border-bottom: 1px solid var(--ex-line); }
+.ex2-toolbar .ex2-chat-mode { margin-inline-start: auto; }
+.ex2-live { color: var(--ex-forest); font-size: 10px; animation: ex-pulse 1.6s ease-in-out infinite; }
+@keyframes ex-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.ex2-transcript { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; position: relative; padding: 18px 2px 10px; scroll-padding-bottom: 20px; }
+.ex2-composer { flex: none; border-top: 1px solid var(--ex-line); padding: 12px 0 14px; background: var(--ex-ivory); }
 .ex2-chat-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
 .ex2-chat-mode { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ex-ink-mute); font-weight: 700; }
 [dir="rtl"] .ex2-chat-mode { letter-spacing: 0; }
@@ -295,10 +302,15 @@ body.ex-body {
 .ex-root .mind-p-strong { font-weight: 700; color: var(--ex-ink); }
 .ex-root .mind-bubble a { color: var(--ex-forest); font-weight: 600; }
 .ex-root .mind-sources { margin-top: 10px; }
-.ex-root .mind-sources-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.ex-root .mind-sources-label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ex-ink-mute); font-weight: 700; }
+.ex-root .mind-sources-toggle { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--ex-line); background: var(--ex-card); color: var(--ex-ink-soft); border-radius: 999px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; min-height: 34px; }
+.ex-root .mind-sources-toggle:hover, .ex-root .mind-sources-toggle:focus-visible { border-color: var(--ex-forest); outline-offset: 2px; }
+.ex-root .mind-sources-label { letter-spacing: 0.06em; text-transform: uppercase; color: var(--ex-ink-mute); font-weight: 700; font-size: 11px; }
 [dir="rtl"] .ex-root .mind-sources-label { letter-spacing: 0; }
-.ex-root .mind-sources-toggle { border: 1px solid var(--ex-brass-soft); background: var(--ex-card); color: var(--ex-brass-ink); border-radius: 999px; padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; min-height: 32px; }
+.ex-root .mind-sources-dots { display: inline-flex; gap: 4px; }
+.ex-root .mind-sources-dots i { width: 7px; height: 7px; border-radius: 2px; background: var(--ex-brass-soft); }
+.ex-root .mind-sources-dots i[data-type="book"] { background: var(--ex-forest); }
+.ex-root .mind-sources-dots i[data-type="repo"], .ex-root .mind-sources-dots i[data-type="doc"] { background: var(--ex-brass); }
+.ex-root .mind-sources-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .ex-root .mind-cite { display: flex; align-items: center; gap: 9px; width: 100%; text-align: start; background: var(--ex-card); border: 1px solid var(--ex-line); border-radius: 9px; padding: 8px 11px; min-height: 44px; cursor: pointer; color: var(--ex-ink); font-family: inherit; font-size: 13px; font-weight: 500; }
 .ex-root .mind-cite:hover { border-color: var(--ex-forest); }
 .ex-root .mind-cite:focus-visible { outline: 3px solid var(--ex-brass); outline-offset: 2px; }
@@ -338,7 +350,7 @@ body.ex-body {
   .ex2-steps { grid-template-columns: 1fr; }
   .ex2-headline { font-size: clamp(27px, 7vw, 36px); }
   .ex2-cta { width: 100%; }
-  .ex2-thread { height: calc(100dvh - 70px - 54px); }
+  .ex2-composer { padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 560px) {
   .ex2-brand-tag { display: none; }

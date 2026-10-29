@@ -13,7 +13,7 @@ export default function ExecLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="robots" content="noindex, nofollow, noarchive" />
       </head>
-      <body>{children}</body>
+      <body className="ex-body">{children}</body>
     </html>
   );
 }

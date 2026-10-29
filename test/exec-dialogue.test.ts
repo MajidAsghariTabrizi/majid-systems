@@ -64,9 +64,16 @@ test('executive component sends persona and renders citations + disclosure', () 
   assert.ok(comp.includes('MindMessage'), 'shared citation renderer used');
   assert.ok(comp.includes('EvidenceInspector'), 'evidence inspector present');
   assert.ok(comp.includes('useFollow'), 'streaming-stable follow engine used');
-  assert.ok(comp.includes('AbortError'), 'cancel handled');
-  assert.ok(comp.includes('retryQ'), 'retry restores failed question');
-  assert.ok(comp.includes('MAX_QUESTIONS') === false, 'own limit constant');
+  // 2026-10-30 remediation: ONE shared stream controller for both surfaces
+  assert.ok(comp.includes('useMindChat('), 'shared stream controller used, not a private sender');
+  assert.ok(comp.includes("sessionKey: 'exec-session'"), 'separate executive session');
+  assert.ok(comp.includes('limit: 24'), 'executive quota preserved');
+  assert.ok(comp.includes('ex2-frame'), 'toolbar/transcript/composer frame');
+  const hook = read('src/components/mind/useMindChat.ts');
+  assert.ok(hook.includes('AbortError'), 'cancel handled in shared controller');
+  assert.ok(hook.includes('retryQuestion'), 'retry restores failed question in shared controller');
+  assert.ok(hook.includes('anchorTurn'), 'turn-start anchoring policy');
+  assert.ok(comp.includes('MAX_QUESTIONS') === false, 'no public limit constant leaked');
   // v2 landing contract: one-action entry, no auto-send, history preserved
   assert.ok(comp.includes('ctaStart'), 'primary CTA copy');
   assert.ok(comp.includes('ctaContinue'), 'continue state for existing conversation');

@@ -24,10 +24,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const follow = useFollow<HTMLDivElement>();
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
-  const openEvidence = (msgId: string, srcId: string) => {
-    follow.hold(); // selection must not move the reader or re-engage follow
-    setEvidence({ msgId, srcId });
-  };
+  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
@@ -42,22 +39,21 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
     if (retryQuestion) setInput(retryQuestion);
   }, [retryQuestion]);
 
-  // Streaming stability (2026-10-29): no per-delta smooth scrolling. The
-  // follow hook sticks to bottom ONLY while the reader is already there,
-  // pauses when they scroll up, and offers an explicit Jump-to-latest.
-  // Reveal ONCE per new user question (tracked by its persistent id), then
-  // per-flush stick only while the reader is following. The previous
-  // condition (role check on every messages update) was true for the whole
-  // stream and forced scrollTop on every batched flush - the P0 jump.
-  const revealedUserRef = useRef<string | null>(null);
+  // Viewport policy (2026-10-30): turn-start anchoring by default. A NEW
+  // user turn is brought near the transcript top ONCE (keyed by its
+  // persistent id); streaming alone never moves the reader afterwards.
+  // follow-latest runs only after explicit Jump activation.
+  const anchoredUserRef = useRef<string | null>(null);
   useEffect(() => {
     const lastUser = [...messages].reverse().find((m) => m.role === 'user');
-    if (lastUser && lastUser.id !== revealedUserRef.current) {
-      revealedUserRef.current = lastUser.id;
-      follow.reveal();
+    if (lastUser && lastUser.id !== anchoredUserRef.current) {
+      anchoredUserRef.current = lastUser.id;
+      requestAnimationFrame(() =>
+        follow.anchorTurn(document.querySelector('[data-mid="' + lastUser.id + '"]'))
+      );
       return;
     }
-    requestAnimationFrame(() => follow.afterFlush());
+    follow.afterFlush();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
@@ -126,7 +122,6 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                       onOpen={openEvidence}
                       expandedSet={expandedSources}
                       onToggleExpand={toggleExpand}
-                      onHold={follow.hold}
                     />
                   ))}
                   {busy && (
@@ -172,7 +167,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                   )}
                 </>
               )}
-              {!follow.following && messages.length > 0 && (
+              {follow.mode !== 'follow-latest' && !follow.atBottom && messages.length > 0 && (
                 <button type="button" className="mind-jump" onClick={follow.jumpToLatest}>
                   ↓ {s.jumpToLatest}
                 </button>

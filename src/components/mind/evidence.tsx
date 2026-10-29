@@ -195,7 +195,6 @@ export function MindSources({
   onOpen,
   expanded,
   onToggleExpand,
-  onHold,
 }: {
   m: Msg;
   label: string;
@@ -203,42 +202,47 @@ export function MindSources({
   onOpen: (msgId: string, srcId: string) => void;
   expanded: boolean;
   onToggleExpand: () => void;
-  /** called on mousedown BEFORE focus can scroll: captures reading position */
-  onHold?: () => void;
 }) {
   const srcs = normalizeSources(m.sources);
   if (srcs.length === 0) return null;
-  const PREVIEW = 4;
-  const visible = expanded ? srcs : srcs.slice(0, PREVIEW);
+  // COMPACT default: one summary control; the full list appears only on
+  // explicit expansion (no auto-mounted card stacks in the message flow)
   return (
     <div className="mind-sources" data-count={srcs.length}>
-      <div className="mind-sources-row">
+      <button
+        type="button"
+        className="mind-sources-toggle"
+        aria-expanded={expanded}
+        onClick={onToggleExpand}
+      >
         <span className="mind-sources-label">
           {label} ({srcs.length})
         </span>
-        {srcs.length > PREVIEW && (
-          <button type="button" className="mind-sources-toggle" aria-expanded={expanded} onClick={onToggleExpand}>
-            {viewAll} ({srcs.length})
-          </button>
-        )}
-      </div>
-      <ul className={expanded ? 'mind-sources-list is-open' : 'mind-sources-list'}>
-        {visible.map((s, i) => (
-          <li key={s.id}>
-            <button
-              type="button"
-              className="mind-cite"
-              onMouseDown={() => onHold?.()}
-              onClick={() => onOpen(m.id, s.id)}
-              aria-label={s.title}
-            >
-              <span className="mind-cite-n" aria-hidden>{i + 1}</span>
-              <span className="mind-cite-title" dir="auto">{s.title}</span>
-              <span className="mind-cite-type" aria-hidden>{s.type}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+        <span className="mind-sources-dots" aria-hidden>
+          {srcs.slice(0, 7).map((s) => (
+            <i key={s.id} data-type={s.type} title={typeLabel(s.type, 'en')} />
+          ))}
+        </span>
+        <span aria-hidden>{expanded ? '▴' : '▾'}</span>
+      </button>
+      {expanded && (
+        <ul className="mind-sources-list is-open">
+          {srcs.map((s, i) => (
+            <li key={s.id}>
+              <button
+                type="button"
+                className="mind-cite"
+                onClick={() => onOpen(m.id, s.id)}
+                aria-label={s.title}
+              >
+                <span className="mind-cite-n" aria-hidden>{i + 1}</span>
+                <span className="mind-cite-title" dir="auto">{s.title}</span>
+                <span className="mind-cite-type" aria-hidden>{typeLabel(s.type, 'en')}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -258,21 +262,60 @@ export function EvidenceInspector({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  /** focus lifecycle keyed to actual OPEN transitions only: a new inline
+   *  close callback per render or an ordinary delta must NOT re-run focus,
+   *  which would scroll the reader (2026-10-30 defect E). */
+  const openKey = source ? source.id : null;
+  const prevKeyRef = useRef<string | null>(null);
+  const restoreRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!openKey) {
+      // close: restore focus ONCE to the exact trigger, without scrolling
+      const prev = restoreRef.current;
+      prevKeyRef.current = null;
+      if (prev && document.contains(prev)) {
+        prev.focus({ preventScroll: true });
+      }
+      return;
+    }
+    if (prevKeyRef.current === openKey) return; // same dialog, content update
+    prevKeyRef.current = openKey;
+    restoreRef.current = (document.activeElement as HTMLElement | null) ?? null;
+    closeRef.current?.focus({ preventScroll: true });
+  }, [openKey]);
+  // dialog key handling: Escape + a real focus trap (tab cycling)
   useEffect(() => {
     if (!source) return;
-    const prev = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape' || !boxRef.current) return;
-      if (!boxRef.current.contains(document.activeElement)) return;
-      onClose();
+      const box = boxRef.current;
+      if (!box) return;
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onCloseRef.current();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const focusables = box.querySelectorAll<HTMLElement>('button, a[href], [tabindex]:not([tabindex="-1"])');
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (!box.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      (prev ?? document.body)?.focus?.();
-    };
-  }, [source, onClose]);
+    document.addEventListener('keydown', onKey, true);
+    return () => document.removeEventListener('keydown', onKey, true);
+  }, [!!source]);
   if (!source) return null;
   return (
     <div className="mind-evidence-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -308,7 +351,6 @@ export function MindMessage({
   onOpen,
   expandedSet,
   onToggleExpand,
-  onHold,
 }: {
   m: Msg;
   label: string;
@@ -317,17 +359,16 @@ export function MindMessage({
   onOpen: (msgId: string, srcId: string) => void;
   expandedSet: Set<string>;
   onToggleExpand: (msgId: string) => void;
-  onHold?: () => void;
 }) {
   if (m.role === 'user') {
     return (
-      <div className="mind-msg mind-msg-user" dir="auto">
+      <div className="mind-msg mind-msg-user" dir="auto" data-mid={m.id}>
         <div className="mind-bubble">{m.content}</div>
       </div>
     );
   }
   return (
-    <div className="mind-msg mind-msg-ai" data-incomplete={m.incomplete ? 'true' : undefined}>
+    <div className="mind-msg mind-msg-ai" data-mid={m.id} data-incomplete={m.incomplete ? 'true' : undefined}>
       <div className="mind-bubble" dir="auto">
         {m.content ? <MindMarkdown text={m.content} /> : null}
         {m.incomplete && incompleteLabel && (
@@ -341,7 +382,6 @@ export function MindMessage({
         onOpen={onOpen}
         expanded={expandedSet.has(m.id)}
         onToggleExpand={() => onToggleExpand(m.id)}
-        onHold={onHold}
       />
     </div>
   );

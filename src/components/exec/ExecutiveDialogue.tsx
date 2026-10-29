@@ -2,16 +2,15 @@
 
 /**
  * Meet Majid — landing + executive conversation at /meet-majid (unlisted).
- * Landing v2 (2026-10-30): proposition-first hero, mechanism diagram,
- * optional starters, how-it-works with real catalog examples, honest
- * unlisted note. Conversation reuses the SHARED Mind evidence/streaming
- * engine (MindMessage + EvidenceInspector + useFollow) with the executive
- * persona backend (POST /api/public-mind/chat, persona:'executive').
- * Landing styles are route-local (exec.css); shared mind-* classes are
- * adapted via .ex-root token aliases (see exec.css adapter block).
+ * 2026-10-30 remediation: the executive surface now runs the SAME stream
+ * controller as Mind (useMindChat with persona/session/limit options —
+ * one sender: stable ids, batched flushes, generation guard, abort/reset,
+ * partial preservation, retry). Viewport policy: turn-start anchoring,
+ * reading, explicit follow-latest (useFollow). Frame: toolbar / transcript
+ * / composer siblings — the composer never travels with streamed text.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useFollow, type Msg } from '../mind/useMindChat';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMindChat, useFollow } from '../mind/useMindChat';
 import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from '../mind/evidence';
 import { MIND_STRINGS } from '../mind/strings';
 
@@ -19,12 +18,12 @@ type Mode = 'work' | 'challenge' | 'transform' | 'general';
 
 const EN = {
   brand: 'QUANTIVIQ',
-  brandTag: 'Meet Majid · AI Dialogue',
+  brandTag: 'Meet Majid \u00b7 AI Dialogue',
   mainSite: 'Main site',
-  eyebrow: 'MEET MAJID · POWERED BY QUANTIVIQ MIND',
+  eyebrow: 'MEET MAJID \u00b7 POWERED BY QUANTIVIQ MIND',
   headline: 'Explore Majid\u2019s thinking through AI.',
   desc: 'Ask about real projects, challenge a decision, or bring a business problem. The AI draws on Majid\u2019s published work and curated public reference material, with sources you can inspect.',
-  identity: 'Majid Asghari Tabrizi · Product leadership, systems thinking & applied AI',
+  identity: 'Majid Asghari Tabrizi \u00b7 Product leadership, systems thinking & applied AI',
   ctaStart: 'Start an AI conversation',
   ctaContinue: 'Continue conversation',
   ctaHow: 'See how it works',
@@ -51,7 +50,6 @@ const EN = {
   ],
   unlistedNote: 'Unlisted, not private. Anyone with this link can open this page.',
   diagram: { q: 'Your question', mind: 'QUANTIVIQ MIND', s1: 'Projects', s2: 'Articles', s3: 'Books & Docs', a1: 'Documented material', a2: 'Interpretation', a3: 'Sources', inspect: 'inspect' },
-  // chat
   paths: ['Explore the work', 'Test a decision', 'Discuss AI transformation'],
   startersQ: {
     work: ['What has Majid actually shipped, and what remains experimental?', 'Walk me through the Phoenix retirement decision \u2014 why shut down a working system?', 'What do the four documented projects prove about his engineering judgment?'],
@@ -74,20 +72,18 @@ const EN = {
   limit: (n: number) => n + ' of 24 questions this session',
   errorUnavailable: 'The service is briefly unavailable. Your question was not lost \u2014 retry when ready.',
   errorRate: 'Session limit reached. The conversation stays readable; start a new session to continue asking.',
-  errorTimeout: 'The answer took too long to arrive. Try again, or rephrase more specifically.',
-  errorGeneric: 'Something failed mid-answer. Retry restores your question.',
   back: '\u2190 Introduction',
   footLeft: 'Meet Majid \u2014 AI representation of Majid Asghari Tabrizi',
   footRight: 'Powered by the Quantiviq public mind \u00b7 not indexed \u00b7 noarchive',
 };
 const FA: typeof EN = {
   brand: 'QUANTIVIQ',
-  brandTag: 'ملاقات با مجید · گفت‌وگوی هوش مصنوعی',
+  brandTag: 'ملاقات با مجید \u00b7 گفت‌وگوی هوش مصنوعی',
   mainSite: 'سایت اصلی',
-  eyebrow: 'ملاقات با مجید · قدرت‌گرفته از ذهن Quantiviq',
+  eyebrow: 'ملاقات با مجید \u00b7 قدرت‌گرفته از ذهن Quantiviq',
   headline: 'تفکر مجید را با هوش مصنوعی کاوش کنید.',
   desc: 'دربارهٔ پروژه‌های واقعی بپرسید، به یک تصمیم چالش بگذارید یا مسئلهٔ کاری‌تان را مطرح کنید. این هوش مصنوعی بر آثار منتشرشدهٔ مجید و منابع عمومی گزینش‌شده تکیه دارد و منابعش قابل بررسی‌اند.',
-  identity: 'مجید اصغری تبریزی · رهبری محصول، تفکر سیستمی و هوش مصنوعی کاربردی',
+  identity: 'مجید اصغری تبریزی \u00b7 رهبری محصول، تفکر سیستمی و هوش مصنوعی کاربردی',
   ctaStart: 'گفت‌وگو را شروع کنید',
   ctaContinue: 'ادامهٔ گفت‌وگو',
   ctaHow: 'چگونه کار می‌کند',
@@ -136,25 +132,10 @@ const FA: typeof EN = {
   limit: (n: number) => 'پرسش ' + String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[+d]) + ' از ۲۴ در این نشست',
   errorUnavailable: 'سرویس موقتاً در دسترس نیست. پرسش شما از دست نرفته \u2014 دوباره تلاش کنید.',
   errorRate: 'سقف نشست پر شده. گفت‌وگو قابل مطالعه می‌ماند؛ برای ادامهٔ پرسش نشست جدیدی بسازید.',
-  errorTimeout: 'پاسخ بیش از حد طول کشید. دوباره تلاش کنید یا پرسش را دقیق‌تر کنید.',
-  errorGeneric: 'در میانهٔ پاسخ خطایی رخ داد. تلاش دوباره پرسش شما را بازمی‌گرداند.',
   back: '\u2190 مقدمه',
   footLeft: 'ملاقات با مجید \u2014 بازنمایی هوش مصنوعی مجید اصغری تبریزی',
   footRight: 'مبتنی بر ذهن عمومی Quantiviq \u00b7 فهرست‌نشده \u00b7 بدون آرشیو',
 };
-
-const LIMIT = 24;
-let idc = 0;
-const mid = () => 'ex' + Date.now().toString(36) + (idc++).toString(36);
-function sid(): string {
-  if (typeof window === 'undefined') return 'server';
-  let s = sessionStorage.getItem('exec-session');
-  if (!s) {
-    s = 'ex' + (crypto.randomUUID?.() ?? String(Date.now()) + String(Math.random())).replace(/-/g, '').slice(0, 32);
-    sessionStorage.setItem('exec-session', s);
-  }
-  return s;
-}
 
 export function ExecutiveDialogue() {
   const [locale, setLocale] = useState<'en' | 'fa'>('en');
@@ -162,18 +143,31 @@ export function ExecutiveDialogue() {
   const rtl = locale === 'fa';
   const [stage, setStage] = useState<'intro' | 'chat'>('intro');
   const [mode, setMode] = useState<Mode>('general');
-  const [messages, setMessages] = useState<Msg[]>([]);
-  const [busy, setBusy] = useState(false);
-  const [asked, setAsked] = useState(0);
-  const [error, setError] = useState('');
-  const [retryQ, setRetryQ] = useState('');
   const [draft, setDraft] = useState('');
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
-  const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const follow = useFollow<HTMLDivElement>();
   const focusChatRef = useRef(false);
+
+  // ONE shared stream controller for both surfaces (defect C fix):
+  // stable ids, ~45ms batched flushes, generation guard, abort/reset,
+  // partial preservation, retry — with executive persona/session/quota.
+  const chatStrings = useMemo(
+    () => ({
+      ...MIND_STRINGS[locale],
+      serviceUnavailable: t.errorUnavailable,
+      limitReached: t.errorRate,
+      error: t.errorUnavailable,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [locale]
+  );
+  const { messages, busy, error, asked, retryQuestion, send, stop } = useMindChat(locale, chatStrings, {
+    persona: 'executive',
+    sessionKey: 'exec-session',
+    limit: 24,
+  });
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -188,116 +182,36 @@ export function ExecutiveDialogue() {
     }
   }, [stage]);
 
-  // streaming-stable follow (same engine as Mind): reveal once per new
-  // question, stick only while following, no unconditional scrolling
-  const revealedUserRef = useRef<string | null>(null);
+  // viewport policy: anchor each NEW user turn once, near the transcript
+  // top; deltas never move the reader; follow-latest is explicit-only
+  const anchoredUserRef = useRef<string | null>(null);
   useEffect(() => {
     const lastUser = [...messages].reverse().find((m) => m.role === 'user');
-    if (lastUser && lastUser.id !== revealedUserRef.current) {
-      revealedUserRef.current = lastUser.id;
-      follow.reveal();
+    if (lastUser && lastUser.id !== anchoredUserRef.current) {
+      anchoredUserRef.current = lastUser.id;
+      requestAnimationFrame(() =>
+        follow.anchorTurn(document.querySelector('[data-mid="' + lastUser.id + '"]'))
+      );
       return;
     }
-    requestAnimationFrame(() => follow.afterFlush());
+    follow.afterFlush();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   const suggestions = useMemo(() => t.startersQ[mode === 'general' ? 'general' : mode] ?? t.startersQ.general, [t, mode]);
 
-  const fail = useCallback((msg: string, q: string, retryable: boolean) => {
-    setError(msg);
-    setRetryQ(retryable ? q : '');
-    setAsked((n) => Math.max(0, n - 1));
-    setMessages((ms) => ms.map((m, i) => (i === ms.length - 1 && m.role === 'assistant' ? (m.content ? { ...m, incomplete: true } : m) : m)).filter((m, i, a) => !(m.role === 'assistant' && !m.content && i === a.length - 1)));
-  }, []);
-
-  const send = useCallback(async (text: string) => {
-    const q = text.trim().slice(0, 2000);
-    if (!q || busy) return;
-    if (asked >= LIMIT) { setError(t.errorRate); setRetryQ(''); return; }
-    setError(''); setRetryQ(''); setAsked((n) => n + 1);
-    const history: Msg[] = [...messages, { id: mid(), role: 'user', content: q }];
-    setMessages([...history, { id: mid(), role: 'assistant', content: '', sources: [] }]);
-    setBusy(true);
-    const ac = new AbortController();
-    abortRef.current = ac;
-    let streamFailed = false;
-    try {
-      const res = await fetch('/api/public-mind/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session: sid(), locale, persona: 'executive', messages: history.map((m) => ({ role: m.role, content: m.content })) }),
-        signal: ac.signal,
-      });
-      if (!res.ok) {
-        fail(res.status === 429 ? t.errorRate : t.errorUnavailable, q, true);
-        return;
-      }
-      const reader = res.body?.getReader();
-      if (!reader) { fail(t.errorUnavailable, q, true); return; }
-      const dec = new TextDecoder();
-      let buf = '';
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += dec.decode(value, { stream: true });
-        const parts = buf.split('\n\n');
-        buf = parts.pop() ?? '';
-        for (const part of parts) {
-          let evName = '', evData = '';
-          for (const line of part.split('\n')) {
-            if (line.startsWith('event: ')) evName = line.slice(7).trim();
-            else if (line.startsWith('data: ')) evData += line.slice(6);
-          }
-          if (!evData) continue;
-          let ev: any;
-          try { ev = JSON.parse(evData); } catch { continue; }
-          if (evName === 'sources') {
-            const srcs = (ev.sources ?? []) as NonNullable<Msg['sources']>;
-            setMessages((ms) => { const c = [...ms]; c[c.length - 1] = { ...c[c.length - 1], sources: srcs }; return c; });
-          } else if (evName === 'delta' && typeof ev.text === 'string') {
-            setMessages((ms) => { const c = [...ms]; c[c.length - 1] = { ...c[c.length - 1], content: c[c.length - 1].content + ev.text }; return c; });
-          } else if (evName === 'done') {
-            if (ev.status !== 'ok' && ev.status !== 'mock') streamFailed = true;
-          }
-        }
-      }
-      if (streamFailed) fail(t.errorGeneric, q, true);
-    } catch (e: any) {
-      if (e?.name === 'AbortError') {
-        setMessages((ms) => {
-          const c = [...ms];
-          const lastM = c.at(-1);
-          if (lastM?.role === 'assistant') {
-            if (lastM.content) c[c.length - 1] = { ...lastM, incomplete: true };
-            else c.pop();
-          }
-          return c;
-        });
-        setAsked((n) => Math.max(0, n - 1));
-      } else if (String(e?.message ?? '').includes('timeout') || String(e?.cause ?? '').includes('TIMEOUT')) {
-        fail(t.errorTimeout, q, true);
-      } else {
-        fail(t.errorUnavailable, q, true);
-      }
-    } finally {
-      setBusy(false);
-      abortRef.current = null;
-    }
-  }, [busy, messages, asked, locale, t, fail]);
-
-  // entering the conversation NEVER clears history, draft or session;
-  // starters only change the suggested-question context
-  const enter = (m: Mode, focus = true) => { setMode(m); setStage('chat'); focusChatRef.current = focus; setError(''); };
+  const enter = (m: Mode, focus = true) => { setMode(m); setStage('chat'); focusChatRef.current = focus; };
   const back = () => { setStage('intro'); setEvidence(null); }; // keeps messages, draft, session
-
-  const openEvidence = (msgId: string, srcId: string) => {
-    follow.hold();
-    setEvidence({ msgId, srcId });
-  };
+  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
   const prefill = (q: string) => { setDraft(q); focusChatRef.current = true; setStage('chat'); setTimeout(() => inputRef.current?.focus(), 60); };
+  const submitDraft = () => {
+    const v = draft.trim();
+    if (!v) return;
+    setDraft('');
+    send(v);
+  };
 
   const hasConversation = messages.length > 0;
   const lastMsg = messages.at(-1);
@@ -307,14 +221,14 @@ export function ExecutiveDialogue() {
       <header className="ex-top">
         <a className="ex2-brand" href={locale === 'fa' ? '/fa' : '/en'}>
           <span className="ex2-brand-mark">QUANTIVIQ</span>
-          <span className="ex2-brand-sep" aria-hidden>\u00b7</span>
+          <span className="ex2-brand-sep" aria-hidden>{'\u00b7'}</span>
           <span className="ex2-brand-tag">{t.brandTag}</span>
         </a>
         <div className="ex-top-right">
           <a className="ex2-main-link" href={locale === 'fa' ? '/fa' : '/en'}>{t.mainSite}</a>
           <div className="ex-locale-toggle" role="group" aria-label="Language">
             <button aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>EN</button>
-            <button aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>\u0641\u0627</button>
+            <button aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>{'\u0641\u0627'}</button>
           </div>
         </div>
       </header>
@@ -331,12 +245,11 @@ export function ExecutiveDialogue() {
                 <button className="ex2-cta" onClick={() => enter(hasConversation ? mode : 'general')}>
                   {hasConversation ? t.ctaContinue : t.ctaStart}
                 </button>
-                <a className="ex2-cta-how" href="#how" onClick={(e) => { e.preventDefault(); document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }); }}>{t.ctaHow}</a>
+                <button className="ex2-cta-how" onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}>{t.ctaHow}</button>
               </div>
               <p className="ex2-disclosure">{t.disclosureShort}</p>
             </div>
             <div className="ex2-hero-visual" aria-label={t.howTitle}>
-              {/* mechanism diagram: question \u2192 knowledge \u2192 answer \u2192 inspectable source */}
               <div className="mx-stage">
                 <div className="mx-chip mx-q">{t.diagram.q}</div>
                 <div className="mx-link" aria-hidden />
@@ -380,7 +293,7 @@ export function ExecutiveDialogue() {
               ))}
             </ul>
             <div className="ex2-general">
-              <button className="ex2-general-btn" onClick={() => enter('general')}>{t.generalAsk} \u2192</button>
+              <button className="ex2-general-btn" onClick={() => enter('general')}>{t.generalAsk} {'\u2192'}</button>
             </div>
           </section>
 
@@ -418,23 +331,26 @@ export function ExecutiveDialogue() {
           </section>
         </main>
       ) : (
-        <main className="ex-chat ex2-chat" id="main">
-          <section className="ex-thread ex2-thread" ref={follow.ref} aria-live="polite">
-            <div className="ex2-chat-top">
+        // FRAME (defect D fix): toolbar / transcript / composer are
+        // siblings — the ONLY message scroller is the transcript viewport
+        <main className="ex2-chat" id="main">
+          <div className="ex2-frame">
+            <div className="ex2-toolbar">
               <button className="ex-back-btn" onClick={back}>{t.back}</button>
               <span className="ex2-chat-mode">{mode !== 'general' ? t.paths[['work', 'challenge', 'transform'].indexOf(mode)] : t.brandTag}</span>
+              {busy && <span className="ex2-live" role="status">{'\u25cf'}</span>}
             </div>
-            {messages.length === 0 && (
-              <div className="ex-suggestions">
-                {suggestions.map((s) => (
-                  <button key={s} className="ex-suggest" onClick={() => prefill(s)}>{s}</button>
-                ))}
-              </div>
-            )}
-            {messages.map((m) => (
-              <div key={m.id} className={m.role === 'assistant' ? 'ex-msg ex-a' + (busy && m === lastMsg ? ' ex-streaming' : '') : 'ex-msg ex-q'}>
-                {m.role === 'assistant' ? (
-                  <>
+            <div className="ex2-transcript" ref={follow.ref} aria-live="polite">
+              {messages.length === 0 && (
+                <div className="ex-suggestions">
+                  {suggestions.map((s) => (
+                    <button key={s} className="ex-suggest" onClick={() => prefill(s)}>{s}</button>
+                  ))}
+                </div>
+              )}
+              {messages.map((m) => (
+                m.role === 'assistant' ? (
+                  <div key={m.id} className={'ex-msg ex-a' + (busy && m === lastMsg ? ' ex-streaming' : '')}>
                     <MindMessage
                       m={m}
                       label={t.sourcesLabel}
@@ -443,27 +359,30 @@ export function ExecutiveDialogue() {
                       onOpen={openEvidence}
                       expandedSet={expandedSources}
                       onToggleExpand={toggleExpand}
-                      onHold={follow.hold}
                     />
-                    {m.content && (m.sources?.length ?? 0) > 0 && (
-                      <button className="ex-challenge" onClick={() => send(locale === 'fa' ? 'به این پاسخ چالش بگذار: نقطه‌ضعف‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>\u21af {t.challengeThis}</button>
+                    {m.content && (m.sources?.length ?? 0) > 0 && !busy && (
+                      <button className="ex-challenge" onClick={() => send(locale === 'fa' ? 'به این پاسخ چالش بگذار: نقطه‌ضعف‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>
+                        {'\u21af'} {t.challengeThis}
+                      </button>
                     )}
-                  </>
+                  </div>
                 ) : (
-                  m.content
-                )}
-              </div>
-            ))}
-            {!follow.following && messages.length > 0 && (
-              <button type="button" className="ex-jump" onClick={follow.jumpToLatest}>\u2193 {t.jumpToLatest}</button>
-            )}
-            {error && (
-              <div className="ex-error" role="alert">
-                <span>{error}</span>
-                {retryQ && <button onClick={() => send(retryQ)}>{t.retry}</button>}
-              </div>
-            )}
-            <div className="ex-compose">
+                  <MindMessage key={m.id} m={m} label={t.sourcesLabel} viewAll={t.viewAll} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
+                )
+              ))}
+              {follow.mode !== 'follow-latest' && !follow.atBottom && messages.length > 0 && (
+                <button type="button" className="ex-jump" onClick={follow.jumpToLatest}>
+                  {'\u2193'} {t.jumpToLatest}
+                </button>
+              )}
+              {error && (
+                <div className="ex-error" role="alert">
+                  <span>{error}</span>
+                  {retryQuestion && <button onClick={() => send(retryQuestion)}>{t.retry}</button>}
+                </div>
+              )}
+            </div>
+            <div className="ex2-composer">
               <div className="ex-compose-row">
                 <textarea
                   ref={inputRef}
@@ -473,14 +392,14 @@ export function ExecutiveDialogue() {
                   placeholder={t.composerPlaceholder}
                   rows={2}
                   maxLength={2000}
-                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (draft.trim()) { const v = draft; setDraft(''); send(v); } } }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitDraft(); } }}
                   aria-label={t.composerPlaceholder}
                 />
-                {busy ? <button className="ex-stop" onClick={() => abortRef.current?.abort()}>{t.stop}</button> : <button className="ex-send" onClick={() => { if (draft.trim()) { const v = draft; setDraft(''); send(v); } }}>{t.send}</button>}
+                {busy ? <button className="ex-stop" onClick={stop}>{t.stop}</button> : <button className="ex-send" onClick={submitDraft}>{t.send}</button>}
               </div>
               <div className="ex-hint"><span>{t.hintLeft}</span><span>{t.limit(asked)}</span></div>
             </div>
-          </section>
+          </div>
         </main>
       )}
 
@@ -492,7 +411,7 @@ export function ExecutiveDialogue() {
         }
         locale={locale === 'fa' ? 'fa' : 'en'}
         s={{ ...MIND_STRINGS[locale], close: t.closeLabel, openSource: t.openSource, evidenceTitle: t.evidenceTitle, evidenceNote: t.evidenceNote }}
-        onClose={() => setEvidence(null)}
+        onClose={() => { setEvidence(null); }}
       />
 
       <footer className="ex-foot">

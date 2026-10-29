@@ -1,21 +1,30 @@
 /* ===== Mind evidence UX + streaming stability (2026-10-29) ===== */
-.mind-sources-row {
-  display: flex;
+.mind-sources-toggle {
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  flex-wrap: wrap;
-}
-.mind-sources-toggle {
   border: 1px solid var(--border-strong);
   background: var(--surface-2);
   color: var(--brand);
   border-radius: 999px;
-  padding: 4px 12px;
-  font: 600 0.78rem var(--font-sans);
-  min-height: 32px;
+  padding: 5px 14px;
+  font: 600 0.8rem var(--font-sans);
+  min-height: 34px;
   cursor: pointer;
 }
+.mind-sources-toggle:hover { border-color: var(--brand); }
 .mind-sources-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.mind-sources-label { text-transform: uppercase; letter-spacing: 0.06em; }
+.mind-sources-dots { display: inline-flex; gap: 4px; }
+.mind-sources-dots i { width: 7px; height: 7px; border-radius: 2px; background: var(--muted); }
+.mind-sources-dots i[data-type="book"] { background: var(--brand); }
+.mind-sources-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
 .mind-cite {
   display: flex;
   align-items: center;

@@ -29,119 +29,182 @@ function mid(role: 'user' | 'assistant') {
 }
 
 export function sessionId(): string {
+  return sessionKeyed('mind-session');
+}
+
+/** session identity per surface: the public mind and the executive
+ *  dialogue keep SEPARATE sessions and quotas by key. */
+export function sessionKeyed(key: string): string {
   if (typeof window === 'undefined') return 'server';
-  let s = sessionStorage.getItem('mind-session');
+  let s = sessionStorage.getItem(key);
   if (!s) {
-    s = (crypto.randomUUID?.() ?? 's-' + Date.now() + '-' + Math.random()).replace(/-/g, '').slice(0, 32);
-    sessionStorage.setItem('mind-session', s);
+    s = key.slice(0, 3) + (crypto.randomUUID?.() ?? 's-' + Date.now() + '-' + Math.random()).replace(/-/g, '').slice(0, 29);
+    sessionStorage.setItem(key, s);
   }
   return s;
 }
 
-/** Follow/pause scroll behavior. ONE scroll owner per surface.
- *  - follows new content only while the reader is near the bottom
- *    (<= 88px), with immediate coalesced movement (no per-token smooth)
- *  - pauses when the reader scrolls up; Jump-to-latest resumes
- *  - respects reduced motion (always immediate) */
-export function useFollow<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [following, setFollowing] = useState(true);
-  /** self-scroll tagging: our own sticks fire 'scroll' events; without
-   *  tagging, a stick landing between the reader's scroll and the rAF
-   *  measurement erases user intent (the residual P0 jump). */
-  const selfRef = useRef(false);
-  const lastTargetRef = useRef(-1);
+/** Viewport policy engine (2026-10-30 remediation). ONE scroll owner per
+ *  surface. Explicit states: turn-start | reading | follow-latest.
+ *  - a new user turn is anchored near the transcript top ONCE (by id)
+ *  - streaming NEVER moves the reader on its own
+ *  - follow-latest is entered ONLY by explicit Jump activation; reader
+ *    navigation exits it synchronously (queued frames are cancelled)
+ *  - self-scrolls are tagged with CLAMPED targets so classification is
+ *    correct even for short/no-overflow transcripts
+ *  - attaches via node state, so late-mounting viewports (Meet intro ->
+ *    chat) and Strict Mode remounts get exactly one live listener */
+export type FollowMode = 'turn-start' | 'reading' | 'follow-latest';
 
-  const measure = useCallback(() => {
-    const el = ref.current;
-    if (!el) return true;
-    return el.scrollHeight - el.scrollTop - el.clientHeight <= 88;
+export function useFollow<T extends HTMLElement>() {
+  const [node, setNode] = useState<T | null>(null);
+  const [mode, setMode] = useState<FollowMode>('turn-start');
+  const [atBottom, setAtBottom] = useState(false);
+  const modeRef = useRef<FollowMode>('turn-start');
+  modeRef.current = mode;
+  const selfRef = useRef(false);
+  const selfTargetRef = useRef(-1);
+  const rafRef = useRef(0);
+  /** last observed reader-input timestamp; queued sticks must not run if
+   *  the reader acted after the stick was queued (in-flight rAF race) */
+  const readerInputAtRef = useRef(0);
+
+  const cancelWork = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = 0;
   }, []);
+
+  const clampTarget = (el: HTMLElement, target: number) =>
+    Math.max(0, Math.min(target, el.scrollHeight - el.clientHeight));
+
+  const measureBottom = useCallback(() => {
+    if (!node) return;
+    const near = node.scrollHeight - node.scrollTop - node.clientHeight <= 88;
+    setAtBottom((prev) => (prev === near ? prev : near));
+  }, [node]);
+
+  const stickBottom = useCallback(() => {
+    rafRef.current = 0;
+    if (!node) return;
+    const target = clampTarget(node, node.scrollHeight);
+    selfRef.current = true;
+    selfTargetRef.current = target;
+    node.scrollTop = target;
+    setAtBottom(true);
+  }, [node]);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let raf = 0;
+    if (!node) return;
+    // Reader-intent INPUTS win synchronously: a queued stick frame can
+    // land between a touch/wheel move and its scroll event, erasing the
+    // reader's position before any handler observes it. wheel/touch/key
+    // events arrive before that frame runs, so they interrupt follow
+    // immediately (2026-10-30 touch race, second fix).
+    const readerActed = () => {
+      readerInputAtRef.current = performance.now();
+      cancelWork();
+      modeRef.current = 'reading';
+      setMode('reading');
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (['PageUp', 'PageDown', 'Home', 'End', 'ArrowUp', 'ArrowDown', ' '].includes(e.key)) readerActed();
+    };
+    node.addEventListener('wheel', readerActed, { passive: true });
+    node.addEventListener('touchstart', readerActed, { passive: true });
+    node.addEventListener('touchmove', readerActed, { passive: true });
+    node.addEventListener('keydown', onKey);
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const isSelf = selfRef.current && Math.abs(el.scrollTop - lastTargetRef.current) <= 2;
-        selfRef.current = false;
-        if (isSelf) return; // our own stick - not user intent
-        const near = measure();
-        followingRef.current = near;
-        setFollowing(near);
-      });
+      // A self-tag is trustworthy only if the tagged target is STILL the
+      // current clamped bottom. While follow-latest sticks every frame, a
+      // reader gesture (touch flick, wheel) can land within tolerance of
+      // the last stick's target and be misclassified as our own write —
+      // letting queued sticks override the reader (2026-10-30 touch race).
+      const clampNow = Math.max(0, node.scrollHeight - node.clientHeight);
+      const isSelf =
+        selfRef.current &&
+        Math.abs(node.scrollTop - selfTargetRef.current) <= 2 &&
+        Math.abs(selfTargetRef.current - clampNow) <= 2;
+      selfRef.current = false;
+      if (isSelf) return;
+      cancelWork();
+      modeRef.current = 'reading';
+      setMode('reading');
+      measureBottom();
     };
-    el.addEventListener('scroll', onScroll, { passive: true });
+    node.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener('scroll', onScroll);
+      node.removeEventListener('scroll', onScroll);
+      node.removeEventListener('wheel', readerActed);
+      node.removeEventListener('touchstart', readerActed);
+      node.removeEventListener('touchmove', readerActed);
+      node.removeEventListener('keydown', onKey);
+      cancelWork();
     };
-  }, [measure]);
+  }, [node, cancelWork, measureBottom]);
 
-  /** programmatic stick to bottom, tagged so its scroll event is not
-   *  mistaken for the reader's intent */
-  const stick = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    selfRef.current = true;
-    lastTargetRef.current = el.scrollHeight;
-    el.scrollTop = el.scrollHeight;
-  }, []);
-
-  /** persistent follow decision, updated ONLY by user scroll and explicit
-   *  actions (never by post-growth measurement — the DOM has already grown
-   *  when effects run, so measuring there would break auto-follow). */
-  const followingRef = useRef(true);
-  followingRef.current = following;
-  // hoisted for onScroll above (defined before the effect that uses it)
-
-  /** kept for API compatibility; the decision now lives in followingRef. */
-  const beforeFlush = useCallback(() => {}, []);
-
-  /** call after a flush renders: stick to bottom iff the reader was
-   *  following. Immediate — no smooth animation per token. */
+  /** call after each batched flush renders. Only follow-latest moves.
+   *  The queued frame re-validates BOTH mode and reader-input recency, so
+   *  an in-flight frame can never overwrite an intervening touch/wheel. */
   const afterFlush = useCallback(() => {
-    if (followingRef.current) stick();
-  }, [stick]);
+    if (!node) return;
+    measureBottom();
+    if (modeRef.current === 'follow-latest' && !rafRef.current) {
+      const queuedAt = performance.now();
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = 0;
+        if (modeRef.current !== 'follow-latest') return;
+        if (readerInputAtRef.current > queuedAt) return; // reader won
+        stickBottom();
+      });
+    }
+  }, [node, measureBottom, stickBottom]);
 
-  /** intentional reveal of a just-sent question (once, not per token) */
-  const reveal = useCallback(() => {
-    followingRef.current = true;
-    setFollowing(true);
-    stick();
-  }, [stick]);
-
-  const jumpToLatest = useCallback(() => {
-    followingRef.current = true;
-    setFollowing(true);
-    stick();
-  }, [stick]);
-
-  /** restore + hold the current reading position (tagged as self) - used
-   *  when selecting a citation so focus/scroll side effects cannot move
-   *  the reader or re-engage following (mission: source open must retain
-   *  reading position). */
-  const hold = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    const st = el.scrollTop;
-    followingRef.current = false; // selection never re-engages follow
-    setFollowing(false);
-    requestAnimationFrame(() => {
+  /** one-shot: bring the newly submitted user turn near the transcript
+   *  top (small preceding-context offset), tagged as a self scroll. */
+  const anchorTurn = useCallback(
+    (el: HTMLElement | null) => {
+      if (!node || !el) return;
+      const target = clampTarget(
+        node,
+        node.scrollTop + el.getBoundingClientRect().top - node.getBoundingClientRect().top - 24
+      );
       selfRef.current = true;
-      lastTargetRef.current = st;
-      el.scrollTop = st;
-    });
+      selfTargetRef.current = target;
+      node.scrollTop = target;
+      modeRef.current = 'turn-start';
+      setMode('turn-start');
+    },
+    [node]
+  );
+
+  /** explicit reader activation only - never re-entered by deltas */
+  const jumpToLatest = useCallback(() => {
+    if (!node) return;
+    modeRef.current = 'follow-latest';
+    setMode('follow-latest');
+    stickBottom();
+  }, [node, stickBottom]);
+
+  /** callback ref: React notifies us of real mount/unmount */
+  const ref = useCallback((n: T | null) => {
+    setNode(n);
   }, []);
 
-  return { ref, following, beforeFlush, afterFlush, reveal, jumpToLatest, hold };
+  return { ref, mode, atBottom, afterFlush, anchorTurn, jumpToLatest };
 }
-
 export type MindScope = 'all' | 'books' | 'oss' | 'flows' | 'concepts' | 'articles';
 
-export function useMindChat(locale: string, s: MindStrings) {
+/** page-specific controller options: BOTH surfaces run this one sender */
+export type ChatOptions = {
+  persona?: string;          // undefined = public mind (default persona + scope)
+  sessionKey?: string;       // sessionStorage key (separate sessions/quotas)
+  limit?: number;            // questions per session
+};
+
+export function useMindChat(locale: string, s: MindStrings, opts: ChatOptions = {}) {
+  const persona = opts.persona;
+  const sessionKey = opts.sessionKey ?? 'mind-session';
+  const limit = opts.limit ?? MAX_QUESTIONS;
   const [messages, setMessages] = useState<Msg[]>([]);
   const [busy, setBusy] = useState(false);
   const [scope, setScope] = useState<MindScope>('all');
@@ -204,7 +267,7 @@ export function useMindChat(locale: string, s: MindStrings) {
     async (text: string) => {
       const q = text.trim().slice(0, 2000);
       if (!q || busy) return;
-      if (asked >= MAX_QUESTIONS) {
+      if (asked >= limit) {
         setNotice(s.limitReached);
         return;
       }
@@ -228,9 +291,9 @@ export function useMindChat(locale: string, s: MindStrings) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            session: sessionId(),
+            session: sessionKeyed(sessionKey),
             locale,
-            scope,
+            ...(persona ? { persona } : { scope }),
             messages: [...history, userMsg].map((m) => ({ role: m.role, content: m.content })),
           }),
           signal: ac.signal,
@@ -307,7 +370,7 @@ export function useMindChat(locale: string, s: MindStrings) {
         }
       }
     },
-    [busy, asked, messages, locale, s, fail, scope, patchLast]
+    [busy, asked, messages, locale, s, fail, scope, patchLast, persona, sessionKey, limit]
   );
 
   return { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, setError, setNotice, scope, setScope };
