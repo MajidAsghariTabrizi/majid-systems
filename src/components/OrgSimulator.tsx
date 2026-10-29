@@ -66,7 +66,7 @@ import {
   phaseDuration,
   type MachineState,
 } from '@/lib/sim/machine';
-import { type LayerKey } from '@/content/simulator';
+import { type LayerKey, type SignalKey } from '@/content/simulator';
 
 /* ------------------------------------------------------------------ */
 /* helpers                                                             */
@@ -255,9 +255,36 @@ const VISIT_ORDER = ['SIGNAL', ...OLD_HOPS.map((h) => h.to)];
 /* Section                                                             */
 /* ================================================================== */
 
-export function OrgSimulatorSection({ locale = 'en' }: { locale?: SimLocale }) {
+export function OrgSimulatorSection({
+  locale = 'en',
+  signal,
+  onSignalChange,
+}: {
+  locale?: SimLocale;
+  /** Controlled signal (single source of truth, e.g. the Explore wrapper). */
+  signal?: SignalKey;
+  onSignalChange?: (s: SignalKey) => void;
+}) {
   const S = useMemo(() => makeSimData(locale), [locale]);
   const [state, dispatch] = useReducer(machine, initialMachine);
+
+  // Controlled signal (2026-10-29): when a wrapper (e.g. /explore) owns the
+  // scenario, keep the machine in sync with it — ONE source of truth drives
+  // the picker, simulation, authority panel, status and transcript.
+  const controlledSignal = signal;
+  useEffect(() => {
+    if (!controlledSignal) return;
+    if (
+      stateRef.current.signal !== controlledSignal &&
+      (state.phase === 'IDLE_OLD' || state.phase === 'OLD_COMPLETE')
+    ) {
+      dispatch({ type: 'SET_SIGNAL', signal: controlledSignal });
+    }
+  }, [controlledSignal, state.phase]);
+  useEffect(() => {
+    if (onSignalChange && state.signal !== controlledSignal) onSignalChange(state.signal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.signal]);
   const [isMobile, setIsMobile] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [edgeTip, setEdgeTip] = useState<{ id: string; x: number; y: number } | null>(null);

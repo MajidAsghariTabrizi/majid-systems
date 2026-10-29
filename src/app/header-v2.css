@@ -1,0 +1,215 @@
+
+/* ============================================================
+   SITE HEADER v2 — grouped nav, dropdowns, mobile sheet
+   (2026-10-29 redesign; replaces the 10-link strip)
+   ============================================================ */
+
+.nv-bar {
+  display: none;
+}
+/* below 620px the header CTA yields to the burger (the sheet carries the
+   same Start-a-conversation action) so nothing overflows at 320px */
+@media (max-width: 620px) {
+  .site-header-actions .nav-cta {
+    display: none;
+  }
+}
+.nv-burger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: 600 0.9rem var(--font-sans);
+  cursor: pointer;
+}
+.nv-burger-icon {
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
+  border-radius: 1px;
+}
+html.sheet-open {
+  overflow: hidden;
+}
+.nv-sheet {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  z-index: 90;
+  background: var(--canvas);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem var(--gutter) 2rem;
+}
+.nv-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0 1rem;
+}
+.nv-sheet-title {
+  font: 700 1.1rem var(--font-display);
+  color: var(--ink);
+}
+.nv-sheet-close {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font: 600 0.9rem var(--font-sans);
+  color: var(--text);
+  cursor: pointer;
+}
+.nv-sheet-group {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border-quiet);
+}
+.nv-sheet-h {
+  margin: 0 0 0.5rem;
+  font: 600 0.78rem var(--font-sans);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+html[lang='fa'] .nv-sheet-h { letter-spacing: 0; }
+.nv-sheet-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.nv-sheet-item,
+.nv-sheet-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font: 500 1rem var(--font-sans);
+  color: var(--text);
+  text-decoration: none;
+}
+.nv-sheet-item.is-here,
+.nv-sheet-link.is-here {
+  background: var(--selected);
+  color: var(--brand);
+  font-weight: 600;
+}
+.nv-sheet-cta {
+  margin-top: 1.4rem;
+  justify-content: center;
+  display: flex;
+}
+.nv-en {
+  font: 600 0.62rem var(--font-mono);
+  font-style: normal;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 5px;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 1024px) {
+  .nv-burger { display: none; }
+  .nv-sheet { display: none; }
+  .nv-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .nv-link,
+  .nv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 13px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    font: 500 0.95rem var(--font-sans);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nv-link:hover,
+  .nv-btn:hover {
+    background: var(--surface-2);
+    color: var(--brand);
+  }
+  .nv-link:focus-visible,
+  .nv-btn:focus-visible,
+  .nv-item:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .nv-link.is-here,
+  .nv-btn.is-here {
+    color: var(--brand);
+    font-weight: 600;
+  }
+  .nv-btn.is-open {
+    background: var(--surface-2);
+  }
+  .nv-caret {
+    font-size: 0.62rem;
+    color: var(--muted);
+    transform: translateY(1px);
+  }
+  .nv-btn[aria-expanded='true'] .nv-caret {
+    transform: translateY(-1px) rotate(180deg);
+  }
+  .nv-group {
+    position: relative;
+  }
+  .nv-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 230px;
+    display: grid;
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lift);
+    z-index: 60;
+  }
+  .nv-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 11px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: 500 0.92rem var(--font-sans);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nv-item:hover {
+    background: var(--selected);
+    color: var(--brand);
+  }
+  .nv-item.is-here {
+    color: var(--brand);
+    font-weight: 600;
+    background: var(--selected);
+  }
+  .site-header .nav {
+    display: none;
+  }
+}

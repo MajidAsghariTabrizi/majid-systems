@@ -20,6 +20,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
   const [ref, setRef] = useState('');
   const [errKind, setErrKind] = useState<'validation' | 'rate' | 'server' | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [preferred, setPreferred] = useState<'email' | 'linkedin'>('email');
 
   useEffect(() => {
     const q = search?.get('intent');
@@ -76,6 +77,10 @@ export function LeadForm({ locale }: { locale: Locale }) {
           else fe[k] = t.errors.message;
         }
         setFieldErrors(fe);
+        requestAnimationFrame(() => {
+          const firstInvalid = document.querySelector<HTMLElement>('.lead-form [aria-invalid="true"]');
+          firstInvalid?.focus();
+        });
         setErrKind('validation');
       } else {
         setErrKind('server');
@@ -120,7 +125,11 @@ export function LeadForm({ locale }: { locale: Locale }) {
         </label>
         <label className="lead-field">
           <span className="lead-label">{t.preferred}</span>
-          <select name="preferred" defaultValue="email">
+          <select
+            name="preferred"
+            value={preferred}
+            onChange={(e) => setPreferred(e.target.value as 'email' | 'linkedin')}
+          >
             <option value="email">{t.preferredOptions.email}</option>
             <option value="linkedin">{t.preferredOptions.linkedin}</option>
           </select>
@@ -161,31 +170,54 @@ export function LeadForm({ locale }: { locale: Locale }) {
         </label>
       </div>
 
-      <div className="lead-row">
-        <label className="lead-field">
-          <span className="lead-label">{t.org}</span>
-          <input name="org" type="text" maxLength={150} autoComplete="organization" />
-        </label>
-        <label className="lead-field">
-          <span className="lead-label">{t.role}</span>
-          <input name="role" type="text" maxLength={100} autoComplete="organization-title" />
-        </label>
-      </div>
+      {preferred === 'linkedin' && (
+        <div className="lead-row">
+          <label className="lead-field">
+            <span className="lead-label">{t.preferredLink}</span>
+            <input
+              name="preferredLink"
+              type="url"
+              maxLength={300}
+              placeholder="https://linkedin.com/in/…"
+              dir="ltr"
+              aria-invalid={!!fieldErrors.preferredLink}
+              aria-describedby={fieldErrors.preferredLink ? 'err-preferredLink' : undefined}
+            />
+            {fieldErrors.preferredLink && (
+              <span className="lead-error" id="err-preferredLink" role="alert">{fieldErrors.preferredLink}</span>
+            )}
+          </label>
+        </div>
+      )}
 
-      <div className="lead-row">
-        <label className="lead-field">
-          <span className="lead-label">{t.website}</span>
-          <input name="website" type="url" maxLength={300} placeholder="https://…" dir="ltr" />
-          {fieldErrors.website && <span className="lead-error" id="err-website" role="alert">{fieldErrors.website}</span>}
-        </label>
-        <label className="lead-field">
-          <span className="lead-label">{t.preferredLink}</span>
-          <input name="preferredLink" type="url" maxLength={300} placeholder="https://linkedin.com/in/…" dir="ltr" />
-          {fieldErrors.preferredLink && (
-            <span className="lead-error" id="err-preferredLink" role="alert">{fieldErrors.preferredLink}</span>
-          )}
-        </label>
-      </div>
+      <details className="lead-more">
+        <summary>{t.moreLabel}</summary>
+        <div className="lead-row">
+          <label className="lead-field">
+            <span className="lead-label">{t.org}</span>
+            <input name="org" type="text" maxLength={150} autoComplete="organization" />
+          </label>
+          <label className="lead-field">
+            <span className="lead-label">{t.role}</span>
+            <input name="role" type="text" maxLength={100} autoComplete="organization-title" />
+          </label>
+        </div>
+        <div className="lead-row">
+          <label className="lead-field">
+            <span className="lead-label">{t.website}</span>
+            <input
+              name="website"
+              type="url"
+              maxLength={300}
+              placeholder="https://…"
+              dir="ltr"
+              aria-invalid={!!fieldErrors.website}
+              aria-describedby={fieldErrors.website ? 'err-website' : undefined}
+            />
+            {fieldErrors.website && <span className="lead-error" id="err-website" role="alert">{fieldErrors.website}</span>}
+          </label>
+        </div>
+      </details>
 
       <label className="lead-field">
         <span className="lead-label">{t.message} *</span>
@@ -204,7 +236,13 @@ export function LeadForm({ locale }: { locale: Locale }) {
       </label>
 
       <label className="lead-consent">
-        <input name="consent" type="checkbox" required />
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          aria-invalid={!!fieldErrors.consent}
+          aria-describedby={fieldErrors.consent ? 'err-consent' : undefined}
+        />
         <span>
           {t.consent}{' '}
           <a href={`./privacy`} className="lead-privacy-link">
@@ -212,7 +250,9 @@ export function LeadForm({ locale }: { locale: Locale }) {
           </a>
         </span>
       </label>
-      {fieldErrors.consent && <span className="lead-error">{fieldErrors.consent}</span>}
+      {fieldErrors.consent && (
+        <span className="lead-error" id="err-consent" role="alert">{fieldErrors.consent}</span>
+      )}
 
       {errKind === 'rate' && (
         <p className="lead-error" role="alert">{t.rateLimited}</p>

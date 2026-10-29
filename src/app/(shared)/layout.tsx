@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
+import '../header-v2.css';
 
 /**
  * Root layout for the shared deep-content tree (journey, profile, work,

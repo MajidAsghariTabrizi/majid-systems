@@ -105,7 +105,8 @@ export default function ExploreExperience({ locale }: { locale: Locale }) {
   const t = dict(locale).explore;
   const L = simLabels[locale];
   const [role, setRole] = useState<string>('ceo');
-  const [signal, setSignal] = useState<SignalKey>('revenue-drop');
+  // must match the simulator's initialMachine.signal so load never disagrees
+  const [signal, setSignal] = useState<SignalKey>('customer-issue');
   const [gate, setGate] = useState<GateChoice>('approve');
   const [drawer, setDrawer] = useState<string | null>(null);
 
@@ -173,13 +174,13 @@ export default function ExploreExperience({ locale }: { locale: Locale }) {
         </div>
         <p className="explore-hint">
           {locale === 'fa'
-            ? 'همین سیگنال را در شبیه‌ساز پایین تزریق کنید تا مسیر دو سازمان را ببینید؛ گیت مجوز و رونوشت نیز با همین سیگنال به‌روز می‌شوند.'
-            : 'Inject this same signal in the simulator below to watch both organizations run; the gate and transcript follow your selection.'}
+            ? 'انتخاب شما مستقیماً سناریوی شبیه‌ساز، گیت مجوز، وضعیت و رونوشت را هم‌زمان تعیین می‌کند — یک منبع حقیقت، بدون انتخاب دوباره.'
+            : 'Your selection drives the simulator scenario, the authority gate, status and transcript together — one source of truth, nothing to re-select.'}
         </p>
       </section>
 
       <div className="explore-sim" id="simulator">
-        <OrgSimulatorSection locale={locale} />
+        <OrgSimulatorSection locale={locale} signal={signal} onSignalChange={setSignal} />
       </div>
 
       <section className="explore-sources" aria-label={t.sourcesTitle}>

@@ -368,9 +368,12 @@ export const PRIMITIVES: Primitive[] = [
     key: 'phoenix',
     name: 'Phoenix',
     oneLiner: 'Fail-closed autonomous execution: intelligence, authority, and execution strictly separated.',
-    proof: 'Multi-language production system on Arbitrum with protected release model and receipt-level reconciliation.',
-    status: 'PRODUCTION',
-    statusKind: 'ok',
+    proof: 'Multi-language production system on Arbitrum with protected release model and receipt-level reconciliation. Retired 2026-09-17 after measurement; the negative result is kept public.',
+    // Canonical status lives in src/content/projects.ts (status: 'retired').
+    // This badge must NEVER say PRODUCTION again: former production quality
+    // and current operating status are different fields (audit 2026-10-29).
+    status: 'RETIRED 2026-09-17',
+    statusKind: 'unknown',
     href: '/work/phoenix',
   },
   {

@@ -11,6 +11,8 @@ import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
 import '../silver-bullet.css';
+import '../header-v2.css';
+import '../home-v2.css';
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -110,7 +112,7 @@ export default async function LocaleLayout({
         <QuantiviqJsonLd />
       </head>
       <body>
-        <a className="skip-link" href="#main">Skip to content</a>
+        <a className="skip-link" href="#main">{dict(locale).skipToContent}</a>
         <Header locale={locale} />
         <main id="main">{children}</main>
         <Footer locale={locale} />

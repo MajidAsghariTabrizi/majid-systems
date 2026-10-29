@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 
 import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
-import { OrgSimulatorSection } from '@/components/OrgSimulator';
+import { IntelligenceMap } from '@/components/IntelligenceMap';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
 import { BrainDemo } from '@/components/BrainDemo';
 import { SystemFlow } from '@/components/LearningLoop';
@@ -37,7 +37,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
     <>
       {/* ===== 01 · HERO ===== */}
       <section className="q-hero" aria-label="Quantiviq — AI-native organization transformation">
-        <div className="container-wide">
+        <div className="container-wide q-hero-grid">
           <div className="q-hero-copy">
             <span className="eyebrow sig">{t.hero.tag}</span>
             <h1 className="q-display">{t.hero.h1}</h1>
@@ -46,36 +46,48 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-hero-body">{t.hero.bodyP2}</p>
             <p className="q-hero-promise">{t.hero.promise}</p>
             <div className="hero-actions">
-              <Link href={`/${l}/explore`} className="btn btn-primary">
+              <Link href={`/${l}/contact`} className="btn btn-primary">
                 {t.hero.ctaPrimary} <span className="arrow" aria-hidden>→</span>
               </Link>
-              <Link href={`/${l}/contact`} className="btn">
+              <Link href={`/${l}/explore`} className="btn">
                 {t.hero.ctaSecondary} <span className="arrow" aria-hidden>→</span>
               </Link>
             </div>
-            <p className="hero-hiring">
-              <Link href={`/${l}/leadership`}>{t.hero.hiringLink}</Link>
-            </p>
+          </div>
+          <div className="q-hero-visual">
+            <IntelligenceMap />
           </div>
         </div>
       </section>
 
-      {/* ===== 02 · SIMULATION (localized frame, EN microcopy inside) ===== */}
-      <section id="simulator-frame" className="q-section" aria-label={h.simFrame}>
+      {/* ===== 02 · COMPACT PREVIEW (full simulation lives on /explore) ===== */}
+      <section id="preview" className="q-section" aria-label={t.home2.previewTitle}>
         <div className="container-wide">
           <Reveal>
             <div className="section-header">
               <div>
-                <span className="eyebrow sig">{h.simFrame}</span>
-                <h2 className="q-h2">{t.hero.ctaPrimary}.</h2>
+                <span className="eyebrow sig">{t.home2.previewEyebrow}</span>
+                <h2 className="q-h2">{t.home2.previewTitle}</h2>
               </div>
-              <span className="section-num sim-disclaimer">{h.simCaption}</span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="preview-card">
+              <p className="q-lede" style={{ margin: 0 }}>{t.home2.previewBody}</p>
+              <div className="preview-signals" aria-hidden>
+                <span>customer issue</span>
+                <span>revenue drop</span>
+                <span>product signal</span>
+              </div>
+              <div className="hero-actions">
+                <Link href={`/${l}/explore#simulator`} className="btn btn-primary">
+                  {t.home2.previewCta} <span className="arrow" aria-hidden>→</span>
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>
       </section>
-
-      <OrgSimulatorSection locale={l} />
 
       {/* ===== 03 · THE PROBLEM ===== */}
       <section id="problem" className="q-section" aria-label={h.problemH2}>
@@ -90,7 +102,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-lede">{h.problemLede}</p>
           </Reveal>
           <ul className="latency-list">
-            {h.latencyForms.map((f, i) => (
+            {h.latencyForms.slice(0, 3).map((f, i) => (
               <Reveal as="li" key={f.name} delay={i * 90} className="latency-row">
                 <div className="latency-main">
                   <span className="latency-num">{String(i + 1).padStart(2, '0')}</span>
@@ -104,9 +116,30 @@ export default async function LocaleHome({ params }: { params: { locale: string 
                   <span className="latency-bar-label">time</span>
                 </div>
                 <p className="latency-body">{f.body}</p>
+            </Reveal>
+          ))}
+          </ul>
+          <details className="latency-more">
+            <summary>{t.home2.symptomsMore}</summary>
+            <ul className="latency-list">
+            {h.latencyForms.slice(3).map((f, i) => (
+              <Reveal as="li" key={f.name} delay={i * 90} className="latency-row">
+                <div className="latency-main">
+                  <span className="latency-num">{String(i + 4).padStart(2, '0')}</span>
+                  <div>
+                    <h3>{f.name}</h3>
+                    <p className="latency-question">{f.question}</p>
+                  </div>
+                </div>
+                <div className="latency-bar" aria-hidden>
+                  <span style={{ width: `${76 + i * 6}%` }} />
+                  <span className="latency-bar-label">time</span>
+                </div>
+                <p className="latency-body">{f.body}</p>
               </Reveal>
             ))}
-          </ul>
+            </ul>
+          </details>
         </div>
       </section>
 
@@ -121,6 +154,21 @@ export default async function LocaleHome({ params }: { params: { locale: string 
               </div>
             </div>
             <p className="q-lede">{h.systemLede}</p>
+          </Reveal>
+          <Reveal>
+            <div className="sys3-grid">
+              {[t.home2.groups.knowledge, t.home2.groups.execution, t.home2.groups.authority].map((g) => (
+                <div key={g.name} className="sys3-card">
+                  <h3>{g.name}</h3>
+                  <p>{g.role}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ marginTop: '0.9rem' }}>
+              <Link href={`/${l}/system`} className="home-more-link">
+                {t.home2.systemGroupsNote} <span aria-hidden>→</span>
+              </Link>
+            </p>
           </Reveal>
           <Reveal>
             <OrgNervousSystem
@@ -171,6 +219,34 @@ export default async function LocaleHome({ params }: { params: { locale: string 
         </div>
       </section>
 
+      {/* ===== 05b · SERVICES ===== */}
+      <section id="services" className="q-section" aria-label={t.home2.servicesTitle}>
+        <div className="container-wide">
+          <Reveal>
+            <div className="section-header">
+              <div>
+                <span className="eyebrow sig">{t.services.eyebrow}</span>
+                <h2 className="q-h2">{t.home2.servicesTitle}</h2>
+              </div>
+            </div>
+            <p className="q-lede">{t.home2.servicesNote}</p>
+          </Reveal>
+          <div className="svc-grid">
+            {t.services.offers.map((o, i) => (
+              <Reveal key={o.key} delay={i * 70} className="svc-card">
+                <h3>{o.name}</h3>
+                <p className="svc-one">{o.oneLiner}</p>
+                <p className="svc-who"><strong>{t.services.whoFor}:</strong> {o.whoFor}</p>
+                <p className="svc-out"><strong>{t.services.deliverables}:</strong> {o.deliverables}</p>
+                <Link href={`/${l}/contact?intent=${o.intent}`} className="svc-cta">
+                  {t.services.cta} <span aria-hidden>→</span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== 06 · PROOF ===== */}
       <section id="proof" className="q-section" aria-label={h.proofH2}>
         <div className="container-wide">
@@ -207,7 +283,10 @@ export default async function LocaleHome({ params }: { params: { locale: string 
           </Reveal>
           <Reveal>
             <div className="proof-bridge">
-              <span className="eyebrow sig">{h.bridgeEyebrow}</span>
+              <span className="eyebrow sig">{t.home2.founderEyebrow} · {h.bridgeEyebrow}</span>
+              <p className="hero-hiring" style={{ marginTop: 0 }}>
+                <Link href={`/${l}/leadership`}>{t.hero.hiringLink}</Link>
+              </p>
               <p className="proof-bridge-line">{h.bridgeLine}</p>
               <div className="hero-actions">
                 <Link href={`/${l}/leadership`} className="btn btn-primary">
@@ -238,7 +317,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-lede">{h.methodLede}</p>
           </Reveal>
           <ol className="steps-list">
-            {t.method.stages.map((s, i) => (
+            {t.method.stages.slice(0, 3).map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 70} className="step-row">
                 <span className="step-num">{String(i + 1).padStart(2, '0')}</span>
                 <div>
@@ -248,6 +327,13 @@ export default async function LocaleHome({ params }: { params: { locale: string 
               </Reveal>
             ))}
           </ol>
+          <Reveal>
+            <p style={{ marginTop: '0.9rem' }}>
+              <Link href={`/${l}/method`} className="home-more-link">
+                {t.home2.methodMore} <span aria-hidden>→</span>
+              </Link>
+            </p>
+          </Reveal>
           <Reveal>
             <p className="q-founder-p">{t.method.close}</p>
           </Reveal>
