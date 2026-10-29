@@ -24,7 +24,10 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const follow = useFollow<HTMLDivElement>();
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
-  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const openEvidence = (msgId: string, srcId: string) => {
+    follow.hold(); // selection must not move the reader or re-engage follow
+    setEvidence({ msgId, srcId });
+  };
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
@@ -42,9 +45,19 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   // Streaming stability (2026-10-29): no per-delta smooth scrolling. The
   // follow hook sticks to bottom ONLY while the reader is already there,
   // pauses when they scroll up, and offers an explicit Jump-to-latest.
+  // Reveal ONCE per new user question (tracked by its persistent id), then
+  // per-flush stick only while the reader is following. The previous
+  // condition (role check on every messages update) was true for the whole
+  // stream and forced scrollTop on every batched flush - the P0 jump.
+  const revealedUserRef = useRef<string | null>(null);
   useEffect(() => {
-    if (messages.length >= 2 && messages[messages.length - 2].role === 'user') follow.reveal();
-    else { follow.beforeFlush(); requestAnimationFrame(() => follow.afterFlush()); }
+    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
+    if (lastUser && lastUser.id !== revealedUserRef.current) {
+      revealedUserRef.current = lastUser.id;
+      follow.reveal();
+      return;
+    }
+    requestAnimationFrame(() => follow.afterFlush());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
@@ -113,6 +126,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                       onOpen={openEvidence}
                       expandedSet={expandedSources}
                       onToggleExpand={toggleExpand}
+                      onHold={follow.hold}
                     />
                   ))}
                   {busy && (

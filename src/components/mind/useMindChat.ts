@@ -46,7 +46,11 @@ export function sessionId(): string {
 export function useFollow<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [following, setFollowing] = useState(true);
-  const stickRef = useRef(true);
+  /** self-scroll tagging: our own sticks fire 'scroll' events; without
+   *  tagging, a stick landing between the reader's scroll and the rAF
+   *  measurement erases user intent (the residual P0 jump). */
+  const selfRef = useRef(false);
+  const lastTargetRef = useRef(-1);
 
   const measure = useCallback(() => {
     const el = ref.current;
@@ -60,7 +64,14 @@ export function useFollow<T extends HTMLElement>() {
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setFollowing(measure()));
+      raf = requestAnimationFrame(() => {
+        const isSelf = selfRef.current && Math.abs(el.scrollTop - lastTargetRef.current) <= 2;
+        selfRef.current = false;
+        if (isSelf) return; // our own stick - not user intent
+        const near = measure();
+        followingRef.current = near;
+        setFollowing(near);
+      });
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => {
@@ -69,38 +80,63 @@ export function useFollow<T extends HTMLElement>() {
     };
   }, [measure]);
 
-  /** call immediately BEFORE flushing new content: captures whether the
-   *  reader was at the bottom before the DOM grows. */
-  const beforeFlush = useCallback(() => { stickRef.current = measure(); }, [measure]);
-
-  /** call right AFTER the flush renders: sticks to bottom if and only if
-   *  the reader was following. Immediate — no smooth animation per token. */
-  const afterFlush = useCallback(() => {
+  /** programmatic stick to bottom, tagged so its scroll event is not
+   *  mistaken for the reader's intent */
+  const stick = useCallback(() => {
     const el = ref.current;
-    if (el && stickRef.current) {
-      el.scrollTop = el.scrollHeight;
-      setFollowing(true);
-    } else if (!stickRef.current) {
-      setFollowing(false);
-    }
+    if (!el) return;
+    selfRef.current = true;
+    lastTargetRef.current = el.scrollHeight;
+    el.scrollTop = el.scrollHeight;
   }, []);
+
+  /** persistent follow decision, updated ONLY by user scroll and explicit
+   *  actions (never by post-growth measurement — the DOM has already grown
+   *  when effects run, so measuring there would break auto-follow). */
+  const followingRef = useRef(true);
+  followingRef.current = following;
+  // hoisted for onScroll above (defined before the effect that uses it)
+
+  /** kept for API compatibility; the decision now lives in followingRef. */
+  const beforeFlush = useCallback(() => {}, []);
+
+  /** call after a flush renders: stick to bottom iff the reader was
+   *  following. Immediate — no smooth animation per token. */
+  const afterFlush = useCallback(() => {
+    if (followingRef.current) stick();
+  }, [stick]);
 
   /** intentional reveal of a just-sent question (once, not per token) */
   const reveal = useCallback(() => {
-    stickRef.current = true;
+    followingRef.current = true;
     setFollowing(true);
-    const el = ref.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, []);
+    stick();
+  }, [stick]);
 
   const jumpToLatest = useCallback(() => {
-    const el = ref.current;
-    if (el) el.scrollTop = el.scrollHeight;
-    stickRef.current = true;
+    followingRef.current = true;
     setFollowing(true);
+    stick();
+  }, [stick]);
+
+  /** restore + hold the current reading position (tagged as self) - used
+   *  when selecting a citation so focus/scroll side effects cannot move
+   *  the reader or re-engage following (mission: source open must retain
+   *  reading position). */
+  const hold = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    const st = el.scrollTop;
+    followingRef.current = false; // selection never re-engages follow
+    setFollowing(false);
+    requestAnimationFrame(() => {
+      selfRef.current = true;
+      lastTargetRef.current = st;
+      el.scrollTop = st;
+    });
   }, []);
 
-  return { ref, following, beforeFlush, afterFlush, reveal, jumpToLatest };
+  return { ref, following, beforeFlush, afterFlush, reveal, jumpToLatest, hold };
 }
 
 export type MindScope = 'all' | 'books' | 'oss' | 'flows' | 'concepts' | 'articles';
