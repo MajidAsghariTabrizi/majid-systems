@@ -5,31 +5,94 @@
 
 :root {
   /* ============================================================
-     GLOBAL DESIGN SYSTEM - Boardroom Ivory (extracted from
-     /meet-majid, the visual source of truth, 2026-10-26).
-     Warm ivory paper, deep ink, restrained forest green,
-     subtle brass. Text tokens meet WCAG AA on ivory surfaces.
+     QUANTIVIQ GLOBAL DESIGN SYSTEM
+     Living Operating System direction (2026-10-29 redesign).
+     Warm ivory canvas, deep evergreen, ink text, celadon accent
+     with dark ink (never white-on-celadon), restrained copper.
+     Every text pair verified against WCAG AA on its surface.
      ============================================================ */
-  --bg: #f7f4ec;              /* ivory paper */
-  --bg-elevated: #efe9dc;     /* deep ivory */
-  --bg-card: #fdfbf6;         /* card surface */
-  --bg-card-hover: #f9f5ea;
-  --border: #ddd4c2;
-  --border-strong: #c9bfa9;
-  --fg: #1d1a16;              /* deep ink */
-  --fg-muted: #4c463c;
-  --fg-subtle: #665d4f;
-  --accent: #1f5c45;          /* restrained forest green */
-  --accent-strong: #174534;
-  --accent-warm: #7d6230;     /* brass, AA-safe for text AND decorative use on ivory */
-  --brass-ink: #6e5626;       /* text-safe brass (>=4.5:1 on ivory) */
-  --danger: #8c3a2b;
-  --code-bg: #1d1a16;         /* code stays ink-dark: terminal window */
-  --code-fg: #efe9dc;
-  --code-border: #3a352c;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --shadow: 0 1px 0 rgba(29, 26, 22, 0.28) inset, 0 8px 24px rgba(90, 78, 55, 0.12);
+
+  /* ---- canvas / surfaces ---- */
+  --canvas: #f7f6f0;
+  --surface: #ffffff;
+  --surface-2: #fcfbf7;
+  --surface-dark: #10251f;
+  --bg: var(--canvas);
+  --bg-elevated: var(--surface-2);
+  --bg-card: var(--surface);
+  --bg-card-hover: #f4f2ea;
+
+  /* ---- text ---- */
+  --ink: #182a26;
+  --text: var(--ink);
+  --text-muted: #53645d;
+  --muted: var(--text-muted);
+  --fg: var(--ink);
+  --fg-muted: #435248;
+  --fg-subtle: var(--text-muted);
+
+  /* ---- brand / action ---- */
+  --brand: #163f37;
+  --accent: #163f37;
+  --accent-strong: #0f2d27;
+  --action: #163f37;
+  --action-hover: #0f2d27;
+  --action-ink: #f7f6f0;          /* text on action surfaces */
+  --celadon: #bce7d2;             /* decorative + dark-ink pairings ONLY */
+  --copper: #b65e37;              /* selected annotations / data emphasis */
+  --accent-warm: #7d5a3c;         /* AA warm text */
+  --brass-ink: #6e5626;
+
+  /* ---- states ---- */
+  --focus: #163f37;
+  --selected: #e3efe7;
+  --error: #8c3a2b;
+  --danger: var(--error);
+  --success: #1f5c45;
+  --warning: #7d5a3c;
+  --disabled-fg: #8d978f;
+  --disabled-bg: #ece9e0;
+  --inverse-fg: #f2f1e8;
+  --inverse-muted: #b9c6bd;
+  --border: #d9e0d8;
+  --border-strong: #c2cdc4;
+  --border-quiet: #e4e8e1;
+
+  /* ---- code / terminals (ink windows) ---- */
+  --code-bg: #10251f;
+  --code-fg: #e6ece4;
+  --code-border: #24443a;
+
+  /* ---- shape & depth ---- */
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 10px 30px rgba(24, 42, 38, 0.08);
+  --shadow-lift: 0 2px 6px rgba(24, 42, 38, 0.07), 0 14px 40px rgba(24, 42, 38, 0.12);
+
+  /* ---- layout containers ---- */
+  --max: 1200px;
+  --max-wide: 1280px;
+  --max-narrow: 720px;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --header-h: 72px;
+
+  /* ---- typography ---- */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+
+  /* fluid type scale: hero 40-76, h1 32-56, h2 28-40, h3 22-28, h4 18-22 */
+  --fs-hero: clamp(2.5rem, 1.7rem + 3.4vw, 4.75rem);
+  --fs-h1: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --fs-h4: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);
+  --fs-body: clamp(1rem, 0.958rem + 0.185vw, 1.125rem);
+  --fs-support: 0.875rem;
+  --fs-btn: 0.9375rem;
+  --lh-heading: 1.12;
+  --lh-body: 1.65;
 }
 
 * {
@@ -7688,7 +7751,8 @@ html[dir='rtl'] .arrow {
   border: 1px solid var(--border, var(--border));
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(160deg, var(--bg-card) 0%, #0a0d12 70%);
+  background: linear-gradient(165deg, var(--surface) 0%, #f2f5ee 62%, #e8eee3 100%);
+  /* light editorial gradient only - dark text stays readable across the whole card */
   padding: 0;
   text-decoration: none;
   transition: border-color 0.25s ease, transform 0.25s ease;
