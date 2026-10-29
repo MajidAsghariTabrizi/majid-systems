@@ -1,26 +1,106 @@
 'use client';
 
 /**
- * Quantiviq Mind — shared chat state/logic for BOTH surfaces (floating panel
- * and the /mind full page). One implementation, one backend, one session.
- * Extracted unchanged in behavior from QuantiviqMindPanel (2026-10-25).
+ * Quantiviq Mind — shared chat state for BOTH surfaces (panel + /mind).
+ * 2026-10-29 stability pass: persistent message IDs, batched delta
+ * flushes (~45ms), generation guard against late writes, partial answers
+ * preserved on stop/failure (marked incomplete), and a follow/pause scroll
+ * hook so streaming never drags a reading user around.
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MindStrings } from './strings';
 
-export type Msg = { role: 'user' | 'assistant'; content: string; sources?: Source[] };
+export type Msg = {
+  role: 'user' | 'assistant';
+  content: string;
+  sources?: Source[];
+  /** persistent identity: created ONCE, never derived from array index */
+  id: string;
+  /** true when the turn ended early (stop/failure) with partial text kept */
+  incomplete?: boolean;
+};
 export type Source = { id: string; title: string; url: string; type: string; class: string; language: string };
 
 export const MAX_QUESTIONS = 6;
+
+let _seq = 0;
+function mid(role: 'user' | 'assistant') {
+  return role + '-' + (crypto.randomUUID?.() ?? 'g' + Date.now() + '-' + (_seq++));
+}
 
 export function sessionId(): string {
   if (typeof window === 'undefined') return 'server';
   let s = sessionStorage.getItem('mind-session');
   if (!s) {
-    s = (crypto.randomUUID?.() ?? `s-${Date.now()}-${Math.random()}`).replace(/-/g, '').slice(0, 32);
+    s = (crypto.randomUUID?.() ?? 's-' + Date.now() + '-' + Math.random()).replace(/-/g, '').slice(0, 32);
     sessionStorage.setItem('mind-session', s);
   }
   return s;
+}
+
+/** Follow/pause scroll behavior. ONE scroll owner per surface.
+ *  - follows new content only while the reader is near the bottom
+ *    (<= 88px), with immediate coalesced movement (no per-token smooth)
+ *  - pauses when the reader scrolls up; Jump-to-latest resumes
+ *  - respects reduced motion (always immediate) */
+export function useFollow<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [following, setFollowing] = useState(true);
+  const stickRef = useRef(true);
+
+  const measure = useCallback(() => {
+    const el = ref.current;
+    if (!el) return true;
+    return el.scrollHeight - el.scrollTop - el.clientHeight <= 88;
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setFollowing(measure()));
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener('scroll', onScroll);
+    };
+  }, [measure]);
+
+  /** call immediately BEFORE flushing new content: captures whether the
+   *  reader was at the bottom before the DOM grows. */
+  const beforeFlush = useCallback(() => { stickRef.current = measure(); }, [measure]);
+
+  /** call right AFTER the flush renders: sticks to bottom if and only if
+   *  the reader was following. Immediate — no smooth animation per token. */
+  const afterFlush = useCallback(() => {
+    const el = ref.current;
+    if (el && stickRef.current) {
+      el.scrollTop = el.scrollHeight;
+      setFollowing(true);
+    } else if (!stickRef.current) {
+      setFollowing(false);
+    }
+  }, []);
+
+  /** intentional reveal of a just-sent question (once, not per token) */
+  const reveal = useCallback(() => {
+    stickRef.current = true;
+    setFollowing(true);
+    const el = ref.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
+
+  const jumpToLatest = useCallback(() => {
+    const el = ref.current;
+    if (el) el.scrollTop = el.scrollHeight;
+    stickRef.current = true;
+    setFollowing(true);
+  }, []);
+
+  return { ref, following, beforeFlush, afterFlush, reveal, jumpToLatest };
 }
 
 export type MindScope = 'all' | 'books' | 'oss' | 'flows' | 'concepts' | 'articles';
@@ -32,14 +112,26 @@ export function useMindChat(locale: string, s: MindStrings) {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [asked, setAsked] = useState(0);
-  /** set when a RETRYABLE failure lost the user's question, so the surface
-   *  can restore it into the composer for one-tap retry */
   const [retryQuestion, setRetryQuestion] = useState('');
   const abortRef = useRef<AbortController | null>(null);
+  /** generation counter: a cancelled/older stream can never write into a
+   *  newer conversation (reset / new send / unmount all bump it) */
+  const genRef = useRef(0);
+  const mountedRef = useRef(true);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      genRef.current += 1;
+      abortRef.current?.abort();
+    };
+  }, []);
 
   const stop = useCallback(() => abortRef.current?.abort(), []);
 
   const reset = useCallback(() => {
+    genRef.current += 1;
+    abortRef.current?.abort();
     setMessages([]);
     setAsked(0);
     setNotice('');
@@ -47,15 +139,29 @@ export function useMindChat(locale: string, s: MindStrings) {
     setRetryQuestion('');
   }, []);
 
-  /** Errors are NEVER appended to the conversation — role integrity is
-   *  preserved (history keeps only user + assistant turns). 429/5xx/network
-   *  are shown as retryable service errors; the failed question is restored
-   *  and does NOT count against the session limit. */
   const fail = useCallback((message: string, question: string, retryable: boolean) => {
     setError(message);
     setRetryQuestion(retryable ? question : '');
-    setAsked((n) => Math.max(0, n - 1)); // failed ask must not burn the limit
-    setMessages((ms) => (ms.at(-1)?.role === 'assistant' && ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
+    setAsked((n) => Math.max(0, n - 1));
+    setMessages((ms) => {
+      const last = ms.at(-1);
+      if (last?.role === 'assistant' && last.content === '') return ms.slice(0, -1);
+      // keep any partial text, marked incomplete
+      if (last?.role === 'assistant' && last.incomplete === undefined && last.content) {
+        return [...ms.slice(0, -1), { ...last, incomplete: true }];
+      }
+      return ms;
+    });
+  }, []);
+
+  /** stable functional update of ONLY the streaming turn */
+  const patchLast = useCallback((patch: Partial<Msg>, gen: number) => {
+    if (gen !== genRef.current || !mountedRef.current) return;
+    setMessages((ms) => {
+      const last = ms.at(-1);
+      if (!last || last.role !== 'assistant') return ms;
+      return [...ms.slice(0, -1), { ...last, ...patch }];
+    });
   }, []);
 
   const send = useCallback(
@@ -70,8 +176,12 @@ export function useMindChat(locale: string, s: MindStrings) {
       setNotice('');
       setRetryQuestion('');
       setAsked((n) => n + 1);
-      const history = [...messages, { role: 'user' as const, content: q }];
-      setMessages([...history, { role: 'assistant', content: '' }]);
+      const gen = ++genRef.current;
+      abortRef.current?.abort();
+      const userMsg: Msg = { role: 'user', content: q, id: mid('user') };
+      const aiMsg: Msg = { role: 'assistant', content: '', id: mid('assistant') };
+      const history = messages;
+      setMessages([...history, userMsg, aiMsg]);
       setBusy(true);
 
       const ac = new AbortController();
@@ -85,7 +195,7 @@ export function useMindChat(locale: string, s: MindStrings) {
             session: sessionId(),
             locale,
             scope,
-            messages: history.map((m) => ({ role: m.role, content: m.content })),
+            messages: [...history, userMsg].map((m) => ({ role: m.role, content: m.content })),
           }),
           signal: ac.signal,
         });
@@ -96,7 +206,6 @@ export function useMindChat(locale: string, s: MindStrings) {
           } else if (j.error === 'session_limit' || j.error === 'budget') {
             fail(locale === 'fa' ? j.message_fa ?? s.limitReached : j.message_en ?? s.limitReached, q, false);
           } else if (res.status === 429 || res.status >= 500) {
-            // upstream overload / gateway down: retryable service error
             fail(
               locale === 'fa' ? j.message_fa ?? s.serviceUnavailable : j.message_en ?? s.serviceUnavailable,
               q,
@@ -105,7 +214,6 @@ export function useMindChat(locale: string, s: MindStrings) {
           } else {
             fail(s.error, q, true);
           }
-          setMessages(history);
           return;
         }
         const reader = res.body!.getReader();
@@ -113,6 +221,18 @@ export function useMindChat(locale: string, s: MindStrings) {
         let buf = '';
         let answer = '';
         let sources: Source[] | undefined;
+        // batched flush: coalesce deltas at ~45ms instead of per-token renders
+        let flushTimer: ReturnType<typeof setTimeout> | null = null;
+        let lastAnswerLen = -1;
+        const flushNow = () => {
+          flushTimer = null;
+          if (answer.length === lastAnswerLen && sources === undefined) return;
+          lastAnswerLen = answer.length;
+          patchLast({ content: answer, sources }, gen);
+        };
+        const scheduleFlush = () => {
+          if (flushTimer === null) flushTimer = setTimeout(flushNow, 45);
+        };
         for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -132,26 +252,26 @@ export function useMindChat(locale: string, s: MindStrings) {
               streamFailed = true;
               fail(s.serviceUnavailable, q, true);
             }
-            if (!streamFailed) {
-              setMessages([...history, { role: 'assistant', content: answer, sources }]);
-            }
+            if (!streamFailed) scheduleFlush();
           }
         }
-        if (streamFailed) setMessages(history);
+        if (flushTimer !== null) clearTimeout(flushTimer);
+        if (!streamFailed) patchLast({ content: answer, sources }, gen);
       } catch (e) {
         if ((e as Error).name !== 'AbortError') {
-          // network failure: retryable, question preserved
           fail(s.serviceUnavailable, q, true);
-          setMessages(history);
         } else {
-          setMessages((ms) => (ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
+          // user pressed Stop: keep the partial answer, mark incomplete
+          genRef.current === gen && patchLast({ incomplete: true }, gen);
         }
       } finally {
-        setBusy(false);
-        abortRef.current = null;
+        if (gen === genRef.current) {
+          setBusy(false);
+          abortRef.current = null;
+        }
       }
     },
-    [busy, asked, messages, locale, s, fail, scope]
+    [busy, asked, messages, locale, s, fail, scope, patchLast]
   );
 
   return { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, setError, setNotice, scope, setScope };

@@ -15,6 +15,12 @@ export type MindStrings = {
   copied: string;
   reset: string;
   sources: string;
+  viewAll: string;
+  jumpToLatest: string;
+  openSource: string;
+  evidenceTitle: string;
+  evidenceNote: string;
+  incomplete: string;
   contactCta: string;
   contactLink: string;
   limitReached: string;
@@ -65,6 +71,12 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
     copied: 'Copied',
     reset: 'New conversation',
     sources: 'Sources',
+  viewAll: 'View all',
+  jumpToLatest: 'Jump to latest',
+  openSource: 'Open source',
+  evidenceTitle: 'Evidence',
+  evidenceNote: 'These are the sources retrieved for this answer - retrieval is not sentence-level proof. Metadata below comes from the published catalog; anything not provided is omitted.',
+  incomplete: 'Answer stopped - partial text kept.',
     contactCta: 'Have a specific challenge worth discussing?',
     contactLink: 'Contact Majid',
     limitReached:
@@ -128,6 +140,12 @@ export const MIND_STRINGS: Record<'en' | 'fa', MindStrings> = {
     copied: 'کپی شد',
     reset: 'گفت‌وگوی جدید',
     sources: 'منابع',
+  viewAll: 'مشاهده همه',
+  jumpToLatest: 'پریدن به آخرین',
+  openSource: 'باز کردن منبع',
+  evidenceTitle: 'شواهد',
+  evidenceNote: 'این منابع برای این پاسخ بازیابی شده‌اند — بازیابی اثبات سطرِ جمله نیست. فرادادهها از فهرست منتشرشده می‌آید؛ موجود نیست = نوشته نمی‌شود.',
+  incomplete: 'پاسخ متوقف شد — متن ناقص نگهداشته شد.',
     contactCta: 'مسئله مشخصی برای همکاری داری؟ می‌توانیم مستقیم گفت‌وگو کنیم.',
     contactLink: 'تماس با مجید',
     limitReached:
