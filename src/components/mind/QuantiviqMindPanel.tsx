@@ -55,7 +55,10 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
   const follow = useFollow<HTMLDivElement>();
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
-  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const openEvidence = (msgId: string, srcId: string) => {
+    follow.hold(); // selection must not move the reader or re-engage follow
+    setEvidence({ msgId, srcId });
+  };
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
@@ -64,10 +67,18 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
     if (retryQuestion) setInput(retryQuestion);
   }, [retryQuestion]);
 
-  // follow-aware streaming scroll (see useFollow) - no unconditional jumps
+  // Reveal ONCE per new user question, then stick only while following
+  // (same P0 fix as MindFullPage - the old condition forced scrollTop on
+  // every batched flush for the whole stream).
+  const revealedUserRef = useRef<string | null>(null);
   useEffect(() => {
-    if (messages.length >= 2 && messages[messages.length - 2].role === 'user') follow.reveal();
-    else { follow.beforeFlush(); requestAnimationFrame(() => follow.afterFlush()); }
+    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
+    if (lastUser && lastUser.id !== revealedUserRef.current) {
+      revealedUserRef.current = lastUser.id;
+      follow.reveal();
+      return;
+    }
+    requestAnimationFrame(() => follow.afterFlush());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
   useEffect(() => {
@@ -127,7 +138,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             </div>
           )}
           {messages.map((m) => (
-            <MindMessage key={m.id} m={m} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
+            <MindMessage key={m.id} m={m} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} onHold={follow.hold} />
           ))}
           {busy && (
             <div className="mind-typing" aria-live="polite">

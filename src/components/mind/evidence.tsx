@@ -117,8 +117,30 @@ function renderProseBlock(block: string, keyBase: string) {
     );
     list = null;
   };
+  const flushTable = (i2: number, t2: string[][]) => {
+    const head = t2.shift() ?? [];
+    out.push(
+      <div key={keyBase + '-tb' + i2} className="mind-md-table">
+        <table>
+          <thead><tr>{head.map((h, j) => <th key={j}>{renderInline(h, keyBase + '-th' + j)}</th>)}</tr></thead>
+          <tbody>{t2.map((row, r) => <tr key={r}>{row.map((c2, j) => <td key={j}>{renderInline(c2, keyBase + '-td' + r + j)}</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+    );
+  };
+  let tbl: string[][] = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (line.trim().startsWith('|')) {
+      const cells = line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+      if (cells.length >= 2 && !cells.every((c) => /^[-: ]*$/.test(c))) {
+        tbl.push(cells);
+        continue;
+      }
+      continue; // separator row
+    }
+    if (tbl.length >= 1) flushTable(i, tbl);
+    tbl = [];
     const ul = /^\s*[-*•]\s+(.*)$/.exec(line);
     const ol = /^\s*\d+[.)]\s+(.*)$/.exec(line);
     if (ul || ol) {
@@ -140,6 +162,7 @@ function renderProseBlock(block: string, keyBase: string) {
     );
   }
   flushList(lines.length);
+  if (tbl.length >= 1) flushTable(lines.length, tbl);
   return out;
 }
 
@@ -172,6 +195,7 @@ export function MindSources({
   onOpen,
   expanded,
   onToggleExpand,
+  onHold,
 }: {
   m: Msg;
   label: string;
@@ -179,6 +203,8 @@ export function MindSources({
   onOpen: (msgId: string, srcId: string) => void;
   expanded: boolean;
   onToggleExpand: () => void;
+  /** called on mousedown BEFORE focus can scroll: captures reading position */
+  onHold?: () => void;
 }) {
   const srcs = normalizeSources(m.sources);
   if (srcs.length === 0) return null;
@@ -202,6 +228,7 @@ export function MindSources({
             <button
               type="button"
               className="mind-cite"
+              onMouseDown={() => onHold?.()}
               onClick={() => onOpen(m.id, s.id)}
               aria-label={s.title}
             >
@@ -281,6 +308,7 @@ export function MindMessage({
   onOpen,
   expandedSet,
   onToggleExpand,
+  onHold,
 }: {
   m: Msg;
   label: string;
@@ -289,6 +317,7 @@ export function MindMessage({
   onOpen: (msgId: string, srcId: string) => void;
   expandedSet: Set<string>;
   onToggleExpand: (msgId: string) => void;
+  onHold?: () => void;
 }) {
   if (m.role === 'user') {
     return (
@@ -312,6 +341,7 @@ export function MindMessage({
         onOpen={onOpen}
         expanded={expandedSet.has(m.id)}
         onToggleExpand={() => onToggleExpand(m.id)}
+        onHold={onHold}
       />
     </div>
   );
