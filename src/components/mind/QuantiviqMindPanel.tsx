@@ -7,7 +7,8 @@
  * restricted to the allowlist enforced server-side).
  */
 import { useEffect, useRef, useState } from 'react';
-import { useMindChat, type Msg, type Source } from './useMindChat';
+import { useMindChat, useFollow } from './useMindChat';
+import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from './evidence';
 import type { MindStrings } from './strings';
 
 /** minimal safe inline rendering: **bold**, `code`, allowlisted links */
@@ -46,55 +47,28 @@ export function renderInline(text: string) {
   return parts;
 }
 
-export function MindMessage({ m, label = 'Sources' }: { m: Msg; label?: string }) {
-  if (m.role === 'user') {
-    return (
-      <div className="mind-msg mind-msg-user" dir="auto">
-        <div className="mind-bubble">{m.content}</div>
-      </div>
-    );
-  }
-  return (
-    <div className="mind-msg mind-msg-ai">
-      <div className="mind-bubble" dir="auto">
-        {m.content.split('\n').map((line, i) => (
-          <p key={i} className={line.startsWith('##') || line.startsWith('**') ? 'mind-p-strong' : undefined}>
-            {renderInline(line.replace(/^#{1,3}\s*/, ''))}
-          </p>
-        ))}
-      </div>
-      {m.sources && m.sources.length > 0 && (
-        <div className="mind-sources">
-          <span className="mind-sources-label">{label}</span>
-          <ul>
-            {m.sources.slice(0, 5).map((s: Source) => (
-              <li key={s.id}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" dir="ltr">
-                  {s.title.slice(0, 64)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: MindStrings; onClose: () => void }) {
   const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset } = useMindChat(locale, s);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const follow = useFollow<HTMLDivElement>();
+  const [evidence, setEvidence] = useState<EvidenceSel>(null);
+  const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
+  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const toggleExpand = (msgId: string) =>
+    setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
   // restore a failed question for one-tap retry (429/5xx/network only)
   useEffect(() => {
     if (retryQuestion) setInput(retryQuestion);
   }, [retryQuestion]);
 
+  // follow-aware streaming scroll (see useFollow) - no unconditional jumps
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+    if (messages.length >= 2 && messages[messages.length - 2].role === 'user') follow.reveal();
+    else { follow.beforeFlush(); requestAnimationFrame(() => follow.afterFlush()); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
   useEffect(() => {
     inputRef.current?.focus();
@@ -139,7 +113,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
           </div>
         </header>
 
-        <div className="mind-scroll" ref={scrollRef}>
+        <div className="mind-scroll" ref={follow.ref}>
           {messages.length === 0 && (
             <div className="mind-empty">
               <p className="mind-empty-title">{s.emptyTitle}</p>
@@ -152,8 +126,8 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
               </div>
             </div>
           )}
-          {messages.map((m, i) => (
-            <MindMessage key={i} m={m} label={s.sources} />
+          {messages.map((m) => (
+            <MindMessage key={m.id} m={m} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
           ))}
           {busy && (
             <div className="mind-typing" aria-live="polite">
@@ -230,6 +204,16 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
           )}
         </form>
       </div>
+    <EvidenceInspector
+        source={
+          evidence
+            ? normalizeSources(messages.find((m) => m.id === evidence.msgId)?.sources).find((x) => x.id === evidence.srcId) ?? null
+            : null
+        }
+        locale={locale === 'fa' ? 'fa' : 'en'}
+        s={s}
+        onClose={() => setEvidence(null)}
+      />
     </div>
   );
 }

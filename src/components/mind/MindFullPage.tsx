@@ -11,8 +11,8 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useMindChat, MAX_QUESTIONS } from './useMindChat';
-import { MindMessage } from './QuantiviqMindPanel';
+import { useMindChat, useFollow, MAX_QUESTIONS } from './useMindChat';
+import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from './evidence';
 import type { MindStrings } from './strings';
 
 function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
@@ -20,8 +20,13 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const { messages, busy, error, notice, asked, retryQuestion, send, stop, reset, scope, setScope } = useMindChat(locale, s);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const composerRef = useRef<HTMLTextAreaElement>(null);
+  const follow = useFollow<HTMLDivElement>();
+  const [evidence, setEvidence] = useState<EvidenceSel>(null);
+  const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
+  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const toggleExpand = (msgId: string) =>
+    setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
   // ?q= prefill: cap length, never auto-send, strip control chars.
   useEffect(() => {
@@ -34,8 +39,13 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
     if (retryQuestion) setInput(retryQuestion);
   }, [retryQuestion]);
 
+  // Streaming stability (2026-10-29): no per-delta smooth scrolling. The
+  // follow hook sticks to bottom ONLY while the reader is already there,
+  // pauses when they scroll up, and offers an explicit Jump-to-latest.
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+    if (messages.length >= 2 && messages[messages.length - 2].role === 'user') follow.reveal();
+    else { follow.beforeFlush(); requestAnimationFrame(() => follow.afterFlush()); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   const last = messages.at(-1);
@@ -79,7 +89,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
       <div className="mind-full-body">
         <div className="container-wide">
           <div className="mind-full-card">
-            <div className="mind-full-scroll" ref={scrollRef}>
+            <div className="mind-full-scroll" ref={follow.ref}>
               {messages.length === 0 ? (
                 <div className="mind-full-empty">
                   <p className="mind-full-starters-title">{s.startersTitle}</p>
@@ -93,8 +103,17 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                 </div>
               ) : (
                 <>
-                  {messages.map((m, i) => (
-                    <MindMessage key={i} m={m} label={s.sources} />
+                  {messages.map((m) => (
+                    <MindMessage
+                      key={m.id}
+                      m={m}
+                      label={s.sources}
+                      viewAll={s.viewAll}
+                      incompleteLabel={s.incomplete}
+                      onOpen={openEvidence}
+                      expandedSet={expandedSources}
+                      onToggleExpand={toggleExpand}
+                    />
                   ))}
                   {busy && (
                     <div className="mind-typing" aria-live="polite">
@@ -138,6 +157,11 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                     </div>
                   )}
                 </>
+              )}
+              {!follow.following && messages.length > 0 && (
+                <button type="button" className="mind-jump" onClick={follow.jumpToLatest}>
+                  ↓ {s.jumpToLatest}
+                </button>
               )}
             </div>
 
@@ -208,6 +232,18 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
           </div>
         </div>
       </div>
+    <EvidenceInspector
+      source={
+        evidence
+          ? normalizeSources(messages.find((m) => m.id === evidence.msgId)?.sources).find(
+              (x) => x.id === evidence.srcId
+            ) ?? null
+          : null
+      }
+      locale={locale}
+      s={s}
+      onClose={() => setEvidence(null)}
+    />
     </section>
   );
 }
