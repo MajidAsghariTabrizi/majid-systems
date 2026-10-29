@@ -1,95 +1,151 @@
 'use client';
 
 /**
- * Executive Dialogue — unlisted executive surface at /meet-majid.
- * Reuses the Public Mind backend exclusively (POST /api/public-mind/chat,
- * persona: 'executive'); no second intelligence, no local storage of
- * conversations beyond React state. Design: Boardroom Ivory (see
- * docs/quantiviq-executive-dialogue/EXECUTIVE_DESIGN_BENCHMARK.md).
+ * Meet Majid — landing + executive conversation at /meet-majid (unlisted).
+ * Landing v2 (2026-10-30): proposition-first hero, mechanism diagram,
+ * optional starters, how-it-works with real catalog examples, honest
+ * unlisted note. Conversation reuses the SHARED Mind evidence/streaming
+ * engine (MindMessage + EvidenceInspector + useFollow) with the executive
+ * persona backend (POST /api/public-mind/chat, persona:'executive').
+ * Landing styles are route-local (exec.css); shared mind-* classes are
+ * adapted via .ex-root token aliases (see exec.css adapter block).
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useFollow, type Msg } from '../mind/useMindChat';
+import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from '../mind/evidence';
+import { MIND_STRINGS } from '../mind/strings';
 
-type Source = { id: string; title: string; url: string; type: string; class: string; language: string };
-type Msg = { role: 'user' | 'assistant'; content: string; sources?: Source[] };
+type Mode = 'work' | 'challenge' | 'transform' | 'general';
 
 const EN = {
-  eyebrow: 'Executive Dialogue · Unlisted',
-  axes: 'Product Leadership',
-  axes2: 'Systems Thinking',
-  axes3: 'Applied AI',
-  challenge: "Don't just read my résumé. Challenge how I think.",
-  sub: 'Explore my work, question my decisions, and examine how I approach complex product, technology, and organizational problems.',
-  disclosure: 'An AI-powered representation grounded in verified, approved professional material — not a live conversation with Majid.',
-  unlisted: 'Unlisted link — anyone holding it can access this page. No confidential material is present or retrievable here.',
-  paths: [
-    { kicker: 'Path 01', title: 'Explore My Work', desc: 'Real projects, architectural decisions, contributions, constraints, evidence and lessons.' },
-    { kicker: 'Path 02', title: 'Challenge My Thinking', desc: 'Hard executive scenarios — how Majid would likely approach them, documented experience separated from interpretation.' },
-    { kicker: 'Path 03', title: 'Discuss AI Transformation', desc: 'Operating models, AI-native organizations, workflow redesign, economics, governance and measurable outcomes.' },
+  brand: 'QUANTIVIQ',
+  brandTag: 'Meet Majid · AI Dialogue',
+  mainSite: 'Main site',
+  eyebrow: 'MEET MAJID · POWERED BY QUANTIVIQ MIND',
+  headline: 'Explore Majid\u2019s thinking through AI.',
+  desc: 'Ask about real projects, challenge a decision, or bring a business problem. The AI draws on Majid\u2019s published work and curated public reference material, with sources you can inspect.',
+  identity: 'Majid Asghari Tabrizi · Product leadership, systems thinking & applied AI',
+  ctaStart: 'Start an AI conversation',
+  ctaContinue: 'Continue conversation',
+  ctaHow: 'See how it works',
+  disclosureShort: 'You are speaking with an AI representation, not Majid live. Answers may be incomplete; inspect the linked sources.',
+  startersTitle: 'Choose a starting point',
+  starters: [
+    { title: 'Explore the work', desc: 'Inspect what was built, the decisions behind it, and the available evidence.' },
+    { title: 'Test a decision', desc: 'Bring a difficult scenario and examine a response informed by published principles.' },
+    { title: 'Discuss AI transformation', desc: 'Explore workflows, decision rights, governance and business value.' },
   ],
-  starters: {
-    work: ['What has Majid actually shipped, and what remains experimental?', 'Walk me through the Phoenix retirement decision — why shut down a working system?', 'What do the four documented projects prove about his engineering judgment?'],
+  generalAsk: 'Or ask your own question',
+  howTitle: 'How it works',
+  how: [
+    { t: 'Ask a real question', d: 'Start with a project, a decision or a business challenge.' },
+    { t: 'Explore the response', d: 'Distinguish documented material from AI interpretation.' },
+    { t: 'Inspect the sources', d: 'Open the relevant articles, books, documentation and project evidence.' },
+  ],
+  examplesTitle: 'Examples of available material',
+  examplesNote: 'A sample of the public catalog the AI retrieves from \u2014 not sources already fetched for an answer that has not happened. Book entries are notes and metadata, not access to full books.',
+  examples: [
+    { kind: 'Article', title: 'AI Adoption Is Not AI Transformation', href: '/en/insights/ai-adoption-is-not-ai-transformation' },
+    { kind: 'Library entry', title: 'AI Engineering \u2014 book notes', href: '/en/insights/books/ai-engineering' },
+    { kind: 'System doc', title: 'The Living Organization', href: '/en/system' },
+  ],
+  unlistedNote: 'Unlisted, not private. Anyone with this link can open this page.',
+  diagram: { q: 'Your question', mind: 'QUANTIVIQ MIND', s1: 'Projects', s2: 'Articles', s3: 'Books & Docs', a1: 'Documented material', a2: 'Interpretation', a3: 'Sources', inspect: 'inspect' },
+  // chat
+  paths: ['Explore the work', 'Test a decision', 'Discuss AI transformation'],
+  startersQ: {
+    work: ['What has Majid actually shipped, and what remains experimental?', 'Walk me through the Phoenix retirement decision \u2014 why shut down a working system?', 'What do the four documented projects prove about his engineering judgment?'],
     challenge: ['What would Majid do if an AI agent made an expensive but technically valid decision?', 'How would he prove an AI transformation created economic value rather than cutting headcount?', 'Why should I trust Majid with AI transformation leadership instead of a management consultant?'],
-    transform: ['Where does an AI-native organization actually start — tools, structure or decision rights?', 'Which workflows should never be automated, and why?', 'How do you govern agents that act, not just answer?'],
+    transform: ['Where does an AI-native organization actually start \u2014 tools, structure or decision rights?', 'Which workflows should never be automated, and why?', 'How do you govern agents that act, not just answer?'],
+    general: ['What can I ask you about?', 'Summarize how Majid separates documented facts from interpretation.', 'What public sources back your answers?'],
   },
+  sourcesLabel: 'Sources',
+  viewAll: 'View all',
+  jumpToLatest: 'Jump to latest',
+  incompleteLabel: 'Answer stopped \u2014 partial text kept.',
+  closeLabel: 'Close',
+  openSource: 'Open source',
   evidenceTitle: 'Evidence',
-  evidenceNote: 'Every answer is grounded in these published sources. Click through to verify.',
-  evidenceEmpty: 'Citations for the selected answer appear here.',
-  evidenceBtn: 'Evidence',
-  composerPlaceholder: 'Ask a hard question…',
-  send: 'Send',
-  stop: 'Stop',
-  retry: 'Retry',
+  evidenceNote: 'Sources retrieved for this answer \u2014 retrieval is not sentence-level proof. Metadata comes from the published catalog; anything not provided is omitted.',
+  composerPlaceholder: 'Ask a hard question\u2026',
+  send: 'Send', stop: 'Stop', retry: 'Retry',
   challengeThis: 'Challenge this answer',
-  hintLeft: 'Grounded in verified public material · answers may be interpretation, clearly labeled by the model.',
+  hintLeft: 'Grounded in verified public material \u00b7 answers may be interpretation, clearly labeled by the model.',
   limit: (n: number) => n + ' of 24 questions this session',
-  errorUnavailable: 'The service is briefly unavailable. Your question was not lost — retry when ready.',
+  errorUnavailable: 'The service is briefly unavailable. Your question was not lost \u2014 retry when ready.',
   errorRate: 'Session limit reached. The conversation stays readable; start a new session to continue asking.',
   errorTimeout: 'The answer took too long to arrive. Try again, or rephrase more specifically.',
   errorGeneric: 'Something failed mid-answer. Retry restores your question.',
-  back: '← Introduction',
-  footLeft: 'Executive Dialogue — AI representation of Majid Asghari Tabrizi',
-  footRight: 'Powered by the Quantiviq public mind · not indexed · noarchive',
+  back: '\u2190 Introduction',
+  footLeft: 'Meet Majid \u2014 AI representation of Majid Asghari Tabrizi',
+  footRight: 'Powered by the Quantiviq public mind \u00b7 not indexed \u00b7 noarchive',
 };
 const FA: typeof EN = {
-  eyebrow: 'گفت‌وگوی راهبری · فهرست‌نشده',
-  axes: 'رهبری محصول',
-  axes2: 'تفکر سیستمی',
-  axes3: 'هوش مصنوعی کاربردی',
-  challenge: 'به رزومه‌ام بسنده نکنید؛ به شیوهٔ فکرکردنم چالش بگذارید.',
-  sub: 'کارهایم را بررسی کنید، تصمیم‌هایم را نقد کنید و ببینید با مسائل پیچیدهٔ محصول، فناوری و سازمان چگونه برخورد می‌کنم.',
-  disclosure: 'بازنمایی هوش مصنوعی، مبتنی بر مطالب عمومی تأییدشده — این گفت‌وگو با خودِ مجید نیست.',
-  unlisted: 'پیوند فهرست‌نشده — هر کسی این پیوند را داشته باشد به صفحه دسترسی دارد. هیچ مادهٔ محرمانه‌ای اینجا وجود ندارد.',
-  paths: [
-    { kicker: 'مسیر ۰۱', title: 'کارهایم را ببینید', desc: 'پروژه‌های واقعی، تصمیم‌های معماری، محدودیت‌ها، شواهد و درس‌ها.' },
-    { kicker: 'مسیر ۰۲', title: 'به تفکرم چالش بگذارید', desc: 'سناریوهای دشوار راهبری — نزدیک‌ترین رویکرد مجید، با تفکیک تجربهٔ مستند از تفسیر.' },
-    { kicker: 'مسیر ۰۳', title: 'تحول با هوش مصنوعی', desc: 'مدل‌های عملیاتی، سازمان بومی-هوشمند، بازطراحی جریان کار، اقتصاد، حکمرانی و نتایج قابل‌سنجش.' },
+  brand: 'QUANTIVIQ',
+  brandTag: 'ملاقات با مجید · گفت‌وگوی هوش مصنوعی',
+  mainSite: 'سایت اصلی',
+  eyebrow: 'ملاقات با مجید · قدرت‌گرفته از ذهن Quantiviq',
+  headline: 'تفکر مجید را با هوش مصنوعی کاوش کنید.',
+  desc: 'دربارهٔ پروژه‌های واقعی بپرسید، به یک تصمیم چالش بگذارید یا مسئلهٔ کاری‌تان را مطرح کنید. این هوش مصنوعی بر آثار منتشرشدهٔ مجید و منابع عمومی گزینش‌شده تکیه دارد و منابعش قابل بررسی‌اند.',
+  identity: 'مجید اصغری تبریزی · رهبری محصول، تفکر سیستمی و هوش مصنوعی کاربردی',
+  ctaStart: 'گفت‌وگو را شروع کنید',
+  ctaContinue: 'ادامهٔ گفت‌وگو',
+  ctaHow: 'چگونه کار می‌کند',
+  disclosureShort: 'با یک بازنمایی هوش مصنوعی گفت‌وگو می‌کنید، نه خود مجید. پاسخ‌ها ممکن است ناقص باشند؛ منابع پیوندشده را بررسی کنید.',
+  startersTitle: 'نقطهٔ شروع را انتخاب کنید',
+  starters: [
+    { title: 'کارها را ببینید', desc: 'آنچه ساخته شده، تصمیم‌های پشت آن و شواهد در دسترس را بررسی کنید.' },
+    { title: 'یک تصمیم را محک بزنید', desc: 'سناریویی دشوار بیاورید و پاسخی مبتنی بر اصول منتشرشده را بسنجید.' },
+    { title: 'تحول با هوش مصنوعی', desc: 'جریان کار، حقوق تصمیم، حکمرانی و ارزش کسب‌وکار را کاوش کنید.' },
   ],
-  starters: {
-    work: ['مجید واقعاً چه چیزهایی را به تولید رسانده و چه چیزی هنوز آزمایشی است؟', 'تصمیم بازنشستگی فینیکس را توضیح بده — چرا سیستم کارا را متوقف کرد؟', 'چهار پروژهٔ مستند دربارهٔ قضاوت مهندسی‌اش چه می‌گویند؟'],
+  generalAsk: 'یا پرسش خودتان را بپرسید',
+  howTitle: 'چگونه کار می‌کند',
+  how: [
+    { t: 'پرسش واقعی بپرسید', d: 'با یک پروژه، یک تصمیم یا یک چالش کسب‌وکار شروع کنید.' },
+    { t: 'پاسخ را کاوش کنید', d: 'مطالب مستند را از تفسیر هوش مصنوعی تفکیک کنید.' },
+    { t: 'منابع را بررسی کنید', d: 'مقاله‌ها، کتاب‌ها، مستندات و شواهد پروژه را باز کنید.' },
+  ],
+  examplesTitle: 'نمونه‌هایی از منابع موجود',
+  examplesNote: 'گوشه‌ای از کاتالوگ عمومی که هوش مصنوعی از آن بازیابی می‌کند \u2014 نه منابعی که برای پاسخی که هنوز داده نشده فراخوانی شده‌اند. مدخل کتاب‌ها یادداشت و فراداده است، نه دسترسی به کامل کتاب.',
+  examples: [
+    { kind: 'مقاله', title: 'پذیرش هوش مصنوعی، تحول هوش مصنوعی نیست', href: '/fa/insights/ai-adoption-is-not-ai-transformation' },
+    { kind: 'مدخل کتاب', title: 'مهندسی هوش مصنوعی \u2014 یادداشت‌های کتاب', href: '/fa/insights/books/ai-engineering' },
+    { kind: 'مستند سیستم', title: 'سازمان زنده', href: '/fa/system' },
+  ],
+  unlistedNote: 'فهرست‌نشده، نه خصوصی. هر کسی این پیوند را داشته باشد می‌تواند این صفحه را ببیند.',
+  diagram: { q: 'پرسش شما', mind: 'ذهن QUANTIVIQ', s1: 'پروژه‌ها', s2: 'مقاله‌ها', s3: 'کتاب‌ها و مستندات', a1: 'مطالب مستند', a2: 'تفسیر', a3: 'منابع', inspect: 'بررسی' },
+  paths: ['کارها را ببینید', 'یک تصمیم را محک بزنید', 'تحول با هوش مصنوعی'],
+  startersQ: {
+    work: ['مجید واقعاً چه چیزهایی را به تولید رسانده و چه چیزی هنوز آزمایشی است؟', 'تصمیم بازنشستگی فینیکس را توضیح بده \u2014 چرا سیستم کارا را متوقف کرد؟', 'چهار پروژهٔ مستند دربارهٔ قضاوت مهندسی‌اش چه می‌گویند؟'],
     challenge: ['اگر یک عامل هوش مصنوعی تصمیم گران ولی از نظر فنی درستی بگیرد، مجید چه می‌کند؟', 'چگونه اثبات می‌کنید تحول AI ارزش اقتصادی آفریده، نه فقط کاهش نیرو؟', 'چرا به مجید برای رهبری تحول AI اعتماد کنم، نه یک مشاور مدیریتی باتجربه؟'],
-    transform: ['سازمان بومی-هوشمند از کجا شروع می‌شود — ابزار، ساختار یا حقوق تصمیم؟', 'کدام جریان‌های کار هرگز نباید خودکار شوند و چرا؟', 'عامل‌هایی که عمل می‌کنند نه فقط پاسخ می‌دهند را چگونه حکمرانی می‌کنید؟'],
+    transform: ['سازمان بومی-هوشمند از کجا شروع می‌شود \u2014 ابزار، ساختار یا حقوق تصمیم؟', 'کدام جریان‌های کار هرگز نباید خودکار شوند و چرا؟', 'عامل‌هایی که عمل می‌کنند نه فقط پاسخ می‌دهند را چگونه حکمرانی می‌کنید؟'],
+    general: ['دربارهٔ چه چیزهایی می‌توانم از شما بپرسم؟', 'خلاصه کن مجید چگونه واقعیت مستند را از تفسیر جدا می‌کند.', 'چه منابع عمومی از پاسخ‌های شما پشتیبانی می‌کنند؟'],
   },
+  sourcesLabel: 'منابع',
+  viewAll: 'نمایش همه',
+  jumpToLatest: 'پرش به آخرین',
+  incompleteLabel: 'پاسخ متوقف شد \u2014 متن ناقص نگه داشته شد.',
+  closeLabel: 'بستن',
+  openSource: 'باز کردن منبع',
   evidenceTitle: 'شواهد',
-  evidenceNote: 'هر پاسخ به این منابع عمومی استوار است؛ برای راستی‌آزمایی روی پیوند بزنید.',
-  evidenceEmpty: 'استنادهای پاسخ انتخاب‌شده اینجا نمایش داده می‌شود.',
-  evidenceBtn: 'شواهد',
-  composerPlaceholder: 'پرسش دشواری بپرسید…',
-  send: 'ارسال',
-  stop: 'توقف',
-  retry: 'تلاش دوباره',
+  evidenceNote: 'منابع بازیابی‌شده برای این پاسخ \u2014 بازیابی اثبات سطری نیست. فراداده از کاتالوگ منتشرشده می‌آید؛ چیزی که موجود نیست نوشته نمی‌شود.',
+  composerPlaceholder: 'پرسش دشواری بپرسید\u2026',
+  send: 'ارسال', stop: 'توقف', retry: 'تلاش دوباره',
   challengeThis: 'به این پاسخ چالش بگذارید',
-  hintLeft: 'مبتنی بر مطالب عمومی تأییدشده · پاسخ‌ها ممکن است تفسیر باشند که مدل صریحاً برچسب می‌زند.',
-  limit: (n: number) => 'پرسش ' + n + ' از ۲۴ در این نشست',
-  errorUnavailable: 'سرویس موقتاً در دسترس نیست. پرسش شما از دست نرفته — دوباره تلاش کنید.',
+  hintLeft: 'مبتنی بر مطالب عمومی تأییدشده \u00b7 پاسخ‌ها ممکن است تفسیر باشند که مدل صریحاً برچسب می‌زند.',
+  limit: (n: number) => 'پرسش ' + String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[+d]) + ' از ۲۴ در این نشست',
+  errorUnavailable: 'سرویس موقتاً در دسترس نیست. پرسش شما از دست نرفته \u2014 دوباره تلاش کنید.',
   errorRate: 'سقف نشست پر شده. گفت‌وگو قابل مطالعه می‌ماند؛ برای ادامهٔ پرسش نشست جدیدی بسازید.',
-  errorTimeout: 'پاسخ بیش از حد طول کشید. دوباره تلاش کنید یا پرسش را دقیق‌تر بپرسید.',
+  errorTimeout: 'پاسخ بیش از حد طول کشید. دوباره تلاش کنید یا پرسش را دقیق‌تر کنید.',
   errorGeneric: 'در میانهٔ پاسخ خطایی رخ داد. تلاش دوباره پرسش شما را بازمی‌گرداند.',
-  back: '← مقدمه',
-  footLeft: 'گفت‌وگوی راهبری — بازنمایی هوش مصنوعی مجید اصغری تبریزی',
-  footRight: 'مبتنی بر ذهن عمومی Quantiviq · فهرست‌نشده · بدون آرشیو',
+  back: '\u2190 مقدمه',
+  footLeft: 'ملاقات با مجید \u2014 بازنمایی هوش مصنوعی مجید اصغری تبریزی',
+  footRight: 'مبتنی بر ذهن عمومی Quantiviq \u00b7 فهرست‌نشده \u00b7 بدون آرشیو',
 };
 
 const LIMIT = 24;
+let idc = 0;
+const mid = () => 'ex' + Date.now().toString(36) + (idc++).toString(36);
 function sid(): string {
   if (typeof window === 'undefined') return 'server';
   let s = sessionStorage.getItem('exec-session');
@@ -100,50 +156,68 @@ function sid(): string {
   return s;
 }
 
-type Mode = 'work' | 'challenge' | 'transform';
-
 export function ExecutiveDialogue() {
   const [locale, setLocale] = useState<'en' | 'fa'>('en');
   const t = locale === 'fa' ? FA : EN;
   const rtl = locale === 'fa';
   const [stage, setStage] = useState<'intro' | 'chat'>('intro');
-  const [mode, setMode] = useState<Mode>('challenge');
+  const [mode, setMode] = useState<Mode>('general');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [busy, setBusy] = useState(false);
   const [asked, setAsked] = useState(0);
   const [error, setError] = useState('');
   const [retryQ, setRetryQ] = useState('');
-  const [evOpen, setEvOpen] = useState(false);
-  const [evMsg, setEvMsg] = useState<number>(-1);
+  const [draft, setDraft] = useState('');
+  const [evidence, setEvidence] = useState<EvidenceSel>(null);
+  const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
   const abortRef = useRef<AbortController | null>(null);
-  const threadRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const follow = useFollow<HTMLDivElement>();
+  const focusChatRef = useRef(false);
 
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dir = rtl ? 'rtl' : 'ltr';
   }, [locale, rtl]);
 
+  // one intentional focus transition when entering the conversation
   useEffect(() => {
-    threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight });
+    if (stage === 'chat' && focusChatRef.current) {
+      focusChatRef.current = false;
+      inputRef.current?.focus();
+    }
+  }, [stage]);
+
+  // streaming-stable follow (same engine as Mind): reveal once per new
+  // question, stick only while following, no unconditional scrolling
+  const revealedUserRef = useRef<string | null>(null);
+  useEffect(() => {
+    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
+    if (lastUser && lastUser.id !== revealedUserRef.current) {
+      revealedUserRef.current = lastUser.id;
+      follow.reveal();
+      return;
+    }
+    requestAnimationFrame(() => follow.afterFlush());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
-  const suggestions = useMemo(() => t.starters[mode], [t, mode]);
+  const suggestions = useMemo(() => t.startersQ[mode === 'general' ? 'general' : mode] ?? t.startersQ.general, [t, mode]);
 
   const fail = useCallback((msg: string, q: string, retryable: boolean) => {
     setError(msg);
     setRetryQ(retryable ? q : '');
     setAsked((n) => Math.max(0, n - 1));
-    setMessages((ms) => (ms.at(-1)?.role === 'assistant' && ms.at(-1)?.content === '' ? ms.slice(0, -1) : ms));
+    setMessages((ms) => ms.map((m, i) => (i === ms.length - 1 && m.role === 'assistant' ? (m.content ? { ...m, incomplete: true } : m) : m)).filter((m, i, a) => !(m.role === 'assistant' && !m.content && i === a.length - 1)));
   }, []);
 
   const send = useCallback(async (text: string) => {
     const q = text.trim().slice(0, 2000);
     if (!q || busy) return;
     if (asked >= LIMIT) { setError(t.errorRate); setRetryQ(''); return; }
-    setError(''); setRetryQ(''); setAsked((n) => n + 1); setEvMsg(-1);
-    const history = [...messages, { role: 'user' as const, content: q }];
-    setMessages([...history, { role: 'assistant', content: '', sources: [] }]);
+    setError(''); setRetryQ(''); setAsked((n) => n + 1);
+    const history: Msg[] = [...messages, { id: mid(), role: 'user', content: q }];
+    setMessages([...history, { id: mid(), role: 'assistant', content: '', sources: [] }]);
     setBusy(true);
     const ac = new AbortController();
     abortRef.current = ac;
@@ -156,7 +230,6 @@ export function ExecutiveDialogue() {
         signal: ac.signal,
       });
       if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
         fail(res.status === 429 ? t.errorRate : t.errorUnavailable, q, true);
         return;
       }
@@ -180,9 +253,8 @@ export function ExecutiveDialogue() {
           let ev: any;
           try { ev = JSON.parse(evData); } catch { continue; }
           if (evName === 'sources') {
-            const srcs = (ev.sources ?? []) as Source[];
+            const srcs = (ev.sources ?? []) as NonNullable<Msg['sources']>;
             setMessages((ms) => { const c = [...ms]; c[c.length - 1] = { ...c[c.length - 1], sources: srcs }; return c; });
-            setEvMsg(history.length); setEvOpen(true);
           } else if (evName === 'delta' && typeof ev.text === 'string') {
             setMessages((ms) => { const c = [...ms]; c[c.length - 1] = { ...c[c.length - 1], content: c[c.length - 1].content + ev.text }; return c; });
           } else if (evName === 'done') {
@@ -193,7 +265,15 @@ export function ExecutiveDialogue() {
       if (streamFailed) fail(t.errorGeneric, q, true);
     } catch (e: any) {
       if (e?.name === 'AbortError') {
-        setMessages((ms) => { const c = [...ms]; if (c.at(-1)?.role === 'assistant' && c.at(-1)?.content === '') return c.slice(0, -1); return c; });
+        setMessages((ms) => {
+          const c = [...ms];
+          const lastM = c.at(-1);
+          if (lastM?.role === 'assistant') {
+            if (lastM.content) c[c.length - 1] = { ...lastM, incomplete: true };
+            else c.pop();
+          }
+          return c;
+        });
         setAsked((n) => Math.max(0, n - 1));
       } else if (String(e?.message ?? '').includes('timeout') || String(e?.cause ?? '').includes('TIMEOUT')) {
         fail(t.errorTimeout, q, true);
@@ -206,69 +286,177 @@ export function ExecutiveDialogue() {
     }
   }, [busy, messages, asked, locale, t, fail]);
 
-  const enter = (m: Mode) => { setMode(m); setStage('chat'); setMessages([]); setAsked(0); setError(''); setRetryQ(''); setEvMsg(-1); };
-  const back = () => { setStage('intro'); setMessages([]); setAsked(0); setError(''); setRetryQ(''); setEvOpen(false); };
+  // entering the conversation NEVER clears history, draft or session;
+  // starters only change the suggested-question context
+  const enter = (m: Mode, focus = true) => { setMode(m); setStage('chat'); focusChatRef.current = focus; setError(''); };
+  const back = () => { setStage('intro'); setEvidence(null); }; // keeps messages, draft, session
 
-  const evidence = evMsg >= 0 ? messages[evMsg]?.sources ?? [] : [];
+  const openEvidence = (msgId: string, srcId: string) => {
+    follow.hold();
+    setEvidence({ msgId, srcId });
+  };
+  const toggleExpand = (msgId: string) =>
+    setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
+  const prefill = (q: string) => { setDraft(q); focusChatRef.current = true; setStage('chat'); setTimeout(() => inputRef.current?.focus(), 60); };
+
+  const hasConversation = messages.length > 0;
+  const lastMsg = messages.at(-1);
 
   return (
     <div className={'ex-root' + (rtl ? ' ex-rtl' : '')}>
       <header className="ex-top">
-        <div className="ex-brand">Executive <b>Dialogue</b></div>
-        <div className="ex-locale-toggle" role="group" aria-label="Language">
-          <button aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>EN</button>
-          <button aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>فا</button>
+        <a className="ex2-brand" href={locale === 'fa' ? '/fa' : '/en'}>
+          <span className="ex2-brand-mark">QUANTIVIQ</span>
+          <span className="ex2-brand-sep" aria-hidden>\u00b7</span>
+          <span className="ex2-brand-tag">{t.brandTag}</span>
+        </a>
+        <div className="ex-top-right">
+          <a className="ex2-main-link" href={locale === 'fa' ? '/fa' : '/en'}>{t.mainSite}</a>
+          <div className="ex-locale-toggle" role="group" aria-label="Language">
+            <button aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>EN</button>
+            <button aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>\u0641\u0627</button>
+          </div>
         </div>
       </header>
 
       {stage === 'intro' ? (
-        <main className="ex-hero" id="main">
-          <p className="ex-eyebrow">{t.eyebrow}</p>
-          <h1 className="ex-name">MAJID ASGHARI TABRIZI</h1>
-          <p className="ex-axes">{t.axes}<span className="ex-sep">×</span>{t.axes2}<span className="ex-sep">×</span>{t.axes3}</p>
-          <h2 className="ex-challenge">“{t.challenge}”</h2>
-          <p className="ex-sub">{t.sub}</p>
-          <p className="ex-disclosure">{t.disclosure}<br /><span>{t.unlisted}</span></p>
-          <ul className="ex-paths">
-            {t.paths.map((p, i) => (
-              <li key={p.title}>
-                <button className="ex-path" onClick={() => enter((['work', 'challenge', 'transform'] as Mode[])[i])}>
-                  <span className="ex-path-kicker">{p.kicker}</span>
-                  <span className="ex-path-title">{p.title}</span>
-                  <p className="ex-path-desc">{p.desc}</p>
-                  <span className="ex-path-go">→<span className="ex-arrow" aria-hidden /></span>
+        <main className="ex2-landing" id="main">
+          <section className="ex2-hero">
+            <div className="ex2-hero-copy">
+              <p className="ex-eyebrow">{t.eyebrow}</p>
+              <h1 className="ex2-headline">{t.headline}</h1>
+              <p className="ex2-desc">{t.desc}</p>
+              <p className="ex2-identity">{t.identity}</p>
+              <div className="ex2-cta-row">
+                <button className="ex2-cta" onClick={() => enter(hasConversation ? mode : 'general')}>
+                  {hasConversation ? t.ctaContinue : t.ctaStart}
                 </button>
-              </li>
-            ))}
-          </ul>
+                <a className="ex2-cta-how" href="#how" onClick={(e) => { e.preventDefault(); document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }); }}>{t.ctaHow}</a>
+              </div>
+              <p className="ex2-disclosure">{t.disclosureShort}</p>
+            </div>
+            <div className="ex2-hero-visual" aria-label={t.howTitle}>
+              {/* mechanism diagram: question \u2192 knowledge \u2192 answer \u2192 inspectable source */}
+              <div className="mx-stage">
+                <div className="mx-chip mx-q">{t.diagram.q}</div>
+                <div className="mx-link" aria-hidden />
+                <div className="mx-mind">
+                  <span className="mx-mind-label">{t.diagram.mind}</span>
+                </div>
+                <div className="mx-src-row">
+                  <div className="mx-src" data-kind="1">{t.diagram.s1}</div>
+                  <div className="mx-src" data-kind="2">{t.diagram.s2}</div>
+                  <div className="mx-src" data-kind="3">{t.diagram.s3}</div>
+                </div>
+                <div className="mx-link" aria-hidden />
+                <div className="mx-answer">
+                  <div className="mx-a-row">{t.diagram.a1}</div>
+                  <div className="mx-a-row mx-a-soft">{t.diagram.a2}</div>
+                  <div className="mx-a-row mx-a-srcs">
+                    <span>{t.diagram.a3}</span>
+                    <span className="mx-cites"><i className="mx-cite">1</i><i className="mx-cite">2</i><i className="mx-cite mx-cite-hit">3</i></span>
+                  </div>
+                </div>
+                <div className="mx-inspect">
+                  <span className="mx-cite mx-cite-hit">3</span>
+                  <span className="mx-inspect-line" aria-hidden />
+                  <span className="mx-inspect-target">{t.diagram.s3}</span>
+                  <span className="mx-inspect-label">{t.diagram.inspect}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="ex2-starters" aria-labelledby="ex2-starters-t">
+            <h2 className="ex2-starters-title" id="ex2-starters-t">{t.startersTitle}</h2>
+            <ul className="ex2-starter-list">
+              {t.starters.map((p, i) => (
+                <li key={p.title}>
+                  <button className="ex2-starter" onClick={() => enter((['work', 'challenge', 'transform'] as Mode[])[i])}>
+                    <span className="ex2-starter-title">{p.title}</span>
+                    <span className="ex2-starter-desc">{p.desc}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="ex2-general">
+              <button className="ex2-general-btn" onClick={() => enter('general')}>{t.generalAsk} \u2192</button>
+            </div>
+          </section>
+
+          <section className="ex2-how" id="how" aria-labelledby="ex2-how-t">
+            <h2 id="ex2-how-t">{t.howTitle}</h2>
+            <ol className="ex2-steps">
+              {t.how.map((s, i) => (
+                <li key={s.t} className="ex2-step">
+                  <span className="ex2-step-n" aria-hidden>{i + 1}</span>
+                  <div><h3>{s.t}</h3><p>{s.d}</p></div>
+                </li>
+              ))}
+            </ol>
+            <div className="ex2-examples">
+              <h3 className="ex2-examples-title">{t.examplesTitle}</h3>
+              <ul>
+                {t.examples.map((x) => (
+                  <li key={x.href}>
+                    <a href={x.href}>
+                      <span className="ex2-ex-kind">{x.kind}</span>
+                      <span className="ex2-ex-title">{x.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="ex2-ex-note">{t.examplesNote}</p>
+            </div>
+          </section>
+
+          <section className="ex2-close">
+            <button className="ex2-cta" onClick={() => enter(hasConversation ? mode : 'general')}>
+              {hasConversation ? t.ctaContinue : t.ctaStart}
+            </button>
+            <p className="ex2-unlisted">{t.unlistedNote}</p>
+          </section>
         </main>
       ) : (
-        <main className="ex-chat" id="main">
-          <section className="ex-thread" ref={threadRef} aria-live="polite">
-            <button className="ex-drawer-toggle ex-back-btn" onClick={back}>{t.back}</button>
-            <div style={{ marginBottom: 18 }}>
-              <span className="ex-eyebrow" style={{ margin: 0 }}>{t.paths[{ work: 0, challenge: 1, transform: 2 }[mode]].kicker} · {t.paths[{ work: 0, challenge: 1, transform: 2 }[mode]].title}</span>
+        <main className="ex-chat ex2-chat" id="main">
+          <section className="ex-thread ex2-thread" ref={follow.ref} aria-live="polite">
+            <div className="ex2-chat-top">
+              <button className="ex-back-btn" onClick={back}>{t.back}</button>
+              <span className="ex2-chat-mode">{mode !== 'general' ? t.paths[['work', 'challenge', 'transform'].indexOf(mode)] : t.brandTag}</span>
             </div>
             {messages.length === 0 && (
               <div className="ex-suggestions">
                 {suggestions.map((s) => (
-                  <button key={s} className="ex-suggest" onClick={() => send(s)}>{s}</button>
+                  <button key={s} className="ex-suggest" onClick={() => prefill(s)}>{s}</button>
                 ))}
               </div>
             )}
-            {messages.map((m, i) => (
-              <div className={'ex-msg ' + (m.role === 'user' ? 'ex-q' : 'ex-a' + (busy && i === messages.length - 1 ? ' ex-streaming' : ''))} key={i}>
-                {m.content || (busy && i === messages.length - 1 ? '' : '…')}
-                {m.role === 'assistant' && m.content && (m.sources?.length ?? 0) > 0 && (
-                  <div className="ex-cites">
-                    {m.sources!.map((s, si) => (
-                      <button key={s.id} className="ex-cite" onClick={() => { setEvMsg(i); setEvOpen(true); }} title={s.title}>[{si + 1}] {s.title}</button>
-                    ))}
-                    <button className="ex-cite" onClick={() => send(locale === 'fa' ? 'به این پاسخ چالش بگذار: نقطه‌ضعف‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>↯ {t.challengeThis}</button>
-                  </div>
+            {messages.map((m) => (
+              <div key={m.id} className={m.role === 'assistant' ? 'ex-msg ex-a' + (busy && m === lastMsg ? ' ex-streaming' : '') : 'ex-msg ex-q'}>
+                {m.role === 'assistant' ? (
+                  <>
+                    <MindMessage
+                      m={m}
+                      label={t.sourcesLabel}
+                      viewAll={t.viewAll}
+                      incompleteLabel={t.incompleteLabel}
+                      onOpen={openEvidence}
+                      expandedSet={expandedSources}
+                      onToggleExpand={toggleExpand}
+                      onHold={follow.hold}
+                    />
+                    {m.content && (m.sources?.length ?? 0) > 0 && (
+                      <button className="ex-challenge" onClick={() => send(locale === 'fa' ? 'به این پاسخ چالش بگذار: نقطه‌ضعف‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>\u21af {t.challengeThis}</button>
+                    )}
+                  </>
+                ) : (
+                  m.content
                 )}
               </div>
             ))}
+            {!follow.following && messages.length > 0 && (
+              <button type="button" className="ex-jump" onClick={follow.jumpToLatest}>\u2193 {t.jumpToLatest}</button>
+            )}
             {error && (
               <div className="ex-error" role="alert">
                 <span>{error}</span>
@@ -280,31 +468,32 @@ export function ExecutiveDialogue() {
                 <textarea
                   ref={inputRef}
                   className="ex-input"
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
                   placeholder={t.composerPlaceholder}
                   rows={2}
                   maxLength={2000}
-                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); const v = inputRef.current?.value ?? ''; if (v.trim()) { inputRef.current!.value = ''; send(v); } } }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (draft.trim()) { const v = draft; setDraft(''); send(v); } } }}
                   aria-label={t.composerPlaceholder}
                 />
-                {busy ? <button className="ex-stop" onClick={() => abortRef.current?.abort()}>{t.stop}</button> : <button className="ex-send" onClick={() => { const v = inputRef.current?.value ?? ''; if (v.trim()) { inputRef.current!.value = ''; send(v); } }}>{t.send}</button>}
+                {busy ? <button className="ex-stop" onClick={() => abortRef.current?.abort()}>{t.stop}</button> : <button className="ex-send" onClick={() => { if (draft.trim()) { const v = draft; setDraft(''); send(v); } }}>{t.send}</button>}
               </div>
               <div className="ex-hint"><span>{t.hintLeft}</span><span>{t.limit(asked)}</span></div>
             </div>
           </section>
-          <aside className="ex-evidence" hidden={!evOpen} aria-label={t.evidenceTitle}>
-            <button className="ex-drawer-toggle" onClick={() => setEvOpen(false)} aria-expanded={evOpen}>{t.evidenceBtn} {evOpen ? '×' : ''}</button>
-            <h3>{t.evidenceTitle}</h3>
-            <p className="ex-ev-note">{evidence.length ? t.evidenceNote : t.evidenceEmpty}</p>
-            {evidence.map((s) => (
-              <div className="ex-ev-item" key={s.id}>
-                <span className="ex-ev-class">{s.class} · {s.type}</span>
-                <p className="ex-ev-title">{s.title}</p>
-                <a className="ex-ev-link" href={s.url} target="_blank" rel="noopener noreferrer">{s.url}</a>
-              </div>
-            ))}
-          </aside>
         </main>
       )}
+
+      <EvidenceInspector
+        source={
+          evidence
+            ? normalizeSources(messages.find((m) => m.id === evidence.msgId)?.sources).find((x) => x.id === evidence.srcId) ?? null
+            : null
+        }
+        locale={locale === 'fa' ? 'fa' : 'en'}
+        s={{ ...MIND_STRINGS[locale], close: t.closeLabel, openSource: t.openSource, evidenceTitle: t.evidenceTitle, evidenceNote: t.evidenceNote }}
+        onClose={() => setEvidence(null)}
+      />
 
       <footer className="ex-foot">
         <span>{t.footLeft}</span>

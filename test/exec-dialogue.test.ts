@@ -59,11 +59,17 @@ test('service defines executive persona contract (prompt, top_k, limit)', () => 
 test('executive component sends persona and renders citations + disclosure', () => {
   const comp = read('src/components/exec/ExecutiveDialogue.tsx');
   assert.ok(comp.includes("persona: 'executive'"), 'persona sent');
-  assert.ok(comp.includes('not a live conversation'), 'AI-representation disclosure present');
-  assert.ok(comp.includes('Unlisted'), 'unlisted-not-private note present');
-  assert.ok(comp.includes('ex-cite'), 'citation chips rendered');
-  assert.ok(comp.includes('ex-evidence'), 'evidence drawer present');
+  assert.ok(comp.includes('not Majid live'), 'AI-representation disclosure present');
+  assert.ok(comp.includes('Unlisted, not private'), 'unlisted-not-private note present');
+  assert.ok(comp.includes('MindMessage'), 'shared citation renderer used');
+  assert.ok(comp.includes('EvidenceInspector'), 'evidence inspector present');
+  assert.ok(comp.includes('useFollow'), 'streaming-stable follow engine used');
   assert.ok(comp.includes('AbortError'), 'cancel handled');
   assert.ok(comp.includes('retryQ'), 'retry restores failed question');
   assert.ok(comp.includes('MAX_QUESTIONS') === false, 'own limit constant');
+  // v2 landing contract: one-action entry, no auto-send, history preserved
+  assert.ok(comp.includes('ctaStart'), 'primary CTA copy');
+  assert.ok(comp.includes('ctaContinue'), 'continue state for existing conversation');
+  assert.ok(comp.includes('ex2-landing'), 'landing stage');
+  assert.ok(comp.includes('diagram'), 'mechanism diagram labels');
 });
