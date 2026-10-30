@@ -1,0 +1,17 @@
+import io, os, sys, base64, paramiko
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, 'reconfigure'): _s.reconfigure(encoding='utf-8', errors='replace')
+KEYB = os.path.expanduser('~/.ssh/trader_vps')
+b = paramiko.SSHClient(); b.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+b.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEYB), timeout=25, look_for_keys=False, allow_agent=False)
+sftp = b.open_sftp()
+with sftp.open('/usr/local/bin/umami-backup-cat','w') as f: f.write(base64.b64decode('IyEvYmluL3NoCmNhc2UgIiRTU0hfT1JJR0lOQUxfQ09NTUFORCIgaW4KICBsaXN0LWxhdGVzdCkgbHMgLTF0IC92YXIvYmFja3Vwcy91bWFtaS91bWFtaS0qLnNxbC5neiB8IGhlYWQgLTEgOzsKICBjYXQqKSBleGVjIHNoIC1jICIkU1NIX09SSUdJTkFMX0NPTU1BTkQiIDs7CiAgKikgZWNobyByZXN0cmljdGVkID4mMjsgZXhpdCAxIDs7CmVzYWM=').decode())
+_, so, _ = b.exec_command('chmod 755 /usr/local/bin/umami-backup-cat && cat /usr/local/bin/umami-backup-cat', timeout=60)
+print(so.read().decode())
+b.close()
+pw = io.open(r'C:\Users\ma.asghari\.dsh\var\quantiviq-ssh.password', encoding='utf-8').read().strip()
+a = paramiko.SSHClient(); a.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+a.connect('171.22.24.45', 22, username='root', password=pw, timeout=15)
+_, so, _ = a.exec_command('rm -f /var/backups/umami-copy/*.gz; bash /usr/local/bin/umami-pull-backup.sh; ls -la /var/backups/umami-copy/', timeout=180)
+print(so.read().decode('utf-8','replace')[:500])
+a.close()

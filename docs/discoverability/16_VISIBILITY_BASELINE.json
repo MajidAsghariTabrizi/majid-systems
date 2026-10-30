@@ -1,0 +1,54 @@
+{
+ "generatedAt": "2026-10-30T12:35:18.883Z",
+ "metrics": [
+  {
+   "name": "sitemap_urls",
+   "numerator": 101,
+   "denominator": 101,
+   "ratio": 1,
+   "note": "all sitemap entries are candidate documents"
+  },
+  {
+   "name": "bing_site_indexed_pages",
+   "numerator": 0,
+   "denominator": 101,
+   "ratio": 0,
+   "note": "unique quantiviq.xyz paths in first SERP vs sitemap size (approx, bot-dependent)"
+  },
+  {
+   "name": "ai_search_crawlers_allowed",
+   "numerator": 4,
+   "denominator": 4,
+   "ratio": 1,
+   "note": "explicit AI-crawler grants in robots.txt"
+  },
+  {
+   "name": "llms_txt_public_urls",
+   "numerator": 60,
+   "denominator": 101,
+   "ratio": 0.594,
+   "note": "llms.txt coverage of public corpus"
+  },
+  {
+   "name": "routes_serving_200_html",
+   "numerator": 104,
+   "denominator": 112,
+   "ratio": 0.929,
+   "note": "live probe both vantages"
+  },
+  {
+   "name": "routes_with_canonical",
+   "numerator": 103,
+   "denominator": 104,
+   "ratio": 0.99,
+   "note": "self-canonical coverage"
+  },
+  {
+   "name": "routes_with_hreflang",
+   "numerator": 82,
+   "denominator": 104,
+   "ratio": 0.788,
+   "note": "hreflang cluster coverage (case-insensitive match, 2026-10-30 re-probe)"
+  }
+ ]
+}

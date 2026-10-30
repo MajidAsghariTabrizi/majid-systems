@@ -1,0 +1,15 @@
+import io, os, paramiko, sys
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, 'reconfigure'): _s.reconfigure(encoding='utf-8', errors='replace')
+KEYB = os.path.expanduser('~/.ssh/trader_vps')
+b = paramiko.SSHClient(); b.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+b.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEYB), timeout=25, look_for_keys=False, allow_agent=False)
+_, so, _ = b.exec_command("sed -i 's/chmod 600/chmod 640; chgrp tunnel/' /usr/local/bin/umami-backup.sh; chmod 640 /var/backups/umami/*.gz; chgrp tunnel /var/backups/umami/*.gz; chmod 750 /var/backups/umami; cat /usr/local/bin/umami-backup.sh | grep chmod; ls -la /var/backups/umami/", timeout=60)
+print(so.read().decode('utf-8','replace')[:600])
+b.close()
+pw = io.open(r'C:\Users\ma.asghari\.dsh\var\quantiviq-ssh.password', encoding='utf-8').read().strip()
+a = paramiko.SSHClient(); a.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+a.connect('171.22.24.45', 22, username='root', password=pw, timeout=15)
+_, so, _ = a.exec_command('rm -f /var/backups/umami-copy/*.gz; bash /usr/local/bin/umami-pull-backup.sh; ls -la /var/backups/umami-copy/; md5sum /var/backups/umami-copy/*.gz', timeout=180)
+print(so.read().decode('utf-8','replace')[:500])
+a.close()
