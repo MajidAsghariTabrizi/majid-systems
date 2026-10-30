@@ -1,0 +1,21 @@
+# ============================================================
+# First-party analytics proxy (Umami via authenticated tunnel;
+# docs/discoverability/03_ANALYTICS_ARCHITECTURE.md). Fail-open.
+# ============================================================
+location = /_q/script.js {
+    proxy_pass http://127.0.0.1:3010/script.js;
+    proxy_connect_timeout 3s;
+    proxy_read_timeout 5s;
+    add_header X-Robots-Tag "noindex" always;
+    add_header Cache-Control "public, max-age=3600, stale-while-revalidate=86400";
+}
+location /_q/ {
+    proxy_pass http://127.0.0.1:3010/;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_connect_timeout 3s;
+    proxy_read_timeout 10s;
+    client_max_body_size 64k;
+}

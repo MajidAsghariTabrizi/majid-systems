@@ -41,9 +41,9 @@ Server-to-server: A→B direct routed via public gateway (RTT 3.4–7.7 ms). **N
 
 | # | Finding | Evidence |
 |---|---|---|
-| F1 | **Zero `hreflang` link tags in HTML** on every page (sitemap has alternates; pages emit none) | all 200 pages: `hreflang 0` |
+| F1 | ~~Zero hreflang~~ **RETRACTED 2026-10-30**: audit-regex case bug (React emits `hrefLang`); re-probe shows full clusters on all locale-paired routes | re-probe in 07_ROUTE_INDEXABILITY_MATRIX.md |
 | F2 | `/en/mind` + `/fa/mind` are CSR shells — 437/438 chars of unhydrated text while `index,follow` | probe textChars |
-| F3 | No `Organization`/`Person`/`WebSite` JSON-LD on home/about/operator pages | jsonLdTypes |
+| F3 | Person↔Organization `@graph` JSON-Ld EXISTS on locale pages; the real defect was `Person.url → /profile` … actually `/profile` EXISTS (200) — link valid; fixed a transient mis-aim to `/en/about` then restored to `/profile` | JsonLd.tsx + live probe |
 | F4 | robots.txt has no AI-crawler-specific policy statements (all allowed by `*` today) and no OAI-SearchBot/GPTBot distinction | 110-byte robots |
 | F5 | `/en/about` thin-ish (1,293 chars) as the de-facto public operator profile | probe |
 | F6 | No webmaster-tool verification records (GSC/Bing) discoverable on host | cert/HTML scan |

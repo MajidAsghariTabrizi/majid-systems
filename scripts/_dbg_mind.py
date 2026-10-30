@@ -8,7 +8,7 @@ async def main():
         errs = []
         pg.on('console', lambda m: errs.append(m.type + ': ' + m.text[:160]) if m.type in ('error','warning') else None)
         pg.on('pageerror', lambda e: errs.append('PAGEERROR: ' + str(e)[:200]))
-        r = await pg.goto('http://127.0.0.1:3219/en/mind', wait_until='domcontentloaded')
+        r = await pg.goto('https://quantiviq.xyz/en/mind', wait_until='domcontentloaded')
         print('STATUS:', r.status)
         await pg.wait_for_timeout(5000)
         ta = await pg.locator('textarea').count()
