@@ -1,4 +1,11 @@
 /* ===== Mind evidence UX + streaming stability (2026-10-29) ===== */
+/* Static crawlable description on /mind (F2 2026-10-30) — server-rendered,
+   sits below the interactive card, uses site tokens only. */
+.mind-seo { padding: clamp(28px, 5vw, 56px) 0 48px; border-top: 1px solid var(--border); }
+.mind-seo h2 { font-size: 1.25rem; margin: 0 0 12px; }
+.mind-seo p { max-width: 72ch; color: var(--muted); line-height: 1.65; margin: 0 0 10px; }
+.mind-seo ul { margin: 6px 0 10px; padding-inline-start: 20px; color: var(--muted); }
+.mind-seo a { color: var(--brand); }
 .mind-sources-toggle {
   display: inline-flex;
   align-items: center;

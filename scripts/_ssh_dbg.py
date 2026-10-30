@@ -1,0 +1,11 @@
+import os, paramiko
+KEY = os.path.expanduser('~/.ssh/trader_vps')
+cl = paramiko.SSHClient(); cl.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+cl.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEY), timeout=25, look_for_keys=False, allow_agent=False)
+_, so, se = cl.exec_command('su - postgres -c "psql -tAc \\"SELECT 1 FROM pg_roles WHERE rolname=umami\\"" ; echo RC=$?', timeout=60)
+print('OUT[' + so.read().decode() + ']')
+_, so2, se2 = cl.exec_command("su - postgres -c 'psql -tAc \"SELECT 1 FROM pg_roles WHERE rolname=umami\"'; echo RC=$?", timeout=60)
+print('OUT2[' + so2.read().decode() + ']')
+_, so3, _ = cl.exec_command("su - postgres -c \"psql -tAc \\\"SELECT count(*) FROM pg_roles\\\"\"", timeout=60)
+print('OUT3[' + so3.read().decode() + ']')
+cl.close()

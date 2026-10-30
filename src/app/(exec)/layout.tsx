@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import './exec.css';
+import { AnalyticsScript } from '@/components/AnalyticsScript';
 
 /**
  * Executive Dialogue shell — deliberately separate from both public shells:
@@ -13,7 +14,7 @@ export default function ExecLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="robots" content="noindex, nofollow, noarchive" />
       </head>
-      <body className="ex-body">{children}</body>
+      <body className="ex-body">{children}<AnalyticsScript page="exec" /></body>
     </html>
   );
 }

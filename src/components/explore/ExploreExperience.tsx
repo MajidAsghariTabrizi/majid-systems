@@ -16,6 +16,7 @@ import { OrgSimulatorSection } from '@/components/OrgSimulator';
 import { dict, type Locale } from '@/content/i18n';
 import { simLabels } from '@/content/i18n/sim';
 import { SIM_SIGNALS, type SignalKey } from '@/content/simulator';
+import { qEvent } from '@/lib/analytics';
 import { OLD_HOPS, NEW_STEPS, OLD_TOTAL_HOURS, OLD_TOTAL_HANDOFFS, NEW_TOTAL_MINUTES } from '@/lib/sim/timeline';
 import { OSS, OSS_BY_ID, BOOK_BY_SLUG, type OssLayer } from '@/content/knowledge';
 
@@ -165,7 +166,10 @@ export default function ExploreExperience({ locale }: { locale: Locale }) {
               key={s.key}
               className={`chip chip-btn role-chip ${signal === s.key ? 'on' : ''}`}
               aria-pressed={signal === s.key}
-              onClick={() => setSignal(s.key)}
+              onClick={() => {
+                setSignal(s.key);
+                qEvent('simulator_run', { scenario: s.key, locale });
+              }}
             >
               <strong>{signalLabel(s.key)}</strong>
               <span className="role-note">{signalNote(s.key)}</span>

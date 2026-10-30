@@ -8,6 +8,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { QuantiviqJsonLd } from '@/components/JsonLd';
 import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
+import { AnalyticsScript } from '@/components/AnalyticsScript';
 
 import '../globals.css';
 import '../silver-bullet.css';
@@ -118,6 +119,7 @@ export default async function LocaleLayout({
         <main id="main">{children}</main>
         <Footer locale={locale} />
         <QuantiviqMind locale={isLocale(locale) ? locale : 'en'} />
+<AnalyticsScript page="site" />
       </body>
     </html>
   );

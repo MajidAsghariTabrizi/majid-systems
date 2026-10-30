@@ -9,6 +9,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MindStrings } from './strings';
+import { qEvent, oncePerSession } from '@/lib/analytics';
 
 export type Msg = {
   role: 'user' | 'assistant';
@@ -277,6 +278,9 @@ export function useMindChat(locale: string, s: MindStrings, opts: ChatOptions = 
       setAsked((n) => n + 1);
       const gen = ++genRef.current;
       abortRef.current?.abort();
+      if (oncePerSession('mind-start-' + (persona ?? 'public'))) {
+        qEvent('mind_session_start', { surface: persona ?? 'public' });
+      }
       const userMsg: Msg = { role: 'user', content: q, id: mid('user') };
       const aiMsg: Msg = { role: 'assistant', content: '', id: mid('assistant') };
       const history = messages;
@@ -355,7 +359,12 @@ export function useMindChat(locale: string, s: MindStrings, opts: ChatOptions = 
           }
         }
         if (flushTimer !== null) clearTimeout(flushTimer);
-        if (!streamFailed) patchLast({ content: answer, sources }, gen);
+        if (!streamFailed) {
+          patchLast({ content: answer, sources }, gen);
+          if (answer.length > 0) {
+            qEvent('mind_session_complete', { surface: persona ?? 'public' });
+          }
+        }
       } catch (e) {
         if ((e as Error).name !== 'AbortError') {
           fail(s.serviceUnavailable, q, true);

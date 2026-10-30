@@ -1,0 +1,16 @@
+import os, paramiko, sys
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, 'reconfigure'): _s.reconfigure(encoding='utf-8', errors='replace')
+KEY = os.path.expanduser('~/.ssh/trader_vps')
+cl = paramiko.SSHClient(); cl.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+cl.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEY), timeout=25, look_for_keys=False, allow_agent=False)
+_, so, _ = cl.exec_command('journalctl -u umami -n 30 --no-pager | grep -iE "error|fail|admin" | tail -8', timeout=60)
+print('LOG:', so.read().decode('utf-8','replace'))
+_, so, _ = cl.exec_command('su - postgres -c "psql -tA -d umami"', timeout=60)
+si, _, _ = cl.exec_command('su - postgres -c "psql -tA -d umami"', timeout=60)
+si.channel.shutdown_write()
+print('USERS:', so.read().decode('utf-8','replace'))
+_, so, _ = cl.exec_command('su - postgres -c "psql -tA -d umami"', timeout=60)
+_, so2, _ = cl.exec_command('su - postgres -c "psql -tA -d umami -c \\"select username from user_account\\\""', timeout=60)
+print('USERNAMES:', so2.read().decode('utf-8','replace'))
+cl.close()

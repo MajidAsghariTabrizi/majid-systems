@@ -13,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMindChat, useFollow } from '../mind/useMindChat';
 import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from '../mind/evidence';
 import { MIND_STRINGS } from '../mind/strings';
+import { qEvent, oncePerSession } from '@/lib/analytics';
 
 type Mode = 'work' | 'challenge' | 'transform' | 'general';
 
@@ -202,7 +203,16 @@ export function ExecutiveDialogue() {
 
   const enter = (m: Mode, focus = true) => { setMode(m); setStage('chat'); focusChatRef.current = focus; };
   const back = () => { setStage('intro'); setEvidence(null); }; // keeps messages, draft, session
-  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const openEvidence = (msgId: string, srcId: string) => {
+    const s = normalizeSources(messages.find((m) => m.id === msgId)?.sources).find((x) => x.id === srcId);
+    if (s) qEvent('source_open', { category: s.type, sid: s.id });
+    setEvidence({ msgId, srcId });
+  };
+
+  // unlisted page view signal (count only; no identity) — once per session
+  useEffect(() => {
+    if (oncePerSession('meet-majid-view')) qEvent('meet_majid_view');
+  }, []);
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
   const prefill = (q: string) => { setDraft(q); focusChatRef.current = true; setStage('chat'); setTimeout(() => inputRef.current?.focus(), 60); };

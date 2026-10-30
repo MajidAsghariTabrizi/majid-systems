@@ -1,5 +1,7 @@
 'use client';
 
+import { qEvent } from '@/lib/analytics';
+
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -63,6 +65,10 @@ export function LeadForm({ locale }: { locale: Locale }) {
         setRef(data.id);
         setStatus('success');
         form.reset();
+        // server-confirmed conversion only (taxonomy v1): diagnostic_request
+        // when the chosen intent IS the diagnostic, otherwise contact_submit_success
+        if (intent === 'diagnostic') qEvent('diagnostic_request', { locale });
+        else qEvent('contact_submit_success', { intent: String(intent).slice(0, 40), locale });
         return;
       }
       if (data.errors) {

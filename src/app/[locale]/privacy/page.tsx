@@ -32,6 +32,7 @@ export default async function PrivacyPage({ params }: { params: { locale: string
     { h: t.howLongTitle, b: t.howLongBody },
     { h: t.rightsTitle, b: t.rightsBody },
     { h: t.securityTitle, b: t.securityBody },
+{ h: t.measurementTitle, b: t.measurementBody },
   ];
 
   return (

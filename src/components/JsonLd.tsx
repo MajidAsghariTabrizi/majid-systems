@@ -95,7 +95,7 @@ export function QuantiviqJsonLd() {
         name: SITE.fullName,
         alternateName: [SITE.fullNameFa, SITE.name],
         jobTitle: SITE.founderTitle,
-        url: `${SITE.canonicalUrl}/profile`,
+        url: `${SITE.canonicalUrl}/en/about`,
         image: `${SITE.canonicalUrl}${SITE.ogImage}`,
         sameAs: [SITE.githubUrl, SITE.linkedinUrl].filter(Boolean),
         worksFor: { '@id': ORG_ID },

@@ -544,6 +544,8 @@ export const en = {
     rightsTitle: 'Your controls',
     rightsBody: 'Reply to the confirmation with “delete my data” (or use the contact form referencing your submission ID) and the record is removed. You can also request a copy of what is stored.',
     securityTitle: 'Security posture',
+    measurementTitle: 'Anonymous site measurement',
+    measurementBody: 'This site uses a self-hosted, cookieless analytics service (Umami) on our own infrastructure to count page views and aggregate events. It sets no cookies, does not build individual profiles, and never records what you type into the AI assistant, your name, email, or any message content. Only anonymous aggregate statistics are retained.',
     securityBody: 'Submissions are validated and rate-limited server-side, stored outside the web root’s static assets, never logged with field values, and never exposed publicly. No credit card or special-category data is ever collected.',
   },
   common: {

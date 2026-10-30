@@ -17,6 +17,7 @@ import {
 } from '@/content/insights';
 import { INSIGHTS_UI } from '@/content/insights/ui';
 import { ArticleJsonLd } from '@/components/InsightsJsonLd';
+import { InsightRead } from '@/components/InsightRead';
 import { SITE } from '@/content/shared';
 
 type Params = { locale: string; slug: string };
@@ -95,6 +96,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
   return (
     <article className="ins-article" itemScope itemType="https://schema.org/BlogPosting">
       <ArticleJsonLd article={article} />
+    <InsightRead slug={article.slug} locale={article.locale} />
 
       <header className="ins-article-head">
         <div className="container">

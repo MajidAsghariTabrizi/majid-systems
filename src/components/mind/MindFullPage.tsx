@@ -14,6 +14,7 @@ import { useSearchParams } from 'next/navigation';
 import { useMindChat, useFollow, MAX_QUESTIONS } from './useMindChat';
 import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from './evidence';
 import type { MindStrings } from './strings';
+import { qEvent } from '@/lib/analytics';
 
 function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const params = useSearchParams();
@@ -24,7 +25,11 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const follow = useFollow<HTMLDivElement>();
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
-  const openEvidence = (msgId: string, srcId: string) => setEvidence({ msgId, srcId });
+  const openEvidence = (msgId: string, srcId: string) => {
+    const s = normalizeSources(messages.find((m) => m.id === msgId)?.sources).find((x) => x.id === srcId);
+    if (s) qEvent('source_open', { category: s.type, sid: s.id });
+    setEvidence({ msgId, srcId });
+  };
   const toggleExpand = (msgId: string) =>
     setExpandedSources((prev) => { const n = new Set(prev); if (n.has(msgId)) n.delete(msgId); else n.add(msgId); return n; });
 
