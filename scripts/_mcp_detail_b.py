@@ -1,0 +1,22 @@
+import os, sys, paramiko
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, 'reconfigure'): _s.reconfigure(encoding='utf-8', errors='replace')
+KEY = os.path.expanduser('~/.ssh/trader_vps')
+b = paramiko.SSHClient(); b.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+b.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEY), timeout=25, look_for_keys=False, allow_agent=False)
+def run(cmd, t=120):
+    _, so, se = b.exec_command(cmd, timeout=t)
+    return (so.read().decode('utf-8','replace') + se.read().decode('utf-8','replace'))
+print('== stdio.ts env block ==')
+print(run('sed -n "1,60p" /opt/umami/packages/mcp/src/stdio.ts'))
+print('== auth.ts gating ==')
+print(run('cat /opt/umami/src/lib/mcp/auth.ts 2>/dev/null | head -70'))
+print('== api-keys model/routes ==')
+print(run('ls /opt/umami/src/app/api/users/ 2>/dev/null; find /opt/umami/src/app/api -maxdepth 3 -path "*api-key*" | head -5'))
+print('== api-key scopes ==')
+print(run('grep -rn "website:read\|scope" /opt/umami/src/lib/types.ts 2>/dev/null | head -8; grep -rn "apiKey" /opt/umami/prisma/schema.prisma | head -6'))
+print('== live probe ==')
+print(run('curl -s -o /dev/null -w "mcp:%{http_code}" -X POST -H "content-type: application/json" -H "accept: application/json, text/event-stream" -d \'{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2026-07-28","capabilities":{},"clientInfo":{"name":"probe","version":"0"}}}\' http://127.0.0.1:3001/mcp; echo; grep -o "MCP[A-Z_=]*" /etc/umami.env || echo no-mcp-env'))
+print('== mcp route gating ==')
+print(run('sed -n "1,50p" /opt/umami/src/app/mcp/route.ts'))
+b.close()
