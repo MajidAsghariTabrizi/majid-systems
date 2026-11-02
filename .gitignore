@@ -46,3 +46,5 @@ captures-journey/
 
 # Lead store (runtime data)
 .data/
+
+.data-local-test/

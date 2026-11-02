@@ -29,7 +29,8 @@ export function Footer({ locale }: { locale?: Locale }) {
         </div>
         {locale ? (
           <ul>
-            <li><Link href={localePath(locale, '/services')}>{t.nav.services}</Link></li>
+            <li><Link href={localePath(locale, '/solutions')}>{locale === 'fa' ? 'راهکارها' : 'Solutions'}</Link></li>
+        <li><Link href={localePath(locale, '/services')}>{t.nav.services}</Link></li>
             <li><Link href={localePath(locale, '/system')}>{t.nav.system}</Link></li>
             <li><Link href={localePath(locale, '/method')}>{t.nav.method}</Link></li>
             <li><Link href={localePath(locale, '/proof')}>{t.nav.proof}</Link></li>

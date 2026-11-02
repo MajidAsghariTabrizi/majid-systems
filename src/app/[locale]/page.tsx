@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { FeaturedSolutions } from '@/components/solutions/FeaturedSolutions';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -90,7 +91,10 @@ export default async function LocaleHome({ params }: { params: { locale: string 
       </section>
 
       {/* ===== 03 · THE PROBLEM ===== */}
-      <section id="problem" className="q-section" aria-label={h.problemH2}>
+      {/* ===== 02b · FEATURED SOLUTIONS (commercial bridge: thesis → practice) ===== */}
+      <FeaturedSolutions locale={l} />
+
+            <section id="problem" className="q-section" aria-label={h.problemH2}>
         <div className="container-wide">
           <Reveal>
             <div className="section-header">

@@ -3,8 +3,9 @@ import crypto from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 
 import { ipHash, validateLead } from '@/lib/lead/validate';
-import { appendLead, storageHealth, type LeadRecord } from '@/lib/lead/store';
+import { appendLead, storageHealth, updateLead, type LeadRecord } from '@/lib/lead/store';
 import { deliverOwnerNotification, outboxPending, smtpConfigured } from '@/lib/lead/notify';
+import { getSolution } from '@/content/solutions';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -123,23 +124,35 @@ export async function POST(req: NextRequest) {
     status: 'stored',
     notify: 'pending',
   };
+  if (parsed.value.solution) record.solution = parsed.value.solution;
+  if (parsed.value.phone) record.phone = parsed.value.phone;
+  if (parsed.value.source) record.source = parsed.value.source;
+  record.pipeline = { status: 'new', updatedAt: new Date().toISOString() };
 
-  // Notification is attempted BEFORE the single durable append, so the stored
-  // line carries the true final state (sent | outbox_queued | notify_failed).
-  // If SMTP delivered but storage then fails, the user sees an honest error
-  // and may retry — the owner email is harmless; no lead is ever silently lost.
-  const notify = await deliverOwnerNotification(record);
-  record.notify = notify.delivered
-    ? notify.channel === 'smtp'
-      ? 'sent'
-      : 'outbox_queued'
-    : 'notify_failed';
+  // Server-side catalog validation: a locked solution selection must be real.
+  if (record.solution && !getSolution(record.solution)) {
+    return NextResponse.json({ ok: false, errors: { solution: 'unknown' } }, { status: 400 });
+  }
 
-  // Durable acceptance: append one JSON line. THIS is the success condition.
+  // DURABLE FIRST (PRD 2026-11-02 ordering fix): the accepted state is the
+  // persisted line — never the email. Notification state is patched onto the
+  // stored record afterwards; SMTP downtime cannot lose an accepted request.
   try {
     appendLead(record);
   } catch {
     return NextResponse.json({ ok: false, errors: { form: 'storage_failed' } }, { status: 500 });
+  }
+
+  const notify = await deliverOwnerNotification(record);
+  const notifyState = notify.delivered
+    ? notify.channel === 'smtp'
+      ? 'sent'
+      : 'outbox_queued'
+    : 'notify_failed';
+  try {
+    updateLead(id, { notify: notifyState });
+  } catch {
+    // The stored line keeps 'pending'; the admin view surfaces it for replay.
   }
 
   return NextResponse.json({ ok: true, id }, { status: 200 });

@@ -4,7 +4,7 @@
  * to a localized message.
  */
 
-export const LEAD_INTENTS = ['hiring', 'diagnostic', 'rebuild-function', 'infrastructure', 'partnership', 'other'] as const;
+export const LEAD_INTENTS = ['hiring', 'diagnostic', 'rebuild-function', 'infrastructure', 'partnership', 'solution_request', 'other'] as const;
 export type LeadIntent = (typeof LEAD_INTENTS)[number];
 
 export const LEAD_MAX = {
@@ -15,6 +15,9 @@ export const LEAD_MAX = {
   role: 100,
   message: 5000,
   preferredLink: 300,
+  phone: 30,
+  solution: 80,
+  source: 100,
 } as const;
 
 export type LeadInput = {
@@ -29,10 +32,14 @@ export type LeadInput = {
   preferredLink?: string;
   consent: boolean;
   company_site?: string; // honeypot — must be empty
+  /** Commercial layer: requested catalog solution id + attribution. */
+  solution?: string;
+  phone?: string;
+  source?: string;
 };
 
 export type LeadErrors = Partial<Record<
-  'intent' | 'name' | 'email' | 'org' | 'website' | 'role' | 'message' | 'preferred' | 'preferredLink' | 'consent',
+  'intent' | 'name' | 'email' | 'org' | 'website' | 'role' | 'message' | 'preferred' | 'preferredLink' | 'consent' | 'phone' | 'solution' | 'source',
   string
 >>;
 
@@ -68,8 +75,13 @@ export function validateLead(raw: unknown): { ok: true; value: LeadInput } | { o
   if (role.length > LEAD_MAX.role) errors.role = 'too_long';
 
   const message = clean(b.message);
-  if (!message || message.length < 10) errors.message = 'required';
+  // Solution requests keep the need description OPTIONAL (owner decision 2026-11-02):
+  // the selected solution itself carries the context. All other intents keep
+  // the >=10 char message requirement (regression-safe for the legacy form).
+  const isSolutionRequest = intent === 'solution_request';
+  if (!isSolutionRequest && (!message || message.length < 10)) errors.message = 'required';
   else if (message.length > LEAD_MAX.message) errors.message = 'too_long';
+  if (isSolutionRequest && message && message.length < 3) errors.message = 'too_short';
 
   const preferred = clean(b.preferred) || 'email';
   if (preferred !== 'email' && preferred !== 'linkedin') errors.preferred = 'invalid';
@@ -80,11 +92,22 @@ export function validateLead(raw: unknown): { ok: true; value: LeadInput } | { o
 
   if (b.consent !== true) errors.consent = 'required';
 
+  // Commercial layer fields (all optional, strictly bounded).
+  const PHONE_RE = /^[+0-9\s()-]{4,30}$/;
+  const phone = clean(b.phone);
+  if (phone && !PHONE_RE.test(phone)) errors.phone = 'invalid_phone';
+
+  const solution = clean(b.solution);
+  if (solution && !/^[a-z0-9-]{2,80}$/.test(solution)) errors.solution = 'invalid';
+
+  const source = clean(b.source);
+  if (source && !/^[a-z0-9_.:-]{2,100}$/i.test(source)) errors.source = 'invalid';
+
   if (Object.keys(errors).length > 0) return { ok: false, errors };
 
   return {
     ok: true,
-    value: { intent, name, email, org, website, role, message, preferred, preferredLink, consent: true },
+    value: { intent, name, email, org, website, role, message, preferred, preferredLink, consent: true, ...(phone && { phone }), ...(solution && { solution }), ...(source && { source }) },
   };
 }
 

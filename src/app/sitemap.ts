@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next';
 import { PROJECTS } from '@/content/projects';
 import { NOTES } from '@/content/notes';
 import { ARTICLES, getArticles, PILLARS } from '@/content/insights';
+import { SOLUTIONS } from '@/content/solutions';
 import { BOOKS } from '@/content/knowledge';
 import { SITE } from '@/content/shared';
 
@@ -223,6 +224,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.7,
     });
+  }
+
+
+  // Commercial layer: solutions catalog + flagship detail pages (flagship only -
+  // scoping pages stay noindex until they carry unique substantive depth).
+  const solAlt = (id: string) => ({ languages: { en: `${BASE}/en/solutions/${id}`, fa: `${BASE}/fa/solutions/${id}` } });
+  items.push(
+    { url: `${BASE}/en/solutions`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: { languages: { en: `${BASE}/en/solutions`, fa: `${BASE}/fa/solutions` } } },
+    { url: `${BASE}/fa/solutions`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: { languages: { en: `${BASE}/en/solutions`, fa: `${BASE}/fa/solutions` } } },
+  );
+  for (const s of SOLUTIONS.filter((x) => x.status === 'flagship')) {
+    for (const loc of ['en', 'fa']) {
+      items.push({
+        url: `${BASE}/${loc}/solutions/${s.id}`,
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: solAlt(s.id),
+      });
+    }
   }
 
   return items;

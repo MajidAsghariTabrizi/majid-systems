@@ -38,6 +38,16 @@ const ALLOWED: Record<string, string[]> = {
   diagnostic_request: ['locale'],
   source_open: ['category', 'sid'],
   simulator_run: ['scenario', 'locale'],
+  // Commercial layer (taxonomy v2) — slug/category/locale/source labels ONLY;
+  // never free-text needs, names, emails or phones (PRD §13).
+  solutions_view: ['locale', 'source'],
+  solution_view: ['solution', 'locale'],
+  solution_finder_start: ['locale'],
+  solution_finder_complete: ['locale', 'outcome', 'type'],
+  solution_request_start: ['solution', 'locale'],
+  solution_request_success: ['solution', 'locale'],
+  solution_request_failure: ['solution', 'locale'],
+  solution_related_insight_click: ['solution', 'locale'],
 };
 
 function sanitize(v: unknown): string {

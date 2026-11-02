@@ -18,6 +18,7 @@ import {
 import { INSIGHTS_UI } from '@/content/insights/ui';
 import { ArticleJsonLd } from '@/components/InsightsJsonLd';
 import { InsightRead } from '@/components/InsightRead';
+import { ArticleSolutionBridge } from '@/components/solutions/ArticleSolutionBridge';
 import { SITE } from '@/content/shared';
 
 type Params = { locale: string; slug: string };
@@ -225,7 +226,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
             )}
           </nav>
 
-          {related.length > 0 && (
+          {/* Editorial bridge: one restrained panel from the central registry */}
+      <ArticleSolutionBridge articleId={`${article.id}-${article.slug}`} locale={l} />
+
+            {related.length > 0 && (
             <section className="ins-related" aria-label={t.related}>
               <h2>{t.related}</h2>
               <div className="ins-grid">

@@ -44,26 +44,33 @@ export function outboxPending(): number {
 
 export function renderOwnerNotification(r: LeadRecord): { subject: string; text: string } {
   const f = r.fields;
-  const subject = `[quantiviq lead] ${f.name} — ${r.intent} (${r.locale})`;
+  const solutionPart = r.solution ? ` — ${r.solution}` : '';
+  const subject = `[Quantiviq request] ${f.name}${solutionPart} (${r.locale})`;
   const text = [
-    `Lead ${r.id}`,
+    `Request ${r.id}`,
     `Received: ${r.createdAt}`,
     `Locale: ${r.locale}`,
     `Intent: ${r.intent}`,
+    r.solution ? `Solution: ${r.solution}` : null,
+    r.source ? `Source: ${r.source}` : null,
     ``,
     `Name:    ${f.name}`,
-    `Email:   ${f.email}`,
+    `Email:   ${f.email} (self-declared)`,
+    r.phone ? `Phone:   ${r.phone}` : null,
     `Org:     ${f.org || '—'}`,
     `Website: ${f.website || '—'}`,
     `Role:    ${f.role || '—'}`,
     `Preferred contact: ${f.preferred}${f.preferredLink ? ` (${f.preferredLink})` : ''}`,
     ``,
     `Message:`,
-    f.message,
+    f.message || '(no message — solution request)',
     ``,
     `--`,
+    `Manage: /admin/requests`,
     `Delete this record: node scripts/leads-tool.mjs delete ${r.id}`,
-  ].join('\n');
+  ]
+    .filter((l) => l !== null)
+    .join('\n');
   return { subject, text };
 }
 

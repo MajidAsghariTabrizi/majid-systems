@@ -8,6 +8,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+export type LeadPipelineStatus = 'new' | 'contacted' | 'discovery' | 'proposal_sent' | 'won' | 'lost';
+
 export type LeadRecord = {
   id: string;
   createdAt: string;
@@ -23,9 +25,14 @@ export type LeadRecord = {
     preferred: string;
     preferredLink: string;
   };
+  /** Commercial layer (optional): catalog solution id, optional phone, attribution. */
+  solution?: string;
+  phone?: string;
+  source?: string;
   ipHash: string;
   status: 'stored' | 'deleted';
   notify: string;
+  pipeline?: { status: LeadPipelineStatus; updatedAt: string; actor?: string };
 };
 
 export function dataDir(base?: string): string {
@@ -54,6 +61,30 @@ export function listLeads(dir?: string): LeadRecord[] {
 
 export function getLead(id: string, dir?: string): LeadRecord | undefined {
   return listLeads(dir).find((r) => r.id === id);
+}
+
+/** Atomic in-place update of an existing record (rewrite tmp+rename). */
+export function updateLead(id: string, patch: Partial<LeadRecord>, dir?: string): boolean {
+  const d = dataDir(dir);
+  const p = leadsPath(d);
+  if (!fs.existsSync(p)) return false;
+  const lines = fs.readFileSync(p, 'utf8').split('\n').filter((l) => l.trim() !== '');
+  let found = false;
+  const next = lines.map((l) => {
+    try {
+      const r = JSON.parse(l) as LeadRecord;
+      if (r.id !== id) return l;
+      found = true;
+      return JSON.stringify({ ...r, ...patch });
+    } catch {
+      return l;
+    }
+  });
+  if (!found) return false;
+  const tmp = `${p}.tmp`;
+  fs.writeFileSync(tmp, next.join('\n') + '\n', 'utf8');
+  fs.renameSync(tmp, p);
+  return true;
 }
 
 /** Delete by reference id. Returns true when a record was removed. */

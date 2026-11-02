@@ -12,7 +12,9 @@ type Status = 'idle' | 'sending' | 'success' | 'error';
 
 /** Single source of truth: LEAD_INTENTS in lib/lead/validate.ts (server truth).
  *  The select and the ?intent= preselect must never drift from the API's set. */
-const INTENT_KEYS = LEAD_INTENTS;
+// 'solution_request' is a programmatic intent set by Solutions pages, never a
+// dropdown option in the general contact form.
+const INTENT_KEYS = LEAD_INTENTS.filter((k) => k !== 'solution_request');
 
 export function LeadForm({ locale }: { locale: Locale }) {
   const t = dict(locale).contact.form;

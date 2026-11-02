@@ -88,10 +88,19 @@ test('notify: TEST transport succeeds without disk/network', async () => {
 test('notify: renders an actionable owner message', () => {
   const r = rec('QV-render', '2026-01-01T00:00:00Z');
   const m = renderOwnerNotification(r);
-  assert.ok(m.subject.includes('[quantiviq lead]'));
+  // v2 commercial subject: [Quantiviq request] <name> [— solution] (locale)
+  assert.ok(m.subject.includes('[Quantiviq request]'));
   assert.ok(m.subject.includes(r.fields.name));
   assert.ok(m.text.includes(r.id));
   assert.ok(m.text.includes('delete ' + r.id));
+});
+
+test('notify: solution requests carry the selected solution', () => {
+  const r = { ...rec('QV-sol', '2026-01-01T00:00:00Z'), solution: 'quote-desk', source: 'solutions' };
+  const m = renderOwnerNotification(r);
+  assert.ok(m.subject.includes('quote-desk'));
+  assert.ok(m.text.includes('Solution: quote-desk'));
+  assert.ok(m.text.includes('Source: solutions'));
 });
 
 test('notify: SMTP unconfigured → smtpConfigured false, health falls back', () => {

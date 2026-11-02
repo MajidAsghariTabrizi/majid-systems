@@ -40,6 +40,14 @@ export function Header({ locale }: { locale?: Locale }) {
 
   const groups: NavGroup[] = locale
     ? [
+      {
+        key: 'solutions',
+        label: locale === 'fa' ? 'راهکارها' : 'Solutions',
+        items: [
+          { label: locale === 'fa' ? 'همه راهکارها' : 'All solutions', href: lp('/solutions') },
+          { label: locale === 'fa' ? 'راهکار خود را پیدا کنید' : 'Find your solution', href: lp('/solutions/find') },
+        ],
+      },
         {
           key: 'approach',
           label: t.nav2.approach,
