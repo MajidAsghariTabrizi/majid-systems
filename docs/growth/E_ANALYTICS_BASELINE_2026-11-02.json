@@ -1,0 +1,15 @@
+{
+  "captured_at": "2026-11-02T07:50:00Z",
+  "window": { "startAt": "2026-10-30T12:03:15Z", "endAt": "2026-11-02T07:50:00Z", "note": "site tracking live since 2026-10-30 12:03 UTC" },
+  "totals": { "sessions": 10, "pageviews": 20, "visitors": 4, "events": 8, "human_organic_sessions": 2, "internal_test_sessions": 3, "scanner_single_bounce": 5 },
+  "events": { "mind_session_start": 4, "mind_session_complete": 3, "insight_read": 1, "simulator_run": 0, "contact_click": 0, "contact_submit_success": 0, "diagnostic_request": 0, "probe_event": 1, "meet_majid_view": 0, "source_open": 0 },
+  "funnel_baselines": {
+    "F1 organic_landing->content->services/about->contact_click": { "step_counts": [2, 2, 2, 0], "note": "denominator 2 human organic sessions" },
+    "F2 homepage->mind_start->mind_complete->contact_click": [2, 3, 2, 0],
+    "F3 insight->related->contact_click->contact_submit_success": [1, 0, 0, 0],
+    "F4 explore/simulator_run->diagnostic_request->lead": [0, 0, 0]
+  },
+  "referrers": { "direct": "majority", "google.com": 2, "utm": "none recorded" },
+  "geo": { "IR": "majority", "US": 3, "SG": 1 },
+  "classification_note": "synthetic/internal traffic (3 sessions incl. labeled tests) excluded from acquisition metrics"
+}

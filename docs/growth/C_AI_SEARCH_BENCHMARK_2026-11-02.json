@@ -1,0 +1,196 @@
+{
+ "provider": "agent web-search backend (Google-index-fed)",
+ "timestamp": "2026-11-02T08:05:00Z",
+ "samples": [
+  {
+   "lang": "EN",
+   "q": "AI-native organization design consultant",
+   "visible": false,
+   "top": [
+    "mono.ipros.com",
+    "miro.com",
+    "www.linkedin.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "AI transformation consulting firm",
+   "visible": false,
+   "top": [
+    "www.british-business-bank.co.uk",
+    "www.forrester.com",
+    "www.oraneconsulting.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "enterprise AI agent governance framework",
+   "visible": false,
+   "top": [
+    "ora.ox.ac.uk",
+    "learn.microsoft.com",
+    "learn.microsoft.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "agentic organization operating system",
+   "error": "tool call timed out after 60000ms"
+  },
+  {
+   "lang": "EN",
+   "q": "enterprise AI agent implementation partner",
+   "error": "tool call timed out after 60000ms"
+  },
+  {
+   "lang": "EN",
+   "q": "AI workflow redesign consulting",
+   "visible": false,
+   "top": [
+    "www.lyzr.ai",
+    "www.griddynamics.com",
+    "www.linkedin.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "human oversight for autonomous agents design patterns",
+   "visible": false,
+   "top": [
+    "browse-export.arxiv.org",
+    "repost.aws",
+    "www.incorta.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "AI transformation architect advisory",
+   "visible": false,
+   "top": [
+    "www.onetonline.org",
+    "www.linkedin.com",
+    "careers.salesforce.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "organizational knowledge graph agents",
+   "visible": false,
+   "top": [
+    "zenodo.org",
+    "pypi.org",
+    "neo4j.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "Who can help redesign one business function around governed AI agents?",
+   "visible": false,
+   "top": [
+    "www.mdpi.com",
+    "gcom.pdo.aws.gartner.com",
+    "www.ey.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "Consultants for enterprise AI operating model and workflow transformation",
+   "visible": false,
+   "top": [
+    "www.griddynamics.com",
+    "torre.ai",
+    "www.accenture.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "Examples of AI transformation diagnostic service for companies",
+   "visible": false,
+   "top": [
+    "investor.servicenow.com",
+    "www.researchnester.com",
+    "www.businessinsider.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "AI governance agent runtime consulting for CTOs",
+   "visible": false,
+   "top": [
+    "help.flexrule.com",
+    "zenodo.org",
+    "www.enterprisedb.com"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "human-in-the-loop vs human-on-the-loop",
+   "visible": false,
+   "top": [
+    "ar5iv.labs.arxiv.org",
+    "ieeexplore.ieee.org",
+    "www.turing.ac.uk"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "the real cost of enterprise AI agents",
+   "error": "tool call timed out after 60000ms"
+  },
+  {
+   "lang": "FA",
+   "q": "مشاور تحول هوش مصنوعی سازمانی",
+   "error": "tool call timed out after 60000ms"
+  },
+  {
+   "lang": "FA",
+   "q": "طراحی سازمان AI Native",
+   "visible": false,
+   "top": [
+    "www.forbes.com",
+    "eu.36kr.com",
+    "eu.36kr.com"
+   ]
+  },
+  {
+   "lang": "FA",
+   "q": "پیاده سازی ایجنت هوش مصنوعی سازمانی",
+   "visible": false,
+   "top": [
+    "pypi.org",
+    "learn.microsoft.com",
+    "developers.cloudflare.com"
+   ]
+  },
+  {
+   "lang": "FA",
+   "q": "مشاوره بازطراحی فرایند با عامل های هوش مصنوعی",
+   "visible": false,
+   "top": [
+    "www.artefact.com",
+    "www.lyzr.ai",
+    "supercharge.io"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "AI transformation consulting Iran Tehran",
+   "error": "tool call timed out after 60000ms"
+  },
+  {
+   "lang": "EN",
+   "q": "quantiviq",
+   "visible": false,
+   "top": [
+    "www.quviviqhcp.com",
+    "dhpp.hpfb-dgpsa.ca",
+    "pro.idorsia.uk"
+   ]
+  },
+  {
+   "lang": "EN",
+   "q": "Majid Asghari Tabrizi Quantiviq",
+   "error": "tool call timed out after 60000ms"
+  }
+ ]
+}

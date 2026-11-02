@@ -1,0 +1,26 @@
+import io, os, sys, time, paramiko
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, 'reconfigure'): _s.reconfigure(encoding='utf-8', errors='replace')
+print('NOW_UTC', time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()))
+KEY = os.path.expanduser('~/.ssh/trader_vps')
+b = paramiko.SSHClient(); b.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+b.connect('87.107.152.67', 22, username='root', pkey=paramiko.Ed25519Key.from_private_key_file(KEY), timeout=25, look_for_keys=False, allow_agent=False)
+def runB(cmd, t=120):
+    _, so, se = b.exec_command(cmd, timeout=t)
+    return (so.read().decode('utf-8','replace') + se.read().decode('utf-8','replace')).strip()
+print('B_TIME', runB('date -u +%Y-%m-%dT%H:%M:%SZ'))
+print('B_umami', runB('systemctl is-active umami; systemctl is-active postgresql@16-main; uptime | grep -o "load average.*"'))
+print('B_hb', runB('curl -s -o /dev/null -w %{http_code} http://127.0.0.1:3001/api/heartbeat; echo; curl -s -o /dev/null -w mcp:%{http_code} -X POST -H "content-type: application/json" -H "accept: application/json, text/event-stream" -H "Authorization: Bearer $(cat /root/.umami-mcp-key 2>/dev/null)" -d \'{}\' http://127.0.0.1:3001/mcp'))
+print('B_health_log', runB('tail -4 /var/log/umami-health.log 2>/dev/null; journalctl -u umami --since "-26 hours" -p err --no-pager | tail -5'))
+b.close()
+pw = io.open(r'C:\Users\ma.asghari\.dsh\var\quantiviq-ssh.password', encoding='utf-8').read().strip()
+a = paramiko.SSHClient(); a.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+a.connect('171.22.24.45', 22, username='root', password=pw, timeout=15)
+def runA(cmd, t=120):
+    _, so, se = a.exec_command(cmd, timeout=t)
+    return (so.read().decode('utf-8','replace') + se.read().decode('utf-8','replace')).strip()
+print('A_TIME', runA('date -u +%Y-%m-%dT%H:%M:%SZ'))
+print('A_nginx', runA('systemctl is-active nginx; systemctl is-active umami-tunnel; curl -s -o /dev/null -w tunnel:%{http_code} http://127.0.0.1:3010/api/heartbeat'))
+print('A_script_public', runA('curl -sk -o /dev/null -w script:%{http_code} https://127.0.0.1/_q/script.js -H "Host: quantiviq.xyz"'))
+print('A_q_volume', runA('grep -c "POST /_q/api/send" /var/log/nginx/access.log 2>/dev/null; ls /var/log/nginx/ | grep access'))
+a.close()
