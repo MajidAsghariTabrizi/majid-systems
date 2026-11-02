@@ -6,6 +6,7 @@
  * Dismissal is respected for the browser session.
  */
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { QuantiviqMindPanel } from './QuantiviqMindPanel';
 import type { MindStrings } from './strings';
 
@@ -13,6 +14,11 @@ export function QuantiviqMindLauncher({ locale, s }: { locale: string; s: MindSt
   const [open, setOpen] = useState(false);
   const [invited, setInvited] = useState(false);
   const [dismissed, setDismissed] = useState(true);
+  const pathname = usePathname();
+  // Conversion routes (solution request / finder / contact): the floating dock
+  // must never cover the form or its submit action. Narrowly scoped behavior
+  // adjustment — the assistant stays available everywhere else.
+  const conversionRoute = /\/(solutions\/[^/]+\/request|solutions\/find|contact)$/.test(pathname ?? '');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -34,7 +40,7 @@ export function QuantiviqMindLauncher({ locale, s }: { locale: string; s: MindSt
   return (
     <>
       {open && <QuantiviqMindPanel locale={locale} s={s} onClose={() => setOpen(false)} />}
-      {!open && (
+      {!open && !conversionRoute && (
         <div className={`mind-dock${dismissed && !invited ? '' : ' mind-dock-show'}`}>
           {invited && !dismissed && (
             <div className="mind-invite" role="status">

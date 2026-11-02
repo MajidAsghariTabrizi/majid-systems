@@ -43,10 +43,10 @@ const ALLOWED: Record<string, string[]> = {
   solutions_view: ['locale', 'source'],
   solution_view: ['solution', 'locale'],
   solution_finder_start: ['locale'],
-  solution_finder_complete: ['locale', 'outcome', 'type'],
+  solution_finder_complete: ['locale', 'outcome', 'bottleneck', 'type'],
   solution_request_start: ['solution', 'locale'],
   solution_request_success: ['solution', 'locale'],
-  solution_request_failure: ['solution', 'locale'],
+  solution_request_failure: ['solution', 'locale', 'reason'],
   solution_related_insight_click: ['solution', 'locale'],
 };
 
@@ -59,11 +59,50 @@ function sanitize(v: unknown): string {
 }
 
 /** Emit an allowlisted analytics event. Safe no-op before hydration, when
- *  blocked by an ad-blocker, or when the collector is unreachable. */
+ *  blocked by an ad-blocker, or when the collector is unreachable.
+ *
+ *  Collector readiness (closure 2026-11-02): early-mount events used to be
+ *  silently dropped when the Umami script had not loaded yet. They are now
+ *  queued (sanitized, deduped, bounded, expiring) and flushed as soon as the
+ *  collector appears; if it never appears, the queue is dropped — the app
+ *  stays fully usable without analytics. */
+type Queued = { name: string; data: Data; at: number };
+const QUEUE: Queued[] = [];
+const QUEUE_MAX = 20;
+const QUEUE_TTL_MS = 15_000;
+let flushTimer: ReturnType<typeof setInterval> | null = null;
+
+function umamiTrack(name?: string, data?: Data): boolean {
+  if (typeof window === 'undefined') return false;
+  const umami = (window as { umami?: { track?: (n: string, d?: Data) => void } }).umami;
+  if (!umami?.track) return false;
+  const track = umami.track.bind(umami);
+  // flush what queued while the collector was unavailable (drop expired)
+  const now = Date.now();
+  while (QUEUE.length > 0) {
+    const q = QUEUE.shift()!;
+    if (now - q.at <= QUEUE_TTL_MS) track(q.name, q.data);
+  }
+  if (flushTimer) { clearInterval(flushTimer); flushTimer = null; }
+  if (name) track(name, data);
+  return true;
+}
+
+function enqueue(name: string, data: Data): void {
+  if (QUEUE.length >= QUEUE_MAX) QUEUE.shift(); // bounded — never a leak
+  QUEUE.push({ name, data, at: Date.now() });
+  if (!flushTimer) {
+    flushTimer = setInterval(() => {
+      if (umamiTrack()) return; // flush succeeded; timer cleared inside
+      if (QUEUE.length === 0 || Date.now() - QUEUE[QUEUE.length - 1].at > QUEUE_TTL_MS) {
+        if (flushTimer) { clearInterval(flushTimer); flushTimer = null; }
+      }
+    }, 800);
+  }
+}
+
 export function qEvent(name: keyof typeof ALLOWED | string, data?: Data): void {
   if (typeof window === 'undefined') return;
-  const umami = (window as { umami?: { track?: (n: string, d?: Data) => void } }).umami;
-  if (!umami?.track) return; // fail open: never break the app for analytics
   const allowedProps = ALLOWED[name];
   if (!allowedProps) return; // not in taxonomy
   const clean: Data = {};
@@ -71,7 +110,7 @@ export function qEvent(name: keyof typeof ALLOWED | string, data?: Data): void {
     if (data && data[k] !== undefined) clean[k] = typeof data[k] === 'number' ? data[k] : sanitize(data[k]);
   }
   try {
-    umami.track(name, clean);
+    if (!umamiTrack(name, clean)) enqueue(name, clean); // collector not ready → bounded queue
   } catch {
     /* analytics must never throw into product code */
   }

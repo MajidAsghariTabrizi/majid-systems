@@ -29,6 +29,12 @@ export type LeadRecord = {
   solution?: string;
   phone?: string;
   source?: string;
+  /** Per-submission idempotency: a client retry after an accepted-but-lost
+   *  response MUST return the same durable reference, not a second lead. */
+  idempotencyKey?: string;
+  /** Stability fingerprint of the submitted payload (name/email/solution),
+   *  used to reject inconsistent reuse of the same idempotency key. */
+  fingerprint?: string;
   ipHash: string;
   status: 'stored' | 'deleted';
   notify: string;
@@ -61,6 +67,12 @@ export function listLeads(dir?: string): LeadRecord[] {
 
 export function getLead(id: string, dir?: string): LeadRecord | undefined {
   return listLeads(dir).find((r) => r.id === id);
+}
+
+/** Find a previously accepted lead by idempotency key (newest wins). */
+export function findByIdempotencyKey(key: string, dir?: string): LeadRecord | undefined {
+  const all = listLeads(dir).filter((r) => r.idempotencyKey === key);
+  return all.length ? all[all.length - 1] : undefined;
 }
 
 /** Atomic in-place update of an existing record (rewrite tmp+rename). */

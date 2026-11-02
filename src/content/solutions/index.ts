@@ -54,7 +54,7 @@ export const SOLUTION_UI = {
   catalogTitle: { en: 'Solutions', fa: 'راهکارها' },
   catalogLead: {
     en: 'Practical AI-enabled solutions for real operating problems. Every engagement is scoped to your organization and delivered with human approvals where judgment matters.',
-    fa: 'راهکارهای هوشمند برای مسائل واقعی کسب‌وکار. هر تعهد متناسب با سازمان شما تعریف می‌شود و جایی که قضاوت مهم است، با تأیید انسانی تحویل می‌داده می‌شود.',
+    fa: 'راهکارهای هوشمند برای مسائل واقعی کسب‌وکار. هر تعهد متناسب با سازمان شما تعریف می‌شود و جایی که قضاوت مهم است، با تأیید انسانی تحویل داده می‌شود.',
   },
   searchPlaceholder: { en: 'Search solutions…', fa: 'جست‌وجوی راهکار…' },
   allCategories: { en: 'All', fa: 'همه' },
@@ -88,7 +88,7 @@ export const SOLUTION_UI = {
   },
   finder: {
     title: { en: 'Find Your Solution', fa: 'راهکار خود را پیدا کنید' },
-    lead: { en: 'Three quick questions — no sign-in, nothing sent until you choose to submit a request.', fa: 'سه پرسش کوتاه — بدون ثبت‌نام؛ تا زمانی که خودتان درخواست نفرستید، چیزی ارسال نمی‌شود.' },
+    lead: { en: 'Three quick questions — answers stay on your device; we only count anonymous category totals for the suggestions you view. Nothing containing your contact details is sent until you submit a request.', fa: 'سه پرسش کوتاه — پاسخ‌ها روی دستگاه شما می‌مانند؛ فقط شمارش بی‌نام دسته‌های انتخابی برای پیشنهادهای نمایش‌داده‌شده ثبت می‌شود. تا زمانی که درخواست ثبت نکنید، هیچ داده‌ای شامل اطلاعات تماس شما ارسال نمی‌شود.' },
     q1: { en: 'Which outcome matters most right now?', fa: 'الان کدام نتیجه برایتان مهم‌تر است؟' },
     q2: { en: 'What is your current bottleneck?', fa: 'گلوگاه فعلی شما چیست؟' },
     q3: { en: 'What type of business are you?', fa: 'نوع کسب‌وکار شما چیست؟' },
@@ -116,36 +116,80 @@ export const TYPE_OPTIONS: { key: string; label: L<string> }[] = [
   { key: 'enterprise', label: { en: 'Larger enterprise', fa: 'سازمان بزرگ' } },
 ];
 
-/** Bottleneck options are derived from entry tags so the mapping is real. */
-export function bottleneckOptions(): { key: string; label: L<string> }[] {
-  const seen = new Map<string, L<string>>();
-  const LABELS: Record<string, L<string>> = {
-    'slow-quotes': { en: 'Quotations take too long', fa: 'پیش‌فاکتور خیلی طول می‌کشد' },
-    'pricing-errors': { en: 'Pricing errors and margin leaks', fa: 'خطای قیمت و نشت حاشیه سود' },
-    'scattered-channels': { en: 'Requests scattered across channels', fa: 'درخواست‌ها پراکنده بین کانال‌ها' },
-    'slow-response': { en: 'Slow response to customers', fa: 'پاسخ کند به مشتری' },
-    'overdue-payments': { en: 'Overdue receivables', fa: 'مطالبات معوق' },
-    'no-followup': { en: 'Follow-ups are forgotten', fa: 'پیگیری‌ها فراموش می‌شوند' },
-    'reconciliation': { en: 'Reconciliation eats our days', fa: 'مغایرت‌گیری روزهای ما را می‌خورد' },
-    'month-end-pain': { en: 'Month-end is chaos', fa: 'پایان ماه آشوب است' },
-    'manual-entry': { en: 'Endless manual data entry', fa: 'ورود دستی بی‌پایان داده' },
-    'key-person-risk': { en: 'Everything depends on one person', fa: 'همه‌چیز به یک نفر وابسته است' },
-    'excel-processes': { en: 'Excel and chat run the company', fa: 'اکسل و چت، شرکت را می‌چرخانند' },
-    'stock-discrepancy': { en: 'Stock never matches records', fa: 'موجودی با رکوردها نمی‌خواند' },
-    'order-chaos': { en: 'Orders get lost or stuck', fa: 'سفارش‌ها گم یا معلق می‌شوند' },
-    'phone-overload': { en: 'The phone never stops', fa: 'تلفن هیچ‌وقت بند نمی‌آید' },
-    'support-overload': { en: 'Support volume overwhelms the team', fa: 'حجم پشتیبانی تیم را له می‌کند' },
-    'knowledge-locked': { en: 'Knowledge is unfindable', fa: 'دانش، غیرقابل یافتن است' },
-    'system-silos': { en: 'Systems do not talk to each other', fa: 'سیستم‌ها با هم حرف نمی‌زنند' },
-    'dirty-catalog': { en: 'Product data is a mess', fa: 'داده محصولات آشفته است' },
-    'forecast-guesswork': { en: 'Buying on guesses', fa: 'خرید بر اساس حدس' },
-    'cash-visibility': { en: 'No clear cash picture', fa: 'تصویر روشنی از نقدینگی نداریم' },
-    'lead-overload': { en: 'Too many leads, no triage', fa: 'سرنخ زیاد، بدون اولویت‌بندی' },
-    'manual-orders': { en: 'Orders typed by staff', fa: 'سفارش‌ها را کارکنان تایپ می‌کنند' },
-  };
-  for (const s of SOLUTIONS) for (const b of s.tags.bottlenecks) if (!seen.has(b)) seen.set(b, LABELS[b] ?? { en: b, fa: b });
-  // Surface the most meaningful subset (first 10)
-  return [...seen.entries()].slice(0, 10).map(([key, label]) => ({ key, label }));
+/** Finder taxonomy — bilingual labels for EVERY bottleneck tag in the catalog
+ *  (closure 2026-11-02: no option ever renders as a raw internal id, options
+ *  are grouped per outcome, and the list is curated — never truncated by
+ *  source-file order). */
+export const BOTTLENECK_LABELS: Record<string, L<string>> = {
+  'slow-quotes': { en: 'Quotations take too long', fa: 'صدور پیش‌فاکتور طول می‌کشد' },
+  'pricing-errors': { en: 'Pricing errors and margin leaks', fa: 'خطای قیمت‌گذاری و نشت حاشیه سود' },
+  'scattered-channels': { en: 'Requests scattered across channels', fa: 'درخواست‌ها پراکنده بین کانال‌ها' },
+  'lead-overload': { en: 'Too many leads, no triage', fa: 'سرنخ زیاد، بدون اولویت‌بندی' },
+  'forgotten-followup': { en: 'Follow-ups are forgotten', fa: 'پیگیری‌ها فراموش می‌شوند' },
+  'crm-rot': { en: 'Customer data decays in the CRM', fa: 'داده مشتریان در CRM کهنه می‌شود' },
+  'manual-orders': { en: 'Orders typed in by staff', fa: 'سفارش‌ها را کارکنان دستی ثبت می‌کنند' },
+  'irregular-demand': { en: 'Reorders are unpredictable', fa: 'سفارش‌های مجدد قابل پیش‌بینی نیستند' },
+  'scheduling': { en: 'Appointment scheduling is chaos', fa: 'تنظیم قرارها آشفته است' },
+  'overdue-payments': { en: 'Overdue receivables', fa: 'مطالبات معوق' },
+  'no-followup': { en: 'Collections follow-up is ad hoc', fa: 'پیگیری مطالبات اتفاقی است' },
+  'reconciliation': { en: 'Reconciliation eats our days', fa: 'مغایرت‌گیری روزهای ما را می‌بلعد' },
+  'month-end-pain': { en: 'Month-end close is chaos', fa: 'بستن حساب‌های پایان ماه آشفته است' },
+  'cash-visibility': { en: 'No clear cash picture', fa: 'تصویر روشنی از نقدینگی نداریم' },
+  'unapplied-cash': { en: 'Payments received but not matched', fa: 'پرداخت‌ها دریافت ولی تطبیق نشده‌اند' },
+  'credit-blindness': { en: 'Customer credit risk is invisible', fa: 'ریسک اعتباری مشتری نامرئی است' },
+  'commission-disputes': { en: 'Commission calculations are disputed', fa: 'محاسبه پورسانت مورد اختلاف است' },
+  'manual-entry': { en: 'Endless manual data entry', fa: 'ورود دستی بی‌پایان داده' },
+  'stock-discrepancy': { en: 'Stock never matches records', fa: 'موجودی با رکوردها نمی‌خواند' },
+  'order-chaos': { en: 'Orders get lost or stuck', fa: 'سفارش‌ها گم یا معلق می‌شوند' },
+  'ungoverned-purchasing': { en: 'Purchasing is ungoverned', fa: 'خرید بدون کنترل و فرایند است' },
+  'supplier-blindness': { en: 'Supplier performance is opaque', fa: 'عملکرد تأمین‌کنندگان نامشخص است' },
+  'chat-approvals': { en: 'Approvals live in chat and paper', fa: 'تأییدها در چت و کاغذ گیر کرده‌اند' },
+  'key-person-risk': { en: 'Everything depends on one person', fa: 'همه‌چیز به یک نفر وابسته است' },
+  'excel-processes': { en: 'Excel and chat run the company', fa: 'اکسل و چت، شرکت را می‌چرخانند' },
+  'system-silos': { en: 'Systems do not talk to each other', fa: 'سیستم‌ها با هم ارتباط ندارند' },
+  'dirty-catalog': { en: 'Product data is a mess', fa: 'داده محصولات آشفته است' },
+  'forecast-guesswork': { en: 'Buying decisions run on guesses', fa: 'تصمیم‌های خرید بر اساس حدس است' },
+  'slow-response': { en: 'Customer responses are slow', fa: 'پاسخ به مشتری کند است' },
+  'phone-overload': { en: 'The phone never stops', fa: 'تلفن هیچ‌وقت بند نمی‌آید' },
+  'support-overload': { en: 'Support volume overwhelms the team', fa: 'حجم پشتیبانی تیم را خسته کرده است' },
+  'complaint-chaos': { en: 'Complaints are untracked', fa: 'شکایات پیگیری نظام‌مند ندارند' },
+  'returns-chaos': { en: 'Returns stall in manual loops', fa: 'مرجوعی‌ها در فرایندهای دستی گیر می‌کنند' },
+  'status-calls': { en: 'Status update calls never end', fa: 'تماس‌های «وضعیت سفارش چیست؟» تمام نمی‌شود' },
+  'knowledge-locked': { en: 'Knowledge is locked in people and files', fa: 'دانش در افراد و فایل‌ها قفل شده است' },
+  'contract-blindness': { en: 'Contract terms are unfindable', fa: 'شرایط قراردادها پیدا نمی‌شود' },
+  'policy-chaos': { en: 'Policies exist but nobody follows them', fa: 'سیاست‌ها هست ولی کسی اجرا نمی‌کند' },
+  'info-lag': { en: 'Leaders decide on stale numbers', fa: 'مدیران با آمار کهنه تصمیم می‌گیرند' },
+  'market-blindness': { en: 'Competitor moves surprise us', fa: 'حرکات رقبا ما را غافلگیر می‌کند' },
+  'slow-onboarding': { en: 'Seller onboarding drags on', fa: 'ورود فروشندگان به پلتفرم طولانی است' },
+  'channel-copies': { en: 'Every channel gets different content', fa: 'هر کانال محتوای متفاوتی می‌گیرد' },
+};
+
+/** Curated per-outcome option groups (ordered, bilingual, never truncated). */
+const BOTTLENECK_GROUPS: Record<string, string[]> = {
+  sales: ['slow-quotes', 'pricing-errors', 'scattered-channels', 'lead-overload', 'forgotten-followup', 'crm-rot', 'manual-orders', 'irregular-demand', 'scheduling'],
+  cash: ['overdue-payments', 'no-followup', 'reconciliation', 'unapplied-cash', 'cash-visibility', 'credit-blindness', 'commission-disputes', 'month-end-pain'],
+  operations: ['stock-discrepancy', 'order-chaos', 'manual-entry', 'ungoverned-purchasing', 'supplier-blindness', 'chat-approvals', 'excel-processes', 'system-silos', 'dirty-catalog', 'forecast-guesswork', 'key-person-risk'],
+  cx: ['slow-response', 'phone-overload', 'support-overload', 'complaint-chaos', 'returns-chaos', 'status-calls'],
+  knowledge: ['knowledge-locked', 'contract-blindness', 'policy-chaos', 'info-lag', 'system-silos', 'key-person-risk'],
+};
+const GENERAL_BOTTLENECKS = ['manual-entry', 'excel-processes', 'system-silos', 'key-person-risk'];
+
+/**
+ * Bottleneck options for the finder. With an outcome selected, options are the
+ * curated group for that outcome (falling back to general bottlenecks when the
+ * group is thin) — real tag keys only, so every option carries a bilingual
+ * label and actually scores in finderMatch. Without an outcome, a compact
+ * cross-cutting selection is shown.
+ */
+export function bottleneckOptions(outcome?: string): { key: string; label: L<string> }[] {
+  let keys: string[];
+  if (outcome && BOTTLENECK_GROUPS[outcome]) {
+    keys = [...BOTTLENECK_GROUPS[outcome]];
+    if (keys.length < 4) keys = [...keys, ...GENERAL_BOTTLENECKS.filter((k) => !keys.includes(k))];
+  } else {
+    keys = ['slow-quotes', 'overdue-payments', 'stock-discrepancy', 'support-overload', 'knowledge-locked', 'manual-entry', 'system-silos', 'key-person-risk'];
+  }
+  return keys.filter((k) => BOTTLENECK_LABELS[k]).map((k) => ({ key: k, label: BOTTLENECK_LABELS[k] }));
 }
 
 /** Deterministic finder: score = 2*outcome + 2*bottleneck (if chosen) + 1*type match. */
@@ -159,7 +203,7 @@ export function finderMatch(answers: { outcome?: string; bottleneck?: string; ty
     return { solution: s, score, reasons };
   })
     .filter((x) => x.score >= 2)
-    .sort((a, b) => b.score - a.score || (a.solution.status === 'flagship' ? -1 : 1));
+    .sort((a, b) => b.score - a.score || b.reasons.length - a.reasons.length || a.solution.id.localeCompare(b.solution.id));
   return scored.slice(0, 3);
 }
 

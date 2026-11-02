@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 
 import { ipHash, validateLead } from '@/lib/lead/validate';
-import { appendLead, storageHealth, updateLead, type LeadRecord } from '@/lib/lead/store';
+import { appendLead, findByIdempotencyKey, storageHealth, updateLead, type LeadRecord } from '@/lib/lead/store';
 import { deliverOwnerNotification, outboxPending, smtpConfigured } from '@/lib/lead/notify';
 import { getSolution } from '@/content/solutions';
 
@@ -46,7 +46,9 @@ function clientIp(req: NextRequest): string {
 
 /** In-memory sliding-window rate limit per IP hash (5/hour). */
 const WINDOW_MS = 60 * 60 * 1000;
-const MAX_PER_WINDOW = 5;
+// 5/hour in production; overridable ONLY for local fixture testing of the
+// 429 path without waiting out a window (ops knob, not a security change).
+const MAX_PER_WINDOW = Number(process.env.QV_RATE_LIMIT_PER_HOUR ?? 5);
 const hits = new Map<string, number[]>();
 
 function rateLimited(key: string): boolean {
@@ -104,6 +106,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, errors: parsed.errors }, { status: 400 });
   }
 
+  // Per-submission idempotency: a network retry after an accepted response
+  // (client never saw it) returns the SAME durable reference. Inconsistent
+  // reuse of a key with a different payload is rejected, not silently merged.
+  const idemKey = typeof body.idempotencyKey === 'string' ? body.idempotencyKey.trim().slice(0, 80) : '';
+  const fingerprint = crypto.createHash('sha256').update(`${parsed.value.name}|${parsed.value.email}|${parsed.value.solution ?? ''}`).digest('hex').slice(0, 16);
+  if (idemKey) {
+    const existing = findByIdempotencyKey(idemKey);
+    if (existing) {
+      if (existing.fingerprint === fingerprint) {
+        return NextResponse.json({ ok: true, id: existing.id, idempotentReplay: true }, { status: 200 });
+      }
+      return NextResponse.json({ ok: false, errors: { form: 'idempotency_conflict' } }, { status: 409 });
+    }
+  }
+
   const id = `QV-${Date.now().toString(36)}-${crypto.randomBytes(2).toString('hex')}`;
   const record: LeadRecord = {
     id,
@@ -126,7 +143,13 @@ export async function POST(req: NextRequest) {
   };
   if (parsed.value.solution) record.solution = parsed.value.solution;
   if (parsed.value.phone) record.phone = parsed.value.phone;
-  if (parsed.value.source) record.source = parsed.value.source;
+  // Attribution: validated-safe value, else a truthful fallback — an odd URL
+  // parameter must never block or corrupt an otherwise valid inquiry.
+  record.source = parsed.value.source || (typeof body.source === 'string' && body.source.trim() ? 'unattributed' : undefined);
+  if (idemKey) {
+    record.idempotencyKey = idemKey;
+    record.fingerprint = fingerprint;
+  }
   record.pipeline = { status: 'new', updatedAt: new Date().toISOString() };
 
   // Server-side catalog validation: a locked solution selection must be real.

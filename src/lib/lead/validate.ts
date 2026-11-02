@@ -66,7 +66,10 @@ export function validateLead(raw: unknown): { ok: true; value: LeadInput } | { o
   else if (email.length > LEAD_MAX.email || !EMAIL_RE.test(email)) errors.email = 'invalid_email';
 
   const org = clean(b.org);
-  if (org.length > LEAD_MAX.org) errors.org = 'too_long';
+  // solution_request keeps the owner field contract: company REQUIRED. Legacy
+  // contact intents preserve their historical optionality (regression-safe).
+  if (intent === 'solution_request' && !org) errors.org = 'required';
+  else if (org.length > LEAD_MAX.org) errors.org = 'too_long';
 
   const website = clean(b.website);
   if (website && (website.length > LEAD_MAX.website || !URL_RE.test(website))) errors.website = 'invalid_url';
@@ -92,22 +95,39 @@ export function validateLead(raw: unknown): { ok: true; value: LeadInput } | { o
 
   if (b.consent !== true) errors.consent = 'required';
 
-  // Commercial layer fields (all optional, strictly bounded).
+  // Commercial layer fields (all bounded; digits normalized).
+  // Persian/Arabic-Indian digits are LEGITIMATE phone input — normalize to
+  // ASCII before validating so «۰۹۱۲…» passes like "0912…".
+  const DIGIT_MAP: Record<string, string> = {
+    '\u06f0': '0', '\u06f1': '1', '\u06f2': '2', '\u06f3': '3', '\u06f4': '4',
+    '\u06f5': '5', '\u06f6': '6', '\u06f7': '7', '\u06f8': '8', '\u06f9': '9',
+    '\u0660': '0', '\u0661': '1', '\u0662': '2', '\u0663': '3', '\u0664': '4',
+    '\u0665': '5', '\u0666': '6', '\u0667': '7', '\u0668': '8', '\u0669': '9',
+  };
+  const normalizeDigits = (s: string) => s.replace(/[\u06f0-\u06f9\u0660-\u0669]/g, (d) => DIGIT_MAP[d] ?? d);
   const PHONE_RE = /^[+0-9\s()-]{4,30}$/;
-  const phone = clean(b.phone);
+  const phoneRaw = clean(b.phone);
+  const phone = normalizeDigits(phoneRaw);
   if (phone && !PHONE_RE.test(phone)) errors.phone = 'invalid_phone';
 
   const solution = clean(b.solution);
   if (solution && !/^[a-z0-9-]{2,80}$/.test(solution)) errors.solution = 'invalid';
+  // solution_request without a solution is a contract violation (locked
+  // selection is the whole point of the solution request form).
+  if (intent === 'solution_request' && !solution) errors.solution = 'required';
 
-  const source = clean(b.source);
-  if (source && !/^[a-z0-9_.:-]{2,100}$/i.test(source)) errors.source = 'invalid';
+  // Attribution is OPTIONAL METADATA: unknown/odd URL params must never block
+  // an otherwise valid inquiry. Anything failing the safe charset falls back
+  // to 'unattributed' at the route level — validation stays lenient here.
+
+  const source = clean(b.source).slice(0, LEAD_MAX.source);
+  const normalizedSource = /^[a-z0-9_.:-]{2,100}$/i.test(source) ? source : '';
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };
 
   return {
     ok: true,
-    value: { intent, name, email, org, website, role, message, preferred, preferredLink, consent: true, ...(phone && { phone }), ...(solution && { solution }), ...(source && { source }) },
+    value: { intent, name, email, org, website, role, message, preferred, preferredLink, consent: true, ...(phone && { phone: normalizeDigits(phoneRaw) }), ...(solution && { solution }), ...(normalizedSource && { source: normalizedSource }) },
   };
 }
 

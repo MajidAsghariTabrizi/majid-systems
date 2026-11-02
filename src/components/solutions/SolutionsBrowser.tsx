@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { CATEGORIES, SOLUTIONS, SOLUTION_UI, type SolutionCategory } from '@/content/solutions';
+import { faMatch } from '@/content/solutions/search';
 import type { Locale } from '@/content/i18n';
 import { qEvent } from '@/lib/analytics';
 import { SolutionCard } from './SolutionCard';
@@ -16,12 +17,15 @@ export function SolutionsBrowser({ locale }: { locale: Locale }) {
   useEffect(() => { qEvent('solutions_view', { locale }); }, []);
 
   const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    const needle = q.trim();
     return SOLUTIONS.filter((s) => {
       if (cat !== 'all' && s.category !== cat) return false;
       if (!needle) return true;
-      const hay = [s.title.en, s.title.fa, s.oneLiner.en, s.oneLiner.fa, s.problem.en, s.problem.fa, s.id].join(' ').toLowerCase();
-      return hay.includes(needle);
+      // normalizeFa handles ZWNJ/space/Arabic-variant spellings (پیش فاکتور
+      // finds پیش‌فاکتور); display text is never altered.
+      const hay = [s.title.en, s.title.fa, s.oneLiner.en, s.oneLiner.fa, s.problem.en, s.problem.fa, s.id].join(' ');
+      const needleEn = needle.toLowerCase();
+      return faMatch(hay, needle) || hay.toLowerCase().includes(needleEn);
     });
   }, [q, cat]);
 

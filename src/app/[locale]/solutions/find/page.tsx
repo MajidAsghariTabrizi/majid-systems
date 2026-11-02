@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { isLocale, LOCALES } from '@/content/i18n';
+import { socialMeta } from '@/lib/social';
 import { SolutionFinder } from '@/components/solutions/SolutionFinder';
 
 export function generateStaticParams() {
@@ -21,6 +22,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       canonical: `${base}/${params.locale}/solutions/find`,
       languages: { en: `${base}/en/solutions/find`, fa: `${base}/fa/solutions/find` },
     },
+    ...socialMeta({
+      title: l === 'fa' ? 'راهکار خود را پیدا کنید — راهکارهای کوانتی‌ویک' : 'Find Your Solution — Quantiviq Solutions',
+      description: l === 'fa' ? 'سه پرسش کوتاه، بدون ثبت‌نام — راهکار مناسب کسب‌وکار خود را پیدا کنید.' : 'Three quick questions, no sign-in — find the solution that fits your business.',
+      path: `/${params.locale}/solutions/find`,
+      locale: l,
+      languages: { en: `${base}/en/solutions/find`, fa: `${base}/fa/solutions/find` },
+    }),
     robots: { index: false, follow: true },
   };
 }
@@ -28,8 +36,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function FindPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   return (
-    <main>
+    <div>
       <SolutionFinder locale={params.locale as 'en' | 'fa'} />
-    </main>
+    </div>
   );
 }

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { CATEGORIES, getSolution, SOLUTIONS, SOLUTION_UI, STATUS_LABEL } from '@/content/solutions';
+import { getArticleBySlug } from '@/content/insights';
+import { socialMeta } from '@/lib/social';
 import { isLocale, LOCALES, type Locale } from '@/content/i18n';
 
 export function generateStaticParams() {
@@ -18,13 +20,19 @@ export async function generateMetadata({ params }: { params: { locale: string; s
   // Flagship pages carry substantive unique content -> indexable.
   // Scoping pages are honest stubs pending depth -> noindex until upgraded.
   const robots = s.status === 'flagship' ? { index: true, follow: true } : { index: false, follow: true };
+  // Truthful sharing metadata for THIS route (closure 2026-11-02): previously
+  // these pages inherited the homepage OG title/description/url.
+  const social = socialMeta({
+    title: `${s.title[l]} — ${l === 'fa' ? 'راهکارهای کوانتی‌ویک' : 'Quantiviq Solutions'}`,
+    description: s.oneLiner[l],
+    path: `/${params.locale}/solutions/${s.id}`,
+    locale: l,
+    languages: { en: `${base}/en/solutions/${s.id}`, fa: `${base}/fa/solutions/${s.id}` },
+  });
   return {
     title: s.title[l],
     description: s.oneLiner[l],
-    alternates: {
-      canonical: `${base}/${params.locale}/solutions/${s.id}`,
-      languages: { en: `${base}/en/solutions/${s.id}`, fa: `${base}/fa/solutions/${s.id}` },
-    },
+    ...social,
     robots,
   };
 }
@@ -50,9 +58,9 @@ export default async function SolutionDetailPage({ params }: { params: { locale:
   };
 
   return (
-    <main className="sol-section sol-detail">
+    <div className="sol-section sol-detail">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <p className="eyebrow">{cat ? cat.label[l] : ''} Â· {st[l]}</p>
+      <p className="eyebrow">{cat ? cat.label[l] : ''} · {st[l]}</p>
       <h1>{s.title[l]}</h1>
       <p className="one">{s.oneLiner[l]}</p>
       <div className="sol-meta-row">
@@ -114,22 +122,28 @@ export default async function SolutionDetailPage({ params }: { params: { locale:
         <>
           <div className="sol-section-h">{SOLUTION_UI.relatedInsightsLabel[l]}</div>
           <div className="sol-related">
-            {s.articles.map((a) => (
-              <Link key={a} href={`/${locale}/insights/${a.replace(/^\d+-/, '')}`}>
-                {a.replace(/-/g, ' ').replace(/^\\d+ /, '')}
-              </Link>
-            ))}
+            {s.articles.map((a) => {
+              // Resolve the REAL localized article title from the registry —
+              // never render the filename as a label.
+              const slug = a.replace(/^\d+-/, '');
+              const art = getArticleBySlug(slug, l) ?? getArticleBySlug(slug, 'en');
+              return (
+                <Link key={a} href={`/${locale}/insights/${slug}`}>
+                  {art ? art.title : slug.replace(/-/g, ' ')}
+                </Link>
+              );
+            })}
           </div>
         </>
       ) : null}
 
       <div className="sol-request-panel">
-        <h2>{l === 'fa' ? 'Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø§ÛŒÙ† Ø±Ø§Ù‡Ú©Ø§Ø±' : 'Request This Solution'}</h2>
+        <h2>{SOLUTION_UI.cta[l]}</h2>
         <p>{SOLUTION_UI.requestNote[l]}</p>
         <Link className="btn" href={`/${locale}/solutions/${s.id}/request`}>
-          {l === 'fa' ? 'Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø§ÛŒÙ† Ø±Ø§Ù‡Ú©Ø§Ø±' : 'Request This Solution'}
+          {SOLUTION_UI.cta[l]}
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

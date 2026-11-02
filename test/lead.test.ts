@@ -47,8 +47,13 @@ test('invalid optional website rejected; valid one passes', () => {
 test('invalid intent rejected; all canonical intents pass', () => {
   assert.equal(validateLead({ ...VALID, intent: 'free-lunch' }).ok, false);
   for (const i of LEAD_INTENTS) {
+    if (i === 'solution_request') continue; // has its own stricter contract below
     assert.equal(validateLead({ ...VALID, intent: i }).ok, true, i);
   }
+  // solution_request keeps the owner field contract: solution + company required.
+  assert.equal(validateLead({ ...VALID, intent: 'solution_request', solution: 'quote-desk', org: 'Acme Co' }).ok, true);
+  assert.equal(validateLead({ ...VALID, intent: 'solution_request' }).ok, false);
+  assert.equal(validateLead({ ...VALID, intent: 'solution_request', solution: 'quote-desk', org: '' }).ok, false);
 });
 
 test('oversized fields rejected', () => {

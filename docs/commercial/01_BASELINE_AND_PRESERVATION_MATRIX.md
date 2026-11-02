@@ -2,7 +2,7 @@
 
 - Base: commit d59afa6 (deployed) → release commit **d7891f3** (pushed + deployed).
 - App: Next.js 14.2.18 / React 18 / TS strict, EN/FA locale routes, first-party Umami + MCP analytics. Service majid-systems on A (127.0.0.1:3000, nginx front).
-- Editorial inventory verified 2026-11-02: **20 EN articles + 15 FA counterparts** (IDs 01–15 paired; 16–20 EN-only, documented), books/topics/authors/feeds untouched. **Zero editorial URL migrations.**
+- Editorial inventory — CORRECTED 2026-11-02 (closure review): **20 EN + 20 FA published articles** (IDs 01–20 fully paired). An earlier revision of this document understated the Persian corpus as 15; actual source inspection during the closure review found 20. No article URL changed in either release.
 
 ## Preservation matrix (verified by tests + production smoke AFTER release)
 

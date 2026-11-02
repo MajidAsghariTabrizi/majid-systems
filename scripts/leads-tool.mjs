@@ -5,6 +5,11 @@
  *   node scripts/leads-tool.mjs delete <QV-ID>
  *   node scripts/leads-tool.mjs purge [--months 24] [--dry-run]
  *   node scripts/leads-tool.mjs outbox [--clear]
+ *   node scripts/leads-tool.mjs flush [--dry-run] [--max N]   ← replay queued owner notifications
+ *
+ * flush: successes are ACKED (removed); failures keep the job with attempts
+ * and lastError. Requires SMTP_* + LEAD_NOTIFY_EMAIL (or QV_NOTIFY_TRANSPORT
+ * for tests). Dry-run sends NOTHING and mutates NOTHING.
  *
  * Privacy policy: records are deleted on request (delete <id>) and purged
  * after 24 months (purge). Use --dry-run to preview.
@@ -12,6 +17,7 @@
 import { parseArgs } from 'node:util';
 
 import { deleteLead, listLeads, purgeOlderThan } from '../src/lib/lead/store.ts';
+import { flushOutbox, readOutboxJobs, smtpConfigured } from '../src/lib/lead/notify.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -68,8 +74,10 @@ switch (cmd) {
     const { values } = parseArgs({ args: rest, options: { clear: { type: 'boolean' } } });
     const p = outboxFile();
     if (values.clear) {
+      // WARNING: clear drops queued notification jobs WITHOUT delivering them.
+      // Use `flush` to deliver. Clear is reserved for operator-discarded test noise.
       if (fs.existsSync(p)) fs.writeFileSync(p, '', 'utf8');
-      console.log('outbox cleared');
+      console.log('outbox cleared (jobs dropped without delivery — prefer flush)');
       break;
     }
     if (!fs.existsSync(p)) { console.log('outbox empty'); break; }
@@ -77,9 +85,23 @@ switch (cmd) {
     console.log(`${lines.length} queued notification(s)`);
     for (const l of lines) {
       const j = JSON.parse(l);
-      console.log(`  ${j.queuedAt}  ${j.leadId}  ${j.subject}`);
+      console.log(`  ${j.queuedAt}  ${j.leadId}${j.attempts ? `  attempts=${j.attempts}` : ''}  ${j.subject}`);
     }
     break;
+  }
+  case 'flush': {
+    const { values } = parseArgs({ args: rest, options: { 'dry-run': { type: 'boolean' }, max: { type: 'string' } } });
+    const dryRun = Boolean(values['dry-run']);
+    if (!smtpConfigured() && !process.env.QV_NOTIFY_TRANSPORT) {
+      console.log('NOT RUN: no SMTP transport configured (set SMTP_HOST/PORT/USER/PASS/FROM + LEAD_NOTIFY_EMAIL).');
+      console.log(`pending jobs: ${readOutboxJobs().length} (nothing lost, nothing sent)`);
+      process.exit(2);
+    }
+    const jobsBefore = readOutboxJobs().length;
+    const r = await flushOutbox({ dryRun, max: values.max ? Number(values.max) : undefined });
+    console.log(`flush ${dryRun ? 'DRY-RUN' : 'EXECUTE'}: considered=${r.considered} sent=${r.sent} failed=${r.failed} skipped=${r.perJob.filter((j) => j.outcome === 'skipped').length} remaining=${r.remaining} (was ${jobsBefore})`);
+    for (const j of r.perJob) console.log(`  ${j.outcome.toUpperCase().padEnd(7)} ${j.leadId}`);
+    process.exit(r.failed > 0 ? 1 : 0);
   }
   default:
     console.log('usage: node scripts/leads-tool.mjs <list|get|delete|purge|outbox> [options]');
