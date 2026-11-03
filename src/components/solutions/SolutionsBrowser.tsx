@@ -46,21 +46,22 @@ export function SolutionsBrowser({ locale }: { locale: Locale }) {
           />
         </div>
         <div className="sol-cat-chips" role="group" aria-label={l === 'fa' ? 'دسته‌بندی' : 'Categories'}>
-          <button className={`sol-chip ${cat === 'all' ? 'on' : ''}`} onClick={() => setCat('all')}>
+          <button className={`sol-chip ${cat === 'all' ? 'on' : ''}`} aria-pressed={cat === 'all'} onClick={() => setCat('all')}>
             {t.allCategories[l]}
           </button>
           {CATEGORIES.map((c) => (
-            <button key={c.key} className={`sol-chip ${cat === c.key ? 'on' : ''}`} onClick={() => setCat(c.key)}>
+            <button key={c.key} className={`sol-chip ${cat === c.key ? 'on' : ''}`} aria-pressed={cat === c.key} onClick={() => setCat(c.key)}>
               {c.label[l]}
             </button>
           ))}
         </div>
       </div>
-      <p className="sol-count" aria-live="polite">
-        {filtered.length} {l === 'fa' ? 'راهکار' : 'solutions'}
-      </p>
+      <div className="sol-results-head">
+        <p className="sol-count" aria-live="polite">{l === 'fa' ? `${filtered.length.toLocaleString('fa-IR')} راهکار` : `${filtered.length} solutions`}</p>
+        <p className="sol-status-guide">{l === 'fa' ? '«مسیر اجرای مشخص» جزئیات تحویل دارد؛ «نیازمند نیازسنجی» پس از شناخت کسب‌وکار شما تعریف می‌شود.' : 'Detailed offerings have a delivery path; scoping engagements are defined after discovery.'}</p>
+      </div>
       {filtered.length === 0 ? (
-        <p className="sol-empty">{t.noResults[l]}</p>
+        <div className="sol-empty"><p>{t.noResults[l]}</p><button className="sol-chip" onClick={() => { setQ(''); setCat('all'); }}>{l === 'fa' ? 'نمایش همه‌ی راهکارها' : 'Show all solutions'}</button></div>
       ) : (
         <div className="sol-grid">
           {filtered.map((s) => (

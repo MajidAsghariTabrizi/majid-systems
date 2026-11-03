@@ -19,6 +19,7 @@ export function QuantiviqMindLauncher({ locale, s }: { locale: string; s: MindSt
   // must never cover the form or its submit action. Narrowly scoped behavior
   // adjustment — the assistant stays available everywhere else.
   const conversionRoute = /\/(solutions\/[^/]+\/request|solutions\/find|contact)$/.test(pathname ?? '');
+  const solutionsRoute = /\/solutions(?:\/|$)/.test(pathname ?? '');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -42,7 +43,7 @@ export function QuantiviqMindLauncher({ locale, s }: { locale: string; s: MindSt
       {open && <QuantiviqMindPanel locale={locale} s={s} onClose={() => setOpen(false)} />}
       {!open && !conversionRoute && (
         <div className={`mind-dock${dismissed && !invited ? '' : ' mind-dock-show'}`}>
-          {invited && !dismissed && (
+          {invited && !dismissed && !solutionsRoute && (
             <div className="mind-invite" role="status">
               <span>{s.invite}</span>
               <button type="button" className="mind-invite-x" aria-label={s.close} onClick={dismiss}>
