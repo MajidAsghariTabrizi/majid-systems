@@ -69,7 +69,7 @@ export const COVER_VERIFIED: Record<string, boolean> = Object.fromEntries(
 );
 
 export const BOOK_DOMAIN_LABELS: Record<BookDomain, Bi> = {
-  strategy: { en: 'Strategy', fa: 'استراتژی' },
+  strategy: { en: 'Strategy', fa: 'راهبرد' },
   leadership: { en: 'Leadership', fa: 'رهبری' },
   economics: { en: 'Economics', fa: 'اقتصاد' },
   'human-collaboration': { en: 'Human Collaboration', fa: 'همکاری انسان و ماشین' },
@@ -78,10 +78,38 @@ export const BOOK_DOMAIN_LABELS: Record<BookDomain, Bi> = {
 };
 
 export const SOURCE_STATUS_LABELS: Record<Book['sourceStatus'], Bi> = {
-  'catalog-only': { en: 'Catalog record — full text not ingested', fa: 'رکورد کتاب‌شناختی — متن کامل دریافت نشده است' },
-  'owner-synthesis': { en: 'Owner synthesis', fa: 'تلفیق مالک' },
+  'catalog-only': { en: 'Catalog record — full text not ingested', fa: 'اطلاعات کتاب‌شناختی؛ متن کامل وارد سامانه نشده است' },
+  'owner-synthesis': { en: 'Owner synthesis', fa: 'جمع‌بندی تحلیلی صاحب وب‌سایت' },
   'full-text-authorized': { en: 'Full text authorized', fa: 'متن کامل با مجوز' },
 };
+
+/** Localized presentation of the current, explicitly catalog-only skill state.
+ * The persisted state code and original provenance note remain unchanged. */
+export function bookSkillStatus(book: Book, locale: Locale): { state: string; note: string } {
+  if (locale === 'en') return book.skillStatus;
+  let note = 'متن کامل دارای مجوز در دسترس نیست؛ پاسخ‌گویی فعلاً به اطلاعات کتاب‌شناختی محدود است. تولید مهارت از کتاب به منبع کامل و مجاز نیاز دارد.';
+  if (book.skillStatus.note.includes('nine ways')) note += ' نُه روش اشاره‌شده در عنوان، در این وب‌سایت فهرست نشده‌اند.';
+  if (book.skillStatus.note.includes('print edition')) note += ' شابک نمایش‌داده‌شده مربوط به نسخه چاپی است.';
+  return { state: book.skillStatus.state === 'not-generated' ? 'مهارت اجرایی تولید نشده است' : SOURCE_STATUS_LABELS[book.sourceStatus].fa, note };
+}
+
+/** Bibliographic display only: retain the source edition and Gregorian dates.
+ * These are the exact edition descriptions in the verified book registry. */
+const PERSIAN_EDITIONS: Record<string, string> = {
+  'Revised and expanded, 2nd edition (April 2026)': 'دوم، بازنگری‌شده و گسترش‌یافته (آوریل ۲۰۲۶ میلادی)',
+  'First edition (2020)': 'اول (۲۰۲۰ میلادی)',
+  'First edition (2022)': 'اول (۲۰۲۲ میلادی)',
+  'First edition (2024)': 'اول (۲۰۲۴ میلادی)',
+  'Updated and Expanded (September 2024)': 'به‌روزشده و گسترش‌یافته (سپتامبر ۲۰۲۴ میلادی)',
+  'First edition (2025)': 'اول (۲۰۲۵ میلادی)',
+  'First edition (2022, print)': 'اول (۲۰۲۲ میلادی، نسخه چاپی)',
+  'First edition (2020, hardcover)': 'اول (۲۰۲۰ میلادی، جلد سخت)',
+  'First edition (2024, hardcover)': 'اول (۲۰۲۴ میلادی، جلد سخت)',
+};
+
+export function bookEdition(book: Book, locale: Locale): string {
+  return locale === 'fa' ? PERSIAN_EDITIONS[book.edition] ?? book.edition : book.edition;
+}
 
 export function bookPath(b: Book, locale: Locale = 'en'): string {
   return `/${locale}/insights/books/${b.slug}`;
@@ -95,7 +123,7 @@ export interface OssLayer {
   order: number;
   name: Bi;
   githubUrl: string;
-  license: { label: string; note: string; boundaryUrl?: string; cncfUrl?: string };
+  license: { label: string; note: string; noteFa?: string; boundaryUrl?: string; cncfUrl?: string };
   brief: Bi;
   inputs: Bi;
   outputs: Bi;
@@ -163,23 +191,23 @@ export const FLOW_DOMAIN_LABELS: Record<FlowDomain, Bi> = {
 
 /** The flow contract, in display order, for the atlas UI. */
 export const FLOW_CONTRACT_FIELDS: { key: keyof OrgFlow; label: Bi }[] = [
-  { key: 'inputTrigger', label: { en: 'Input trigger', fa: 'محرّک ورودی' } },
-  { key: 'actors', label: { en: 'Actors', fa: 'بازیگران' } },
-  { key: 'accountableOwner', label: { en: 'Accountable owner', fa: 'مالک پاسخگو' } },
-  { key: 'decisionRights', label: { en: 'Decision rights', fa: 'حقوق تصمیم' } },
+  { key: 'inputTrigger', label: { en: 'Input trigger', fa: 'رویداد آغاز فرایند' } },
+  { key: 'actors', label: { en: 'Actors', fa: 'نقش‌های درگیر' } },
+  { key: 'accountableOwner', label: { en: 'Accountable owner', fa: 'مسئول پاسخگو' } },
+  { key: 'decisionRights', label: { en: 'Decision rights', fa: 'اختیارات تصمیم‌گیری' } },
   { key: 'policies', label: { en: 'Applicable policies', fa: 'سیاست‌های مرتبط' } },
   { key: 'prerequisites', label: { en: 'Prerequisites', fa: 'پیش‌نیازها' } },
   { key: 'evidenceSources', label: { en: 'Evidence sources', fa: 'منابع شواهد' } },
   { key: 'steps', label: { en: 'Steps', fa: 'مراحل' } },
   { key: 'dataAssets', label: { en: 'Data assets', fa: 'دارایی‌های داده' } },
   { key: 'tools', label: { en: 'Tools', fa: 'ابزارها' } },
-  { key: 'metrics', label: { en: 'Metric definitions', fa: 'تعریف متریک‌ها' } },
-  { key: 'outcomes', label: { en: 'Expected outcomes', fa: 'پیامدهای مورد انتظار' } },
-  { key: 'humanGates', label: { en: 'Human gates', fa: 'دروازه‌های انسانی' } },
+  { key: 'metrics', label: { en: 'Metric definitions', fa: 'تعریف شاخص‌ها' } },
+  { key: 'outcomes', label: { en: 'Expected outcomes', fa: 'نتایج مورد انتظار' } },
+  { key: 'humanGates', label: { en: 'Human gates', fa: 'نقاط تأیید انسانی' } },
   { key: 'failureModes', label: { en: 'Failure modes', fa: 'حالت‌های شکست' } },
-  { key: 'rollback', label: { en: 'Rollback', fa: 'بازگشت' } },
+  { key: 'rollback', label: { en: 'Rollback', fa: 'مسیر بازگشت به وضعیت پیشین' } },
   { key: 'observability', label: { en: 'Observability', fa: 'مشاهده‌پذیری' } },
-  { key: 'lessons', label: { en: 'Lessons', fa: 'درس‌ها' } },
+  { key: 'lessons', label: { en: 'Lessons', fa: 'آموخته‌ها' } },
 ];
 
 /* -------------------------------------------------------------- concepts */

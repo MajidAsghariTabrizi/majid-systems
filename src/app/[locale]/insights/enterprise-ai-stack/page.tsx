@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 import { dict, isLocale, type Locale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
@@ -45,13 +46,14 @@ export default async function StackPage({ params }: { params: Params }) {
   return (
     <div className="stack-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
+      <nav className="ins-breadcrumb" aria-label={l === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}><ol><li><Link href={`/${l}`}>{l === 'fa' ? 'خانه' : 'Home'}</Link></li><li><Link href={`/${l}/insights`}>{l === 'fa' ? 'تحلیل‌ها' : 'Insights'}</Link></li><li aria-current="page">{l === 'fa' ? 'معماری هوش مصنوعی سازمانی' : 'Enterprise AI architecture'}</li></ol></nav>
       <header className="stack-head">
         <p className="eyebrow">{l === 'fa' ? 'اطلس متن‌باز' : 'OPEN-SOURCE ATLAS'}</p>
         <h1>{t.h1}</h1>
         <p className="lede">{t.sub}</p>
         <p className="stack-intro">{/* intro from data, bilingual */}
           {l === 'fa'
-            ? 'یک سازمان AI-Native صرفاً به یک LLM یا چت‌بات نیاز ندارد. پنج نوع هوشمندی کنار هم قرار می‌گیرند و ارزش در قراردادهای مشترک، منبع معتبر، مجوز تصمیم و چرخه یادگیری است.'
+            ? 'ساختن سازمانی با هوش مصنوعی به انتخاب یک مدل زبانی یا چت‌بات محدود نمی‌شود. پنج قابلیت هوشمند باید با قراردادهای روشن به هم وصل شوند: منابع قابل پیگیری، حدود اختیار تصمیم و چرخه‌ای برای ارزیابی و یادگیری.'
             : 'An AI-native business needs more than a language model — the architecture becomes useful only when provenance, authority and evaluation connect these capabilities into a coherent decision workflow.'}
         </p>
       </header>

@@ -19,6 +19,7 @@ import {
   type Locale,
 } from '@/content/knowledge';
 import { dict } from '@/content/i18n';
+import { matchesSearch } from '@/lib/search-text';
 
 const ALL = 'all';
 
@@ -27,16 +28,26 @@ export default function FlowAtlas({ locale }: { locale: Locale }) {
   const [domain, setDomain] = useState<string>(ALL);
   const [open, setOpen] = useState<string | null>(FLOWS[0].id);
   const [listMode, setListMode] = useState(false);
+  const [query, setQuery] = useState('');
 
   const domains = useMemo(() => [...new Set(FLOWS.map((f) => f.domain))] as FlowDomain[], []);
-  const shown = domain === ALL ? FLOWS : FLOWS.filter((f) => f.domain === (domain as FlowDomain));
+  const count = (value: number) => value.toLocaleString(locale === 'fa' ? 'fa-IR' : 'en-US');
+  const shown = FLOWS.filter((flow) => {
+    if (domain !== ALL && flow.domain !== (domain as FlowDomain)) return false;
+    const searchable = [flow.name, flow.inputTrigger, flow.actors, flow.steps, flow.outcomes, flow.tools, FLOW_DOMAIN_LABELS[flow.domain]].flatMap((field) => [field.en, field.fa]).join(' ');
+    return matchesSearch(searchable, query);
+  });
 
   return (
     <div className="flow-atlas">
+      <div className="knowledge-search" role="search">
+        <label htmlFor="flow-atlas-search">{locale === 'fa' ? 'جست‌وجو در فرایندها' : 'Search the workflows'}</label>
+        <input id="flow-atlas-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} aria-controls="flow-atlas-results" placeholder={locale === 'fa' ? 'نام فرایند، نقش یا مسئله…' : 'Workflow, role or problem…'} />
+      </div>
       <div className="flow-controls">
         <div className="book-filters" role="group" aria-label={locale === 'fa' ? 'پالایش حوزه' : 'Filter domain'}>
           <button className={`chip chip-btn ${domain === ALL ? 'on' : ''}`} aria-pressed={domain === ALL} onClick={() => setDomain(ALL)}>
-            {t.filterAll} ({FLOWS.length})
+            {t.filterAll} ({count(FLOWS.length)})
           </button>
           {domains.map((d) => (
             <button
@@ -45,7 +56,7 @@ export default function FlowAtlas({ locale }: { locale: Locale }) {
               aria-pressed={domain === d}
               onClick={() => setDomain(d)}
             >
-              {FLOW_DOMAIN_LABELS[d][locale]} ({FLOWS.filter((f) => f.domain === d).length})
+              {FLOW_DOMAIN_LABELS[d][locale]} ({count(FLOWS.filter((f) => f.domain === d).length)})
             </button>
           ))}
         </div>
@@ -59,7 +70,9 @@ export default function FlowAtlas({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      {listMode ? (
+      <p className="knowledge-results" role="status">{locale === 'fa' ? `${count(shown.length)} فرایند از ${count(FLOWS.length)} فرایند` : `${count(shown.length)} of ${count(FLOWS.length)} workflows`}</p>
+      <div id="flow-atlas-results">
+      {shown.length === 0 ? <div className="knowledge-empty"><h3>{locale === 'fa' ? 'فرایندی با این مشخصات پیدا نشد' : 'No workflows match these choices'}</h3><p>{locale === 'fa' ? 'عبارت یا حوزه دیگری را امتحان کنید.' : 'Try another search or domain.'}</p><button className="chip chip-btn" onClick={() => { setQuery(''); setDomain(ALL); }}>{locale === 'fa' ? 'نمایش همه فرایندها' : 'Show all workflows'}</button></div> : listMode ? (
         <ol className="flow-list-mode">
           {shown.map((f) => (
             <li key={f.id} id={f.id}>
@@ -90,7 +103,7 @@ export default function FlowAtlas({ locale }: { locale: Locale }) {
                   aria-controls={`flow-contract-${f.id}`}
                   onClick={() => setOpen(isOpen ? null : f.id)}
                 >
-                  <span className="flow-card-num" aria-hidden="true">{String(f.order).padStart(2, '0')}</span>
+                  <span className="flow-card-num" aria-hidden="true">{locale === 'fa' ? count(f.order) : String(f.order).padStart(2, '0')}</span>
                   <span className="flow-card-name">{f.name[locale]}</span>
                   <span className="chip chip-quiet">{FLOW_DOMAIN_LABELS[f.domain][locale]}</span>
                   <span className="flow-caret" aria-hidden="true">{isOpen ? '−' : '+'}</span>
@@ -142,6 +155,7 @@ export default function FlowAtlas({ locale }: { locale: Locale }) {
           })}
         </div>
       )}
+      </div>
 
       <section className="mindsets">
         <h2>{t.mindsetsTitle}</h2>

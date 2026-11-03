@@ -109,9 +109,9 @@ export function BrainDemo({ locale = 'en' }: { locale?: Locale }) {
     <div className="brain-demo" ref={ref}>
       <div className="brain-term" data-run={run}>
         <div className="brain-term-head">
-          <span className="brain-term-title">company-brain · query</span>
+          <span className="brain-term-title">{locale === 'fa' ? 'دانش سازمان · پرس‌وجو' : 'company-brain · query'}</span>
           <span className="brain-term-state">
-            {run === 'idle' && 'READY'}
+            {run === 'idle' && (locale === 'fa' ? 'آماده' : 'READY')}
             {run === 'running' && t.term_resolving}
             {run === 'done' && t.term_answered.replace('{n}', String(claimStates))}
           </span>

@@ -34,7 +34,7 @@ export default function ResumePage() {
         <p className="r-print-hint">Use your browser’s Print → Save as PDF for a downloadable copy.</p>
       </header>
 
-      <main className="r-sheet">
+      <div className="r-sheet">
         <h1>Majid Asghari Tabrizi</h1>
         <p className="r-tag">Product Lead — AI — Systems · AI-native organization design</p>
         <p className="r-contact">
@@ -96,7 +96,7 @@ export default function ResumePage() {
             <li>Learning must preserve provenance; technical difficulty is not commercial validation.</li>
           </ul>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

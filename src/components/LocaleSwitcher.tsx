@@ -32,7 +32,8 @@ export function LocaleSwitcher({ compact = false }: { compact?: boolean }) {
         ? pathname.replace(/^\/(en|fa)(?=\/|$)/, `/${to}`)
         : `/${to}`;
     const qs = typeof window !== 'undefined' ? window.location.search : '';
-    router.push(nextPath + qs);
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    router.push(nextPath + qs + hash);
   };
 
   const t = dict(current ?? 'en').switcher;

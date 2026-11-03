@@ -1,6 +1,5 @@
-/** Insights publication UI strings. Articles are English-first; the FA index
- * renders localized chrome with an explicit notice (no machine-published
- * translations — see docs/INSIGHTS_BASELINE.md §8). */
+/** Publication chrome. English and Persian editions share source references;
+ * language availability is resolved from the article registry. */
 export const INSIGHTS_UI: Record<'en' | 'fa', InsightsUi> = {
   en: {
     eyebrow: 'Quantiviq Research',
@@ -30,9 +29,9 @@ export const INSIGHTS_UI: Record<'en' | 'fa', InsightsUi> = {
     copyLink: 'Copy link',
     sourcesLabel: 'sources cited',
     wordsLabel: 'words',
-    noticeTitle: 'English-first research publication',
+    noticeTitle: 'Research in English and Persian',
     noticeBody:
-      'Quantiviq Insights is published in English so that sources, terminology and analysis can be verified to a single editorial standard. Persian editions will follow only where translation and editorial review can meet that same standard — we do not publish machine translations as finished articles.',
+      'English and Persian editions share the same source references. Use the language switch to read the available edition, and inspect the references and methodology behind each analysis.',
     contactCta: 'Discuss this with Quantiviq',
     contactBody: 'If your organization is working through the problems these articles describe, we compare notes with leadership teams.',
     series: 'Featured series',
@@ -48,45 +47,45 @@ export const INSIGHTS_UI: Record<'en' | 'fa', InsightsUi> = {
   fa: {
     eyebrow: 'پژوهش کوانتی‌ویک',
     title: 'تحلیل‌ها',
-    subtitle: 'تحلیل‌های اصیل دربارهٔ تحول کسب‌وکار بومی هوش مصنوعی — مدل عملیاتی، اقتصاد، حاکمیت و اجرا.',
+    subtitle: 'تحلیل درباره تحول کسب‌وکار با هوش مصنوعی؛ از مدل عملیاتی و اقتصاد تا حکمرانی و اجرا.',
     intro:
-      'انتشارات تحلیل‌های کوانتی‌ویک برای مدیرانی نوشته می‌شود که در حال بازطراحی روش ارزش‌آفرینی سازمان خود با هوش مصنوعی‌اند. هر مقاله به یک پرسش تصمیم‌گیری پاسخ می‌دهد، به منابع راستی‌آزمایی‌شده استناد می‌کند و با گام‌های عملی برای رهبران پایان می‌یابد.',
+      'تحلیل‌های کوانتی‌ویک برای مدیرانی است که شیوه ارزش‌آفرینی سازمان خود را با هوش مصنوعی بازطراحی می‌کنند. هر مقاله از یک پرسش تصمیم‌گیری آغاز می‌شود، شواهد و محدودیت‌ها را توضیح می‌دهد و با گام‌های عملی پایان می‌یابد.',
     latest: 'تازه‌ترین تحلیل‌ها',
-    pillars: 'محورهای سردبیری',
+    pillars: 'محورهای پژوهش',
     explorePillar: 'مرور محور',
-    readArticle: 'خواندن تحلیل',
+    readArticle: 'مطالعه تحلیل',
     minRead: 'دقیقه مطالعه',
     published: 'انتشار',
     updated: 'به‌روزرسانی',
     byAuthor: 'به قلم',
     keyTakeaways: 'پیام‌های کلیدی',
     onThisPage: 'در این صفحه',
-    discussion: 'پرسش‌های بحث',
-    discussionIntro: 'پرسش‌هایی که تیم‌های اجرایی می‌توانند برای سنجش این تحلیل در سازمان خود به‌کار ببرند.',
+    discussion: 'پرسش‌هایی برای گفت‌وگوی تیم',
+    discussionIntro: 'این پرسش‌ها به تیم مدیریت کمک می‌کنند تحلیل را با شرایط و تصمیم‌های سازمان خود بسنجند.',
     references: 'منابع و مستندات',
     methodologyNote: 'روش پژوهش و راستی‌آزمایی ما',
     related: 'تحلیل‌های مرتبط',
     nextArticle: 'بعدی',
     prevArticle: 'قبلی',
     backToInsights: 'همهٔ تحلیل‌ها',
-    share: 'اشتراک',
-    copyLink: 'کپی پیوند',
+    share: 'اشتراک‌گذاری',
+    copyLink: 'کپی لینک',
     sourcesLabel: 'منبع استنادشده',
     wordsLabel: 'واژه',
-    noticeTitle: 'انتشار پژوهشی با زبان اصلی انگلیسی',
+    noticeTitle: 'پژوهش به فارسی و انگلیسی',
     noticeBody:
-      'تحلیل‌های کوانتی‌ویک به انگلیسی منتشر می‌شود تا استنادها، اصطلاحات و تحلیل‌ها با یک استاندارد سردبیری واحد راستی‌آزمایی شوند. نسخهٔ فارسی تنها زمانی منتشر می‌شود که ترجمه و ویرایش بتواند به همان استاندارد برسد؛ ترجمهٔ ماشینی را به‌عنوان مقالهٔ نهایی منتشر نمی‌کنیم.',
+      'نسخه‌های فارسی و انگلیسی به منابع مشترک استناد می‌کنند. با انتخاب زبان، نسخه موجود را بخوانید و برای بررسی شواهد و محدودیت‌ها به منابع و روش پژوهش هر تحلیل مراجعه کنید.',
     contactCta: 'گفت‌وگو با کوانتی‌ویک',
-    contactBody: 'اگر سازمان شما با مسائلی که این مقالات توصیف می‌کنند سروکار دارد، تجربه‌ها و یادداشت‌هایمان را با تیم‌های رهبری به اشتراک می‌گذاریم.',
+    contactBody: 'اگر سازمان شما با این مسائل روبه‌روست، می‌توانیم درباره شرایط، تصمیم‌ها و گام بعدی با تیم شما گفت‌وگو کنیم.',
     series: 'مجموعهٔ ویژه',
     allArticles: 'همهٔ تحلیل‌ها',
     authorTitle: 'دربارهٔ پژوهش کوانتی‌ویک',
-    methodologyTitle: 'روش سردبیری',
+    methodologyTitle: 'روش پژوهش و ویرایش',
     topicsTitle: 'موضوع‌ها',
     aiDisclosure:
-      'این مقالات پیش‌نویس‌های پژوهش‌محور و با کمک هوش مصنوعی‌اند که پیش از انتشار بر اساس دفتر منابع ویرایش و راستی‌آزمایی شده‌اند. توضیح روش ما را ببینید.',
-    publishedOn: 'منتشر شده در',
-    updatedOn: 'به‌روزرسانی شده در',
+      'این مقاله‌ها با کمک هوش مصنوعی تهیه و بر اساس فهرست منابع ویرایش و بررسی شده‌اند. روش پژوهش، حدود شواهد و نقش هوش مصنوعی در صفحه روش‌شناسی توضیح داده شده است.',
+    publishedOn: 'تاریخ انتشار',
+    updatedOn: 'آخرین به‌روزرسانی',
   },
 } satisfies Record<'en' | 'fa', InsightsUi>;
 

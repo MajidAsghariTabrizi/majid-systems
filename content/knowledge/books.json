@@ -33,7 +33,7 @@
       },
       "brief": {
         "en": "A leadership playbook for rewiring a company's operating capabilities around technology and AI — not merely launching pilots. Its value here is the transition from strategic intent to teams, architecture, data, talent, governance and measurable changes to a business function. Useful for executives who have several AI pilots but no clear line from pilot to value stream.",
-        "fa": "این کتاب تحول AI را یک پروژه نصب ابزار نمی‌بیند؛ مسئله، بازآرایی توانمندی‌های سازمان در مقیاس واقعی است. ارزش اصلی آن پیوند استراتژی، طراحی مدل عملیاتی، معماری فناوری، داده، استعدادها و شیوه سنجش اثر است. برای مدیرانی مفید است که چند پایلوت AI دارند ولی نمی‌دانند چگونه آن‌ها را به جریان ارزش سازمان متصل کنند."
+        "fa": "این کتاب تحول هوش مصنوعی را یک پروژه نصب ابزار نمی‌بیند؛ مسئله، بازآرایی توانمندی‌های سازمان در مقیاس واقعی است. ارزش اصلی آن پیوند استراتژی، طراحی مدل عملیاتی، معماری فناوری، داده، استعدادها و شیوه سنجش اثر است. برای مدیرانی مفید است که چند پایلوت هوش مصنوعی دارند ولی نمی‌دانند چگونه آن‌ها را به جریان ارزش سازمان متصل کنند."
       },
       "takeaway": {
         "en": "Use at work: frame the transformation roadmap as an operating-model change with executive trade-offs — never as a technology shopping list, and never as a promise of instant ROI.",
@@ -63,8 +63,8 @@
           "What does catalog-only mean for what I can ask about this book?"
         ],
         "fa": [
-          "تفاوت پذیرش AI با بازآرایی مدل عملیاتی چیست؟",
-          "کدام بینش کوانتیویک استراتژی تحول را به تغییر قابل‌اندازه‌گیری یک عملکرد وصل می‌کند؟",
+          "تفاوت پذیرش هوش مصنوعی با بازآرایی مدل عملیاتی چیست؟",
+          "کدام بینش کوانتی‌ویک استراتژی تحول را به تغییر قابل‌اندازه‌گیری یک عملکرد وصل می‌کند؟",
           "وضعیت catalog-only برای پرسش‌های من درباره این کتاب یعنی چه؟"
         ]
       }
@@ -84,15 +84,15 @@
       "officialSourceUrl": "https://www.harvard.com/book/9781633697621",
       "title": {
         "en": "Competing in the Age of AI: Strategy and Leadership When Algorithms and Networks Run the World",
-        "fa": "رقابت در عصر AI: استراتژی و رهبری وقتی الگوریتم‌ها و شبکه‌ها بازی را تغییر می‌دهند"
+        "fa": "رقابت در عصر هوش مصنوعی: استراتژی و رهبری وقتی الگوریتم‌ها و شبکه‌ها بازی را تغییر می‌دهند"
       },
       "brief": {
         "en": "A strategic account of why AI-centric operating architectures alter scale, scope and learning. When decision and data flows are designed as one continuous system, the logic of competition changes — but only with a coherent operating architecture underneath.",
-        "fa": "این کتاب سازمان AI-محور را از منظر مقیاس، دامنه فعالیت و یادگیری بررسی می‌کند. وقتی جریان‌های تصمیم و داده به‌صورت پیوسته طراحی شوند، منطق رقابت تغییر می‌کند؛ اما این نتیجه نیازمند معماری عملیاتی منسجم است."
+        "fa": "این کتاب سازمان متکی به هوش مصنوعی را از منظر مقیاس، دامنه فعالیت و یادگیری بررسی می‌کند. وقتی جریان‌های تصمیم و داده به‌صورت پیوسته طراحی شوند، منطق رقابت تغییر می‌کند؛ اما این نتیجه نیازمند معماری عملیاتی منسجم است."
       },
       "takeaway": {
         "en": "Use at work: distinguish an 'AI feature' from an AI-native operating model, and design the learning loop of the business as an inspectable artifact — while keeping the authors' conceptual claims separate from any measured project outcome.",
-        "fa": "کاربرد در کار: میان «قابلیت AI» و «مدل عملیاتی AI-Native» تمایز بگذارید و حلقه یادگیری کسب‌وکار را به یک artefact قابل‌بررسی تبدیل کنید؛ مرز ادعای مفهومی نویسندگان و اثر اندازه‌گیری‌شده پروژه‌های خودتان را حفظ کنید."
+        "fa": "کاربرد در کار: میان «قابلیت هوش مصنوعی» و «مدل عملیاتی بومی هوش مصنوعی» تمایز بگذارید و حلقه یادگیری کسب‌وکار را به یک خروجی مستند قابل‌بررسی تبدیل کنید؛ مرز ادعای مفهومی نویسندگان و اثر اندازه‌گیری‌شده پروژه‌های خودتان را حفظ کنید."
       },
       "domains": [
         "strategy",
@@ -119,9 +119,9 @@
           "Which layer of the enterprise AI stack records when a decision changed and why?"
         ],
         "fa": [
-          "سازمان AI-Native با سازمان سنتی در مواجهه با سیگنال افت فروش چه تفاوتی دارد؟",
-          "تفاوت قابلیت AI با مدل عملیاتی AI-Native چیست؟",
-          "کدام لایه استک هوش مصنوعی سازمانی ثبت می‌کند که یک تصمیم کِی و چرا تغییر کرد؟"
+          "سازمان بومی هوش مصنوعی با سازمان سنتی در مواجهه با سیگنال افت فروش چه تفاوتی دارد؟",
+          "تفاوت قابلیت هوش مصنوعی با مدل عملیاتی بومی هوش مصنوعی چیست؟",
+          "کدام لایه معماری هوش مصنوعی سازمانی ثبت می‌کند که یک تصمیم کِی و چرا تغییر کرد؟"
         ]
       }
     },
@@ -145,11 +145,11 @@
       },
       "brief": {
         "en": "Separates prediction from judgment and shows why cheaper prediction can force redesign of entire interdependent decision systems. Better prediction alone is not enough; the decision chain and its process dependencies must be re-examined.",
-        "fa": "تمایز میان «پیش‌بینی» و «قضاوت» کمک می‌کند بفهمیم AI دقیقاً در کدام قسمت تصمیم نقش دارد و چه بخشی باید زیر مسئولیت انسان بماند. ایده کلیدی برای طراحی محصول این است که بهترشدن یک پیش‌بینی به‌تنهایی کافی نیست؛ زنجیره تصمیم‌ها و وابستگی‌های فرایند را باید از نو بررسی کرد."
+        "fa": "تمایز میان «پیش‌بینی» و «قضاوت» کمک می‌کند بفهمیم هوش مصنوعی دقیقاً در کدام قسمت تصمیم نقش دارد و چه بخشی باید زیر مسئولیت انسان بماند. ایده کلیدی برای طراحی محصول این است که بهترشدن یک پیش‌بینی به‌تنهایی کافی نیست؛ زنجیره تصمیم‌ها و وابستگی‌های فرایند را باید از نو بررسی کرد."
       },
       "takeaway": {
         "en": "Use at work: map AI's predictions, human judgment, decision rights and cost-of-error as visibly distinct stages — decision economics, not blanket automation advocacy.",
-        "fa": "کاربرد در کار: پیش‌بینی AI، قضاوت انسانی، مالکیت تصمیم و هزینه خطا را به‌صورت مراحل مجزای قابل‌مشاهده ترسیم کنید؛ این اقتصادِ تصمیم است، نه دفاع همه‌جانبه از اتوماسیون."
+        "fa": "کاربرد در کار: پیش‌بینی هوش مصنوعی، قضاوت انسانی، مالکیت تصمیم و هزینه خطا را به‌صورت مراحل مجزای قابل‌مشاهده ترسیم کنید؛ این اقتصادِ تصمیم است، نه دفاع همه‌جانبه از اتوماسیون."
       },
       "domains": [
         "economics",
@@ -177,8 +177,8 @@
         ],
         "fa": [
           "در یک جریان تأیید، مرز پیش‌بینی و قضاوت کجاست؟",
-          "وقتی پیش‌بینی AI اشتباه باشد، مالک تصمیم کیست؟",
-          "سازمان زنده گیت مجوز انسانی را چگونه قابل‌مشاهده می‌کند؟"
+          "وقتی پیش‌بینی هوش مصنوعی اشتباه باشد، مالک تصمیم کیست؟",
+          "سازمان زنده نقطه تأیید انسانی را چگونه قابل‌مشاهده می‌کند؟"
         ]
       }
     },
@@ -200,11 +200,11 @@
       },
       "brief": {
         "en": "A practical lens on working and learning with generative AI as a collaborator, not an unquestionable oracle. Instead of assuming the model is always right — or that it replaces the person — design the AI's role, its failure points, how to interrogate it and how outputs get reviewed.",
-        "fa": "تمرکز این کتاب بر کیفیت همکاری انسان و AI در کار و یادگیری است. به‌جای فرض اینکه مدل همیشه درست است یا جای فرد را می‌گیرد، باید نقش AI، نقاط خطا، شیوه پرسش‌گری و بازبینی خروجی را طراحی کنیم."
+        "fa": "تمرکز این کتاب بر کیفیت همکاری انسان و هوش مصنوعی در کار و یادگیری است. به‌جای فرض اینکه مدل همیشه درست است یا جای فرد را می‌گیرد، باید نقش هوش مصنوعی، نقاط خطا، شیوه پرسش‌گری و بازبینی خروجی را طراحی کنیم."
       },
       "takeaway": {
         "en": "Use at work: treat AI as a challengeable colleague — in the Mind experience you can question an answer, demand its sources, and keep the final decision yourself.",
-        "fa": "کاربرد در کار: با AI مثل همکارِ قابل‌چالش رفتار کنید — در تجربه Mind می‌توانید پاسخ را زیر سؤال ببرید، منبع بخواهید و تصمیم نهایی را خودتان بگیرید."
+        "fa": "کاربرد در کار: با هوش مصنوعی مثل همکارِ قابل‌چالش رفتار کنید — در تجربه Mind می‌توانید پاسخ را زیر سؤال ببرید، منبع بخواهید و تصمیم نهایی را خودتان بگیرید."
       },
       "domains": [
         "human-collaboration"
@@ -230,9 +230,9 @@
           "Which stack layer gives document-backed evidence for a policy question?"
         ],
         "fa": [
-          "یک تیم پیش از اقدام بر تحلیل تولیدشده توسط AI چگونه باید آن را بازبینی کند؟",
-          "«AI قابل‌چالش» در رابط Mind کوانتیویک یعنی چه؟",
-          "کدام لایه استک برای یک سؤال سیاستی، سند پشتیبان می‌دهد؟"
+          "یک تیم پیش از اقدام بر تحلیل تولیدشده توسط هوش مصنوعی چگونه باید آن را بازبینی کند؟",
+          "«هوش مصنوعی قابل‌چالش» در رابط Mind کوانتی‌ویک یعنی چه؟",
+          "کدام لایه معماری برای یک سؤال سیاستی، سند پشتیبان می‌دهد؟"
         ]
       }
     },
@@ -250,15 +250,15 @@
       "officialSourceUrl": "https://store.hbr.org/product/the-ai-savvy-leader-nine-ways-to-take-back-control-and-make-ai-work/10688",
       "title": {
         "en": "The AI-Savvy Leader: Nine Ways to Take Back Control and Make AI Work",
-        "fa": "رهبر آگاه از AI: نه راه برای هدایت مسئولانه تحول"
+        "fa": "رهبر آگاه از هوش مصنوعی: نه راه برای هدایت مسئولانه تحول"
       },
       "brief": {
         "en": "A leadership-centered guide to making AI a strategic management responsibility rather than delegating the transformation to technology teams. Leaders must decide on purpose, business value, the human role, controls and organizational adoption. The book's nine actions are referenced only as far as its public description goes — this site does not enumerate them from guesswork.",
-        "fa": "تحول هوش مصنوعی را نمی‌توان فقط به واحد فناوری واگذار کرد. مدیران باید درباره هدف، ارزش کسب‌وکار، نقش انسان، کنترل‌ها و پذیرش سازمانی تصمیم بگیرند. این کتاب برای روایت نقش رهبری محصول و کسب‌وکار در تحول AI مهم است؛ فهرست نه اقدام آن فقط تا سطح توضیح عمومی کتاب ارجاع می‌شود و از حدس بازسازی نمی‌شود."
+        "fa": "تحول هوش مصنوعی را نمی‌توان فقط به واحد فناوری واگذار کرد. مدیران باید درباره هدف، ارزش کسب‌وکار، نقش انسان، کنترل‌ها و پذیرش سازمانی تصمیم بگیرند. این کتاب برای روایت نقش رهبری محصول و کسب‌وکار در تحول هوش مصنوعی مهم است؛ فهرست نه اقدام آن فقط تا سطح توضیح عمومی کتاب ارجاع می‌شود و از حدس بازسازی نمی‌شود."
       },
       "takeaway": {
         "en": "Use at work: pair executive sponsorship with explicit decision rights — the 'questions a CEO should ask' panel on this site is exactly that pattern.",
-        "fa": "کاربرد در کار: حامی اجرایی را با حقوق تصمیم صریح جفت کنید؛ پنل «سؤال‌هایی که مدیرعامل باید بپرسد» در همین سایت دقیقاً همین الگوست."
+        "fa": "کاربرد در کار: حامی اجرایی را با اختیارات تصمیم‌گیری صریح جفت کنید؛ پنل «سؤال‌هایی که مدیرعامل باید بپرسد» در همین سایت دقیقاً همین الگوست."
       },
       "domains": [
         "leadership",
@@ -283,9 +283,9 @@
           "Where do decision rights live in the workflow atlas?"
         ],
         "fa": [
-          "چرا تحول AI را نمی‌توان تماماً به تیم فناوری واگذار کرد؟",
-          "مدیرعامل پیش از تأیید یک ابتکار AI چه سؤال‌هایی باید بپرسد؟",
-          "در اطلس جریان‌های کاری، حقوق تصمیم کجا تعریف شده است؟"
+          "چرا تحول هوش مصنوعی را نمی‌توان تماماً به تیم فناوری واگذار کرد؟",
+          "مدیرعامل پیش از تأیید یک ابتکار هوش مصنوعی چه سؤال‌هایی باید بپرسد؟",
+          "در اطلس جریان‌های کاری، اختیارات تصمیم‌گیری کجا تعریف شده است؟"
         ]
       }
     },
@@ -304,11 +304,11 @@
       "officialSourceUrl": "https://store.hbr.org/product/human-machine-updated-and-expanded-reimagining-work-in-the-age-of-ai/10724",
       "title": {
         "en": "Human + Machine, Updated and Expanded: Reimagining Work in the Age of AI",
-        "fa": "انسان + ماشین: بازاندیشی در کار در عصر AI (ویرایش توسعه‌یافته)"
+        "fa": "انسان + ماشین: بازاندیشی در کار در عصر هوش مصنوعی (ویرایش توسعه‌یافته)"
       },
       "brief": {
         "en": "The important question is not 'which jobs disappear?' but 'how is the work itself redesigned?'. Updated with a generative-AI context, it examines hybrid human-machine capability, new roles, shared decisions and process change. This card is our analytical summary and does not replace the book's content.",
-        "fa": "مهم‌ترین سؤال این کتاب «کدام شغل حذف می‌شود؟» نیست، بلکه «چگونه خود کار بازطراحی می‌شود؟» است. با زمینه AI مولد، از ترکیب قابلیت‌های انسانی و ماشین برای تعریف نقش‌های تازه، تصمیم‌های مشترک و تغییر فرایند سخن می‌گوید. این توضیح خلاصه تحلیلی ماست و جای محتوای کامل کتاب را نمی‌گیرد."
+        "fa": "مهم‌ترین سؤال این کتاب «کدام شغل حذف می‌شود؟» نیست، بلکه «چگونه خود کار بازطراحی می‌شود؟» است. با زمینه هوش مصنوعی مولد، از ترکیب قابلیت‌های انسانی و ماشین برای تعریف نقش‌های تازه، تصمیم‌های مشترک و تغییر فرایند سخن می‌گوید. این توضیح خلاصه تحلیلی ماست و جای محتوای کامل کتاب را نمی‌گیرد."
       },
       "takeaway": {
         "en": "Use at work: distinguish assistance, augmentation, delegated tasks and approval — and make the fictional-demo vs observed-deployment boundary explicit when you design the human roles.",
@@ -357,7 +357,7 @@
       "officialSourceUrl": "https://ingramacademic.com/products/ai-engineering-9781098166304",
       "title": {
         "en": "AI Engineering: Building Applications with Foundation Models",
-        "fa": "مهندسی AI: ساخت اپلیکیشن با مدل‌های بنیادین"
+        "fa": "مهندسی هوش مصنوعی: ساخت اپلیکیشن با مدل‌های بنیادین"
       },
       "brief": {
         "en": "Turning a powerful model into a dependable product is an engineering problem: data quality and retrieval, model selection, evaluation, cost, latency, tooling and control mechanisms. A systems-oriented guide to foundation-model applications — attached here to testable runtime and quality gates, not 'smart AI' marketing.",
@@ -365,7 +365,7 @@
       },
       "takeaway": {
         "en": "Use at work: connect AI concepts to an architecture diagram and a test scenario; never claim accuracy or performance for your own system without real experiment data.",
-        "fa": "کاربرد در کار: مفاهیم AI را به دیاگرام معماری و سناریوی تست وصل کنید؛ درباره دقت یا کارایی سیستم خودتان بدون داده آزمایش واقعی ادعایی مطرح نکنید."
+        "fa": "کاربرد در کار: مفاهیم هوش مصنوعی را به دیاگرام معماری و سناریوی تست وصل کنید؛ درباره دقت یا کارایی سیستم خودتان بدون داده آزمایش واقعی ادعایی مطرح نکنید."
       },
       "domains": [
         "engineering"
@@ -393,7 +393,7 @@
           "Which open-source layer provides governed text-to-SQL and what are its limits?"
         ],
         "fa": [
-          "دروازه‌های مهندسی میان نمونه اولیه AI و محصول عملیاتی کدام‌اند؟",
+          "دروازه‌های مهندسی میان نمونه اولیه هوش مصنوعی و محصول عملیاتی کدام‌اند؟",
           "کیفیت بازیابی چگونه بر اعتمادپذیری پاسخ اثر می‌گذارد؟",
           "کدام لایه متن‌باز، Text-to-SQL حاکمیت‌شده می‌دهد و محدودیت‌هایش چیست؟"
         ]
@@ -421,7 +421,7 @@
       },
       "takeaway": {
         "en": "Use at work: in the Mind, connect this to the evaluation flow — data quality, metric ownership, drift and incident response.",
-        "fa": "کاربرد در کار: در Mind این کتاب را به جریان ارزیابی وصل کنید — کیفیت داده، مالک متریک، Drift و پاسخ به رخداد."
+        "fa": "کاربرد در کار: در Mind این کتاب را به جریان ارزیابی وصل کنید — کیفیت داده، مالک شاخص، تغییر توزیع داده یا عملکرد و پاسخ به رخداد."
       },
       "domains": [
         "engineering",
@@ -451,8 +451,8 @@
         ],
         "fa": [
           "پس از رسیدن مدل به محصول عملیاتی، چه چیزهایی باید پایش شود؟",
-          "مالک تعریف یک متریک و شجره‌نامه آن کیست؟",
-          "استک چگونه Drift را تشخیص می‌دهد و به رخدادها پیوند می‌دهد؟"
+          "مالک تعریف یک شاخص و شجره‌نامه آن کیست؟",
+          "معماری چگونه تغییر توزیع داده یا عملکرد را تشخیص می‌دهد و به رخدادها پیوند می‌دهد؟"
         ]
       }
     },
@@ -474,7 +474,7 @@
       },
       "brief": {
         "en": "AI systems can optimize metrics that do not match what humans actually intend. An accessible exploration of the gap between machine-learning objectives and human values — grounding the governance and risk layer: why metrics, rewards and delegated authority cannot be blindly equated with human intent. The interactive demo stays educational and fully synthetic.",
-        "fa": "سیستم‌های AI ممکن است معیارهایی را بهینه کنند که با هدف واقعی انسان سازگار نیست. این کتاب برای طراحی نقاط کنترل، تعریف هدف، پیشگیری از اثرات ناخواسته و ارزیابی مسئولیت‌پذیری مهم است؛ چرا که معیار، پاداش و اختیار واگذارشده را نمی‌توان کورکورانه با قصد انسان یکی گرفت."
+        "fa": "سیستم‌های هوش مصنوعی ممکن است معیارهایی را بهینه کنند که با هدف واقعی انسان سازگار نیست. این کتاب برای طراحی نقاط کنترل، تعریف هدف، پیشگیری از اثرات ناخواسته و ارزیابی مسئولیت‌پذیری مهم است؛ چرا که معیار، پاداش و اختیار واگذارشده را نمی‌توان کورکورانه با قصد انسان یکی گرفت."
       },
       "takeaway": {
         "en": "Use at work: in the Living Organization, let the visitor see the consequence of choosing the wrong metric or removing the human confirmation — as a clearly fictional, educational scenario.",
@@ -505,7 +505,7 @@
           "Where do risk gates and review live in the workflow atlas?"
         ],
         "fa": [
-          "چرا یک متریک کاملاً بهینه‌شده همچنان می‌تواند غلط باشد؟",
+          "چرا یک شاخص کاملاً بهینه‌شده همچنان می‌تواند غلط باشد؟",
           "وقتی تأیید انسانی حذف شود، در دمو چه اتفاقی می‌افتد؟",
           "دروازه‌های ریسک و بازبینی در اطلس جریان‌ها کجا هستند؟"
         ]
@@ -526,15 +526,15 @@
       "officialSourceUrl": "https://ingramacademic.com/products/ai-snake-oil-9780691249131",
       "title": {
         "en": "AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference",
-        "fa": "روغن مار AI: تشخیص قابلیت واقعی از ادعای اغراق‌آمیز"
+        "fa": "روغن مار هوش مصنوعی: تشخیص قابلیت واقعی از ادعای اغراق‌آمیز"
       },
       "brief": {
         "en": "A skeptical, evidence-first guide to separating useful AI capabilities from inflated or misleading claims: judge the problem type, the evidence quality, the failure modes and the marketing incentives. This site treats it as its built-in critical reviewer — is this use really better than a simpler solution? What does an error cost? What independent evidence exists?",
-        "fa": "این کتاب یک صدای انتقادی لازم در میان روایت‌های خوش‌بینانه AI است. تأکید می‌کند نوع مسئله، کیفیت شواهد، خطاها و انگیزه‌های تبلیغاتی را جدا از هم سنجید. برای کوانتیویک، چالش‌گر تمام ادعاهای خودمان است: آیا این کاربرد واقعاً بهتر از راه‌حل ساده‌تر است؟ هزینه خطا چقدر است؟ شواهد مستقل کدام‌اند؟"
+        "fa": "این کتاب یک صدای انتقادی لازم در میان روایت‌های خوش‌بینانه هوش مصنوعی است. تأکید می‌کند نوع مسئله، کیفیت شواهد، خطاها و انگیزه‌های تبلیغاتی را جدا از هم سنجید. برای کوانتی‌ویک، چالش‌گر تمام ادعاهای خودمان است: آیا این کاربرد واقعاً بهتر از راه‌حل ساده‌تر است؟ هزینه خطا چقدر است؟ شواهد مستقل کدام‌اند؟"
       },
       "takeaway": {
         "en": "Use at work: run anti-hypothesis questions and expose confidence levels before believing any AI claim — including this site's own.",
-        "fa": "کاربرد در کار: پیش از باور هر ادعای AI — از جمله ادعاهای همین سایت — سؤال‌های ضدفرضیه بپرسید و سطح اطمینان را آشکار کنید."
+        "fa": "کاربرد در کار: پیش از باور هر ادعای هوش مصنوعی — از جمله ادعاهای همین سایت — سؤال‌های ضدفرضیه بپرسید و سطح اطمینان را آشکار کنید."
       },
       "domains": [
         "governance",
@@ -560,8 +560,8 @@
         ],
         "fa": [
           "کدام ادعاهای این سایت فرضیه است و کدام شواهد واقعی دارد؟",
-          "یک ادعای AI را چگونه با baseline ساده‌تر مقایسه می‌کنید؟",
-          "خریدار پیش از اعتماد به فروشنده AI باید درباره چه حالت‌های شکستی بپرسد؟"
+          "یک ادعای هوش مصنوعی را چگونه با روش مبنای ساده‌تر مقایسه می‌کنید؟",
+          "خریدار پیش از اعتماد به فروشنده هوش مصنوعی باید درباره چه حالت‌های شکستی بپرسد؟"
         ]
       }
     }

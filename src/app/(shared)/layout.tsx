@@ -8,6 +8,7 @@ import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 
 import '../globals.css';
 import '../header-v2.css';
+import '../site-polish.css';
 
 /**
  * Root layout for the shared deep-content tree (journey, profile, work,

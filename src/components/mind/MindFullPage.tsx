@@ -67,6 +67,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
   const other = locale === 'fa' ? '/en/mind' : '/fa/mind';
 
   const submit = (text: string) => {
+    if (busy || asked >= MAX_QUESTIONS || !text.trim()) return;
     send(text);
     setInput('');
   };
@@ -103,7 +104,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
       <div className="mind-full-body">
         <div className="container-wide">
           <div className="mind-full-card">
-            <div className="mind-full-scroll" ref={follow.ref}>
+            <div className="mind-full-scroll" ref={follow.ref} role="region" aria-label={locale === 'fa' ? 'متن گفت‌وگو' : 'Conversation transcript'} tabIndex={0}>
               {messages.length === 0 ? (
                 <div className="mind-full-empty">
                   <p className="mind-full-starters-title">{s.startersTitle}</p>
@@ -130,8 +131,8 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                     />
                   ))}
                   {busy && (
-                    <div className="mind-typing" aria-live="polite">
-                      <span /> <span /> <span />
+                    <div className="mind-typing" role="status" aria-label={locale === 'fa' ? 'در حال آماده‌سازی پاسخ' : 'Preparing a response'}>
+                      <span aria-hidden="true" /> <span aria-hidden="true" /> <span aria-hidden="true" />
                     </div>
                   )}
                   {error && (
@@ -158,7 +159,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                         <button
                           type="button"
                           className="mind-icon-btn"
-                          aria-label={s.copy}
+                          aria-label={copied ? s.copied : s.copy}
                           onClick={() => {
                             navigator.clipboard?.writeText(last?.content ?? '');
                             setCopied(true);
@@ -215,7 +216,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                 placeholder={s.placeholder}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
                     e.preventDefault();
                     submit(input);
                   }

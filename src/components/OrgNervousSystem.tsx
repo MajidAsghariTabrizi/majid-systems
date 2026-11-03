@@ -31,9 +31,16 @@ const POS = [
 /** Localized layer names/roles can be injected; default = canonical EN data. */
 export function OrgNervousSystem({
   layers = OS_LAYERS,
+  locale = 'en',
 }: {
   layers?: { key: string; num: string; name: string; role: string; detail: string }[];
+  locale?: 'en' | 'fa';
 }) {
+  // Keep this homepage diagram independent of the full simulator dictionary.
+  const t = locale === 'fa'
+    ? { a11y_os_stage: 'سیستم‌عامل سازمان بومی هوش مصنوعی — یک لایه انتخاب کنید', layer_of_8: 'لایهٔ {n} از ۰۸' }
+    : { a11y_os_stage: 'The AI-native organization operating system — select a layer', layer_of_8: 'Layer {n} / 08' };
+  const number = (value: string) => Number(value).toLocaleString(locale === 'fa' ? 'fa-IR' : 'en-US', { minimumIntegerDigits: 2, useGrouping: false });
   const [activeKey, setActiveKey] = useState('control-plane');
   const { ref, inView } = useInView<HTMLDivElement>('60px');
   const reduced = usePrefersReducedMotion();
@@ -45,7 +52,7 @@ export function OrgNervousSystem({
 
   return (
     <div className="os-viz" ref={ref}>
-      <div className="os-stage" role="group" aria-label="The AI-native organization operating system — select a layer">
+      <div className="os-stage" role="group" aria-label={t.a11y_os_stage}>
         <svg className="os-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
           {orbit.map((l, i) => (
             <line
@@ -68,7 +75,7 @@ export function OrgNervousSystem({
           onClick={() => setActiveKey(BRAIN_KEY)}
           aria-pressed={activeKey === BRAIN_KEY}
         >
-          <span className="os-center-title">COMPANY BRAIN</span>
+          <span className="os-center-title">{brain.name}</span>
           <span className="os-center-sub">{brain.role}</span>
         </button>
 
@@ -83,7 +90,7 @@ export function OrgNervousSystem({
             onClick={() => setActiveKey(l.key)}
             aria-pressed={l.key === activeKey}
           >
-            <span className="os-node-num">{l.num}</span>
+            <span className="os-node-num">{number(l.num)}</span>
             <span className="os-node-name">{l.name}</span>
             <span className="os-node-role">{l.role}</span>
           </button>
@@ -91,7 +98,7 @@ export function OrgNervousSystem({
       </div>
 
       <div className="os-detail" aria-live="polite">
-        <span className="eyebrow">Layer {active.num} / 08</span>
+        <span className="eyebrow">{t.layer_of_8.replace('{n}', number(active.num))}</span>
         <h3>{active.name}</h3>
         <p className="os-detail-role">{active.role}</p>
         <p className="os-detail-body">{active.detail}</p>

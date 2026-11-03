@@ -79,11 +79,11 @@ const EN = {
 };
 const FA: typeof EN = {
   brand: 'QUANTIVIQ',
-  brandTag: 'ملاقات با مجید \u00b7 گفت‌وگوی هوش مصنوعی',
+  brandTag: 'آشنایی با مجید \u00b7 گفت‌وگو با هوش مصنوعی',
   mainSite: 'سایت اصلی',
-  eyebrow: 'ملاقات با مجید \u00b7 قدرت‌گرفته از ذهن Quantiviq',
-  headline: 'تفکر مجید را با هوش مصنوعی کاوش کنید.',
-  desc: 'دربارهٔ پروژه‌های واقعی بپرسید، به یک تصمیم چالش بگذارید یا مسئلهٔ کاری‌تان را مطرح کنید. این هوش مصنوعی بر آثار منتشرشدهٔ مجید و منابع عمومی گزینش‌شده تکیه دارد و منابعش قابل بررسی‌اند.',
+  eyebrow: 'آشنایی با مجید \u00b7 با پشتیبانی Quantiviq Mind',
+  headline: 'شیوهٔ فکرکردن مجید را در گفت‌وگو بشناسید.',
+  desc: 'دربارهٔ پروژه‌های واقعی بپرسید، تصمیمی را به چالش بکشید یا مسئلهٔ کسب‌وکارتان را مطرح کنید. پاسخ‌ها بر آثار منتشرشدهٔ مجید و منابع عمومی منتخب تکیه دارند و می‌توانید منابع هر پاسخ را بررسی کنید.',
   identity: 'مجید اصغری تبریزی \u00b7 رهبری محصول، تفکر سیستمی و هوش مصنوعی کاربردی',
   ctaStart: 'گفت‌وگو را شروع کنید',
   ctaContinue: 'ادامهٔ گفت‌وگو',
@@ -93,49 +93,49 @@ const FA: typeof EN = {
   starters: [
     { title: 'کارها را ببینید', desc: 'آنچه ساخته شده، تصمیم‌های پشت آن و شواهد در دسترس را بررسی کنید.' },
     { title: 'یک تصمیم را محک بزنید', desc: 'سناریویی دشوار بیاورید و پاسخی مبتنی بر اصول منتشرشده را بسنجید.' },
-    { title: 'تحول با هوش مصنوعی', desc: 'جریان کار، حقوق تصمیم، حکمرانی و ارزش کسب‌وکار را کاوش کنید.' },
+    { title: 'تحول با هوش مصنوعی', desc: 'فرایند کار، حدود اختیار تصمیم و ارزش حاصل برای کسب‌وکار را بررسی کنید.' },
   ],
   generalAsk: 'یا پرسش خودتان را بپرسید',
   howTitle: 'چگونه کار می‌کند',
   how: [
     { t: 'پرسش واقعی بپرسید', d: 'با یک پروژه، یک تصمیم یا یک چالش کسب‌وکار شروع کنید.' },
-    { t: 'پاسخ را کاوش کنید', d: 'مطالب مستند را از تفسیر هوش مصنوعی تفکیک کنید.' },
+    { t: 'پاسخ را بسنجید', d: 'تفاوت مطالب مستند و برداشت هوش مصنوعی را بررسی کنید.' },
     { t: 'منابع را بررسی کنید', d: 'مقاله‌ها، کتاب‌ها، مستندات و شواهد پروژه را باز کنید.' },
   ],
   examplesTitle: 'نمونه‌هایی از منابع موجود',
-  examplesNote: 'گوشه‌ای از کاتالوگ عمومی که هوش مصنوعی از آن بازیابی می‌کند \u2014 نه منابعی که برای پاسخی که هنوز داده نشده فراخوانی شده‌اند. مدخل کتاب‌ها یادداشت و فراداده است، نه دسترسی به کامل کتاب.',
+  examplesNote: 'این‌ها نمونه‌هایی از فهرست منابع عمومی‌اند و برای پاسخ مشخصی بازیابی نشده‌اند. صفحه‌های کتاب شامل معرفی و یادداشت‌اند و به‌معنای دسترسی به متن کامل کتاب نیستند.',
   examples: [
     { kind: 'مقاله', title: 'پذیرش هوش مصنوعی، تحول هوش مصنوعی نیست', href: '/fa/insights/ai-adoption-is-not-ai-transformation' },
     { kind: 'مدخل کتاب', title: 'مهندسی هوش مصنوعی \u2014 یادداشت‌های کتاب', href: '/fa/insights/books/ai-engineering' },
     { kind: 'مستند سیستم', title: 'سازمان زنده', href: '/fa/system' },
   ],
-  unlistedNote: 'فهرست‌نشده، نه خصوصی. هر کسی این پیوند را داشته باشد می‌تواند این صفحه را ببیند.',
+  unlistedNote: 'این صفحه در فهرست عمومی سایت نمایش داده نمی‌شود؛ اما هر کسی پیوند آن را داشته باشد می‌تواند وارد شود.',
   diagram: { q: 'پرسش شما', mind: 'ذهن QUANTIVIQ', s1: 'پروژه‌ها', s2: 'مقاله‌ها', s3: 'کتاب‌ها و مستندات', a1: 'مطالب مستند', a2: 'تفسیر', a3: 'منابع', inspect: 'بررسی' },
   paths: ['کارها را ببینید', 'یک تصمیم را محک بزنید', 'تحول با هوش مصنوعی'],
   startersQ: {
     work: ['مجید واقعاً چه چیزهایی را به تولید رسانده و چه چیزی هنوز آزمایشی است؟', 'تصمیم بازنشستگی فینیکس را توضیح بده \u2014 چرا سیستم کارا را متوقف کرد؟', 'چهار پروژهٔ مستند دربارهٔ قضاوت مهندسی‌اش چه می‌گویند؟'],
     challenge: ['اگر یک عامل هوش مصنوعی تصمیم گران ولی از نظر فنی درستی بگیرد، مجید چه می‌کند؟', 'چگونه اثبات می‌کنید تحول AI ارزش اقتصادی آفریده، نه فقط کاهش نیرو؟', 'چرا به مجید برای رهبری تحول AI اعتماد کنم، نه یک مشاور مدیریتی باتجربه؟'],
-    transform: ['سازمان بومی-هوشمند از کجا شروع می‌شود \u2014 ابزار، ساختار یا حقوق تصمیم؟', 'کدام جریان‌های کار هرگز نباید خودکار شوند و چرا؟', 'عامل‌هایی که عمل می‌کنند نه فقط پاسخ می‌دهند را چگونه حکمرانی می‌کنید؟'],
+    transform: ['ساختن سازمانی بر پایهٔ هوش مصنوعی از کجا شروع می‌شود \u2014 ابزار، ساختار یا حدود اختیار تصمیم؟', 'کدام فرایندها نباید خودکار شوند و چرا؟', 'بر عامل‌هایی که اقدام می‌کنند، نه فقط پاسخ می‌دهند، چگونه نظارت می‌کنید؟'],
     general: ['دربارهٔ چه چیزهایی می‌توانم از شما بپرسم؟', 'خلاصه کن مجید چگونه واقعیت مستند را از تفسیر جدا می‌کند.', 'چه منابع عمومی از پاسخ‌های شما پشتیبانی می‌کنند؟'],
   },
   sourcesLabel: 'منابع',
   viewAll: 'نمایش همه',
-  jumpToLatest: 'پرش به آخرین',
+  jumpToLatest: 'رفتن به آخرین پیام',
   incompleteLabel: 'پاسخ متوقف شد \u2014 متن ناقص نگه داشته شد.',
   closeLabel: 'بستن',
   openSource: 'باز کردن منبع',
   evidenceTitle: 'شواهد',
-  evidenceNote: 'منابع بازیابی‌شده برای این پاسخ \u2014 بازیابی اثبات سطری نیست. فراداده از کاتالوگ منتشرشده می‌آید؛ چیزی که موجود نیست نوشته نمی‌شود.',
-  composerPlaceholder: 'پرسش دشواری بپرسید\u2026',
+  evidenceNote: 'این منابع برای کمک به پاسخ بازیابی شده‌اند. نمایش یک منبع به‌تنهایی اثبات همهٔ جمله‌های پاسخ نیست. فقط اطلاعات موجود در فهرست منتشرشده نمایش داده می‌شود.',
+  composerPlaceholder: 'پرسش یا مسئلهٔ خود را مطرح کنید\u2026',
   send: 'ارسال', stop: 'توقف', retry: 'تلاش دوباره',
-  challengeThis: 'به این پاسخ چالش بگذارید',
-  hintLeft: 'مبتنی بر مطالب عمومی تأییدشده \u00b7 پاسخ‌ها ممکن است تفسیر باشند که مدل صریحاً برچسب می‌زند.',
+  challengeThis: 'نقاط ضعف این پاسخ را بررسی کنید',
+  hintLeft: 'مبتنی بر منابع عمومی قابل بررسی \u00b7 پاسخ ممکن است شامل برداشت و تفسیر هوش مصنوعی باشد.',
   limit: (n: number) => 'پرسش ' + String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[+d]) + ' از ۲۴ در این نشست',
   errorUnavailable: 'سرویس موقتاً در دسترس نیست. پرسش شما از دست نرفته \u2014 دوباره تلاش کنید.',
-  errorRate: 'سقف نشست پر شده. گفت‌وگو قابل مطالعه می‌ماند؛ برای ادامهٔ پرسش نشست جدیدی بسازید.',
-  back: '\u2190 مقدمه',
-  footLeft: 'ملاقات با مجید \u2014 بازنمایی هوش مصنوعی مجید اصغری تبریزی',
-  footRight: 'مبتنی بر ذهن عمومی Quantiviq \u00b7 فهرست‌نشده \u00b7 بدون آرشیو',
+  errorRate: 'به سقف پرسش‌های این نشست رسیده‌اید. گفت‌وگو و منابع آن همچنان برای مطالعه در دسترس‌اند.',
+  back: '\u2192 بازگشت به معرفی',
+  footLeft: 'آشنایی با مجید \u2014 بازنمایی هوش مصنوعی مجید اصغری تبریزی',
+  footRight: 'با پشتیبانی Quantiviq Mind \u00b7 خارج از فهرست عمومی سایت',
 };
 
 export function ExecutiveDialogue() {
@@ -218,7 +218,7 @@ export function ExecutiveDialogue() {
   const prefill = (q: string) => { setDraft(q); focusChatRef.current = true; setStage('chat'); setTimeout(() => inputRef.current?.focus(), 60); };
   const submitDraft = () => {
     const v = draft.trim();
-    if (!v) return;
+    if (busy || asked >= 24 || !v) return;
     setDraft('');
     send(v);
   };
@@ -228,6 +228,7 @@ export function ExecutiveDialogue() {
 
   return (
     <div className={'ex-root' + (rtl ? ' ex-rtl' : '')}>
+      <a className="ex-skip" href="#main">{rtl ? 'رفتن به محتوای اصلی' : 'Skip to main content'}</a>
       <header className="ex-top">
         <a className="ex2-brand" href={locale === 'fa' ? '/fa' : '/en'}>
           <span className="ex2-brand-mark">QUANTIVIQ</span>
@@ -236,9 +237,9 @@ export function ExecutiveDialogue() {
         </a>
         <div className="ex-top-right">
           <a className="ex2-main-link" href={locale === 'fa' ? '/fa' : '/en'}>{t.mainSite}</a>
-          <div className="ex-locale-toggle" role="group" aria-label="Language">
-            <button aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>EN</button>
-            <button aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>{'\u0641\u0627'}</button>
+          <div className="ex-locale-toggle" role="group" aria-label={rtl ? 'زبان' : 'Language'}>
+            <button type="button" lang="en" aria-label="English" aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>EN</button>
+            <button type="button" lang="fa" aria-label="فارسی" aria-pressed={locale === 'fa'} onClick={() => setLocale('fa')}>{'\u0641\u0627'}</button>
           </div>
         </div>
       </header>
@@ -259,7 +260,7 @@ export function ExecutiveDialogue() {
               </div>
               <p className="ex2-disclosure">{t.disclosureShort}</p>
             </div>
-            <div className="ex2-hero-visual" aria-label={t.howTitle}>
+            <div className="ex2-hero-visual" role="img" aria-label={rtl ? 'پرسش شما با کمک پروژه‌ها، مقاله‌ها و اطلاعات کتاب‌ها به پاسخی همراه با منابع قابل بررسی تبدیل می‌شود.' : 'Your question is explored through projects, articles and book information, producing an answer with sources you can inspect.'}>
               <div className="mx-stage">
                 <div className="mx-chip mx-q">{t.diagram.q}</div>
                 <div className="mx-link" aria-hidden />
@@ -277,11 +278,11 @@ export function ExecutiveDialogue() {
                   <div className="mx-a-row mx-a-soft">{t.diagram.a2}</div>
                   <div className="mx-a-row mx-a-srcs">
                     <span>{t.diagram.a3}</span>
-                    <span className="mx-cites"><i className="mx-cite">1</i><i className="mx-cite">2</i><i className="mx-cite mx-cite-hit">3</i></span>
+                    <span className="mx-cites"><i className="mx-cite">{rtl ? '۱' : '1'}</i><i className="mx-cite">{rtl ? '۲' : '2'}</i><i className="mx-cite mx-cite-hit">{rtl ? '۳' : '3'}</i></span>
                   </div>
                 </div>
                 <div className="mx-inspect">
-                  <span className="mx-cite mx-cite-hit">3</span>
+                  <span className="mx-cite mx-cite-hit">{rtl ? '۳' : '3'}</span>
                   <span className="mx-inspect-line" aria-hidden />
                   <span className="mx-inspect-target">{t.diagram.s3}</span>
                   <span className="mx-inspect-label">{t.diagram.inspect}</span>
@@ -303,7 +304,7 @@ export function ExecutiveDialogue() {
               ))}
             </ul>
             <div className="ex2-general">
-              <button className="ex2-general-btn" onClick={() => enter('general')}>{t.generalAsk} {'\u2192'}</button>
+              <button className="ex2-general-btn" onClick={() => enter('general')}>{t.generalAsk} <span aria-hidden="true">{rtl ? '\u2190' : '\u2192'}</span></button>
             </div>
           </section>
 
@@ -312,7 +313,7 @@ export function ExecutiveDialogue() {
             <ol className="ex2-steps">
               {t.how.map((s, i) => (
                 <li key={s.t} className="ex2-step">
-                  <span className="ex2-step-n" aria-hidden>{i + 1}</span>
+                  <span className="ex2-step-n" aria-hidden>{(i + 1).toLocaleString(locale)}</span>
                   <div><h3>{s.t}</h3><p>{s.d}</p></div>
                 </li>
               ))}
@@ -347,10 +348,10 @@ export function ExecutiveDialogue() {
           <div className="ex2-frame">
             <div className="ex2-toolbar">
               <button className="ex-back-btn" onClick={back}>{t.back}</button>
-              <span className="ex2-chat-mode">{mode !== 'general' ? t.paths[['work', 'challenge', 'transform'].indexOf(mode)] : t.brandTag}</span>
-              {busy && <span className="ex2-live" role="status">{'\u25cf'}</span>}
+              <h1 className="ex2-chat-mode">{mode !== 'general' ? t.paths[['work', 'challenge', 'transform'].indexOf(mode)] : t.brandTag}</h1>
+              {busy && <span className="ex2-live" role="status" aria-label={rtl ? 'در حال آماده‌سازی پاسخ' : 'Preparing a response'}>{'\u25cf'}</span>}
             </div>
-            <div className="ex2-transcript" ref={follow.ref} aria-live="polite">
+            <div className="ex2-transcript" ref={follow.ref} aria-live="polite" role="region" aria-label={rtl ? 'متن گفت‌وگو' : 'Conversation transcript'} tabIndex={0}>
               {messages.length === 0 && (
                 <div className="ex-suggestions">
                   {suggestions.map((s) => (
@@ -371,7 +372,7 @@ export function ExecutiveDialogue() {
                       onToggleExpand={toggleExpand}
                     />
                     {m.content && (m.sources?.length ?? 0) > 0 && !busy && (
-                      <button className="ex-challenge" onClick={() => send(locale === 'fa' ? 'به این پاسخ چالش بگذار: نقطه‌ضعف‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>
+                      <button className="ex-challenge" onClick={() => send(locale === 'fa' ? 'این پاسخ را نقد کن و ضعیف‌ترین بخش‌های استدلال را نشان بده.' : 'Challenge this answer: expose the weakest links in the reasoning.')}>
                         {'\u21af'} {t.challengeThis}
                       </button>
                     )}
@@ -401,11 +402,13 @@ export function ExecutiveDialogue() {
                   onChange={(e) => setDraft(e.target.value)}
                   placeholder={t.composerPlaceholder}
                   rows={2}
+                  dir="auto"
+                  disabled={asked >= 24 && !busy}
                   maxLength={2000}
-                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitDraft(); } }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); submitDraft(); } }}
                   aria-label={t.composerPlaceholder}
                 />
-                {busy ? <button className="ex-stop" onClick={stop}>{t.stop}</button> : <button className="ex-send" onClick={submitDraft}>{t.send}</button>}
+                {busy ? <button className="ex-stop" onClick={stop}>{t.stop}</button> : <button className="ex-send" onClick={submitDraft} disabled={!draft.trim() || asked >= 24}>{t.send}</button>}
               </div>
               <div className="ex-hint"><span>{t.hintLeft}</span><span>{t.limit(asked)}</span></div>
             </div>

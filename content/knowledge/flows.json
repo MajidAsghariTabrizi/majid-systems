@@ -40,7 +40,7 @@
       },
       "evidenceSources": {
         "en": "Market research, win/loss, metric owner sign-offs.",
-        "fa": "تحقیق بازار، برد/باخت، تأیید مالکان متریک."
+        "fa": "تحقیق بازار، برد/باخت، تأیید مالکان شاخص."
       },
       "steps": {
         "en": "Signal → opportunity sizing → constraints → portfolio construction → funding gates → OKR cascade → experiment gates → outcome & reversal review.",
@@ -52,7 +52,7 @@
       },
       "tools": {
         "en": "Planning sheets; optional: OpenMetadata for metric definitions.",
-        "fa": "برگه‌های برنامه‌ریزی؛ اختیاری: OpenMetadata برای تعریف متریک‌ها."
+        "fa": "برگه‌های برنامه‌ریزی؛ اختیاری: OpenMetadata برای تعریف شاخص‌ها."
       },
       "metrics": {
         "en": "Portfolio value at stake, % initiatives past gates, reversal rate.",
@@ -68,7 +68,7 @@
       },
       "failureModes": {
         "en": "Pet projects bypass gates; metrics without owners; no reversal path.",
-        "fa": "پروژه‌های محبوب از دروازه عبور می‌کنند؛ متریک بدون مالک؛ نبود مسیر بازگشت."
+        "fa": "پروژه‌های محبوب از دروازه عبور می‌کنند؛ شاخص بدون مالک؛ نبود مسیر بازگشت."
       },
       "rollback": {
         "en": "Stage-gated funding releases; kill criteria pre-agreed.",
@@ -147,7 +147,7 @@
       },
       "outcomes": {
         "en": "Released increment meeting acceptance criteria with audit trail.",
-        "fa": "افزوده منتشرشده منطبق بر معیارهای پذیرش با رد حسابرسی."
+        "fa": "افزوده منتشرشده منطبق بر معیارهای پذیرش با ردپای حسابرسی."
       },
       "humanGates": {
         "en": "Change approval before release; privacy/a11y sign-off.",
@@ -210,7 +210,7 @@
       },
       "prerequisites": {
         "en": "Instrumented funnel, cohort baselines.",
-        "fa": "قیف ابزارگذاری‌شده، baselineهای هم‌گروه."
+        "fa": "قیف ابزارگذاری‌شده، مقدار مبناهای هم‌گروه."
       },
       "evidenceSources": {
         "en": "Acquisition source data, funnel analytics, support feedback.",
@@ -226,7 +226,7 @@
       },
       "tools": {
         "en": "Analytics; optional: WrenAI for certified metric queries.",
-        "fa": "تحلیل؛ اختیاری: WrenAI برای کوئری متریک تأییدشده."
+        "fa": "تحلیل؛ اختیاری: WrenAI برای کوئری شاخص تأییدشده."
       },
       "metrics": {
         "en": "Conversion by source, retention curves, CAC/LTV.",
@@ -250,7 +250,7 @@
       },
       "observability": {
         "en": "Experiment dashboard with guardrail metrics.",
-        "fa": "داشبورد آزمایش با متریک‌های محافظ."
+        "fa": "داشبورد آزمایش با شاخص‌های محافظ."
       },
       "lessons": {
         "en": "One lever per experiment; guardrails before wins.",
@@ -313,7 +313,7 @@
       },
       "tools": {
         "en": "OMS/catalog systems; optional: OpenMetadata lineage, WrenAI metric queries.",
-        "fa": "سیستم‌های OMS/کاتالوگ؛ اختیاری: شجره‌نامه OpenMetadata، کوئری متریک WrenAI."
+        "fa": "سیستم‌های OMS/کاتالوگ؛ اختیاری: شجره‌نامه OpenMetadata، کوئری شاخص WrenAI."
       },
       "metrics": {
         "en": "Fill rate, catalog coverage, checkout conversion, OTD delivery, reconciliation delta.",
@@ -329,7 +329,7 @@
       },
       "failureModes": {
         "en": "Catalog drift, inventory oversell, reconciliation breaks.",
-        "fa": "drift کاتالوگ، فروش بیش از موجودی، شکست تسویه."
+        "fa": "تغییر توزیع داده یا عملکرد کاتالوگ، فروش بیش از موجودی، شکست تسویه."
       },
       "rollback": {
         "en": "Listing suspension; order cancel path; settlement retry.",
@@ -341,7 +341,7 @@
       },
       "lessons": {
         "en": "Every stage needs an owner and a defect metric before automation.",
-        "fa": "هر مرحله پیش از اتوماسیون به مالک و متریک نقص نیاز دارد."
+        "fa": "هر مرحله پیش از اتوماسیون به مالک و شاخص نقص نیاز دارد."
       },
       "relatedBooks": [
         "rewired",
@@ -361,23 +361,23 @@
       "publicSafe": true,
       "name": {
         "en": "Data → Metric → Analysis → Decision",
-        "fa": "داده ← متریک ← تحلیل ← تصمیم"
+        "fa": "داده ← شاخص ← تحلیل ← تصمیم"
       },
       "inputTrigger": {
         "en": "Business question or metric anomaly.",
-        "fa": "سؤال کسب‌وکار یا ناهنجاری متریک."
+        "fa": "سؤال کسب‌وکار یا ناهنجاری شاخص."
       },
       "actors": {
         "en": "Data engineer, analyst, metric owner, decision owner.",
-        "fa": "مهندس داده، تحلیلگر، مالک متریک، مالک تصمیم."
+        "fa": "مهندس داده، تحلیلگر، مالک شاخص، مالک تصمیم."
       },
       "accountableOwner": {
         "en": "Metric Owner (per metric).",
-        "fa": "مالک متریک (به ازای هر متریک)."
+        "fa": "مالک شاخص (به ازای هر شاخص)."
       },
       "decisionRights": {
         "en": "Metric owner certifies definitions; decision owner accepts/rejects analysis.",
-        "fa": "مالک متریک تعریف‌ها را تأیید می‌کند؛ مالک تصمیم تحلیل را می‌پذیرد/رد می‌کند."
+        "fa": "مالک شاخص تعریف‌ها را تأیید می‌کند؛ مالک تصمیم تحلیل را می‌پذیرد/رد می‌کند."
       },
       "policies": {
         "en": "Data classification, access policy, semantic-layer change control.",
@@ -389,15 +389,15 @@
       },
       "evidenceSources": {
         "en": "Catalog metadata, quality tests, certified metric definitions.",
-        "fa": "فراداده کاتالوگ، تست‌های کیفیت، تعریف‌های تأییدشده متریک."
+        "fa": "فراداده کاتالوگ، تست‌های کیفیت، تعریف‌های تأییدشده شاخص."
       },
       "steps": {
         "en": "Ingestion → lineage capture → quality gate → glossary/semantic metric approval → read-only analysis → explanation → human acceptance.",
-        "fa": "دریافت ← ثبت شجره‌نامه ← دروازه کیفیت ← تأیید متریک معنایی ← تحلیل فقط‌خواندنی ← توضیح ← پذیرش انسانی."
+        "fa": "دریافت ← ثبت شجره‌نامه ← دروازه کیفیت ← تأیید شاخص معنایی ← تحلیل فقط‌خواندنی ← توضیح ← پذیرش انسانی."
       },
       "dataAssets": {
         "en": "Warehouse tables, semantic model, metric registry.",
-        "fa": "جدول‌های انبار داده، مدل معنایی، ثبت متریک."
+        "fa": "جدول‌های انبار داده، مدل معنایی، ثبت شاخص."
       },
       "tools": {
         "en": "OpenMetadata (context/lineage), WrenAI (governed queries).",
@@ -409,7 +409,7 @@
       },
       "outcomes": {
         "en": "Decision backed by a certified metric with traceable lineage.",
-        "fa": "تصمیم پشتیبان‌شده با متریک تأییدشده و شجره‌نامه قابل‌ردیابی."
+        "fa": "تصمیم پشتیبان‌شده با شاخص تأییدشده و شجره‌نامه قابل‌ردیابی."
       },
       "humanGates": {
         "en": "Semantic approval; decision acceptance.",
@@ -421,7 +421,7 @@
       },
       "rollback": {
         "en": "Metric versioning; supersede not overwrite.",
-        "fa": "نسخه‌بندی متریک؛ جانشینی نه بازنویسی."
+        "fa": "نسخه‌بندی شاخص؛ جانشینی نه بازنویسی."
       },
       "observability": {
         "en": "Lineage graph + freshness monitors.",
@@ -429,7 +429,7 @@
       },
       "lessons": {
         "en": "Every metric has owner, grain, time window and definition.",
-        "fa": "هر متریک مالک، دانه، بازه زمانی و تعریف دارد."
+        "fa": "هر شاخص مالک، دانه، بازه زمانی و تعریف دارد."
       },
       "relatedBooks": [
         "designing-machine-learning-systems",
@@ -478,7 +478,7 @@
       },
       "evidenceSources": {
         "en": "Metrics, logs, change events, alert history.",
-        "fa": "متریک‌ها، لاگ‌ها، رخدادهای تغییر، تاریخچه هشدار."
+        "fa": "شاخص‌ها، لاگ‌ها، رخدادهای تغییر، تاریخچه هشدار."
       },
       "steps": {
         "en": "Alert → triage → context assembly → impact hypothesis → mitigation proposal → approved action → postmortem → knowledge revision.",
@@ -490,7 +490,7 @@
       },
       "tools": {
         "en": "Observability stack; optional: HolmesGPT for evidence-correlated RCA (read-only).",
-        "fa": "استک مشاهده‌پذیری؛ اختیاری: HolmesGPT برای RCA همبسته با شواهد (فقط‌خواندنی)."
+        "fa": "معماری مشاهده‌پذیری؛ اختیاری: HolmesGPT برای RCA همبسته با شواهد (فقط‌خواندنی)."
       },
       "metrics": {
         "en": "MTTA/MTTR, change-failure rate, repeat-incident rate.",
@@ -498,7 +498,7 @@
       },
       "outcomes": {
         "en": "Mitigated incident + causal knowledge retained.",
-        "fa": "رخداد کاهش‌یافته + دانش علّی حفظ‌شده."
+        "fa": "رخداد مهارشده + دانش علّی حفظ‌شده."
       },
       "humanGates": {
         "en": "Approval before any write-back/remediation action.",
@@ -506,7 +506,7 @@
       },
       "failureModes": {
         "en": "Alert fatigue; mitigation without diagnosis; postmortems that change nothing.",
-        "fa": "خستگی هشدار؛ کاهش بدون تشخیص؛ مرورهایی که چیزی را تغییر نمی‌دهند."
+        "fa": "خستگی هشدار؛ مهار بدون تشخیص علت؛ مرورهایی که چیزی را تغییر نمی‌دهند."
       },
       "rollback": {
         "en": "Change revert path; feature flags.",
@@ -541,7 +541,7 @@
       },
       "inputTrigger": {
         "en": "Task assigned to an AI agent.",
-        "fa": "تکلیف واگذارشده به عامل AI."
+        "fa": "تکلیف واگذارشده به عامل هوش مصنوعی."
       },
       "actors": {
         "en": "Operator, agent runtime owner, reviewer.",
@@ -557,7 +557,7 @@
       },
       "policies": {
         "en": "Least privilege, read-first default, no-write without explicit gate.",
-        "fa": "حداقل امتیاز، پیش‌فرض ابتدا-خواندن، بدون نوشتن بدون دروازه صریح."
+        "fa": "حداقل سطح دسترسی، پیش‌فرض ابتدا-خواندن، بدون نوشتن بدون دروازه صریح."
       },
       "prerequisites": {
         "en": "Tool allowlist, context budget, eval harness.",
@@ -605,7 +605,7 @@
       },
       "lessons": {
         "en": "Intelligence ≠ authority; permissions are bounded and revocable.",
-        "fa": "هوشمندی ≠ اختیار؛ مجوزها محدود و قابل‌لغورند."
+        "fa": "هوشمندی ≠ اختیار؛ مجوزها محدود و قابل‌لغوند."
       },
       "relatedBooks": [
         "power-and-prediction",
@@ -650,7 +650,7 @@
       },
       "prerequisites": {
         "en": "Certified revenue metric, cost model.",
-        "fa": "متریک درآمد تأییدشده، مدل هزینه."
+        "fa": "شاخص درآمد تأییدشده، مدل هزینه."
       },
       "evidenceSources": {
         "en": "Order ledger, campaign spend, accounting records.",
@@ -662,7 +662,7 @@
       },
       "dataAssets": {
         "en": "Price book, budget, spend ledger, GL entries.",
-        "fa": "کتاب قیمت، بودجه، دفتر هزینه، اسناد حسابداری."
+        "fa": "فهرست قیمت، بودجه، دفتر هزینه، اسناد حسابداری."
       },
       "tools": {
         "en": "ERP; optional: WrenAI certified revenue queries.",
@@ -674,7 +674,7 @@
       },
       "outcomes": {
         "en": "Books that reconcile to certified metrics.",
-        "fa": "دفترهایی که با متریک‌های تأییدشده تسویه می‌شوند."
+        "fa": "دفترهایی که با شاخص‌های تأییدشده تسویه می‌شوند."
       },
       "humanGates": {
         "en": "Budget approval; write-off approval.",
@@ -722,7 +722,7 @@
       },
       "actors": {
         "en": "Support agent, policy owner, product team.",
-        "fa": "ایجنت پشتیبانی، مالک سیاست، تیم محصول."
+        "fa": "کارشناس پشتیبانی، مالک سیاست، تیم محصول."
       },
       "accountableOwner": {
         "en": "Support Operations Lead.",
@@ -730,11 +730,11 @@
       },
       "decisionRights": {
         "en": "Agents resolve within policy; policy owner handles exceptions.",
-        "fa": "ایجنت‌ها درون سیاست حل می‌کنند؛ مالک سیاست استثناها را."
+        "fa": "کارشناسان درون سیاست حل می‌کنند؛ مالک سیاست استثناها را."
       },
       "policies": {
         "en": "Refund/escalation policy, consent rules, tone standards.",
-        "fa": "سیاست بازپرداخت/تشدید، قواعد رضایت، استانداردهای لحن."
+        "fa": "سیاست بازپرداخت/ارجاع، قواعد رضایت، استانداردهای لحن."
       },
       "prerequisites": {
         "en": "Curated knowledge base, classification taxonomy.",
@@ -746,7 +746,7 @@
       },
       "steps": {
         "en": "Issue → classification → knowledge search → policy decision → escalation/consent → resolution → satisfaction/learning.",
-        "fa": "مسئله ← طبقه‌بندی ← جست‌وجوی دانش ← تصمیم سیاستی ← تشدید/رضایت ← حل ← رضایت/یادگیری."
+        "fa": "مسئله ← طبقه‌بندی ← جست‌وجوی دانش ← تصمیم سیاستی ← ارجاع/رضایت ← حل ← رضایت/یادگیری."
       },
       "dataAssets": {
         "en": "Ticket ledger, KB articles, CSAT logs.",
@@ -770,15 +770,15 @@
       },
       "failureModes": {
         "en": "Uncited AI answers; silent policy drift.",
-        "fa": "پاسخ‌های AI بدون استناد؛ انحراف بی‌صدای سیاست."
+        "fa": "پاسخ‌های هوش مصنوعی بدون استناد؛ انحراف بی‌صدای سیاست."
       },
       "rollback": {
         "en": "Escalation path to human; answer withdrawal.",
-        "fa": "مسیر تشدید به انسان؛ پس‌گرفتن پاسخ."
+        "fa": "مسیر ارجاع به انسان؛ پس‌گرفتن پاسخ."
       },
       "observability": {
         "en": "Citation rate on AI-assisted answers.",
-        "fa": "نرخ استناد پاسخ‌های کمک‌گرفته از AI."
+        "fa": "نرخ استناد پاسخ‌های کمک‌گرفته از هوش مصنوعی."
       },
       "lessons": {
         "en": "Search output ≠ truth; require citations and policy links.",
@@ -801,7 +801,7 @@
       "publicSafe": true,
       "name": {
         "en": "People & Change: Capability Map → Gaps → Adoption → Training → Feedback",
-        "fa": "مردم و تغییر: نقشه توانمندی ← شکاف‌ها ← پذیرش ← آموزش ← بازخورد"
+        "fa": "افراد و تغییر: نقشه توانمندی ← شکاف‌ها ← پذیرش ← آموزش ← بازخورد"
       },
       "inputTrigger": {
         "en": "Transformation program kickoff or skills review.",
@@ -825,11 +825,11 @@
       },
       "prerequisites": {
         "en": "Capability map, baseline adoption metrics.",
-        "fa": "نقشه توانمندی، متریک‌های پایه پذیرش."
+        "fa": "نقشه توانمندی، شاخص‌های پایه پذیرش."
       },
       "evidenceSources": {
         "en": "Skill assessments, usage data, pulse surveys.",
-        "fa": "ارزیابی مهارت، داده استفاده، نظرسنجی ضربانی."
+        "fa": "ارزیابی مهارت، داده استفاده، نظرسنجی کوتاه دوره‌ای."
       },
       "steps": {
         "en": "Capability map → skill gaps → adoption plan → training → human-in-the-loop responsibility → feedback and incentives.",
@@ -902,7 +902,7 @@
       },
       "decisionRights": {
         "en": "Risk committee approves high-impact processing; DPO can veto.",
-        "fa": "کمیته ریسک پردازش‌های پربلای اثر را تأیید می‌کند؛ افسر داده حق وتو دارد."
+        "fa": "کمیته ریسک پردازش‌های پرپیامد را تأیید می‌کند؛ افسر داده حق وتو دارد."
       },
       "policies": {
         "en": "Data classification standard, threat modeling method, permission policy.",
@@ -918,7 +918,7 @@
       },
       "steps": {
         "en": "Data classification → threat model → permission policy → approval → audit trail → expiry/review.",
-        "fa": "طبقه‌بندی داده ← مدل تهدید ← سیاست مجوز ← تأیید ← رد حسابرسی ← انقضا/بازبینی."
+        "fa": "طبقه‌بندی داده ← مدل تهدید ← سیاست مجوز ← تأیید ← ردپای حسابرسی ← انقضا/بازبینی."
       },
       "dataAssets": {
         "en": "Asset register, permission registry, audit log.",
@@ -934,7 +934,7 @@
       },
       "outcomes": {
         "en": "Approved processing with auditable trail and expiry.",
-        "fa": "پردازش تأییدشده با رد قابل‌حسابرسی و انقضا."
+        "fa": "پردازش تأییدشده با سابقه قابل حسابرسی و انقضا."
       },
       "humanGates": {
         "en": "Approval step mandatory for high-class data.",
@@ -950,7 +950,7 @@
       },
       "observability": {
         "en": "Audit trail with approver identity and scope.",
-        "fa": "رد حسابرسی با هویت تأییدکننده و دامنه."
+        "fa": "ردپای حسابرسی با هویت تأییدکننده و دامنه."
       },
       "lessons": {
         "en": "INDEXED ≠ RETRIEVABLE ≠ RETURNED ≠ VISIBLE.",
@@ -974,7 +974,7 @@
       "publicSafe": true,
       "name": {
         "en": "Research & Model Improvement: Claim → Experiment → Controls → Metrics → Critique → Versioned Decision",
-        "fa": "پژوهش و بهبود مدل: ادعا ← آزمایش ← کنترل‌ها ← متریک‌ها ← نقادی ← تصمیم نسخه‌بندی‌شده"
+        "fa": "پژوهش و بهبود مدل: ادعا ← آزمایش ← کنترل‌ها ← شاخص‌ها ← نقادی ← تصمیم نسخه‌بندی‌شده"
       },
       "inputTrigger": {
         "en": "Improvement claim or observed regression.",
@@ -990,23 +990,23 @@
       },
       "decisionRights": {
         "en": "Owner promotes/rejects versions; reviewer blocks on evidence gaps.",
-        "fa": "مالک نسخه‌ها را ترویج/رد می‌کند؛ بازبین به دلیل کمبود شواهد مسدود می‌کند."
+        "fa": "مالک نسخه‌ها را ارتقا/رد می‌کند؛ بازبین به دلیل کمبود شواهد مسدود می‌کند."
       },
       "policies": {
         "en": "Experiment hygiene, holdout protection, documentation standard.",
-        "fa": "بهداشت آزمایش، حفاظت holdout، استاندارد مستندسازی."
+        "fa": "بهداشت آزمایش، حفاظت از مجموعه آزمون مستقل (holdout)، استاندارد مستندسازی."
       },
       "prerequisites": {
         "en": "Baseline, eval set, ablation tooling.",
-        "fa": "baseline، مجموعه ارزیابی، ابزار ablation."
+        "fa": "مقدار مبنا، مجموعه ارزیابی، آزمون حذف مؤلفه‌ها (ablation)."
       },
       "evidenceSources": {
         "en": "Experiment ledger, ablation results, critique notes.",
-        "fa": "دفتر آزمایش، نتایج ablation، یادداشت‌های نقادی."
+        "fa": "دفتر آزمایش، نتایج آزمون حذف مؤلفه‌ها، یادداشت‌های نقادی."
       },
       "steps": {
         "en": "Claim → experiment design → controls → metrics → failure/ablation → critique → versioned decision to promote/reject.",
-        "fa": "ادعا ← طراحی آزمایش ← کنترل‌ها ← متریک‌ها ← شکست/ablation ← نقادی ← تصمیم نسخه‌بندی‌شده برای ترویج/رد."
+        "fa": "ادعا ← طراحی آزمایش ← کنترل‌ها ← شاخص‌ها ← شکست/آزمون حذف مؤلفه‌ها ← نقادی ← تصمیم نسخه‌بندی‌شده برای ارتقا/رد."
       },
       "dataAssets": {
         "en": "Eval sets, experiment tracker, model registry.",
@@ -1018,19 +1018,19 @@
       },
       "metrics": {
         "en": "Primary metric lift, robustness, cost, drift post-deploy.",
-        "fa": "بهبود متریک اصلی، استحکام، هزینه، drift پس از استقرار."
+        "fa": "بهبود شاخص اصلی، استحکام، هزینه، تغییر توزیع داده یا عملکرد پس از استقرار."
       },
       "outcomes": {
         "en": "Versioned promote/reject decision with evidence.",
-        "fa": "تصمیم ترویج/رد نسخه‌بندی‌شده با شواهد."
+        "fa": "تصمیم ارتقا/رد نسخه‌بندی‌شده با شواهد."
       },
       "humanGates": {
         "en": "Critique/review before promotion.",
-        "fa": "نقادی/بازبینی پیش از ترویج."
+        "fa": "نقادی/بازبینی پیش از ارتقا."
       },
       "failureModes": {
         "en": "Overfitting to eval; missing ablation; hype-driven promotion.",
-        "fa": "برازش بیش‌ازحد به ارزیابی؛ نبود ablation؛ ترویج هیجان‌محور."
+        "fa": "برازش بیش‌ازحد به ارزیابی؛ نبود آزمون حذف مؤلفه‌ها؛ ارتقا هیجان‌محور."
       },
       "rollback": {
         "en": "Model versioning with previous-version fallback.",
@@ -1038,11 +1038,11 @@
       },
       "observability": {
         "en": "Post-deploy drift monitors tied to the decision record.",
-        "fa": "پایش drift پس از استقرار متصل به سند تصمیم."
+        "fa": "پایش تغییر توزیع داده یا عملکرد پس از استقرار متصل به سند تصمیم."
       },
       "lessons": {
         "en": "Disconfirmation is a strength; simpler baselines first.",
-        "fa": "ردکردن فرضیه فضیلت است؛ ابتدا baseline ساده‌تر."
+        "fa": "ردکردن فرضیه فضیلت است؛ ابتدا روش مبنای ساده‌تر."
       },
       "relatedBooks": [
         "ai-engineering",

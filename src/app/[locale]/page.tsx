@@ -37,7 +37,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
   return (
     <>
       {/* ===== 01 · HERO ===== */}
-      <section className="q-hero" aria-label="Quantiviq — AI-native organization transformation">
+      <section className="q-hero" aria-label={l === 'fa' ? 'کوانتی‌ویک — تحول سازمانی با هوش مصنوعی' : 'Quantiviq — AI-native organization transformation'}>
         <div className="container-wide q-hero-grid">
           <div className="q-hero-copy">
             <span className="eyebrow sig">{t.hero.tag}</span>
@@ -56,7 +56,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             </div>
           </div>
           <div className="q-hero-visual">
-            <IntelligenceMap />
+            <IntelligenceMap locale={l} />
           </div>
         </div>
       </section>
@@ -76,9 +76,9 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <div className="preview-card">
               <p className="q-lede" style={{ margin: 0 }}>{t.home2.previewBody}</p>
               <div className="preview-signals" aria-hidden>
-                <span>customer issue</span>
-                <span>revenue drop</span>
-                <span>product signal</span>
+                <span>{l === 'fa' ? 'مسئله مشتری' : 'customer issue'}</span>
+                <span>{l === 'fa' ? 'افت درآمد' : 'revenue drop'}</span>
+                <span>{l === 'fa' ? 'رویداد محصول' : 'product signal'}</span>
               </div>
               <div className="hero-actions">
                 <Link href={`/${l}/explore#simulator`} className="btn btn-primary">
@@ -176,6 +176,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
           </Reveal>
           <Reveal>
             <OrgNervousSystem
+              locale={l}
               layers={t.system.osLayers.map((ly, i) => ({
                 key: ['governance', 'authority', 'control-plane', 'workflows', 'agents', 'brain', 'data', 'tools'][i],
                 num: ly.num,
@@ -215,7 +216,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-lede">{h.learningLede}</p>
           </Reveal>
           <Reveal>
-            <SystemFlow steps={h.flow} />
+            <SystemFlow steps={h.flow} locale={l} />
           </Reveal>
           <Reveal>
             <p className="q-punch" dir="ltr">{t.system.principle}</p>
@@ -352,7 +353,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
       </section>
 
       {/* ===== FINAL ===== */}
-      <section className="q-final" aria-label="Start">
+      <section className="q-final" aria-label={l === 'fa' ? 'شروع گفت‌وگو' : 'Start'}>
         <div className="container-narrow">
           <Reveal>
             <p className="q-final-question">{h.finalQ}</p>

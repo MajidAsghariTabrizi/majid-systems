@@ -16,6 +16,7 @@ import {
 import { INSIGHTS_UI } from '@/content/insights/ui';
 import { InsightsIndexJsonLd } from '@/components/InsightsJsonLd';
 import { SITE } from '@/content/shared';
+import { formatInsightDate, formatInsightNumber } from '@/lib/insights-format';
 
 type Params = { locale: string };
 
@@ -51,10 +52,10 @@ function Card({ article, t, locale }: { article: Article; t: (typeof INSIGHTS_UI
   return (
     <Link className="ins-card" href={`/${locale}/insights/${article.slug}`}>
       <span className="ins-card-pillar">{pillarFor(article.pillar, locale)?.name}</span>
-      <span className="ins-card-title">{article.title}</span>
+      <h3 className="ins-card-title">{article.title}</h3>
       <span className="ins-card-sub">{article.excerpt}</span>
       <span className="ins-card-meta">
-        {article.published_at} · {article.readingTime} {t.minRead}
+        <time dateTime={article.published_at}>{formatInsightDate(article.published_at, locale)}</time> · {formatInsightNumber(article.readingTime, locale)} {t.minRead}
       </span>
     </Link>
   );
@@ -82,9 +83,9 @@ export default async function InsightsIndexPage({ params }: { params: Params }) 
           <p className="ins-subtitle">{t.subtitle}</p>
           <p className="q-lede">{t.intro}</p>
           <div className="ins-stats" role="list">
-            <span role="listitem"><strong>{stats.articles}</strong> {locale === 'fa' ? 'مقالهٔ پژوهشی' : 'research articles'}</span>
-            <span role="listitem"><strong>{stats.pillars}</strong> {locale === 'fa' ? 'محور سردبیری' : 'editorial pillars'}</span>
-            <span role="listitem"><strong>{stats.sources}</strong> {locale === 'fa' ? 'منبع راستی‌آزمایی‌شده' : 'verified sources'}</span>
+            <span role="listitem"><strong>{formatInsightNumber(stats.articles, locale)}</strong> {locale === 'fa' ? 'مقالهٔ پژوهشی' : 'research articles'}</span>
+            <span role="listitem"><strong>{formatInsightNumber(stats.pillars, locale)}</strong> {locale === 'fa' ? 'محور سردبیری' : 'editorial pillars'}</span>
+            <span role="listitem"><strong>{formatInsightNumber(stats.sources, locale)}</strong> {locale === 'fa' ? 'منبع راستی‌آزمایی‌شده' : 'verified sources'}</span>
           </div>
         </div>
       </section>
@@ -102,7 +103,7 @@ export default async function InsightsIndexPage({ params }: { params: Params }) 
                 <h2 className="ins-featured-title">{featured.title}</h2>
                 <p className="ins-featured-sub">{featured.subtitle}</p>
                 <span className="ins-card-meta">
-                  {featured.published_at} · {featured.readingTime} {t.minRead}
+                  <time dateTime={featured.published_at}>{formatInsightDate(featured.published_at, locale)}</time> · {formatInsightNumber(featured.readingTime, locale)} {t.minRead}
                 </span>
                 <span className="btn btn-primary ins-featured-cta">{t.readArticle} <span className="arrow" aria-hidden>→</span></span>
               </div>
@@ -119,11 +120,11 @@ export default async function InsightsIndexPage({ params }: { params: Params }) 
               const loc = pillarFor(p.id, locale);
               return (
                 <Link key={p.id} className="ins-pillar" href={`/${locale}/insights/topics/${p.id}`}>
-                  <span className="ins-pillar-num">0{p.order}</span>
+                  <span className="ins-pillar-num">{locale === 'fa' ? formatInsightNumber(p.order, locale) : `0${p.order}`}</span>
                   <span className="ins-pillar-name">{loc?.name}</span>
                   <span className="ins-pillar-tag">{loc?.tagline}</span>
                   <span className="ins-pillar-desc">{loc?.description}</span>
-                  <span className="ins-pillar-count">{articlesByPillar(p.id, locale).length} {locale === 'fa' ? 'مقاله' : 'articles'}</span>
+                  <span className="ins-pillar-count">{formatInsightNumber(articlesByPillar(p.id, locale).length, locale)} {locale === 'fa' ? 'مقاله' : 'articles'}</span>
                 </Link>
               );
             })}

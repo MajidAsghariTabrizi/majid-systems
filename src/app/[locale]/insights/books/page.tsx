@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
@@ -48,8 +49,9 @@ export default async function BooksPage({ params }: { params: Params }) {
   return (
     <div className="books-page" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-wide">
+      <nav className="ins-breadcrumb" aria-label={l === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}><ol><li><Link href={`/${l}`}>{l === 'fa' ? 'خانه' : 'Home'}</Link></li><li><Link href={`/${l}/insights`}>{l === 'fa' ? 'تحلیل‌ها' : 'Insights'}</Link></li><li aria-current="page">{l === 'fa' ? 'کتابخانه' : 'Library'}</li></ol></nav>
       <header className="stack-head">
-        <p className="eyebrow">{l === 'fa' ? 'کتابخانه کوانتیویک' : 'QUANTIVIQ LIBRARY'}</p>
+        <p className="eyebrow">{l === 'fa' ? 'کتابخانه کوانتی‌ویک' : 'QUANTIVIQ LIBRARY'}</p>
         <h1>{t.h1}</h1>
         <p className="lede">{t.sub}</p>
       </header>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import BookCover from './BookCover';
-import { BOOK_DOMAIN_LABELS, SOURCE_STATUS_LABELS, bookPath, type Book, type Locale } from '@/content/knowledge';
+import { BOOK_DOMAIN_LABELS, SOURCE_STATUS_LABELS, bookPath, bookSkillStatus, bookEdition, type Book, type Locale } from '@/content/knowledge';
 import { dict } from '@/content/i18n';
 
 export default function BookCard({ book, locale }: { book: Book; locale: Locale }) {
@@ -21,13 +21,11 @@ export default function BookCard({ book, locale }: { book: Book; locale: Locale 
         </h3>
         <p className="book-card-authors">{book.authors.join(locale === 'fa' ? '، ' : ', ')}</p>
         <p className="book-card-edition">
-          {book.publisher} · {book.year} · {locale === 'fa' ? 'ویراست' : 'ed.'}{' '}
-          {locale === 'fa'
-            ? book.edition.replace(/First edition/i, 'اول').replace(/Updated and Expanded/g, 'توسعه‌یافته')
-            : book.edition}
+          {book.publisher} · {book.year.toLocaleString(locale === 'fa' ? 'fa-IR' : 'en-US', { useGrouping: false })} · {locale === 'fa' ? 'ویراست' : 'ed.'}{' '}
+          {bookEdition(book, locale)}
         </p>
-        <p className="book-card-brief">{book.brief[locale].slice(0, 165)}…</p>
-        <p className="book-card-status" title={book.skillStatus.note}>
+        <p className="book-card-brief">{book.brief[locale].length > 165 ? `${book.brief[locale].slice(0, 165).replace(/\s+\S*$/, '')}…` : book.brief[locale]}</p>
+        <p className="book-card-status" title={bookSkillStatus(book, locale).note}>
           <span className="dot dot-hollow" aria-hidden="true" />
           {SOURCE_STATUS_LABELS[book.sourceStatus][locale]}
         </p>

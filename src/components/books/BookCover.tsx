@@ -28,7 +28,7 @@ export default function BookCover({
         <span className="bcf-title">{book.title[locale]}</span>
         <span className="bcf-authors">{book.authors.join(' · ')}</span>
         <span className="bcf-isbn">ISBN {book.isbn13}</span>
-        <span className="bcf-note">cover unavailable — text card</span>
+        <span className="bcf-note">{locale === 'fa' ? 'تصویر جلد در دسترس نیست؛ نمای متنی کتاب' : 'Cover unavailable — text card'}</span>
       </div>
     );
   }

@@ -7,7 +7,7 @@
  * restricted to the allowlist enforced server-side).
  */
 import { useEffect, useRef, useState } from 'react';
-import { useMindChat, useFollow } from './useMindChat';
+import { useMindChat, useFollow, MAX_QUESTIONS } from './useMindChat';
 import { MindMessage, EvidenceInspector, normalizeSources, type EvidenceSel } from './evidence';
 import type { MindStrings } from './strings';
 
@@ -52,6 +52,8 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   const follow = useFollow<HTMLDivElement>();
   const [evidence, setEvidence] = useState<EvidenceSel>(null);
   const [expandedSources, setExpandedSources] = useState<Set<string>>(new Set());
@@ -80,16 +82,31 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
   useEffect(() => {
+    const previousFocus = document.activeElement as HTMLElement | null;
     inputRef.current?.focus();
     const esc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      // The nested source inspector owns its own Escape and focus handling.
+      if (e.defaultPrevented || document.querySelector('.mind-evidence-overlay')) return;
+      if (e.key === 'Escape') closeRef.current();
     };
     window.addEventListener('keydown', esc);
-    return () => window.removeEventListener('keydown', esc);
-  }, [onClose]);
+    return () => {
+      window.removeEventListener('keydown', esc);
+      requestAnimationFrame(() => {
+        if (document.querySelector('.mind-overlay')) return;
+        if (previousFocus?.isConnected) previousFocus.focus();
+        else document.querySelector<HTMLButtonElement>('.mind-fab')?.focus();
+      });
+    };
+  }, []);
 
   const last = messages.at(-1);
   const showContact = !busy && last?.role === 'assistant' && (last.content?.length ?? 0) > 80;
+  const submitInput = () => {
+    if (busy || asked >= MAX_QUESTIONS || !input.trim()) return;
+    send(input);
+    setInput('');
+  };
 
   return (
     <div className="mind-overlay" role="dialog" aria-modal="true" aria-label={s.title}>
@@ -122,7 +139,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
           </div>
         </header>
 
-        <div className="mind-scroll" ref={follow.ref}>
+        <div className="mind-scroll" ref={follow.ref} role="region" aria-label={locale === 'fa' ? 'متن گفت‌وگو' : 'Conversation transcript'} tabIndex={0}>
           {messages.length === 0 && (
             <div className="mind-empty">
               <p className="mind-empty-title">{s.emptyTitle}</p>
@@ -139,8 +156,8 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             <MindMessage key={m.id} m={m} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
           ))}
           {busy && (
-            <div className="mind-typing" aria-live="polite">
-              <span /> <span /> <span />
+            <div className="mind-typing" role="status" aria-label={locale === 'fa' ? 'در حال آماده‌سازی پاسخ' : 'Preparing a response'}>
+              <span aria-hidden="true" /> <span aria-hidden="true" /> <span aria-hidden="true" />
             </div>
           )}
           {error && (
@@ -160,7 +177,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
                 <button
                   type="button"
                   className="mind-icon-btn"
-                  aria-label={s.copy}
+                  aria-label={copied ? s.copied : s.copy}
                   onClick={() => {
                     navigator.clipboard?.writeText(last?.content ?? '');
                     setCopied(true);
@@ -178,8 +195,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
           className="mind-compose"
           onSubmit={(e) => {
             e.preventDefault();
-            send(input);
-            setInput('');
+            submitInput();
           }}
         >
           <label className="mind-sr" htmlFor="mind-input">
@@ -191,23 +207,23 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             rows={1}
             dir="auto"
             value={input}
+            maxLength={2000}
             placeholder={s.placeholder}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
+              if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
                 e.preventDefault();
-                send(input);
-                setInput('');
+                submitInput();
               }
             }}
-            disabled={asked >= 6 && !busy}
+            disabled={asked >= MAX_QUESTIONS && !busy}
           />
           {busy ? (
             <button type="button" className="mind-send" onClick={stop}>
               {s.stop}
             </button>
           ) : (
-            <button type="submit" className="mind-send" disabled={!input.trim() || asked >= 6}>
+            <button type="submit" className="mind-send" disabled={!input.trim() || asked >= MAX_QUESTIONS}>
               {s.send}
             </button>
           )}

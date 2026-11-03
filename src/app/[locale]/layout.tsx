@@ -16,6 +16,7 @@ import '../header-v2.css';
 import '../home-v2.css';
 import '../mind-evidence.css';
 import '../solutions.css';
+import '../site-polish.css';
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

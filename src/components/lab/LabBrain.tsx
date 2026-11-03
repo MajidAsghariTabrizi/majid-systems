@@ -19,8 +19,27 @@ const KIND_COLORS: Record<string, string> = {
   ERROR_ATTRIBUTION: 'var(--stale)',
 };
 
+const SOURCE_TEXT_FA: Record<string, string> = {
+  TRADE_DECISION: 'تصمیم معاملاتی', RESEARCH_FINDING: 'یافته پژوهشی',
+  REFLECTION: 'بازنگری', ERROR_ATTRIBUTION: 'نسبت‌دهی خطا',
+  REQUEST_INFORMATION: 'درخواست اطلاعات', RELAX_GATE: 'بازبینی آستانه کنترل', ADJUST_TRUST: 'تنظیم میزان اتکا',
+  'owner approval + frozen challenger ladder': 'تأیید مسئول سیستم و مسیر آزمایش چالشگر با مشخصات ثابت',
+  'CONTROL vs CONTROL+L2 direction/opportunity delta': 'تغییر ارزیابی جهت و فرصت، در مقایسه CONTROL با CONTROL+L2',
+  'regret -10% with FP rate rise <=20% relative on fresh shadow': 'هدف آزمون: کاهش 10% پشیمانی با افزایش نسبی حداکثر 20% نرخ مثبت کاذب در داده سایه تازه',
+  'median magnitude error halves on fresh shadow': 'هدف آزمون: نصف‌شدن میانه خطای بزرگی حرکت در داده سایه تازه',
+  'uncertainty gate UNC_MAX 0.65 (challenger only)': 'کنترل عدم‌قطعیت UNC_MAX 0.65، فقط در چالشگر',
+  'magnitude expert calibration challenger': 'چالشگر کالیبراسیون خبره بزرگی حرکت',
+};
+function sourceTextFa(text: string): string {
+  return SOURCE_TEXT_FA[text] ?? text
+    .replace(/^(\d+) decisions attributed to information frontier \((\d+)bps regret mass\)$/, '$1 تصمیم به کمبود اطلاعات نسبت داده شده‌اند؛ مجموع پشیمانی $2 bps')
+    .replace(/^(\d+) missed opportunities bound by uncertainty gate, (\d+)bps regret mass; aleatoric cap dominates$/, '$1 فرصت ازدست‌رفته به کنترل عدم‌قطعیت مربوط‌اند؛ مجموع پشیمانی $2 bps. سقف عدم‌قطعیت ذاتی عامل غالب است')
+    .replace(/^(\d+) magnitude-attribution rows, (\d+)bps$/, '$1 ردیف نسبت‌دهی به بزرگی حرکت، با مجموع $2 bps');
+}
+
 export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocale }) {
   const t = labDict(locale);
+  const fa = locale === 'fa';
   const brain = snap.brain;
   const ebd = Object.entries(brain.episodes_by_day ?? {}).sort(([a], [b]) => a.localeCompare(b));
   const kinds = [...new Set(ebd.flatMap(([, d]) => Object.keys(d)))];
@@ -46,8 +65,8 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
         <div className="lab-brain-stats">
           <LabStat value={brain.claims} label={t.hero.stats.claims} />
           <LabStat value={brain.queue_total ?? '—'} label={t.brainSection.queueTitle} tone="warn" />
-          <LabStat value={nErrors} label={`${t.brainSection.attributionTitle.split('（')[0]}`} sub={`window ${brain.meta_report?.window_days ?? '—'}d`} />
-          <LabStat value={brain.meta_report?.open_hypotheses ?? '—'} label="open hypotheses" tone="neutral" />
+          <LabStat value={nErrors} label={`${t.brainSection.attributionTitle.split('（')[0]}`} sub={fa ? `بازه ${brain.meta_report?.window_days ?? '—'} روز` : `window ${brain.meta_report?.window_days ?? '—'}d`} />
+          <LabStat value={brain.meta_report?.open_hypotheses ?? '—'} label={fa ? 'فرضیه‌های باز' : 'open hypotheses'} tone="neutral" />
         </div>
 
         <div className="lab-brain-grid">
@@ -68,7 +87,7 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
                               height: `${(v / maxDay) * 64}px`,
                               background: KIND_COLORS[k] ?? 'var(--superseded)',
                             }}
-                            title={`${k}: ${v}`}
+                            title={`${fa ? sourceTextFa(k) : k}: ${v}`}
                           />
                         ) : null;
                       })}
@@ -80,7 +99,7 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
                   {kinds.map((k) => (
                     <li key={k}>
                       <span style={{ background: KIND_COLORS[k] ?? 'var(--superseded)' }} aria-hidden />
-                      {k}
+                      {fa ? sourceTextFa(k) : k}
                     </li>
                   ))}
                 </ul>
@@ -115,8 +134,8 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
                 </li>
               ))}
             </ul>
-            <p className="lab-brain-note">{brain.queue_note}</p>
-            <p className="lab-brain-note">{brain.findings_note}</p>
+            <p className="lab-brain-note">{fa ? 'متن فرضیه‌ها منتشر نمی‌شود؛ فقط تعداد و وضعیت نمایش داده می‌شود.' : brain.queue_note}</p>
+            <p className="lab-brain-note">{fa ? 'دفتر پژوهش‌های داخلی در بسته داده عمومی منتشر نمی‌شود.' : brain.findings_note}</p>
           </LabPanel>
 
           <LabPanel title={t.brainSection.recommendationsTitle} note={t.brainSection.recommendationsNote}>
@@ -124,13 +143,13 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
               {recs.map((r, i) => (
                 <li key={i}>
                   <div className="lab-rec-head">
-                    <LabChip kind="path">{r.recommendation}</LabChip>
+                    <LabChip kind="path">{fa ? sourceTextFa(r.recommendation) : r.recommendation}</LabChip>
                     <span className="lab-mono">p={num(r.priority, 2)}</span>
                   </div>
-                  <div className="lab-rec-target lab-mono">{r.target}</div>
-                  <div>{r.why}</div>
-                  <div className="lab-rec-metric">{r.expected_metric}</div>
-                  <div className="lab-rec-req">{r.requires}</div>
+                  <div className="lab-rec-target lab-mono">{fa ? sourceTextFa(r.target) : r.target}</div>
+                  <div>{fa ? sourceTextFa(r.why) : r.why}</div>
+                  <div className="lab-rec-metric">{fa ? sourceTextFa(r.expected_metric) : r.expected_metric}</div>
+                  <div className="lab-rec-req">{fa ? sourceTextFa(r.requires) : r.requires}</div>
                 </li>
               ))}
             </ul>
@@ -142,15 +161,15 @@ export function LabBrain({ snap, locale }: { snap: LabSnapshot; locale: LabLocal
           <p>{t.brainSection.twoLoopsBody}</p>
           <div className="lab-twoloops-diagram" aria-hidden>
             <div className="lab-loop">
-              <span className="lab-loop-title">DECISION</span>
-              <span className="lab-mono">market → features → heads → fusion → policy → ledger</span>
-              <span className="lab-loop-note">reads/writes Brain: never</span>
+              <span className="lab-loop-title">{fa ? 'تصمیم' : 'DECISION'}</span>
+              <span className="lab-mono">{fa ? 'بازار ← ویژگی‌ها ← مدل‌ها ← ترکیب ← سیاست ← دفتر' : 'market → features → heads → fusion → policy → ledger'}</span>
+              <span className="lab-loop-note">{fa ? 'خواندن یا نوشتن در مغز: هرگز' : 'reads/writes Brain: never'}</span>
             </div>
-            <span className="lab-loop-sep">⇄ owner only ⇄</span>
+            <span className="lab-loop-sep">⇄ {fa ? 'فقط از طریق مسئول سیستم' : 'owner only'} ⇄</span>
             <div className="lab-loop">
-              <span className="lab-loop-title">LEARNING</span>
-              <span className="lab-mono">outcomes → episodes → attribution → hypotheses → experiments</span>
-              <span className="lab-loop-note">reaches policy only via owner + evidence</span>
+              <span className="lab-loop-title">{fa ? 'یادگیری' : 'LEARNING'}</span>
+              <span className="lab-mono">{fa ? 'نتیجه‌ها ← سوابق یادگیری ← نسبت‌دهی ← فرضیه‌ها ← آزمایش‌ها' : 'outcomes → episodes → attribution → hypotheses → experiments'}</span>
+              <span className="lab-loop-note">{fa ? 'تغییر سیاست فقط با تصمیم مسئول و شواهد' : 'reaches policy only via owner + evidence'}</span>
             </div>
           </div>
         </div>

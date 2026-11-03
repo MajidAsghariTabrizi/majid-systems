@@ -47,6 +47,7 @@ export default async function SystemPage({ params }: { params: { locale: string 
         <div className="container-wide">
           <Reveal>
             <OrgNervousSystem
+              locale={l}
               layers={s.osLayers.map((ly, i) => ({ key: KEYS[i], num: ly.num, name: ly.name, role: ly.role, detail: ly.detail }))}
             />
           </Reveal>
@@ -76,7 +77,7 @@ export default async function SystemPage({ params }: { params: { locale: string 
             <p className="q-lede">{s.flowLede}</p>
           </Reveal>
           <Reveal>
-            <SystemFlow steps={t.home.flow} />
+            <SystemFlow steps={t.home.flow} locale={l} />
           </Reveal>
           <Reveal>
             <p className="q-punch">{s.principle}</p>

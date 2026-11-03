@@ -37,6 +37,7 @@ function pickDefault(snap: LabSnapshot): RichDecision {
 
 export function LabReplay({ snap, locale }: { snap: LabSnapshot; locale: LabLocale }) {
   const t = labDict(locale);
+  const fa = locale === 'fa';
   const reduced = usePrefersReducedMotion();
   const [decIdx, setDecIdx] = useState<number>(() => {
     const d = pickDefault(snap);
@@ -162,16 +163,16 @@ export function LabReplay({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
               {SCENE_KEYS[idx] === 'event' && (
                 <div className="lab-rv-event">
                   <span className="lab-mono">{utcShort(dec.t)}</span>
-                  <span className="lab-rv-h">{dec.horizon}m</span>
+                  <span className="lab-rv-h">{dec.horizon}{fa ? ' دقیقه' : 'm'}</span>
                   <span className="lab-rv-id">{dec.decision_id}</span>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'data' && (
                 <div className="lab-rv-kv">
-                  <div><span>BTCTMN 5m grid</span><span className="lab-mono">{snap.market_closes_5m.length} pts</span></div>
-                  <div><span>features</span><span className="lab-mono">×25 std</span></div>
-                  <div><span>freeze</span><span className="lab-mono">{dec.freeze_ref ?? '—'}</span></div>
-                  <div><span>feature set</span><span className="lab-mono">{dec.feature_version ?? '—'}</span></div>
+                  <div><span>{fa ? 'شبکه ۵ دقیقه‌ای BTCTMN' : 'BTCTMN 5m grid'}</span><span className="lab-mono">{snap.market_closes_5m.length} {fa ? 'نقطه' : 'pts'}</span></div>
+                  <div><span>{fa ? 'ویژگی‌ها' : 'features'}</span><span className="lab-mono">{fa ? '25 ویژگی استانداردشده' : '×25 std'}</span></div>
+                  <div><span>{fa ? 'مرجع نسخه ثابت' : 'freeze'}</span><span className="lab-mono">{dec.freeze_ref ?? '—'}</span></div>
+                  <div><span>{fa ? 'مجموعه ویژگی' : 'feature set'}</span><span className="lab-mono">{dec.feature_version ?? '—'}</span></div>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'state' && (
@@ -188,7 +189,7 @@ export function LabReplay({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
                       <li key={e.id}>
                         <span className="lab-rv-ename">{lb?.name ?? e.id}</span>
                         <span className="lab-mono">P(up) {e.p === null ? 'N/A' : num(e.p, 3)}</span>
-                        <span className="lab-mono">w {e.weight === null ? '—' : e.weight.toFixed(2)}</span>
+                        <span className="lab-mono">{fa ? 'وزن' : 'w'} {e.weight === null ? '—' : e.weight.toFixed(2)}</span>
                       </li>
                     );
                   })}
@@ -199,13 +200,13 @@ export function LabReplay({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
                   <div><span>P(up)</span><span className="lab-mono">{num(dec.fused?.P_UP, 4)}</span></div>
                   <div><span>P(&gt;BE)</span><span className="lab-mono">{num(dec.fused?.P_MOVE_GT_BE, 4)}</span></div>
                   <div><span>E|move|</span><span className="lab-mono">{bps(dec.fused?.expected_abs_move, 1)} bps</span></div>
-                  <div><span>cost</span><span className="lab-mono">{bps(dec.fused?.execution_cost_bps ?? (dec as { costBps?: number }).costBps, 1)} bps</span></div>
+                  <div><span>{fa ? 'هزینه' : 'cost'}</span><span className="lab-mono">{bps(dec.fused?.execution_cost_bps ?? (dec as { costBps?: number }).costBps, 1)} bps</span></div>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'uncertainty' && (
                 <div className="lab-rv-unc">
-                  <div className="lab-rv-unc-row"><span>aleatoric</span><span className="lab-bar"><span className="lab-bar-fill lab-bar-warn" style={{ width: `${(dec.fused?.uncertainty?.aleatoric ?? 0) * 100}%` }} /></span><span className="lab-mono">{num(dec.fused?.uncertainty?.aleatoric, 2)}</span></div>
-                  <div className="lab-rv-unc-row"><span>epistemic</span><span className="lab-bar"><span className="lab-bar-fill lab-bar-ok" style={{ width: `${(dec.fused?.uncertainty?.epistemic ?? 0) * 100}%` }} /></span><span className="lab-mono">{num(dec.fused?.uncertainty?.epistemic, 2)}</span></div>
+                  <div className="lab-rv-unc-row"><span>{fa ? 'عدم‌قطعیت ذاتی' : 'aleatoric'}</span><span className="lab-bar"><span className="lab-bar-fill lab-bar-warn" style={{ width: `${(dec.fused?.uncertainty?.aleatoric ?? 0) * 100}%` }} /></span><span className="lab-mono">{num(dec.fused?.uncertainty?.aleatoric, 2)}</span></div>
+                  <div className="lab-rv-unc-row"><span>{fa ? 'عدم‌قطعیت مدل' : 'epistemic'}</span><span className="lab-bar"><span className="lab-bar-fill lab-bar-ok" style={{ width: `${(dec.fused?.uncertainty?.epistemic ?? 0) * 100}%` }} /></span><span className="lab-mono">{num(dec.fused?.uncertainty?.epistemic, 2)}</span></div>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'gates' && (
@@ -222,19 +223,19 @@ export function LabReplay({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
                 <div className="lab-rv-decision">
                   <span className="lab-rv-action">{actionLabel}</span>
                   <span className="lab-mono">{dec.policy?.reason_codes?.join(' · ')}</span>
-                  <span className="lab-mono">authority {dec.authority}</span>
+                  <span className="lab-mono">{fa ? 'اختیار' : 'authority'} {dec.authority}</span>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'outcome' && visibleBig && (
                 <div className={`lab-rv-outcome ${y !== null && y < 0 ? 'neg' : 'pos'}`}>
                   <span className="lab-rv-y">{y === null || y === undefined ? '—' : `${y > 0 ? '+' : ''}${y.toFixed(1)}`} bps</span>
-                  <span className="lab-mono">@ maturity +{dec.horizon}m</span>
+                  <span className="lab-mono">{fa ? 'در سررسید' : '@ maturity'} +{dec.horizon}{fa ? ' دقیقه' : 'm'}</span>
                 </div>
               )}
               {SCENE_KEYS[idx] === 'evaluation' && (
                 <div className="lab-rv-kv">
-                  <div><span>taxonomy</span><span className="lab-mono">{errRow?.taxonomy?.join(' · ') ?? '—'}</span></div>
-                  <div><span>error ledger</span><span className="lab-mono">{snap.errors_latest.length} latest rows</span></div>
+                  <div><span>{fa ? 'طبقه‌بندی خطا' : 'taxonomy'}</span><span className="lab-mono">{errRow?.taxonomy?.join(' · ') ?? '—'}</span></div>
+                  <div><span>{fa ? 'دفتر خطا' : 'error ledger'}</span><span className="lab-mono">{snap.errors_latest.length} {fa ? 'ردیف اخیر' : 'latest rows'}</span></div>
                 </div>
               )}
             </div>

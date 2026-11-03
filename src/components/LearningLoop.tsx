@@ -15,7 +15,7 @@ import { useInView, usePrefersReducedMotion } from '@/lib/motion';
 type FlowStep = { key: string; label: string; note: string };
 
 /** Localized steps can be injected (locale dictionaries); default = canonical EN. */
-export function SystemFlow({ steps = SYSTEM_FLOW as readonly FlowStep[] }: { steps?: readonly FlowStep[] }) {
+export function SystemFlow({ steps = SYSTEM_FLOW as readonly FlowStep[], locale = 'en' }: { steps?: readonly FlowStep[]; locale?: 'en' | 'fa' }) {
   const { ref, inView } = useInView<HTMLDivElement>('60px');
   const reduced = usePrefersReducedMotion();
   const [step, setStep] = useState(0);
@@ -29,7 +29,7 @@ export function SystemFlow({ steps = SYSTEM_FLOW as readonly FlowStep[] }: { ste
 
   return (
     <div ref={ref}>
-      <ol className="loop-flow" aria-label="How the system learns — signal to learning">
+      <ol className="loop-flow" aria-label={locale === 'fa' ? 'مسیر یادگیری سیستم؛ از رویداد تا دانش تازه' : 'How the system learns — signal to learning'}>
         {steps.map((s, i) => (
           <li
             key={s.key}
@@ -43,7 +43,7 @@ export function SystemFlow({ steps = SYSTEM_FLOW as readonly FlowStep[] }: { ste
           </li>
         ))}
         <li className="loop-return" aria-hidden>
-          <span>↺ compounds</span>
+          <span>{locale === 'fa' ? '↺ یادگیری پیوسته' : '↺ compounds'}</span>
         </li>
       </ol>
     </div>

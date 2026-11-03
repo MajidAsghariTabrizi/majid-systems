@@ -5,7 +5,7 @@
  * Pure presentation over content/knowledge/oss.json; no invented capability:
  * every layer states its OSS/commercial boundary and links its upstream repo.
  */
-import { useState } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import Link from 'next/link';
 import {
   OSS,
@@ -18,7 +18,22 @@ import { dict } from '@/content/i18n';
 export default function StackAtlas({ locale }: { locale: Locale }) {
   const t = dict(locale).stackPage;
   const [active, setActive] = useState(OSS.layers[0].id);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const layer = OSS_BY_ID[active];
+  const moveTab = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next = index;
+    if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = OSS.layers.length - 1;
+    else if (event.key === 'ArrowDown') next = index + 1;
+    else if (event.key === 'ArrowUp') next = index - 1;
+    else if (event.key === 'ArrowRight') next = index + (locale === 'fa' ? -1 : 1);
+    else if (event.key === 'ArrowLeft') next = index + (locale === 'fa' ? 1 : -1);
+    else return;
+    event.preventDefault();
+    next = (next + OSS.layers.length) % OSS.layers.length;
+    setActive(OSS.layers[next].id);
+    tabs.current[next]?.focus();
+  };
 
   return (
     <div className="stack-atlas">
@@ -32,12 +47,15 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
             key={l.id}
             id={`layer-tab-${l.id}`}
             role="tab"
+            ref={(element) => { tabs.current[i] = element; }}
+            tabIndex={active === l.id ? 0 : -1}
             aria-selected={active === l.id}
             aria-controls={`layer-panel-${l.id}`}
             className={`stack-node ${active === l.id ? 'on' : ''}`}
             onClick={() => setActive(l.id)}
+            onKeyDown={(event) => moveTab(event, i)}
           >
-            <span className="stack-node-num" aria-hidden="true">0{l.order}</span>
+            <span className="stack-node-num" aria-hidden="true">{locale === 'fa' ? l.order.toLocaleString('fa-IR') : `0${l.order}`}</span>
             <span className="stack-node-name">{l.name[locale]}</span>
             <span className="stack-node-key">{l.license.label}</span>
           </button>
@@ -47,6 +65,7 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
       <section
         id={`layer-panel-${layer.id}`}
         role="tabpanel"
+        tabIndex={0}
         aria-labelledby={`layer-tab-${layer.id}`}
         className="stack-panel"
         key={layer.id}
@@ -70,12 +89,12 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
           <div className="stack-cell">
             <h3>{t.licenseBoundary}</h3>
             <p>
-              <strong>{layer.license.label}.</strong> {layer.license.note}
+              <strong dir="ltr">{layer.license.label}.</strong> {locale === 'fa' ? layer.license.noteFa ?? layer.license.note : layer.license.note}
               {layer.license.boundaryUrl && (
                 <>
                   {' '}
                   <a href={layer.license.boundaryUrl} target="_blank" rel="noopener noreferrer">
-                    {locale === 'fa' ? 'مرز قابلیت‌ها ↗' : 'capability boundary ↗'}
+                    {locale === 'fa' ? 'جزئیات قابلیت‌های متن‌باز و تجاری ↗' : 'capability boundary ↗'}
                   </a>
                 </>
               )}
@@ -88,7 +107,7 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
             </p>
           </div>
           <div className="stack-cell stack-cell-guard">
-            <h3>{locale === 'fa' ? 'محافظت' : 'Guard'}</h3>
+            <h3>{locale === 'fa' ? 'کنترل‌های لازم' : 'Guard'}</h3>
             <p>{layer.guard[locale]}</p>
           </div>
         </div>
@@ -104,7 +123,7 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
           </p>
         )}
         <p className="stack-deeplink">
-          <Link href={`/${locale}/explore#source-${layer.id}`}>{t.deepLink} →</Link>
+          <Link href={`/${locale}/explore#source-${layer.id}`}>{t.deepLink} {locale === 'fa' ? '←' : '→'}</Link>
         </p>
         <p className="stack-verified-at">{t.verifiedAt}: {OSS.verifiedAt}</p>
       </section>
@@ -116,7 +135,7 @@ export default function StackAtlas({ locale }: { locale: Locale }) {
         <ol className="stack-story-steps">
           {OSS.combinedStory.steps.map((s, i) => (
             <li key={i}>
-              <span className="story-idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span className="story-idx" aria-hidden="true">{locale === 'fa' ? (i + 1).toLocaleString('fa-IR') : String(i + 1).padStart(2, '0')}</span>
               <span>{s[locale]}</span>
             </li>
           ))}

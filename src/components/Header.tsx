@@ -73,7 +73,7 @@ export function Header({ locale }: { locale?: Locale }) {
           items: [
             { label: t.nav.insights, href: lp('/insights') },
             { label: t.nav2.library, href: lp('/insights/books') },
-            { label: t.nav2.stack, href: '/insights/enterprise-ai-stack', sharedEn: true },
+            { label: t.nav2.stack, href: lp('/insights/enterprise-ai-stack') },
           ],
         },
         {
@@ -113,9 +113,15 @@ export function Header({ locale }: { locale?: Locale }) {
   }, [openKey]);
 
   useEffect(() => {
+    setOpenKey(null);
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!mobileOpen) return;
     document.documentElement.classList.add('sheet-open');
     const prevFocused = document.activeElement as HTMLElement | null;
+    const returnTarget = menuBtnRef.current;
     sheetRef.current?.querySelector<HTMLElement>('a, button')?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { setMobileOpen(false); return; }
@@ -130,7 +136,7 @@ export function Header({ locale }: { locale?: Locale }) {
     return () => {
       document.documentElement.classList.remove('sheet-open');
       document.removeEventListener('keydown', onKey);
-      (prevFocused ?? menuBtnRef.current)?.focus();
+      (prevFocused ?? returnTarget)?.focus();
     };
   }, [mobileOpen]);
 
@@ -145,6 +151,14 @@ export function Header({ locale }: { locale?: Locale }) {
   const onGroupKey = (e: React.KeyboardEvent, g: NavGroup) => {
     if (!g.items) return;
     if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(g.key); }
+    else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setOpenKey(g.key);
+      requestAnimationFrame(() => {
+        const links = barRef.current?.querySelectorAll<HTMLElement>('[data-menu="' + g.key + '"] a');
+        links?.[links.length - 1]?.focus();
+      });
+    }
     else if (e.key === 'Escape' && openKey === g.key) setOpenKey(null);
   };
 
@@ -158,7 +172,16 @@ export function Header({ locale }: { locale?: Locale }) {
       setOpenKey(null);
       const grp = barRef.current?.querySelector('[data-group="' + key + '"]');
       (grp?.querySelector('button') as HTMLElement | null)?.focus();
-    } else if (e.key === 'Tab') setOpenKey(null);
+    } else if (e.key === 'Tab') {
+      const group = barRef.current?.querySelector('[data-group="' + key + '"]');
+      const trigger = group?.querySelector<HTMLButtonElement>('button');
+      const controls = [...(barRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [])]
+        .filter((element) => element.offsetParent !== null && !menu.contains(element));
+      const triggerIndex = trigger ? controls.indexOf(trigger) : -1;
+      const next = e.shiftKey ? trigger : controls[triggerIndex + 1];
+      if (next) { e.preventDefault(); next.focus(); }
+      setOpenKey(null);
+    }
   };
 
   const closeAll = () => { setOpenKey(null); setMobileOpen(false); };
@@ -166,12 +189,12 @@ export function Header({ locale }: { locale?: Locale }) {
   return (
     <header className={`site-header ${locale ? 'site-header-locale' : 'site-header-root'}`}>
       <div className="site-header-inner" ref={barRef}>
-        <Link href={locale ? localePath(locale) : '/'} className="brand" aria-label="Quantiviq home">
+        <Link href={locale ? localePath(locale) : '/'} className="brand" aria-label={locale === 'fa' ? 'خانه کوانتی‌ویک' : 'Quantiviq home'} onClick={closeAll}>
           <span className="brand-mark" aria-hidden />
           <span className="brand-word">{BRAND.wordmark}</span>
         </Link>
 
-        <nav className="nv-bar" aria-label={locale ? 'Primary - Quantiviq' : 'Primary - builder'}>
+        <nav className="nv-bar" aria-label={locale === 'fa' ? 'راهبری اصلی کوانتی‌ویک' : locale ? 'Primary - Quantiviq' : 'Primary - builder'}>
           {groups.map((g) =>
             g.items ? (
               <div key={g.key} className="nv-group" data-group={g.key}>
@@ -180,6 +203,7 @@ export function Header({ locale }: { locale?: Locale }) {
                   className={'nv-btn' + (groupActive(g) ? ' is-here' : '') + (openKey === g.key ? ' is-open' : '')}
                   aria-expanded={openKey === g.key}
                   aria-haspopup="true"
+                  aria-controls={openKey === g.key ? `nav-menu-${g.key}` : undefined}
                   onClick={() => (openKey === g.key ? setOpenKey(null) : openMenu(g.key))}
                   onKeyDown={(e) => onGroupKey(e, g)}
                 >
@@ -187,24 +211,25 @@ export function Header({ locale }: { locale?: Locale }) {
                   <span className="nv-caret" aria-hidden>&#9662;</span>
                 </button>
                 {openKey === g.key && (
-                  <div className="nv-menu" data-menu={g.key} role="menu" onKeyDown={(e) => onMenuKey(e, g.key)}>
+                  <div id={`nav-menu-${g.key}`} className="nv-menu" data-menu={g.key} role="menu" aria-label={g.label} onKeyDown={(e) => onMenuKey(e, g.key)}>
                     {g.items.map((it) => (
                       <Link
                         key={it.href}
                         href={it.href}
                         role="menuitem"
                         className={'nv-item' + (isActive(it.href) ? ' is-here' : '')}
-                        aria-current={isActive(it.href) ? 'page' : undefined}
+                        aria-current={pathname === it.href ? 'page' : undefined}
+                        onClick={closeAll}
                       >
                         <span>{it.label}</span>
-                        {it.sharedEn ? <em className="nv-en" aria-label="English content">EN</em> : null}
+                        {it.sharedEn ? <em className="nv-en" aria-label={locale === 'fa' ? 'محتوا به زبان انگلیسی' : 'English content'}>EN</em> : null}
                       </Link>
                     ))}
                   </div>
                 )}
               </div>
             ) : (
-              <Link key={g.key} href={g.href as string} className={'nv-link' + (groupActive(g) ? ' is-here' : '')} aria-current={groupActive(g) ? 'page' : undefined}>
+              <Link key={g.key} href={g.href as string} className={'nv-link' + (groupActive(g) ? ' is-here' : '')} aria-current={pathname === g.href ? 'page' : undefined} onClick={closeAll}>
                 {g.label}
               </Link>
             )
@@ -216,7 +241,7 @@ export function Header({ locale }: { locale?: Locale }) {
           <Link href={locale ? localePath(locale, '/contact') : '/en/contact'} className="btn btn-primary nav-cta">
             {t.nav2.start}
           </Link>
-          <button ref={menuBtnRef} type="button" className="nv-burger" aria-expanded={mobileOpen} aria-haspopup="dialog" onClick={() => setMobileOpen((v) => !v)}>
+          <button ref={menuBtnRef} type="button" className="nv-burger" aria-expanded={mobileOpen} aria-haspopup="dialog" aria-controls={mobileOpen ? 'site-mobile-menu' : undefined} onClick={() => { setOpenKey(null); setMobileOpen((v) => !v); }}>
             <span className="nv-burger-label">{t.nav2.menu}</span>
             <span className="nv-burger-icon" aria-hidden />
           </button>
@@ -224,7 +249,7 @@ export function Header({ locale }: { locale?: Locale }) {
       </div>
 
       {mobileOpen && (
-        <div ref={sheetRef} className="nv-sheet" role="dialog" aria-modal="true" aria-label={t.nav2.menu}>
+        <div id="site-mobile-menu" ref={sheetRef} className="nv-sheet" role="dialog" aria-modal="true" aria-label={t.nav2.menu}>
           <div className="nv-sheet-head">
             <span className="nv-sheet-title">{t.nav2.menu}</span>
             <button type="button" className="nv-sheet-close" onClick={closeAll}>{t.nav2.close}</button>
@@ -233,16 +258,16 @@ export function Header({ locale }: { locale?: Locale }) {
             {groups.map((g) => (
               <section key={g.key} className="nv-sheet-group">
                 {g.href ? (
-                  <Link href={g.href} className={'nv-sheet-link' + (groupActive(g) ? ' is-here' : '')} onClick={closeAll}>{g.label}</Link>
+                  <Link href={g.href} className={'nv-sheet-link' + (groupActive(g) ? ' is-here' : '')} aria-current={pathname === g.href ? 'page' : undefined} onClick={closeAll}>{g.label}</Link>
                 ) : (
                   <>
                     <h3 className="nv-sheet-h">{g.label}</h3>
                     <ul>
                       {(g.items ?? []).map((it) => (
                         <li key={it.href}>
-                          <Link href={it.href} className={'nv-sheet-item' + (isActive(it.href) ? ' is-here' : '')} aria-current={isActive(it.href) ? 'page' : undefined} onClick={closeAll}>
+                          <Link href={it.href} className={'nv-sheet-item' + (isActive(it.href) ? ' is-here' : '')} aria-current={pathname === it.href ? 'page' : undefined} onClick={closeAll}>
                             {it.label}
-                            {it.sharedEn ? <em className="nv-en" aria-label="English content">EN</em> : null}
+                            {it.sharedEn ? <em className="nv-en" aria-label={locale === 'fa' ? 'محتوا به زبان انگلیسی' : 'English content'}>EN</em> : null}
                           </Link>
                         </li>
                       ))}

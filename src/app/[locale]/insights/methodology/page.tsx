@@ -48,7 +48,7 @@ export default async function MethodologyPage({ params }: { params: Params }) {
     <>
       <section className="ins-hero-section">
         <div className="container-narrow">
-          <nav className="ins-breadcrumb" aria-label="Breadcrumb">
+          <nav className="ins-breadcrumb" aria-label={locale === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}>
             <ol>
               <li><Link href={`/${locale}`}>{locale === 'fa' ? 'خانه' : 'Home'}</Link></li>
               <li><Link href={`/${locale}/insights`}>{t.title}</Link></li>
@@ -62,7 +62,7 @@ export default async function MethodologyPage({ params }: { params: Params }) {
           </p>
           <p className="q-lede">
             {locale === 'fa'
-              ? 'تحلیل‌های کوانتی‌ویک برای این نوشته می‌شود که مدیران بتوانند بر پایهٔ آن تصمیم بگیرند. یعنی هر عدد به منبعی قابل ردیابی است، هر چارچوب سنتیز اصیل است و هر محدودیت صریحاً بیان می‌شود. این صفحه روش کار را مستند می‌کند.'
+              ? 'تحلیل‌های کوانتی‌ویک به تصمیم‌گیری مدیران کمک می‌کنند: هر عدد باید منبع قابل پیگیری داشته باشد، هر چارچوب حاصل تحلیل ما باشد و محدودیت‌ها روشن بیان شوند. این صفحه روش کار ما را توضیح می‌دهد.'
               : 'Quantiviq Insights exists to give executives analysis they can act on. That means every number traces to a source, every framework is original synthesis, and every limitation is stated. This page documents how.'}
           </p>
         </div>
@@ -80,7 +80,7 @@ export default async function MethodologyPage({ params }: { params: Params }) {
           <h2>{locale === 'fa' ? 'سیاست انتخاب منابع' : 'Source policy'}</h2>
           <p>
             {locale === 'fa'
-              ? `هر ادعای بیرونی به یک منبع دست‌اول لنگر می‌شود: نهادهای پژوهشی (McKinsey، BCG، Gartner، Deloitte، MIT، NBER، METR)، نهادهای استانداردگذار (NIST، مقررات اتحادیهٔ اروپا) یا نشریات داوری‌شده. منبع، ناشر، تاریخ انتشار، نشانی، تاریخ بازدید، یادداشت‌های روش‌شناسی و محدودیت‌ها را در یک دفتر ساختاریافته ثبت می‌کنیم — در حال حاضر ${sources.length} منبع. هرگاه به پوشش ثانویهٔ یک پژوهش دست‌اول تکیه کنیم (مثلاً گزارش مطبوعات تجاری از یک نظرسنجی مشاوره‌ای)، این موضوع را صریحاً در مدخل مرجع می‌گوییم و آن ارقام را جهت‌دار — نه دقیق — تلقی می‌کنیم.`
+              ? `برای ادعاهای بیرونی به منابع دست‌اول رجوع می‌کنیم: نهادهای پژوهشی (McKinsey، BCG، Gartner، Deloitte، MIT، NBER، METR)، نهادهای استانداردگذار (مانند NIST)، مقررات اتحادیهٔ اروپا و نشریات داوری‌شده. ناشر، تاریخ انتشار، نشانی، تاریخ بررسی، روش پژوهش و محدودیت‌های هر منبع در فهرستی ساختاریافته ثبت می‌شود؛ این فهرست اکنون ${sources.length.toLocaleString('fa-IR')} منبع دارد. اگر به گزارش ثانویه‌ای از یک پژوهش تکیه کنیم، مانند پوشش رسانه‌ای یک نظرسنجی، آن را در مدخل منبع مشخص می‌کنیم و ارقام را نشانه‌ای از روند می‌دانیم، نه برآوردی با دقت قطعی.`
               : `Every external claim is anchored to a primary source: research institutions (McKinsey, BCG, Gartner, Deloitte, MIT, NBER, METR), standards bodies (NIST, EU regulation), or peer-reviewed journals. We record the source, publisher, publication date, URL, access date, methodology notes and limitations in a structured ledger — ${sources.length} sources at present. When we rely on secondary coverage of primary research (for example, trade-press reporting of a consultancy survey), we say so explicitly in the reference entry, and we treat those figures as directional rather than exact.`}
           </p>
           <p>{locale === 'fa' ? 'هرگز:' : 'We never:'}</p>
@@ -98,10 +98,10 @@ export default async function MethodologyPage({ params }: { params: Params }) {
               : 'Inline citations link to the reference list at the end of each article; every reference carries the original link and the date we last verified it. Quantitative claims include the context an executive needs: year, surveyed population or sample, and whether the finding is observational, experimental or a forecast.'}
           </p>
 
-          <h2>{locale === 'fa' ? 'سنتیز اصیل و مثال‌ها' : 'Original synthesis and examples'}</h2>
+          <h2>{locale === 'fa' ? 'تحلیل مستقل و مثال‌های توضیحی' : 'Original synthesis and examples'}</h2>
           <p>
             {locale === 'fa'
-              ? 'چارچوب‌ها، نمودارها و مدل‌های مالی این مقالات کار اصیل کوانتی‌ویک‌اند — ساخته‌شده برای به‌کارگیری، نه تحسین. هرگاه مقاله‌ای از سناریوی محاسبه‌شده با اعداد فرضی استفاده کند (مثلاً یک خرده‌فروش که درآمد ازدست‌رفته را بازیابی می‌کند)، آن سناریو با برجستگی به‌عنوان «سناریوی فرضی و نمایشی» با فرض‌های بیان‌شده برچسب می‌خورد. مثال‌های ساختگی را به‌عنوان مطالعهٔ موردی مشتری ارائه نمی‌کنیم و ادعایی دربارهٔ نتایج مشتریان بدون‌نام نداریم.'
+              ? 'چارچوب‌ها، نمودارها و مدل‌های مالی این مقالات را کوانتی‌ویک برای استفاده در تصمیم‌های واقعی طراحی می‌کند. اگر از محاسبه‌ای با اعداد فرضی استفاده کنیم، مانند برآورد درآمد قابل بازیابی یک خرده‌فروش، فرض‌ها را می‌نویسیم و نمونه را به‌روشنی «سناریوی فرضی» معرفی می‌کنیم. این مثال‌ها گزارش عملکرد مشتری نیستند و به نتایج مشتریان نامشخص استناد نمی‌کنیم.'
               : 'Frameworks, diagrams and financial models in these articles are original Quantiviq work — built to be applied, not admired. Where an article uses a worked scenario with invented numbers (for example, a retailer recovering lost revenue), the scenario is labeled prominently as an illustrative synthetic scenario with stated assumptions. We do not present synthetic examples as client case studies, and we make no claims of unnamed-client outcomes.'}
           </p>
 
@@ -122,7 +122,7 @@ export default async function MethodologyPage({ params }: { params: Params }) {
           <h2>{locale === 'fa' ? 'خواندن دفتر منابع' : 'Reading the ledger'}</h2>
           <p>
             {locale === 'fa'
-              ? `دفتر کامل منابع در کنار مقالات نگهداری می‌شود (${sources.length} منبع در زمان انتشار). فهرست منابع هر مقاله، نمای رو‌به‌خوانندهٔ همان دفتر است — با همان شناسه‌های منبع، تاریخ‌ها و محدودیت‌ها. ادعایی که نتوان راستی‌آزمایی کرد، منتشر نمی‌شود.`
+              ? `فهرست کامل منابع در کنار مقالات نگهداری می‌شود و اکنون ${sources.length.toLocaleString('fa-IR')} مدخل دارد. منابع انتهای هر مقاله از همین فهرست انتخاب می‌شوند و شناسه‌ها، تاریخ‌ها و محدودیت‌های ثبت‌شده را حفظ می‌کنند. ادعایی که امکان بررسی آن وجود نداشته باشد، منتشر نمی‌شود.`
               : `The full source ledger is maintained alongside the articles (${sources.length} sources at publication). For each article, the reference list is the article-facing view of that ledger — the same source IDs, dates and limitations. If a claim cannot be verified, it does not ship.`}
           </p>
 

@@ -3,10 +3,10 @@
 import { qEvent } from '@/lib/analytics';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { dict, type Locale } from '@/content/i18n';
-import { LEAD_INTENTS } from '@/lib/lead/validate';
+import { LEAD_INTENTS, validateLead } from '@/lib/lead/validate';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -25,37 +25,64 @@ export function LeadForm({ locale }: { locale: Locale }) {
   const [errKind, setErrKind] = useState<'validation' | 'rate' | 'server' | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [preferred, setPreferred] = useState<'email' | 'linkedin'>('email');
+  const [moreOpen, setMoreOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+  const pendingRef = useRef(false);
 
   useEffect(() => {
     const q = search?.get('intent');
     if (q && (INTENT_KEYS as readonly string[]).includes(q)) setIntent(q);
   }, [search]);
 
+  useEffect(() => {
+    if (status === 'success') successRef.current?.focus();
+    else if (status === 'error' && Object.keys(fieldErrors).length) {
+      formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+    }
+  }, [status, fieldErrors]);
+
+  function reportValidation(errors: Record<string, string>) {
+    const localized: Record<string, string> = {};
+    for (const [key, code] of Object.entries(errors)) {
+      if (code === 'too_long') localized[key] = t.errors.tooLong;
+      else if (code === 'invalid_email') localized[key] = t.errors.email;
+      else if (code === 'invalid_url') localized[key] = key === 'preferredLink' ? t.errors.preferredLink : t.errors.website;
+      else if (key === 'name') localized[key] = t.errors.name;
+      else if (key === 'consent') localized[key] = t.errors.consent;
+      else localized[key] = t.errors.message;
+    }
+    if (errors.org || errors.role || errors.website) setMoreOpen(true);
+    setFieldErrors(localized);
+    setErrKind('validation');
+    setStatus('error');
+  }
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (pendingRef.current) return;
     const form = e.currentTarget;
     const fd = new FormData(form);
-    setStatus('sending');
     setErrKind(null);
     setFieldErrors({});
+    const payload = {
+      intent, name: fd.get('name'), email: fd.get('email'), org: fd.get('org'),
+      website: fd.get('website'), role: fd.get('role'), message: fd.get('message'),
+      preferred: fd.get('preferred'), preferredLink: fd.get('preferredLink'),
+      consent: fd.get('consent') === 'on', company_site: fd.get('company_site'), locale,
+    };
+    const validation = validateLead(payload);
+    if (!validation.ok) {
+      reportValidation(validation.errors);
+      return;
+    }
+    pendingRef.current = true;
+    setStatus('sending');
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          intent,
-          name: fd.get('name'),
-          email: fd.get('email'),
-          org: fd.get('org'),
-          website: fd.get('website'),
-          role: fd.get('role'),
-          message: fd.get('message'),
-          preferred: fd.get('preferred'),
-          preferredLink: fd.get('preferredLink'),
-          consent: fd.get('consent') === 'on',
-          company_site: fd.get('company_site'),
-          locale,
-        }),
+        body: JSON.stringify(payload),
       });
       if (res.status === 429) {
         setErrKind('rate');
@@ -74,22 +101,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
         return;
       }
       if (data.errors) {
-        const fe: Record<string, string> = {};
-        for (const [k, code] of Object.entries(data.errors)) {
-          if (code === 'too_long') fe[k] = t.errors.tooLong;
-          else if (code === 'invalid_email') fe[k] = t.errors.email;
-          else if (code === 'invalid_url') fe[k] = t.errors.website;
-          else if (k === 'name') fe[k] = t.errors.name;
-          else if (k === 'message') fe[k] = t.errors.message;
-          else if (k === 'consent') fe[k] = t.errors.consent;
-          else fe[k] = t.errors.message;
-        }
-        setFieldErrors(fe);
-        requestAnimationFrame(() => {
-          const firstInvalid = document.querySelector<HTMLElement>('.lead-form [aria-invalid="true"]');
-          firstInvalid?.focus();
-        });
-        setErrKind('validation');
+        reportValidation(data.errors);
       } else {
         setErrKind('server');
       }
@@ -97,12 +109,14 @@ export function LeadForm({ locale }: { locale: Locale }) {
     } catch {
       setErrKind('server');
       setStatus('error');
+    } finally {
+      pendingRef.current = false;
     }
   }
 
   if (status === 'success') {
     return (
-      <div className="lead-success" role="status" aria-live="polite">
+      <div className="lead-success" ref={successRef} tabIndex={-1} role="status" aria-live="polite">
         <h2 className="lead-success-title">{t.successTitle}</h2>
         <p className="lead-success-body">{t.successBody.replace('{id}', ref)}</p>
         <p className="lead-direct">
@@ -113,7 +127,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <form className="lead-form" onSubmit={onSubmit} noValidate>
+    <form className="lead-form" ref={formRef} onSubmit={onSubmit} noValidate aria-busy={status === 'sending'}>
       {/* honeypot — invisible to humans, irresistible to bots */}
       <div className="hp-field" aria-hidden="true">
         <label htmlFor="company_site">{t.honeypotLabel}</label>
@@ -157,7 +171,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
             aria-describedby={fieldErrors.name ? 'err-name' : undefined}
           />
           {fieldErrors.name && (
-            <span className="lead-error" id="err-name" role="alert">{fieldErrors.name}</span>
+            <span className="lead-error" id="err-name">{fieldErrors.name}</span>
           )}
         </label>
         <label className="lead-field">
@@ -173,7 +187,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
             aria-describedby={fieldErrors.email ? 'err-email' : undefined}
           />
           {fieldErrors.email && (
-            <span className="lead-error" id="err-email" role="alert">{fieldErrors.email}</span>
+            <span className="lead-error" id="err-email">{fieldErrors.email}</span>
           )}
         </label>
       </div>
@@ -192,22 +206,24 @@ export function LeadForm({ locale }: { locale: Locale }) {
               aria-describedby={fieldErrors.preferredLink ? 'err-preferredLink' : undefined}
             />
             {fieldErrors.preferredLink && (
-              <span className="lead-error" id="err-preferredLink" role="alert">{fieldErrors.preferredLink}</span>
+              <span className="lead-error" id="err-preferredLink">{fieldErrors.preferredLink}</span>
             )}
           </label>
         </div>
       )}
 
-      <details className="lead-more">
+      <details className="lead-more" open={moreOpen} onToggle={(e) => setMoreOpen(e.currentTarget.open)}>
         <summary>{t.moreLabel}</summary>
         <div className="lead-row">
           <label className="lead-field">
             <span className="lead-label">{t.org}</span>
-            <input name="org" type="text" maxLength={150} autoComplete="organization" />
+            <input name="org" type="text" maxLength={150} autoComplete="organization" aria-invalid={!!fieldErrors.org} aria-describedby={fieldErrors.org ? 'err-org' : undefined} />
+            {fieldErrors.org && <span className="lead-error" id="err-org">{fieldErrors.org}</span>}
           </label>
           <label className="lead-field">
             <span className="lead-label">{t.role}</span>
-            <input name="role" type="text" maxLength={100} autoComplete="organization-title" />
+            <input name="role" type="text" maxLength={100} autoComplete="organization-title" aria-invalid={!!fieldErrors.role} aria-describedby={fieldErrors.role ? 'err-role' : undefined} />
+            {fieldErrors.role && <span className="lead-error" id="err-role">{fieldErrors.role}</span>}
           </label>
         </div>
         <div className="lead-row">
@@ -222,7 +238,7 @@ export function LeadForm({ locale }: { locale: Locale }) {
               aria-invalid={!!fieldErrors.website}
               aria-describedby={fieldErrors.website ? 'err-website' : undefined}
             />
-            {fieldErrors.website && <span className="lead-error" id="err-website" role="alert">{fieldErrors.website}</span>}
+            {fieldErrors.website && <span className="lead-error" id="err-website">{fieldErrors.website}</span>}
           </label>
         </div>
       </details>
@@ -235,11 +251,11 @@ export function LeadForm({ locale }: { locale: Locale }) {
           maxLength={5000}
           rows={5}
           aria-invalid={!!fieldErrors.message}
-          aria-describedby={fieldErrors.message ? 'err-message' : 'hint-message'}
+          aria-describedby={fieldErrors.message ? 'hint-message err-message' : 'hint-message'}
         />
         <span className="lead-hint" id="hint-message">{t.messageHint}</span>
         {fieldErrors.message && (
-          <span className="lead-error" id="err-message" role="alert">{fieldErrors.message}</span>
+          <span className="lead-error" id="err-message">{fieldErrors.message}</span>
         )}
       </label>
 
@@ -253,14 +269,18 @@ export function LeadForm({ locale }: { locale: Locale }) {
         />
         <span>
           {t.consent}{' '}
-          <a href={`./privacy`} className="lead-privacy-link">
+          <a href={`/${locale}/privacy`} className="lead-privacy-link">
             {t.privacyLink}
           </a>
         </span>
       </label>
       {fieldErrors.consent && (
-        <span className="lead-error" id="err-consent" role="alert">{fieldErrors.consent}</span>
+        <span className="lead-error" id="err-consent">{fieldErrors.consent}</span>
       )}
+
+      {errKind === 'validation' && <p className="lead-error lead-error-summary" role="alert">
+        {locale === 'fa' ? 'لطفاً فیلدهای مشخص‌شده را بررسی و اصلاح کنید؛ اطلاعات واردشده حفظ شده است.' : 'Please check the highlighted fields. Your entered information has been kept.'}
+      </p>}
 
       {errKind === 'rate' && (
         <p className="lead-error" role="alert">{t.rateLimited}</p>

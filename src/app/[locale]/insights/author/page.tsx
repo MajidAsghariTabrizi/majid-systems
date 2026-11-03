@@ -7,6 +7,7 @@ import { socialMeta } from '@/lib/social';
 import { AUTHORS, PILLARS, articlesByPillar, getArticles, insightsStats, pillarFor, type Locale } from '@/content/insights';
 import { INSIGHTS_UI } from '@/content/insights/ui';
 import { SITE } from '@/content/shared';
+import { formatInsightDate, formatInsightNumber } from '@/lib/insights-format';
 
 type Params = { locale: string };
 
@@ -45,13 +46,13 @@ export default async function AuthorPage({ params }: { params: Params }) {
   const articles = getArticles(locale);
   const faRole = 'گروه سردبیری تحلیل‌های کوانتی‌ویک';
   const faBio =
-    'پژوهش کوانتی‌ویک نام جمعی گروهی است که تحلیل‌های این انتشارات را تولید می‌کند: پژوهش‌گرانی با پیشینهٔ بهره‌برداری محصول، معماری سیستم و اقتصاد شرکت. هر مقاله پیش از انتشار بر اساس دفتر منابع راستی‌آزمایی و از نظر ساختار و صحت فنی بازبینی می‌شود. روش کامل کار در صفحهٔ روش سردبیری آمده است.';
+    'پژوهش کوانتی‌ویک نام گروه سردبیری این مجموعه است؛ با تمرکز بر مدیریت و عملیات محصول، معماری سامانه‌ها و اقتصاد کسب‌وکار. هر مقاله پیش از انتشار با منابع ثبت‌شده تطبیق داده می‌شود و از نظر ساختار استدلال و دقت فنی بازبینی می‌شود. جزئیات این فرایند در صفحهٔ روش سردبیری آمده است.';
 
   return (
     <>
       <section className="ins-hero-section">
         <div className="container-narrow">
-          <nav className="ins-breadcrumb" aria-label="Breadcrumb">
+          <nav className="ins-breadcrumb" aria-label={locale === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}>
             <ol>
               <li><Link href={`/${locale}`}>{locale === 'fa' ? 'خانه' : 'Home'}</Link></li>
               <li><Link href={`/${locale}/insights`}>{t.title}</Link></li>
@@ -59,7 +60,7 @@ export default async function AuthorPage({ params }: { params: Params }) {
             </ol>
           </nav>
           <span className="eyebrow sig">{t.eyebrow}</span>
-          <h1 className="q-display">{locale === 'fa' ? (author?.name ?? 'پژوهش کوانتی‌ویک') : author?.name}</h1>
+          <h1 className="q-display">{locale === 'fa' ? 'پژوهش کوانتی‌ویک' : author?.name}</h1>
           <p className="ins-subtitle">{locale === 'fa' ? faRole : author?.role}</p>
           <p className="q-lede">{locale === 'fa' ? faBio : author?.bio}</p>
         </div>
@@ -76,7 +77,7 @@ export default async function AuthorPage({ params }: { params: Params }) {
                   <li key={a.slug}>
                     <Link href={`/${locale}/insights/${a.slug}`}>
                       {a.title}
-                      <span className="ins-card-meta"> — {a.published_at} · {a.readingTime} {t.minRead}</span>
+                      <span className="ins-card-meta"> — <time dateTime={a.published_at}>{formatInsightDate(a.published_at, locale)}</time> · {formatInsightNumber(a.readingTime, locale)} {t.minRead}</span>
                     </Link>
                   </li>
                 ))}
@@ -86,7 +87,7 @@ export default async function AuthorPage({ params }: { params: Params }) {
           <p className="ins-stats-note">
             {locale === 'fa' ? (
               <>
-                {stats.articles} مقاله · {stats.sources} منبع راستی‌آزمایی‌شده ·{' '}
+                {formatInsightNumber(stats.articles, locale)} مقاله · {formatInsightNumber(stats.sources, locale)} منبع راستی‌آزمایی‌شده ·{' '}
                 <Link href="/fa/insights/methodology">روش پژوهش ما</Link>.
               </>
             ) : (

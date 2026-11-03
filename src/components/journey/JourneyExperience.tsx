@@ -496,10 +496,10 @@ export function JourneyExperience() {
       </aside>
 
       {/* scenes */}
-      <main className="jv-main">
+      <div className="jv-main">
         {/* 00 cold open */}
         <section className="jv-open" data-scene="open">
-          <p className="jv-open-l1">{JOURNEY_OPEN.line1}</p>
+          <h1 className="jv-open-l1">{JOURNEY_OPEN.line1}</h1>
           <p className="jv-open-l2">{JOURNEY_OPEN.line2}</p>
           <div className="jv-open-node" aria-hidden="true">
             <span className="jv-open-core" />
@@ -797,7 +797,7 @@ export function JourneyExperience() {
             VERDICTS ON THIS PAGE: {VERDICTS_SHOWN.join(' · ')} — an honest ledger, not a highlight reel.
           </p>
         </SceneSection>
-      </main>
+      </div>
 
       {/* persistent controls */}
       <button type="button" className="jv-ask-fab" onClick={() => setAskOpen(true)}>

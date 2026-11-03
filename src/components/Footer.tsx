@@ -28,12 +28,16 @@ export function Footer({ locale }: { locale?: Locale }) {
           </div>
         </div>
         {locale ? (
-          <ul>
+          <ul aria-label={locale === 'fa' ? 'پیوندهای اصلی و منابع' : 'Site links and resources'}>
             <li><Link href={localePath(locale, '/solutions')}>{locale === 'fa' ? 'راهکارها' : 'Solutions'}</Link></li>
         <li><Link href={localePath(locale, '/services')}>{t.nav.services}</Link></li>
             <li><Link href={localePath(locale, '/system')}>{t.nav.system}</Link></li>
             <li><Link href={localePath(locale, '/method')}>{t.nav.method}</Link></li>
             <li><Link href={localePath(locale, '/proof')}>{t.nav.proof}</Link></li>
+            <li><Link href={localePath(locale, '/insights')}>{t.nav.insights}</Link></li>
+            <li><Link href={localePath(locale, '/insights/books')}>{t.nav2.library}</Link></li>
+            <li><Link href={localePath(locale, '/mind')}>{t.nav.mind}</Link></li>
+            <li><Link href={localePath(locale, '/contact')}>{t.nav.contact}</Link></li>
             <li><Link href={localePath(locale, '/privacy')}>{t.meta.privacy.title.split(' — ')[0]}</Link></li>
             {locale === 'fa' && <li className="footer-en-note" aria-label={t.footer.englishNote}>{t.footer.englishNote}</li>}
             <li><Link href="/journey">{t.nav.journey} · EN</Link></li>

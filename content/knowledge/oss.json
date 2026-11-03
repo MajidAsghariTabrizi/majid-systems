@@ -4,7 +4,7 @@
   "status": "research-and-recommendation — NOT deployed Quantiviq services",
   "intro": {
     "en": "An AI-native business needs more than a language model. Document retrieval, data semantics, governed analytics, temporal relationships and incident intelligence solve different problems. The architecture becomes useful only when provenance, authority and evaluation connect these capabilities into a coherent decision workflow.",
-    "fa": "یک سازمان AI-Native صرفاً به یک LLM یا چت‌بات نیاز ندارد. پنج نوع هوشمندی کنار هم قرار می‌گیرند: بازیابی اسناد، معنای داده، تحلیل قابل‌کنترل، حافظه روابط و زمان، و درک رخدادهای عملیاتی. هیچ‌کدام به‌تنهایی مغز سازمان نیستند؛ ارزش در قراردادهای مشترک، منبع معتبر، مجوز تصمیم و چرخه یادگیری است."
+    "fa": "یک سازمان بومی هوش مصنوعی صرفاً به یک LLM یا چت‌بات نیاز ندارد. پنج نوع هوشمندی کنار هم قرار می‌گیرند: بازیابی اسناد، معنای داده، تحلیل قابل‌کنترل، حافظه روابط و زمان، و درک رخدادهای عملیاتی. هیچ‌کدام به‌تنهایی مغز سازمان نیستند؛ ارزش در قراردادهای مشترک، منبع معتبر، مجوز تصمیم و چرخه یادگیری است."
   },
   "combinedStory": {
     "question": {
@@ -30,11 +30,11 @@
       },
       {
         "en": "OpenMetadata: verify Revenue metric + owner + lineage + freshness",
-        "fa": "OpenMetadata: تأیید متریک Revenue + مالک + شجره‌نامه + تازگی"
+        "fa": "OpenMetadata: بررسی تعریف شاخص درآمد، مسئول، منشأ و تازگی داده"
       },
       {
         "en": "WrenAI: ask a certified metric question → safe query and aggregate",
-        "fa": "WrenAI: پرسش متریک تأییدشده → کوئری امن و تجمیع"
+        "fa": "WrenAI: پرسش درباره شاخص تأییدشده، سپس پرس‌وجوی امن و نتیجه تجمیعی"
       },
       {
         "en": "Graphiti: what decisions/owners/changes were valid then?",
@@ -42,11 +42,11 @@
       },
       {
         "en": "HolmesGPT: correlate deployment/alerts/logs → candidate RCA",
-        "fa": "HolmesGPT: همبست‌سازی استقرار/هشدارها/لاگ‌ها → RCA نامزد"
+        "fa": "HolmesGPT: ارتباط استقرار، هشدار و گزارش‌ها برای پیشنهاد علت احتمالی"
       },
       {
         "en": "Evidence ledger → conflict check → uncertainty & alternatives",
-        "fa": "دفتر شواهد → بررسی تضاد → عدم‌قطعیت و بدیل‌ها"
+        "fa": "ثبت شواهد، بررسی ناسازگاری و بیان عدم‌قطعیت و فرضیه‌های دیگر"
       },
       {
         "en": "Decision proposal (NOT an action)",
@@ -54,7 +54,7 @@
       },
       {
         "en": "Human authority gate → approve / reject / request-more-evidence",
-        "fa": "گیت مجوز انسانی → تأیید / رد / درخواست شواهد بیشتر"
+        "fa": "تأیید انسانی: پذیرش، رد یا درخواست شواهد بیشتر"
       },
       {
         "en": "Simulated action, measured feedback, reversible learning",
@@ -74,11 +74,12 @@
       "githubUrl": "https://github.com/onyx-dot-app/onyx",
       "license": {
         "label": "MIT (Community Edition)",
-        "note": "Onyx Community Edition is MIT with core chat/RAG/agents/actions; larger-enterprise controls may require Enterprise Edition — confirm feature-by-feature instead of calling every permission feature open-source."
+        "note": "Onyx Community Edition is MIT with core chat/RAG/agents/actions; larger-enterprise controls may require Enterprise Edition — confirm feature-by-feature instead of calling every permission feature open-source.",
+        "noteFa": "نسخه Community با مجوز MIT، هسته گفت‌وگو، بازیابی اسناد، عامل‌ها و اقدام‌ها را دارد. بعضی کنترل‌های سازمانی به نسخه Enterprise نیاز دارند؛ متن‌بازبودن هر قابلیت دسترسی باید جداگانه بررسی شود."
       },
       "brief": {
         "en": "Onyx is the document-facing enterprise knowledge layer: search, retrieve and cite distributed organizational information. It helps answer what was documented and where. It is not the business metric source of truth, the temporal fact graph or an authorization engine.",
-        "fa": "Onyx نقطه ورود پرسش به دانش سازمان است: اسناد، گفتگوها و دانش پراکنده را قابل جست‌وجو و استناد می‌کند. در سناریوی تصمیم‌گیری، وقتی می‌پرسیم چرا سیاست قبلی تغییر کرد، Onyx محتمل‌ترین سند و زمینه را پیدا می‌کند. اما تشخیص اینکه یک متریک چه معنایی دارد، روابط تاریخی از چه زمانی معتبرند یا اجرای یک دستور مجاز است، مسئولیت لایه‌های دیگر است."
+        "fa": "Onyx نقطه ورود پرسش به دانش سازمان است: اسناد، گفتگوها و دانش پراکنده را قابل جست‌وجو و استناد می‌کند. در سناریوی تصمیم‌گیری، وقتی می‌پرسیم چرا سیاست قبلی تغییر کرد، Onyx محتمل‌ترین سند و زمینه را پیدا می‌کند. اما تشخیص اینکه یک شاخص چه معنایی دارد، روابط تاریخی از چه زمانی معتبرند یا اجرای یک دستور مجاز است، مسئولیت لایه‌های دیگر است."
       },
       "inputs": {
         "en": "Permission-filtered documents and source IDs.",
@@ -113,32 +114,33 @@
       "order": 2,
       "name": {
         "en": "OpenMetadata — Data Context, Meaning & Lineage",
-        "fa": "OpenMetadata — زمینه داده، معنا و شجره‌نامه"
+        "fa": "OpenMetadata — معنا و منشأ داده"
       },
       "githubUrl": "https://github.com/open-metadata/OpenMetadata",
       "license": {
         "label": "Apache-2.0 (upstream)",
-        "note": "Scope includes glossary, lineage, ownership, data quality, policies and AI-context/memory tooling; check the actual version before selecting a connector."
+        "note": "Scope includes glossary, lineage, ownership, data quality, policies and AI-context/memory tooling; check the actual version before selecting a connector.",
+        "noteFa": "دامنه ابزار شامل واژه‌نامه، مسیر منشأ و تبدیل داده، مالکیت، کیفیت داده، سیاست‌ها و ابزارهای زمینه و حافظه هوش مصنوعی است. پیش از انتخاب اتصال‌دهنده، قابلیت نسخه مورد استفاده را بررسی کنید."
       },
       "brief": {
         "en": "OpenMetadata provides the governed data context: what a metric means, who owns it, lineage, quality, glossary and contracts. Before an AI agent reasons about revenue or conversion, it must know which certified definition and data asset are valid. It is not a replacement for analytics computation or business approvals.",
-        "fa": "OpenMetadata کمک می‌کند سازمان بداند داده دقیقاً چیست، مالک آن کیست، از کدام سیستم آمده و چه کسی به تعریف آن اعتماد کرده است. وقتی دو داشبورد Revenue متفاوت نشان می‌دهند، قبل از تحلیل باید تعریف متریک، مالک، تبدیل‌های داده و کیفیت را دید. این لایه برای AI حکم فرهنگ لغت و نقشه شجره‌نامه داده را دارد؛ اما خودش تحلیلگر نهایی یا مجری تصمیم نیست."
+        "fa": "OpenMetadata کمک می‌کند سازمان بداند داده دقیقاً چیست، مالک آن کیست، از کدام سیستم آمده و چه کسی به تعریف آن اعتماد کرده است. وقتی دو داشبورد Revenue متفاوت نشان می‌دهند، قبل از تحلیل باید تعریف شاخص، مالک، تبدیل‌های داده و کیفیت را دید. این لایه برای هوش مصنوعی حکم فرهنگ لغت و نقشه شجره‌نامه داده را دارد؛ اما خودش تحلیلگر نهایی یا مجری تصمیم نیست."
       },
       "inputs": {
         "en": "Catalog metadata, lineage, data contracts.",
-        "fa": "فراداده کاتالوگ، شجره‌نامه، قراردادهای داده."
+        "fa": "فراداده کاتالوگ، مسیر منشأ و تبدیل داده و قراردادهای داده."
       },
       "outputs": {
         "en": "Certified metric definitions/owner/quality/freshness/lineage.",
-        "fa": "تعریف‌های تأییدشده متریک/مالک/کیفیت/تازگی/شجره‌نامه."
+        "fa": "تعریف تأییدشده شاخص، مسئول، کیفیت، تازگی و مسیر منشأ داده."
       },
       "guard": {
         "en": "Not all metadata is public; use allowlisted demo data.",
-        "fa": "همه فراداده‌ها عمومی نیستند؛ از داده دموی allowlist‌شده استفاده کنید."
+        "fa": "همه فراداده‌ها عمومی نیستند؛ فقط داده نمایشیِ از پیش مجازشده را استفاده کنید."
       },
       "whenNot": {
         "en": "Generating uncontrolled SQL; serving a general chat model without metadata.",
-        "fa": "تولید SQL کنترل‌نشده؛ سرو یک چت‌مطب عمومی بدون فراداده."
+        "fa": "تولید SQL کنترل‌نشده یا ارائه چت‌بات عمومی بدون زمینه داده."
       },
       "mindConcepts": [
         "metric-definition",
@@ -158,13 +160,14 @@
       "order": 3,
       "name": {
         "en": "WrenAI — Governed Analytics / Text-to-SQL",
-        "fa": "WrenAI — تحلیل حاکمیت‌شده / Text-to-SQL"
+        "fa": "WrenAI — تحلیل کنترل‌شده و تبدیل متن به SQL"
       },
       "githubUrl": "https://github.com/Canner/WrenAI",
       "license": {
         "label": "Apache-2.0 (OSS core) + commercial",
         "note": "2026 update: the maintained repository merged Wren Engine in May 2026. Apache-2.0 OSS components cover the semantic/MDL engine, CLI, MCP, connectors and core text-to-SQL; current hosted/commercial offerings include UI/dashboards, RLS/CLS, advanced access control and apps. The previous chat-first UI is preserved only on legacy/v1 and does NOT receive new security fixes — do not deploy the abandoned legacy branch.",
-        "boundaryUrl": "https://github.com/Canner/WrenAI#open-core-whats-oss-whats-commercial"
+        "boundaryUrl": "https://github.com/Canner/WrenAI#open-core-whats-oss-whats-commercial",
+        "noteFa": "به‌روزرسانی ۲۰۲۶: مخزن فعال در مه ۲۰۲۶ با Wren Engine ادغام شد. هسته متن‌باز Apache-2.0 شامل موتور معنایی/MDL، خط فرمان، MCP، اتصال‌دهنده‌ها و هسته تبدیل متن به SQL است. رابط کاربری و داشبورد، کنترل سطر/ستون، کنترل دسترسی پیشرفته و برنامه‌ها در عرضه‌های میزبانی‌شده یا تجاری قرار دارند. رابط گفت‌وگوی قدیمی فقط در شاخه legacy/v1 نگهداری شده و اصلاحات امنیتی جدید دریافت نمی‌کند؛ این شاخه کنارگذاشته‌شده برای استقرار مناسب نیست."
       },
       "brief": {
         "en": "WrenAI adds a governed semantic model between plain-language business questions and SQL. It can plan metrics and joins and support agent-driven analysis, but the maintained open-source core is not the entire commercial GenBI product. Explicitly enforce query safety, permissions, limits and reviewed metrics.",
@@ -172,15 +175,15 @@
       },
       "inputs": {
         "en": "Approved metric semantics + read-only scoped warehouse access.",
-        "fa": "معنای متریک تأییدشده + دسترسی فقط-خواندنی محدودبه انبار داده."
+        "fa": "تعریف تأییدشده شاخص و دسترسی محدود و فقط خواندنی به انبار داده."
       },
       "outputs": {
         "en": "Reviewed SQL / aggregated results with query and metric provenance.",
-        "fa": "SQL بازبینی‌شده / نتایج تجمیعی با ترد کوئری و مبدأ متریک."
+        "fa": "SQL بازبینی‌شده و نتایج تجمیعی، همراه با سابقه پرس‌وجو و منشأ شاخص."
       },
       "guard": {
         "en": "Read-only, EXPLAIN, timeouts, limits, injection, cost caps, forbidden schemas.",
-        "fa": "فقط-خواندنی، EXPLAIN، تایم‌اوت، سقف‌ها، تزریق، سقف هزینه، اسکیماهای ممنوع."
+        "fa": "دسترسی فقط خواندنی، بررسی EXPLAIN، محدودیت زمان و هزینه، کنترل تزریق دستور و منع دسترسی به ساختارهای داده غیرمجاز."
       },
       "whenNot": {
         "en": "Unreviewed data definitions; public SQL access to proprietary data.",
@@ -207,7 +210,8 @@
       "githubUrl": "https://github.com/getzep/graphiti",
       "license": {
         "label": "Apache-2.0",
-        "note": "Self-hosted OSS framework (not turnkey SaaS, not an organizational truth authority). Tracks entity relationships over time with source episodes, validity windows and incremental updates."
+        "note": "Self-hosted OSS framework (not turnkey SaaS, not an organizational truth authority). Tracks entity relationships over time with source episodes, validity windows and incremental updates.",
+        "noteFa": "چارچوب متن‌باز قابل میزبانی روی زیرساخت خودتان است، نه خدمت آماده SaaS و نه مرجع حقیقت سازمان. روابط موجودیت‌ها را با رویداد منبع، بازه اعتبار و به‌روزرسانی تدریجی در طول زمان نگه می‌دارد."
       },
       "brief": {
         "en": "Graphiti models evolving entities, relationships and source episodes with temporal validity. It is ideal for 'what changed, when, and why' questions, but extracted relationships are hypotheses until admitted through governance. Use it selectively rather than indiscriminately graphing every page.",
@@ -215,7 +219,7 @@
       },
       "inputs": {
         "en": "Reviewed source episodes and canonical entities.",
-        "fa": "قسمت‌های منبع بازبینی‌شده و موجودیت‌های متعارف."
+        "fa": "رویدادهای منبع بازبینی‌شده و موجودیت‌های مرجع."
       },
       "outputs": {
         "en": "Current/historical edges with source links.",
@@ -223,7 +227,7 @@
       },
       "guard": {
         "en": "Bitemporal consistency, conflicts, tenant isolation, source trust, TTL.",
-        "fa": "سازگاری دومدته‌ای، تضادها، جداسازی مستأجر، اعتماد منبع، TTL."
+        "fa": "سازگاری زمان ثبت و زمان اعتبار، رسیدگی به تضاد، جداسازی مشتریان، اعتماد منبع و زمان انقضای داده."
       },
       "whenNot": {
         "en": "Simple static catalog; a shortcut to full reasoning.",
@@ -252,15 +256,16 @@
       "license": {
         "label": "Apache-2.0; CNCF Sandbox (accepted 2025-10-08)",
         "note": "Existing diagnostics can work read-only, BUT the project also advertises Operator Mode and integrations that can write back, create PRs or remediate if explicitly enabled. Not all HolmesGPT features are read-only — say so explicitly.",
-        "cncfUrl": "https://www.cncf.io/projects/holmesgpt/"
+        "cncfUrl": "https://www.cncf.io/projects/holmesgpt/",
+        "noteFa": "قابلیت‌های تشخیص می‌توانند فقط خواندنی باشند، اما پروژه حالت اپراتور و اتصال‌هایی برای ثبت تغییر، ساخت درخواست تغییر کد یا اصلاح مشکل نیز معرفی می‌کند که باید صریحاً فعال شوند. همه قابلیت‌های HolmesGPT فقط خواندنی نیستند."
       },
       "brief": {
         "en": "HolmesGPT investigates operational incidents through observability and infrastructure signals. It is a specialist for evidence-driven diagnosis, not a universal organizational assistant. Keep diagnostic access read-only in a public prototype; any remediation, write-back or PR action requires explicit gated authority.",
-        "fa": "HolmesGPT متخصص فهم خرابی و ریشه‌یابی Incident است؛ داده متریک، لاگ، رخداد سرویس و تغییرات زیرساخت را کنار هم می‌گذارد تا یک فرضیه قابل‌پیگیری بسازد. ارزشش برای سازمان AI-Native در اتصال عملیات روزمره به حلقه یادگیری است: چه اتفاقی افتاد، مدرک چیست، مالک اقدام کیست و پس از اصلاح چه چیزی باید راستی‌آزمایی شود؟ هر مسیر Remediation باید مجوز جداگانه و بازبینی انسانی داشته باشد."
+        "fa": "HolmesGPT متخصص فهم خرابی و ریشه‌یابی Incident است؛ داده شاخص، لاگ، رخداد سرویس و تغییرات زیرساخت را کنار هم می‌گذارد تا یک فرضیه قابل‌پیگیری بسازد. ارزشش برای سازمان بومی هوش مصنوعی در اتصال عملیات روزمره به حلقه یادگیری است: چه اتفاقی افتاد، مدرک چیست، مالک اقدام کیست و پس از اصلاح چه چیزی باید راستی‌آزمایی شود؟ هر مسیر Remediation باید مجوز جداگانه و بازبینی انسانی داشته باشد."
       },
       "inputs": {
         "en": "Read-only curated metrics/logs/events (synthetic demo).",
-        "fa": "متریک/لاگ/رخدادهای فقط-خواندنی منتخب (دموی ساختگی)."
+        "fa": "شاخص‌ها، گزارش‌ها و رخدادهای منتخب با دسترسی فقط خواندنی؛ داده‌های دمو فرضی‌اند."
       },
       "outputs": {
         "en": "Evidence-backed incident hypothesis, confidence, verification plan.",
@@ -268,7 +273,7 @@
       },
       "guard": {
         "en": "No production writes; no raw secrets in prompts.",
-        "fa": "بدون نوشتن در تولید؛ بدون راز خام در پرامپت."
+        "fa": "بدون ثبت تغییر در محیط عملیاتی و بدون قرار دادن اسرار یا اعتبارنامه خام در پرامپت."
       },
       "whenNot": {
         "en": "General-purpose assistance; unsupervised remediation.",

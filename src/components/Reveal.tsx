@@ -27,7 +27,7 @@ export function Reveal({
     <Component
       ref={ref}
       className={`reveal ${shown ? 'is-shown' : ''} ${className}`.trim()}
-      style={delay && !reduced ? { transitionDelay: `${delay}ms` } : undefined}
+      style={delay && !reduced ? { transitionDelay: `${Math.min(delay, 120)}ms` } : undefined}
     >
       {children}
     </Component>

@@ -83,7 +83,7 @@ export function LabDecisions({ snap, locale }: { snap: LabSnapshot; locale: LabL
               <dl className="lab-dec-kv">
                 <div>
                   <dt>{f.freshness}</dt>
-                  <dd className="lab-mono">{utcShort(dec.t)}Z · inputs ≤ {dec.horizon}m before</dd>
+                  <dd className="lab-mono">{utcShort(dec.t)} · {locale === 'fa' ? `ورودی‌ها حداکثر ${dec.horizon} دقیقه پیش از تصمیم` : `inputs ≤ ${dec.horizon}m before`}</dd>
                 </div>
                 <div>
                   <dt>{f.model}</dt>
@@ -101,7 +101,7 @@ export function LabDecisions({ snap, locale }: { snap: LabSnapshot; locale: LabL
                 <div>
                   <dt>{f.uncertainty}</dt>
                   <dd className="lab-mono">
-                    alea {num(dec.fused?.uncertainty?.aleatoric, 2)} · epis {num(dec.fused?.uncertainty?.epistemic, 2)}
+                    {locale === 'fa' ? 'ذاتی' : 'alea'} {num(dec.fused?.uncertainty?.aleatoric, 2)} · {locale === 'fa' ? 'مدلی' : 'epis'} {num(dec.fused?.uncertainty?.epistemic, 2)}
                     {dec.fused?.expert_disagreement !== undefined &&
                       ` · ${f.disagreement.toLowerCase()} ${num(dec.fused.expert_disagreement, 3)}`}
                   </dd>
@@ -160,7 +160,7 @@ export function LabDecisions({ snap, locale }: { snap: LabSnapshot; locale: LabL
                     <li key={e.id} className={participating ? '' : 'mute'}>
                       <span className="lab-dec-ename">{lb?.name ?? e.id}</span>
                       <span className="lab-mono">{p === null ? 'N/A' : num(p, 3)}</span>
-                      <span className="lab-mono">w {w === undefined || w === null ? '—' : w.toFixed(2)}</span>
+                      <span className="lab-mono">{locale === 'fa' ? 'وزن' : 'w'} {w === undefined || w === null ? '—' : w.toFixed(2)}</span>
                     </li>
                   );
                 })}

@@ -20,6 +20,7 @@ import { ArticleJsonLd } from '@/components/InsightsJsonLd';
 import { InsightRead } from '@/components/InsightRead';
 import { ArticleSolutionBridge } from '@/components/solutions/ArticleSolutionBridge';
 import { SITE } from '@/content/shared';
+import { formatInsightDate, formatInsightNumber } from '@/lib/insights-format';
 
 type Params = { locale: string; slug: string };
 
@@ -64,13 +65,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-function formatDate(iso: string, locale: Locale): string {
-  const d = new Date(`${iso}T00:00:00Z`);
-  return locale === 'fa'
-    ? d.toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
-    : d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
-}
-
 export default async function ArticlePage({ params }: { params: Params }) {
   const { locale, slug } = params;
   if (!isLocale(locale)) notFound();
@@ -83,6 +77,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const author = AUTHORS[article.author_id];
   const pillar = pillarFor(article.pillar, l);
   const sources = sourcesFor(article);
+  const verificationDates = [...new Set(sources.map((source) => source.accessed_at))]
+    .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date)).sort();
   const corpus = ARTICLES_BY_LOCALE[l];
   const idx = corpus.findIndex((a) => a.slug === article.slug);
   const prev = idx < corpus.length - 1 ? corpus[idx + 1] : null;
@@ -101,7 +97,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
       <header className="ins-article-head">
         <div className="container">
-          <nav className="ins-breadcrumb" aria-label="Breadcrumb">
+          <nav className="ins-breadcrumb" aria-label={l === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}>
             <ol>
               <li><Link href={`/${l}`}>{l === 'fa' ? 'خانه' : 'Home'}</Link></li>
               <li><Link href={`/${l}/insights`}>{t.title}</Link></li>
@@ -118,24 +114,24 @@ export default async function ArticlePage({ params }: { params: Params }) {
               <span className="ins-meta-author">
                 {t.byAuthor}{' '}
                 <Link href={`/${l}/insights/author`} itemProp="author">
-                  {author.name}
+                  {l === 'fa' && author.author_id === 'quantiviq-research' ? 'پژوهش کوانتی‌ویک' : author.name}
                 </Link>
               </span>
             )}
             <span className="ins-meta-dot" aria-hidden>·</span>
             <time dateTime={article.published_at} itemProp="datePublished">
-              {t.published} {formatDate(article.published_at, l)}
+              {t.published} {formatInsightDate(article.published_at, l)}
             </time>
             {article.updated_at !== article.published_at && (
               <>
                 <span className="ins-meta-dot" aria-hidden>·</span>
                 <time dateTime={article.updated_at} itemProp="dateModified">
-                  {t.updated} {formatDate(article.updated_at, l)}
+                  {t.updated} {formatInsightDate(article.updated_at, l)}
                 </time>
               </>
             )}
             <span className="ins-meta-dot" aria-hidden>·</span>
-            <span>{article.readingTime} {t.minRead}</span>
+            <span>{formatInsightNumber(article.readingTime, l)} {t.minRead}</span>
           </div>
         </div>
       </header>
@@ -158,9 +154,17 @@ export default async function ArticlePage({ params }: { params: Params }) {
       <div className="ins-article-body">
         <div className="container">
           <div className="ins-layout">
+            <details className="ins-mobile-toc">
+              <summary>{t.onThisPage}</summary>
+              <nav aria-label={t.onThisPage}>
+                <ul>{article.headings.filter((heading) => heading.depth === 2).map((heading) => (
+                  <li key={heading.id}><a href={`#${heading.id}`}>{heading.text}</a></li>
+                ))}</ul>
+              </nav>
+            </details>
             <div className="ins-prose" itemProp="articleBody" dangerouslySetInnerHTML={{ __html: article.html }} />
 
-            <aside className="ins-rail">
+            <aside className="ins-rail" aria-label={l === 'fa' ? 'راهنمای مقاله و اشتراک‌گذاری' : 'Article navigation and sharing'}>
               <nav className="ins-toc" aria-label={t.onThisPage}>
                 <h2 className="ins-rail-h">{t.onThisPage}</h2>
                 <ul>
@@ -202,25 +206,29 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
           <section className="ins-refs" aria-label={t.references}>
             <p className="ins-refs-note">
-              {sources.length} {t.sourcesLabel} · {t.methodologyNote}:{' '}
-              <Link href={`/${l}/insights/methodology`}>{t.methodologyTitle}</Link>. Links verified {sources[0]?.accessed_at ?? '2026-10-23'}.
+              {formatInsightNumber(sources.length, l)} {t.sourcesLabel} · {t.methodologyNote}:{' '}
+              <Link href={`/${l}/insights/methodology`}>{t.methodologyTitle}</Link>.{' '}
+              {verificationDates.length > 0 && <>{l === 'fa' ? 'تاریخ ثبت‌شده برای بررسی منابع: ' : 'Recorded source checks: '}
+                {formatInsightDate(verificationDates[0], l)}
+                {verificationDates.length > 1 && <> — {formatInsightDate(verificationDates[verificationDates.length - 1], l)}</>}.
+              </>}
             </p>
           </section>
 
-          <nav className="ins-articlenav" aria-label="Article navigation">
+          <nav className="ins-articlenav" aria-label={l === 'fa' ? 'مقاله‌های قبلی و بعدی' : 'Article navigation'}>
             {prev ? (
               <Link className="ins-articlenav-prev" href={`/${l}/insights/${prev.slug}`} rel="prev">
-                <span className="ins-articlenav-label">← {t.prevArticle}</span>
+                <span className="ins-articlenav-label">{l === 'fa' ? '→' : '←'} {t.prevArticle}</span>
                 <span className="ins-articlenav-title">{prev.title}</span>
               </Link>
             ) : (
               <Link className="ins-articlenav-prev" href={`/${l}/insights`} rel="prev">
-                <span className="ins-articlenav-label">← {t.backToInsights}</span>
+                <span className="ins-articlenav-label">{l === 'fa' ? '→' : '←'} {t.backToInsights}</span>
               </Link>
             )}
             {next && (
               <Link className="ins-articlenav-next" href={`/${l}/insights/${next.slug}`} rel="next">
-                <span className="ins-articlenav-label">{t.nextArticle} →</span>
+                <span className="ins-articlenav-label">{t.nextArticle} {l === 'fa' ? '←' : '→'}</span>
                 <span className="ins-articlenav-title">{next.title}</span>
               </Link>
             )}
@@ -236,8 +244,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
                 {related.map((r) => (
                   <Link key={r.slug} className="ins-card" href={`/${l}/insights/${r.slug}`}>
                     <span className="ins-card-pillar">{pillarName(r.pillar)}</span>
-                    <span className="ins-card-title">{r.title}</span>
-                    <span className="ins-card-meta">{r.readingTime} {t.minRead}</span>
+                    <h3 className="ins-card-title">{r.title}</h3>
+                    <span className="ins-card-meta">{formatInsightNumber(r.readingTime, l)} {t.minRead}</span>
                   </Link>
                 ))}
               </div>

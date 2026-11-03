@@ -7,6 +7,22 @@ import { socialMeta } from '@/lib/social';
 import { JOURNEY_LAYERS, JOURNEY_NODES } from '@/content/journey';
 import { Reveal } from '@/components/Reveal';
 
+const CAREER_FA: Record<string, string> = {
+  'n-tech': 'نرم‌افزار چگونه کار می‌کند و در محیط عملیاتی پایدار می‌ماند؟',
+  'n-product': 'محصول برای چه کسی و چگونه ارزش ایجاد می‌کند؟',
+  'n-org': 'تیم‌ها چگونه محصول می‌سازند؛ نقش ساختار پیرامون کد چیست؟',
+  'n-market': 'سازمان چگونه کار می‌کند و اثر هر تصمیم چگونه گسترش می‌یابد؟',
+  'n-markets': 'سیستم‌های پیچیده در شرایط عدم‌قطعیت چگونه تصمیم می‌گیرند؟',
+  'n-ai': 'هوش به زیرساخت تبدیل شد؛ با مسیریابی، ارزیابی و بودجه مشخص.',
+  'n-agents': 'از مدل تا عامل اجرایی؛ با کنترل، بازیابی پس از خطا و راستی‌آزمایی.',
+  'n-learning': 'چگونه سیستم می‌تواند تجربه را نگه دارد و هر بار از صفر شروع نکند؟',
+  'n-quantiviq': 'مدل عملیاتی بومی هوش مصنوعی؛ نقطه پیوند همه لایه‌ها.',
+};
+const CAREER_LAYER_FA: Record<string, string> = {
+  tech: 'فناوری', product: 'محصول', org: 'سازمان', market: 'سیستم‌های بازارگاهی',
+  markets: 'سیستم‌های تصمیم', ai: 'زیرساخت هوش مصنوعی', agents: 'محیط اجرای عامل', learning: 'سیستم‌های یادگیری',
+};
+
 /**
  * Leadership pathway — the executive/hiring entry point.
  * Every claim here reuses facts already published elsewhere on the site
@@ -52,7 +68,7 @@ export default async function LeadershipPage({ params }: { params: { locale: str
               {z.ctaPrimary} <span className="arrow" aria-hidden>→</span>
             </Link>
             <Link href={`/${l}/mind`} className="btn">
-              {l === 'fa' ? 'گفت‌وگو با ذهن AI مجید' : 'Ask Majid’s AI Mind'} <span className="arrow" aria-hidden>→</span>
+              {l === 'fa' ? 'گفت‌وگو با دستیار هوش مصنوعی مجید' : 'Ask Majid’s AI Mind'} <span className="arrow" aria-hidden>→</span>
             </Link>
             <Link href="/resume" className="btn">
               {z.ctaSecondary} <span className="arrow" aria-hidden>→</span>
@@ -131,9 +147,9 @@ export default async function LeadershipPage({ params }: { params: { locale: str
           <ol className="leadership-layers">
             {JOURNEY_NODES.map((n) => (
               <li key={n.id} className="leadership-layer">
-                <span className="leadership-layer-era">{n.era}</span>
-                <span className="leadership-layer-name">{JOURNEY_LAYERS[n.layer].label}</span>
-                <span className="leadership-layer-thesis">{n.thesis}</span>
+                <span className="leadership-layer-era">{l === 'fa' && n.era === 'NOW' ? 'اکنون' : n.era}</span>
+                <span className="leadership-layer-name">{l === 'fa' ? CAREER_LAYER_FA[n.layer] : JOURNEY_LAYERS[n.layer].label}</span>
+                <span className="leadership-layer-thesis">{l === 'fa' ? CAREER_FA[n.id] : n.thesis}</span>
               </li>
             ))}
           </ol>
@@ -158,7 +174,7 @@ export default async function LeadershipPage({ params }: { params: { locale: str
           </Reveal>
           <div className="leadership-case">
             <div className="leadership-case-head">
-              <span className="leadership-chip chip-warn">ILLUSTRATIVE</span>
+              <span className="leadership-chip chip-warn">{l === 'fa' ? 'نمونه توضیحی' : 'ILLUSTRATIVE'}</span>
               <span className="leadership-case-title">{z.cases.cardTitle}</span>
             </div>
             <ol className="leadership-case-structure">

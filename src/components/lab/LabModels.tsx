@@ -25,6 +25,7 @@ const VERDICT_CHIP: Record<VerdictKey, 'ok' | 'path' | 'warn' | 'bad' | 'neutral
 
 export function LabModels({ snap, locale }: { snap: LabSnapshot; locale: LabLocale }) {
   const t = labDict(locale);
+  const fa = locale === 'fa';
   const fv = snap.audits.forward_validity;
   const h60 = fv?.per_horizon?.['60'];
   const ua = snap.audits.uncertainty_audit;
@@ -53,33 +54,33 @@ export function LabModels({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
     const val = (i: number): string => {
       switch (i) {
         case 0:
-          return `h60 rank AUC ${num(h60?.direction?.rank_auc_P_UP_vs_signY, 3)} · ${t.models.audits.forwardValidity.title.match(/\d{4}-\d{2}-\d{2}/)?.[0] ?? ''} · n=${h60?.n_joined ?? '—'}`;
+          return `${fa ? 'AUC رتبه‌ای، افق 60 دقیقه' : 'h60 rank AUC'} ${num(h60?.direction?.rank_auc_P_UP_vs_signY, 3)} · ${fv?.generated_at?.slice(0, 10) ?? ''} · n=${h60?.n_joined ?? '—'}`;
         case 1:
-          return `h60 AUC ${num(h60?.opportunity?.auc_P_MOVE_GT_BE_vs_absY_gt_BE, 3)} · base ${pct(h60?.opportunity?.base_rate_absY_gt_BE, 1)}`;
+          return `${fa ? 'AUC، افق 60 دقیقه' : 'h60 AUC'} ${num(h60?.opportunity?.auc_P_MOVE_GT_BE_vs_absY_gt_BE, 3)} · ${fa ? 'مبنا' : 'base'} ${pct(h60?.opportunity?.base_rate_absY_gt_BE, 1)}`;
         case 2:
-          return `mean P(BE+) ${num(h60?.opportunity?.mean_predicted_p_big, 3)} vs base ${pct(h60?.opportunity?.base_rate_absY_gt_BE, 1)}`;
+          return `${fa ? 'میانگین' : 'mean'} P(BE+) ${num(h60?.opportunity?.mean_predicted_p_big, 3)} ${fa ? 'در برابر مبنا' : 'vs base'} ${pct(h60?.opportunity?.base_rate_absY_gt_BE, 1)}`;
         case 3:
-          return `logloss ${num(e4s.logloss_challenger, 3)} vs control ${num(e4s.logloss_control, 3)} · Brier ${num(e4s.brier_challenger, 3)} vs ${num(e4s.brier_control, 3)} · ${e4?.forward_rows ?? '—'} forward rows`;
+          return `logloss ${num(e4s.logloss_challenger, 3)} ${fa ? 'در برابر مبنا' : 'vs control'} ${num(e4s.logloss_control, 3)} · Brier ${num(e4s.brier_challenger, 3)} ${fa ? 'در برابر' : 'vs'} ${num(e4s.brier_control, 3)} · ${e4?.forward_rows ?? '—'} ${fa ? 'ردیف پیش‌رو' : 'forward rows'}`;
         case 4:
           return `h60 Spearman ρ ${num(h60?.magnitude?.spearman_E_abs_vs_absY, 3)}`;
         case 5:
-          return `aleatoric = 1.0 on ${stats ? pct(stats.alea1 / stats.n, 0) : '—'} of ${stats?.n ?? 0} rows (${stats?.day ?? ''})`;
+          return `${fa ? 'عدم‌قطعیت ذاتی' : 'aleatoric'} = 1.0 ${fa ? 'در' : 'on'} ${stats ? pct(stats.alea1 / stats.n, 0) : '—'} ${fa ? 'از' : 'of'} ${stats?.n ?? 0} ${fa ? 'ردیف' : 'rows'} (${stats?.day ?? ''})`;
         case 6:
-          return stats ? `${pct(stats.noTrade / stats.n, 1)} NO_TRADE · uncertainty gate binds ${pct(stats.uncBind / stats.n, 0)} (${stats.day})` : '—';
+          return stats ? `${pct(stats.noTrade / stats.n, 1)} NO_TRADE · ${fa ? 'ممانعت کنترل عدم‌قطعیت' : 'uncertainty gate binds'} ${pct(stats.uncBind / stats.n, 0)} (${stats.day})` : '—';
         case 7:
-          return `top pair ρ = ${num(ec?.top_abs_correlations?.[0]?.rho, 3)} (${ec?.top_abs_correlations?.[0]?.a} × ${ec?.top_abs_correlations?.[0]?.b}) · n=${ec?.rows_h60 ?? '—'}`;
+          return `${fa ? 'بیشترین همبستگی جفتی' : 'top pair'} ρ = ${num(ec?.top_abs_correlations?.[0]?.rho, 3)} (${ec?.top_abs_correlations?.[0]?.a} × ${ec?.top_abs_correlations?.[0]?.b}) · n=${ec?.rows_h60 ?? '—'}`;
         case 8:
-          return `ablation ${ra?.generated_at?.slice(0, 10) ?? ''} · n=${ra?.rows_h60 ?? '—'} · action flips: ${Object.values(ra?.variants ?? {}).map((v) => v.action_flips_vs_V0).join('/')}`;
+          return `${fa ? 'آزمایش حذف' : 'ablation'} ${ra?.generated_at?.slice(0, 10) ?? ''} · n=${ra?.rows_h60 ?? '—'} · ${fa ? 'تغییر اقدام' : 'action flips'}: ${Object.values(ra?.variants ?? {}).map((v) => v.action_flips_vs_V0).join('/')}`;
         case 9:
-          return `trades executed: 0 · fills: 0 · authority: NONE_PAPER_SHADOW`;
+          return fa ? 'معامله اجراشده: 0 · سفارش انجام‌شده: 0 · اختیار: NONE_PAPER_SHADOW' : 'trades executed: 0 · fills: 0 · authority: NONE_PAPER_SHADOW';
         case 10:
-          return `replay 2026-10-04: 480 decisions · live shadow ${snap.decisions_compact.length} rows / ${snap.meta.window_days}d`;
+          return `${fa ? 'بازپخش' : 'replay'} 2026-10-04: 480 ${fa ? 'تصمیم' : 'decisions'} · ${fa ? 'سایه زنده' : 'live shadow'} ${snap.decisions_compact.length} ${fa ? 'ردیف' : 'rows'} / ${snap.meta.window_days}${fa ? ' روز' : 'd'}`;
         default:
           return `BE ${bps(be, 1)} bps`;
       }
     };
     return t.models.matrixRows.map((_, i) => val(i));
-  }, [snap, h60, e4, e4s, ec, ra, stats, t]);
+  }, [snap, h60, e4, e4s, ec, ra, stats, t, fa, fv]);
 
   const calBins = h60?.opportunity?.calibration_deciles ?? [];
 
@@ -105,7 +106,7 @@ export function LabModels({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
               ))}
               {Object.entries(snap.meta.frozen_heads).map(([k, v]) => (
                 <li key={k}>
-                  <span className="lab-registry-key">{k} (hash)</span>
+                  <span className="lab-registry-key">{k} ({fa ? 'هش' : 'hash'})</span>
                   <span className="lab-mono">{v}</span>
                 </li>
               ))}
@@ -153,11 +154,11 @@ export function LabModels({ snap, locale }: { snap: LabSnapshot; locale: LabLoca
                       </g>
                     );
                   })}
-                  <text x={127} y={196} textAnchor="middle" className="lab-cal-axis">predicted P(move&gt;BE)</text>
-                  <text x={12} y={96} className="lab-cal-axis" transform="rotate(-90 12 96)">observed freq</text>
+                  <text x={127} y={196} textAnchor="middle" className="lab-cal-axis">{fa ? 'احتمال پیش‌بینی‌شده' : 'predicted P(move>BE)'}</text>
+                  <text x={12} y={96} className="lab-cal-axis" transform="rotate(-90 12 96)">{fa ? 'فراوانی مشاهده‌شده' : 'observed freq'}</text>
                 </svg>
                 <p className="lab-cal-note lab-mono">
-                  h60 · n={h60?.n_joined ?? '—'} · {fv?.generated_at?.slice(0, 10) ?? ''} · control fusion
+                  h60 · n={h60?.n_joined ?? '—'} · {fv?.generated_at?.slice(0, 10) ?? ''} · {fa ? 'ترکیب مبنا' : 'control fusion'}
                 </p>
               </div>
             </LabPanel>

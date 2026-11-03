@@ -76,7 +76,7 @@ export function LabApp({ locale }: { locale: LabLocale }) {
     return (
       <div className="lab-loading" aria-busy="true" role="status">
         <span className="lab-loading-dot" aria-hidden />
-        <span>LAB</span>
+        <span>{locale === 'fa' ? 'در حال بارگیری آزمایشگاه…' : 'LAB'}</span>
       </div>
     );
   }
@@ -137,7 +137,7 @@ export function LabApp({ locale }: { locale: LabLocale }) {
       </div>
 
       {/* executive stat strip */}
-      <div className="lab-stats" role="group" aria-label="laboratory key figures">
+      <div className="lab-stats" role="group" aria-label={locale === 'fa' ? 'شاخص‌های اصلی آزمایشگاه' : 'laboratory key figures'}>
         <Stat value={snap.decisions_compact.length.toLocaleString('en-US')} label={t.hero.stats.decisions} />
         <Stat value={snap.outcomes_compact.length.toLocaleString('en-US')} label={t.hero.stats.outcomes} />
         <Stat

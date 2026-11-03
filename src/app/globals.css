@@ -574,7 +574,7 @@ section:first-of-type {
 
 .section-header {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 3rem;
   flex-wrap: wrap;
@@ -754,34 +754,34 @@ section:first-of-type {
   padding: 4rem 0;
 }
 
-.detail-grid main h2 {
+.detail-grid .project-detail-body h2 {
   margin-top: 2.5rem;
   scroll-margin-top: 5rem;
 }
 
-.detail-grid main h2:first-child {
+.detail-grid .project-detail-body h2:first-child {
   margin-top: 0;
 }
 
-.detail-grid main h3 {
+.detail-grid .project-detail-body h3 {
   margin-top: 2rem;
 }
 
-.detail-grid main ul {
+.detail-grid .project-detail-body ul {
   padding-left: 1.2em;
   margin: 0.5em 0 1.5em;
 }
 
-.detail-grid main li {
+.detail-grid .project-detail-body li {
   margin-bottom: 0.4em;
   color: var(--fg);
 }
 
-.detail-grid main p {
+.detail-grid .project-detail-body p {
   max-width: 70ch;
 }
 
-.detail-grid main .invariants {
+.detail-grid .project-detail-body .invariants {
   list-style: none;
   padding: 0;
   margin: 1rem 0;
@@ -789,7 +789,7 @@ section:first-of-type {
   gap: 0.5rem;
 }
 
-.detail-grid main .invariants li {
+.detail-grid .project-detail-body .invariants li {
   position: relative;
   padding: 0.7rem 1rem 0.7rem 1.6rem;
   background: var(--bg-card);
@@ -799,7 +799,7 @@ section:first-of-type {
   color: var(--fg);
 }
 
-.detail-grid main .invariants li::before {
+.detail-grid .project-detail-body .invariants li::before {
   content: '';
   position: absolute;
   left: 0.7rem;

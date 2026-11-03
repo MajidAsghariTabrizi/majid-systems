@@ -16,7 +16,10 @@ import {
   askMindLink,
   bookPath,
   coverCreditUrl,
+  bookSkillStatus,
+  bookEdition,
 } from '@/content/knowledge';
+import { formatInsightNumber } from '@/lib/insights-format';
 
 type Params = { locale: string; slug: string };
 
@@ -58,12 +61,13 @@ export default async function BookDetailPage({ params }: { params: Params }) {
   const book = BOOK_BY_SLUG[slug];
   if (!book) notFound();
   const t = dict(l).booksPage;
+  const skill = bookSkillStatus(book, l);
 
   return (
     <div className="book-detail" dir={l === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container-narrow">
-      <nav className="breadcrumb" aria-label={l === 'fa' ? 'مسیر' : 'Breadcrumb'}>
-        <Link href={`/${l}/insights/books`}>← {t.backToLibrary}</Link>
+      <nav className="ins-breadcrumb" aria-label={l === 'fa' ? 'مسیر صفحه' : 'Breadcrumb'}>
+        <ol><li><Link href={`/${l}`}>{l === 'fa' ? 'خانه' : 'Home'}</Link></li><li><Link href={`/${l}/insights/books`}>{t.backToLibrary}</Link></li><li aria-current="page">{book.title[l]}</li></ol>
       </nav>
 
       <header className="book-hero">
@@ -74,19 +78,19 @@ export default async function BookDetailPage({ params }: { params: Params }) {
           </a>
         </div>
         <div className="book-hero-meta">
-          <p className="eyebrow">{l === 'fa' ? `کتاب ${book.num} از ۱۰` : `BOOK ${book.num} OF 10`}</p>
+          <p className="eyebrow">{l === 'fa' ? `کتاب ${formatInsightNumber(Number(book.num), l)} از ${formatInsightNumber(BOOKS.length, l)}` : `BOOK ${book.num} OF ${BOOKS.length}`}</p>
           <h1>{book.title[l]}</h1>
           <p className="book-authors">{book.authors.join(l === 'fa' ? '، ' : ', ')}</p>
           <dl className="book-facts">
-            <div><dt>ISBN-13</dt><dd>{book.isbn13}</dd></div>
+            <div><dt>ISBN-13</dt><dd><bdi dir="ltr">{book.isbn13}</bdi></dd></div>
             <div><dt>{l === 'fa' ? 'ناشر' : 'Publisher'}</dt><dd>{book.publisher}</dd></div>
-            <div><dt>{l === 'fa' ? 'سال' : 'Year'}</dt><dd>{book.year}</dd></div>
-            <div><dt>{l === 'fa' ? 'ویراست' : 'Edition'}</dt><dd>{book.edition}</dd></div>
+            <div><dt>{l === 'fa' ? 'سال انتشار میلادی' : 'Year'}</dt><dd>{new Intl.NumberFormat(l, { useGrouping: false }).format(book.year)}</dd></div>
+            <div><dt>{l === 'fa' ? 'ویراست' : 'Edition'}</dt><dd>{bookEdition(book, l)}</dd></div>
           </dl>
           <p className="book-source-link">
             {t.verifiedAgainst}:{' '}
             <a href={book.officialSourceUrl} target="_blank" rel="noopener noreferrer">
-              {new URL(book.officialSourceUrl).hostname} ↗
+              <bdi dir="ltr">{new URL(book.officialSourceUrl).hostname}</bdi> ↗
             </a>
           </p>
           <div className="book-domains">
@@ -111,9 +115,9 @@ export default async function BookDetailPage({ params }: { params: Params }) {
       <section className="book-skill">
         <h2>{t.skillTitle}</h2>
         <p className="book-skill-state">
-          <span className="chip">{book.skillStatus.state}</span>
+          <span className="chip" data-state={book.skillStatus.state}>{skill.state}</span>
         </p>
-        <p className="book-skill-note">{book.skillStatus.note}</p>
+        <p className="book-skill-note">{skill.note}</p>
         <p className="book-skill-policy">
           {l === 'fa'
             ? 'توضیحات این صفحه خلاصه تحلیلی مالک سایت است؛ نقل‌قول فصل یا صفحه‌ای از کتاب ارائه نمی‌شود و ادعایی درباره دریافت متن کامل مطرح نیست.'
@@ -127,7 +131,7 @@ export default async function BookDetailPage({ params }: { params: Params }) {
           {book.questions[l].map((q) => (
             <li key={q}>
               <Link className="book-question" href={askMindLink(l, q, book.slug)}>
-                {q} <span aria-hidden="true">→</span>
+                {q} <span aria-hidden="true">{l === 'fa' ? '←' : '→'}</span>
               </Link>
             </li>
           ))}
@@ -154,20 +158,20 @@ export default async function BookDetailPage({ params }: { params: Params }) {
           <div className="book-related">
             <h3>{t.relatedFlow}</h3>
             <Link className="rel-link" href={`/${l}/mind/flows#${book.relatedFlow}`}>
-              {FLOW_BY_ID[book.relatedFlow].name[l]} →
+              {FLOW_BY_ID[book.relatedFlow].name[l]} <span aria-hidden="true">{l === 'fa' ? '←' : '→'}</span>
             </Link>
           </div>
         )}
 
         {book.relatedRepos.length > 0 && (
           <div className="book-related">
-            <h3>{l === 'fa' ? 'لایه‌های مرتبط استک' : 'Related stack layers'}</h3>
+            <h3>{l === 'fa' ? 'لایه‌های مرتبط معماری' : 'Related stack layers'}</h3>
             <ul className="related-list">
               {book.relatedRepos.map((rid) => {
                 const r = OSS_BY_ID[rid];
                 return r ? (
                   <li key={rid}>
-                    <Link className="rel-link" href={`/${l}/insights/enterprise-ai-stack#${rid}`}>{r.name[l]} →</Link>
+                    <Link className="rel-link" href={`/${l}/insights/enterprise-ai-stack#${rid}`}>{r.name[l]} <span aria-hidden="true">{l === 'fa' ? '←' : '→'}</span></Link>
                   </li>
                 ) : null;
               })}

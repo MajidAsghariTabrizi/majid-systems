@@ -100,7 +100,7 @@ export default async function ProjectDetailPage({
 
       <div className="container-wide">
         <div className="detail-grid">
-          <main>
+          <div className="project-detail-body">
             <h2 id="overview">Overview</h2>
             <p>{project.oneLiner}</p>
             <p>{project.problem}</p>
@@ -176,7 +176,7 @@ export default async function ProjectDetailPage({
 
             <h2 id="state">Current state</h2>
             <p>{project.currentState}</p>
-          </main>
+          </div>
 
           <aside className="detail-aside">
             <div className="aside-card">

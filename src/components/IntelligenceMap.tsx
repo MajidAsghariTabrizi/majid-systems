@@ -6,13 +6,14 @@
  * reduced-motion safe (CSS animation only, disabled under prefers-
  * reduced-motion). Decorative — hidden from AT; meaning lives in copy.
  */
-export function IntelligenceMap() {
+export function IntelligenceMap({ locale = 'en' }: { locale?: 'en' | 'fa' }) {
+  const fa = locale === 'fa';
   return (
     <svg
       className="intel-map"
       viewBox="0 0 560 480"
       role="img"
-      aria-label="Organizational intelligence map: a signal enters, flows through shared knowledge, a human authority gate approves, bounded agents execute, and the measured result returns to the knowledge hub as learning."
+      aria-label={fa ? 'نقشه هوشمندی سازمان: رویداد به دانش مشترک متصل می‌شود؛ مسئول مجاز تصمیم را تأیید می‌کند، عامل‌ها در حدود اختیار عمل می‌کنند و نتیجه برای یادگیری به دانش سازمان برمی‌گردد.' : 'Organizational intelligence map: a signal enters, flows through shared knowledge, a human authority gate approves, bounded agents execute, and the measured result returns to the knowledge hub as learning.'}
     >
       <defs>
         <radialGradient id="im-hub" cx="50%" cy="42%" r="70%">
@@ -48,7 +49,7 @@ export function IntelligenceMap() {
         <circle r="26" fill="#f7f6f0" stroke="#163f37" strokeWidth="1.4" />
         <path d="M-7,3 L0,-6 L7,3" fill="none" stroke="#163f37" strokeWidth="1.8" strokeLinecap="round" />
         <circle cx="0" cy="7" r="1.6" fill="#163f37" />
-        <text y="44" textAnchor="middle" className="im-t">signal</text>
+        <text y="44" textAnchor="middle" className="im-t">{fa ? 'رویداد' : 'signal'}</text>
       </g>
 
       {/* human authority gate (top) */}
@@ -57,21 +58,21 @@ export function IntelligenceMap() {
         <circle cx="-32" cy="0" r="9" fill="none" stroke="#bce7d2" strokeWidth="1.6" />
         <circle cx="-32" cy="-2.4" r="2.6" fill="#bce7d2" />
         <path d="M-39,5 a7,7 0 0 1 14,0" fill="none" stroke="#bce7d2" strokeWidth="1.6" />
-        <text x="12" y="-3" textAnchor="middle" className="im-t2">human</text>
-        <text x="12" y="13" textAnchor="middle" className="im-t2">authority</text>
+        <text x="12" y="-3" textAnchor="middle" className="im-t2">{fa ? 'تأیید' : 'human'}</text>
+        <text x="12" y="13" textAnchor="middle" className="im-t2">{fa ? 'انسانی' : 'authority'}</text>
       </g>
 
       {/* central knowledge hub */}
       <g transform="translate(280,250)">
         <circle r="74" fill="url(#im-hub)" stroke="#163f37" strokeWidth="1.6" />
         <circle r="52" fill="none" stroke="#bce7d2" strokeWidth="1.2" />
-        <text y="-6" textAnchor="middle" className="im-h">shared</text>
-        <text y="12" textAnchor="middle" className="im-h">knowledge</text>
-        <text y="32" textAnchor="middle" className="im-t">decisions · evidence · state</text>
+        <text y="-6" textAnchor="middle" className="im-h">{fa ? 'دانش' : 'shared'}</text>
+        <text y="12" textAnchor="middle" className="im-h">{fa ? 'مشترک' : 'knowledge'}</text>
+        <text y="32" textAnchor="middle" className="im-t">{fa ? 'تصمیم · شواهد · وضعیت' : 'decisions · evidence · state'}</text>
       </g>
 
       {/* bounded agents */}
-      {[{ x: 120, l: 'agent A' }, { x: 280, l: 'agent B' }, { x: 440, l: 'agent C' }].map((a) => (
+      {[{ x: 120, l: fa ? 'عامل ۱' : 'agent A' }, { x: 280, l: fa ? 'عامل ۲' : 'agent B' }, { x: 440, l: fa ? 'عامل ۳' : 'agent C' }].map((a) => (
         <g key={a.l} transform={'translate(' + a.x + ',400)'}>
           <rect x="-46" y="-22" width="92" height="44" rx="12" fill="#ffffff" stroke="#53645d" strokeWidth="1.2" />
           <rect x="-38" y="-12" width="20" height="4" rx="2" fill="#bce7d2" />
@@ -89,7 +90,7 @@ export function IntelligenceMap() {
       <line x1="322" y1="292" x2="394" y2="378" stroke="#53645d" strokeWidth="1.2" strokeDasharray="3 4" />
 
       {/* learning return */}
-      <text x="470" y="286" textAnchor="middle" className="im-t" fill="#b65e37">learning</text>
+      <text x="470" y="286" textAnchor="middle" className="im-t" fill="#b65e37">{fa ? 'یادگیری' : 'learning'}</text>
     </svg>
   );
 }

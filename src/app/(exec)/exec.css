@@ -2,6 +2,20 @@
    Executive Dialogue — Boardroom Ivory (direction A)
    ivory paper / deep ink / forest + brass. No gradients, no glow.
    ============================================================ */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('/fonts/Estedad-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
 :root {
   --ex-ivory: #f7f4ec;
   --ex-ivory-deep: #efe9dc;
@@ -30,7 +44,7 @@ body.ex-body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-.ex-fa body.ex-body, body.ex-body.ex-rtl {
+html[dir='rtl'] body.ex-body {
   font-family: 'Estedad', 'Inter', Tahoma, sans-serif;
 }
 .ex-root { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
@@ -360,4 +374,44 @@ body.ex-body {
 }
 @media (prefers-reduced-motion: reduce) {
   .ex-root * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Reading and control refinements within the executive shell only. */
+.ex-skip { position: fixed; top: -100px; inset-inline-start: 16px; z-index: 200; background: var(--ex-forest); color: var(--ex-ivory); padding: 10px 16px; border-radius: 8px; text-decoration: none; }
+.ex-skip:focus { top: 12px; outline: 3px solid var(--ex-brass); outline-offset: 2px; }
+.ex-root a:focus-visible, .ex-root button:focus-visible { outline: 2px solid var(--ex-forest); outline-offset: 3px; }
+.ex-top, .ex-top-right, .ex2-brand, .ex2-hero-copy, .ex2-hero-visual, .ex2-composer { min-width: 0; }
+.ex-top { gap: 20px; flex: 0 0 auto; }
+.ex2-brand { flex-wrap: wrap; }
+.ex-locale-toggle { flex: 0 0 auto; }
+.ex-locale-toggle button { min-height: 42px; min-width: 44px; }
+.ex2-cta-how { min-height: 44px; display: inline-flex; align-items: center; }
+.ex2-how { scroll-margin-top: 24px; }
+.ex2-chat-mode { margin: 0; }
+.ex2-transcript:focus-visible { outline: 2px solid var(--ex-forest); outline-offset: -2px; border-radius: 8px; }
+.ex-input { min-width: 0; width: 100%; border-radius: 10px; font-size: 16px; }
+.ex-send, .ex-stop { border-radius: 10px; }
+.ex-back-btn, .ex-challenge { min-height: 44px; }
+.ex-hint { line-height: 1.8; }
+.ex-foot { flex: 0 0 auto; line-height: 1.8; }
+.ex-root .mind-msg-user .mind-p-strong { color: inherit; }
+.ex-root .mind-msg-user .mind-bubble a { color: var(--ex-ivory); text-decoration: underline; }
+.ex-rtl .ex-eyebrow, .ex-rtl .ex2-brand-tag, .ex-rtl .ex2-identity, .ex-rtl .mx-mind-label { letter-spacing: 0; }
+.ex-rtl .ex2-headline { line-height: 1.65; font-size: clamp(29px, 3.4vw, 43px); }
+.ex-rtl .ex2-desc, .ex-rtl .ex2-starter-desc, .ex-rtl .ex2-step p { line-height: 2; }
+.ex-rtl .ex2-disclosure, .ex-rtl .ex2-ex-note, .ex-rtl .ex2-unlisted { line-height: 1.95; }
+.ex-rtl .ex2-starter-title, .ex-rtl .ex2-step h3, .ex-rtl .ex2-how h2 { line-height: 1.7; }
+.ex-rtl .mind-bubble { line-height: 1.95; }
+.ex-rtl .mind-evidence-title, .ex-rtl .mind-evidence-note { line-height: 1.9; }
+@media (max-width: 560px) {
+  .ex-top { gap: 14px; }
+  .ex2-brand-mark { letter-spacing: .16em; font-size: 12px; }
+  .ex2-landing { padding-inline: 18px; }
+  .ex-rtl .ex2-headline { font-size: clamp(27px, 7.5vw, 34px); }
+  .ex2-desc { font-size: 15px; }
+  .ex2-identity { font-size: 12px; line-height: 1.9; }
+  .ex2-toolbar { flex-wrap: wrap; gap: 8px 12px; }
+  .ex2-chat-mode { font-size: 10px; line-height: 1.8; }
+  .ex-hint { font-size: 11px; }
+  .ex-foot { padding: 12px 18px; font-size: 10px; }
 }

@@ -11,7 +11,7 @@
       },
       "body": {
         "en": "Systems over AI wrappers: start from the value stream and the decision to be improved, then choose the tool.",
-        "fa": "سیستم به‌جای پوشش AI: از جریان ارزش و تصمیمی که باید بهبود یابد شروع کنید، بعد ابزار را انتخاب کنید."
+        "fa": "سیستم به‌جای افزودن ظاهری هوش مصنوعی: از جریان ارزش و تصمیمی که باید بهبود یابد شروع کنید، بعد ابزار را انتخاب کنید."
       },
       "relatedBooks": [
         "rewired",
@@ -59,7 +59,7 @@
       },
       "body": {
         "en": "Query results need semantic contracts and access rights explained before they are trusted.",
-        "fa": "نتایج پرس‌وجو پیش از اعتماد به قرارداد معنایی و حقوق دسترسی شفاف نیاز دارند."
+        "fa": "پیش از اعتماد به نتیجه جست‌وجو، تعریف داده و حدود دسترسی باید روشن باشد."
       },
       "relatedBooks": [
         "ai-snake-oil"
@@ -77,7 +77,7 @@
       },
       "body": {
         "en": "Capabilities get bounded, revocable permissions; final authority stays human where consequences matter.",
-        "fa": "قابلیت‌ها مجوزهای محدود و قابل‌لغو می‌گیرند؛ اختیار نهایی جایی که پیامد مهم است، انسان می‌ماند."
+        "fa": "قابلیت‌ها مجوزهای محدود و قابل لغو می‌گیرند؛ تصمیم نهایی در موارد پرپیامد در اختیار انسان می‌ماند."
       },
       "relatedBooks": [
         "power-and-prediction",
@@ -91,7 +91,7 @@
       "id": "metric-ownership",
       "name": {
         "en": "Every metric has owner, grain, time window and definition",
-        "fa": "هر متریک مالک، دانه، بازه زمانی و تعریف دارد"
+        "fa": "هر شاخص مسئول، سطح جزئیات، بازه زمانی و تعریف دارد"
       },
       "body": {
         "en": "Without certified definitions, two dashboards will disagree and both will be right.",
@@ -129,7 +129,7 @@
       },
       "body": {
         "en": "Source evidence, hypotheses, narrative and retrospective revision are different record types.",
-        "fa": "شاهد منبع، فرضیه، روایت و بازنگری پسینی نوع‌های رکورد متفاوت‌اند."
+        "fa": "شواهد منبع، فرضیه، روایت و بازنگری بعدی، انواع متفاوتی از اطلاعات‌اند و باید جدا ثبت شوند."
       },
       "relatedBooks": [
         "the-alignment-problem"
@@ -159,11 +159,11 @@
       "id": "robustness-over-demos",
       "name": {
         "en": "Robustness, evaluation, observability, economics beat token-heavy demos",
-        "fa": "استحکام، ارزیابی، مشاهده‌پذیری و اقتصاد بر دموی توکن‌سنگین برتری دارند"
+        "fa": "اتکاپذیری، ارزیابی، پایش و اقتصاد از دموی پرمصرف مهم‌ترند"
       },
       "body": {
         "en": "Production quality is measured under drift, load and cost caps.",
-        "fa": "کیفیت محصول در شرایط drift، بار و سقف هزینه سنجیده می‌شود."
+        "fa": "کیفیت محصول در شرایط تغییر توزیع داده یا عملکرد، بار و سقف هزینه سنجیده می‌شود."
       },
       "relatedBooks": [
         "ai-engineering",

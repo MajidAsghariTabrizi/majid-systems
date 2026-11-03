@@ -45,7 +45,7 @@ export function LabExperiments({ snap, locale }: { snap: LabSnapshot; locale: La
               >
                 <div className="lab-exp-body">
                   <p className="lab-exp-onechange">
-                    <strong>{t.experimentsSection.oneChange}:</strong> <span className="lab-mono">{e.one_change ?? '—'}</span>
+                    <strong>{t.experimentsSection.oneChange}:</strong> <span className="lab-mono" lang="en" dir="ltr" title={locale === 'fa' ? 'متن فنی ثبت‌شده در منبع' : undefined}>{e.one_change ?? '—'}</span>
                   </p>
                   {e.result?.summary && (
                     <ul className="lab-exp-metrics lab-mono">
@@ -62,7 +62,7 @@ export function LabExperiments({ snap, locale }: { snap: LabSnapshot; locale: La
                             <span className={better(e.result!.summary![cKey], e.result!.summary![kKey], false)}>
                               {num(e.result!.summary![cKey], 4)}
                             </span>
-                            <span className="lab-exp-vs">vs</span>
+                            <span className="lab-exp-vs">{locale === 'fa' ? 'در برابر' : 'vs'}</span>
                             <span>{num(e.result!.summary![kKey], 4)}</span>
                           </li>
                         ) : null,
@@ -83,8 +83,8 @@ export function LabExperiments({ snap, locale }: { snap: LabSnapshot; locale: La
                     {e.forward_rows !== undefined && (
                       <span>{t.experimentsSection.forwardRows}: {e.forward_rows}</span>
                     )}
-                    {e.result?.ran_at && <span>ran {e.result.ran_at.slice(0, 16)}Z</span>}
-                    {e.result?.eval_rows !== undefined && <span>eval rows {e.result.eval_rows}</span>}
+                    {e.result?.ran_at && <span>{locale === 'fa' ? 'زمان اجرا' : 'ran'} {e.result.ran_at.slice(0, 16)}Z</span>}
+                    {e.result?.eval_rows !== undefined && <span>{locale === 'fa' ? 'ردیف‌های ارزیابی' : 'eval rows'} {e.result.eval_rows}</span>}
                   </div>
                   <div className="lab-exp-timeline">
                     <span className="lab-exp-tl-title">{t.experimentsSection.timeline}</span>

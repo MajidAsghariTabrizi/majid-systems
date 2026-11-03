@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { marked, type Tokens, type Token } from 'marked';
 import matter from 'gray-matter';
+import { articleHeadingLabel } from './heading-labels';
 
 /* ============================================================================
  * Quantiviq Insights — file-based content layer (bilingual: EN + FA)
@@ -221,7 +222,7 @@ export interface HeadingEntry {
 }
 
 /** Render markdown to HTML. Headings get stable anchor ids; a TOC is extracted. */
-export function renderMarkdown(md: string): { html: string; headings: HeadingEntry[] } {
+export function renderMarkdown(md: string, locale: Locale = 'en'): { html: string; headings: HeadingEntry[] } {
   const seen = new Map<string, number>();
   const headings: HeadingEntry[] = [];
   marked.use({
@@ -229,12 +230,16 @@ export function renderMarkdown(md: string): { html: string; headings: HeadingEnt
     breaks: false,
     renderer: {
       heading(token: Tokens.Heading) {
-        const text = inlineText(token.tokens);
-        const id = headingId(text, seen);
+        const originalText = inlineText(token.tokens);
+        const text = articleHeadingLabel(originalText, locale);
+        // Preserve existing published fragments while improving the FA label.
+        const id = headingId(originalText, seen);
         const depth = token.depth as 2 | 3;
         if (depth === 2 || depth === 3) headings.push({ id, text, depth });
         const p = (this as { parser?: { parseInline(t: Token[]): string } }).parser;
-        const inner = p ? p.parseInline(token.tokens) : text;
+        const inner = text !== originalText
+          ? text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          : p ? p.parseInline(token.tokens) : text;
         return `<h${token.depth} id="${id}">${inner}</h${token.depth}>`;
       },
       link(token: Tokens.Link) {
@@ -305,7 +310,7 @@ function loadArticles(locale: Locale): Article[] {
     // minimal hard requirements here; full schema validation runs in
     // scripts/insights-validate.mjs and fails CI loudly.
     if (!fm.id || !fm.slug || fm.status !== 'published') continue;
-    const { html, headings } = renderMarkdown(content);
+    const { html, headings } = renderMarkdown(content, locale);
     const words = countWords(content);
     articles.push({
       ...(fm as ArticleFrontmatter),
