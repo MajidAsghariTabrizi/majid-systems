@@ -1,6 +1,9 @@
 /* Shared editorial refinements. Interactive canvases and chat scroll geometry
    retain their own layout rules. The solutions visual system stays intact. */
 html { scroll-padding-top: calc(var(--header-h, 72px) + 24px); }
+/* The AI launcher stays available; its automatic invitation must not cover
+   reading or interactive controls on a small screen. */
+@media (max-width: 760px) { .mind-invite { display: none; } }
 main { min-width: 0; }
 .container, .container-wide, .container-narrow { min-width: 0; }
 .q-hero { padding-top: clamp(42px, 5vw, 72px); padding-bottom: 38px; }

@@ -1,0 +1,32 @@
+.footer .inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
+  gap: 2.5rem clamp(2rem, 5vw, 5rem);
+}
+.identity { min-width: 0; }
+.wordmark { color: var(--ink); font-weight: 650; letter-spacing: 0.12em; text-decoration: none; }
+.tagline { margin: 0.6rem 0 1.3rem; line-height: 1.8; max-width: 34ch; }
+.navigation { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; min-width: 0; }
+.group { min-width: 0; }
+.heading { margin: 0 0 0.65rem; font-size: 0.87rem; line-height: 1.7; font-weight: 650; color: var(--ink); }
+.navigation .linkList { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; list-style: none; padding: 0; margin: 0; }
+.linkList li { min-width: 0; }
+.navigation .linkList a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding-block: 0.45rem; line-height: 1.6; text-decoration: none; overflow-wrap: anywhere; }
+.linkList a:hover, .bottom a:hover { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; }
+.linkList a:focus-visible, .wordmark:focus-visible, .bottom a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 3px; }
+.english { flex: 0 0 auto; font-size: 0.62rem; line-height: 1.3; padding: 0.2rem 0.3rem; border: 1px solid var(--border); border-radius: 4px; color: var(--fg-muted); }
+.note { margin: 0.55rem 0 0; color: var(--fg-subtle); font-size: 0.75rem; line-height: 1.8; }
+.bottom { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1.5rem; border-top: 1px solid var(--border-quiet); padding-top: 1.3rem; font-size: 0.8rem; }
+.bottom a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 960px) {
+  .footer .inner { grid-template-columns: minmax(0, 1fr); }
+  .tagline { max-width: 58ch; }
+}
+@media (max-width: 580px) {
+  .navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.7rem 1.2rem; }
+  .navigation .linkList { grid-template-columns: minmax(0, 1fr); }
+  .heading { font-size: 0.9rem; }
+}
+@media (max-width: 360px) {
+  .navigation { grid-template-columns: minmax(0, 1fr); }
+}

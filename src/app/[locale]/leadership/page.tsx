@@ -154,8 +154,8 @@ export default async function LeadershipPage({ params }: { params: { locale: str
             ))}
           </ol>
           <div className="hero-actions" style={{ marginTop: '1.5rem' }}>
-            <Link href="/journey" className="btn">{z.career.journeyLink}</Link>
-            <Link href="/resume" className="btn">{z.career.resumeLink}</Link>
+            <Link href="/journey" className="btn">{z.career.journeyLink} {l === 'fa' ? <span className="shared-en-mark" lang="en" dir="ltr">EN</span> : null}</Link>
+            <Link href="/resume" className="btn">{z.career.resumeLink} {l === 'fa' ? <span className="shared-en-mark" lang="en" dir="ltr">EN</span> : null}</Link>
           </div>
         </div>
       </section>
@@ -206,6 +206,10 @@ export default async function LeadershipPage({ params }: { params: { locale: str
             <p className="leadership-consulting">
               <Link href={`/${l}/services`}>{z.contactBlock.consulting}</Link>
             </p>
+            <div className="hero-actions">
+              <Link href={`/${l}/contact?intent=hiring`} className="btn btn-primary">{l === 'fa' ? 'دربارهٔ فرصت همکاری صحبت کنیم' : 'Discuss a leadership opportunity'} <span className="arrow" aria-hidden>→</span></Link>
+              <Link href={`/${l}/mind`} className="btn">{l === 'fa' ? 'دربارهٔ سوابق و رویکردم بپرسید' : 'Ask about my work and approach'} <span className="arrow" aria-hidden>→</span></Link>
+            </div>
           </Reveal>
         </div>
       </section>

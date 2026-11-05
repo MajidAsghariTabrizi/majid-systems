@@ -61,9 +61,19 @@ export default async function AboutPage({ params }: { params: { locale: string }
             </div>
           </Reveal>
           <Reveal>
-            <div className="hero-actions" style={{ marginTop: '2.5rem' }}>
-              <Link href="/journey" className="btn btn-primary">{t.journeyCta} <span className="arrow" aria-hidden>→</span></Link>
-              <Link href="/profile" className="btn">{t.profileCta} <span className="arrow" aria-hidden>→</span></Link>
+            <div style={{ marginTop: '2.5rem' }}>
+              <h2 className="q-h2">{l === 'fa' ? 'از ایده تا مسئلهٔ شما' : 'Find a practical next step'}</h2>
+              <p className="q-founder-p">{l === 'fa'
+                ? 'دربارهٔ آثار منتشرشده از دستیار هوش مصنوعی بپرسید، یا راهکار مرتبط با کار تیم‌تان را پیدا کنید.'
+                : 'Ask the AI about the published work, or find a solution relevant to your team.'}</p>
+              <div className="hero-actions">
+                <Link href={`/${l}/mind`} className="btn btn-primary">{l === 'fa' ? 'از دستیار هوش مصنوعی بپرسید' : 'Ask Quantiviq Mind'} <span className="arrow" aria-hidden>→</span></Link>
+                <Link href={`/${l}/solutions/find`} className="btn">{l === 'fa' ? 'راهکار مناسب را پیدا کنید' : 'Find your solution'} <span className="arrow" aria-hidden>→</span></Link>
+              </div>
+              <div className="hero-actions" style={{ marginTop: '1rem' }}>
+                <Link href="/journey" className="founder-linkedin">{t.journeyCta} {l === 'fa' ? <span className="shared-en-mark" lang="en" dir="ltr">EN</span> : null}</Link>
+                <Link href="/profile" className="founder-linkedin">{t.profileCta} {l === 'fa' ? <span className="shared-en-mark" lang="en" dir="ltr">EN</span> : null}</Link>
+              </div>
             </div>
           </Reveal>
         </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getSolution } from '@/content/solutions';
@@ -39,12 +40,15 @@ export default async function SolutionRequestPage({
   const l = locale === 'fa' ? 'fa' : 'en';
   return (
     <div className="sol-form-wrap">
-      <h1>{l === 'fa' ? 'درخواست راهکار' : 'Request This Solution'}</h1>
-      <p className="lede" style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.6 }}>
+      <Link className="sol-form-back" href={`/${locale}/solutions/${s.id}`}><span aria-hidden="true">{l === 'fa' ? '→' : '←'}</span>{l === 'fa' ? 'بازگشت به جزئیات راهکار' : 'Back to the solution'}</Link>
+      <p className="eyebrow">{l === 'fa' ? 'گام اول همکاری' : 'The first step'}</p>
+      <h1>{l === 'fa' ? 'از نیاز شما شروع کنیم.' : 'Let’s start with your need.'}</h1>
+      <p className="sol-form-intro">
         {l === 'fa'
-          ? 'بدون پرداخت و بدون حساب کاربری. درخواست شما ثبت می‌شود و ما شخصاً برای بررسی و پیشنهاد اختصاصی با شما تماس می‌گیریم.'
-          : 'No payment and no account needed. Your request is registered; we personally follow up to scope and propose.'}
+          ? 'شرح کوتاهی از شرایطتان بنویسید. ابتدا تناسب راهکار با نیاز شما را بررسی می‌کنیم؛ دامنه، هزینه و گام بعدی پیش از شروع کار با شما توافق می‌شود.'
+          : 'Share a little context. We’ll review whether this solution fits, then agree the scope, cost and next step with you before any work begins.'}
       </p>
+      <p className="sol-form-reassurance">{l === 'fa' ? 'بدون ثبت‌نام، بدون پرداخت و بدون تعهد به خرید.' : 'No account, no payment and no commitment to buy.'}</p>
       <SolutionRequestForm solution={s} locale={locale} source={searchParams?.src} />
     </div>
   );

@@ -7,9 +7,11 @@ import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
 import { IntelligenceMap } from '@/components/IntelligenceMap';
 import { OrgNervousSystem } from '@/components/OrgNervousSystem';
-import { BrainDemo } from '@/components/BrainDemo';
 import { SystemFlow } from '@/components/LearningLoop';
 import { Reveal } from '@/components/Reveal';
+import { HomeStartGuide } from '@/components/HomeStartGuide';
+import { homeGuide } from '@/content/home-guide';
+import '../home-guide.css';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
@@ -33,6 +35,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
   const l = params.locale;
   const t = dict(l);
   const h = t.home;
+  const guide = homeGuide(l);
 
   return (
     <>
@@ -47,19 +50,22 @@ export default async function LocaleHome({ params }: { params: { locale: string 
             <p className="q-hero-body">{t.hero.bodyP2}</p>
             <p className="q-hero-promise">{t.hero.promise}</p>
             <div className="hero-actions">
-              <Link href={`/${l}/contact`} className="btn btn-primary">
-                {t.hero.ctaPrimary} <span className="arrow" aria-hidden>→</span>
+              <Link href={`/${l}/solutions/find`} className="btn btn-primary">
+                {guide.heroPrimary} <span className="arrow" aria-hidden>{l === 'fa' ? '←' : '→'}</span>
               </Link>
               <Link href={`/${l}/explore`} className="btn">
-                {t.hero.ctaSecondary} <span className="arrow" aria-hidden>→</span>
+                {guide.heroSecondary} <span className="arrow" aria-hidden>{l === 'fa' ? '←' : '→'}</span>
               </Link>
             </div>
+            <Link href="#start-here" className="home-hero-hint">{guide.heroHint}</Link>
           </div>
           <div className="q-hero-visual">
             <IntelligenceMap locale={l} />
           </div>
         </div>
       </section>
+
+      <HomeStartGuide locale={l} />
 
       {/* ===== 02 · COMPACT PREVIEW (full simulation lives on /explore) ===== */}
       <section id="preview" className="q-section" aria-label={t.home2.previewTitle}>
@@ -117,7 +123,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
                 </div>
                 <div className="latency-bar" aria-hidden>
                   <span style={{ width: `${34 + i * 14}%` }} />
-                  <span className="latency-bar-label">time</span>
+                  <span className="latency-bar-label">{guide.timeLabel}</span>
                 </div>
                 <p className="latency-body">{f.body}</p>
             </Reveal>
@@ -137,7 +143,7 @@ export default async function LocaleHome({ params }: { params: { locale: string 
                 </div>
                 <div className="latency-bar" aria-hidden>
                   <span style={{ width: `${76 + i * 6}%` }} />
-                  <span className="latency-bar-label">time</span>
+                  <span className="latency-bar-label">{guide.timeLabel}</span>
                 </div>
                 <p className="latency-body">{f.body}</p>
               </Reveal>

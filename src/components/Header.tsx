@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { BRAND, NAV } from '@/content/shared';
 import { dict, localePath, type Locale } from '@/content/i18n';
@@ -32,7 +33,7 @@ export function Header({ locale }: { locale?: Locale }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
-  const sheetRef = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDialogElement>(null);
 
   const lp = (p: string) => (locale ? localePath(locale, p) : p);
   const isActive = (href: string) =>
@@ -119,10 +120,16 @@ export function Header({ locale }: { locale?: Locale }) {
 
   useEffect(() => {
     if (!mobileOpen) return;
+    const sheet = sheetRef.current;
+    if (!sheet) return;
     document.documentElement.classList.add('sheet-open');
     const prevFocused = document.activeElement as HTMLElement | null;
     const returnTarget = menuBtnRef.current;
-    sheetRef.current?.querySelector<HTMLElement>('a, button')?.focus();
+    sheet.showModal();
+    sheet.querySelector<HTMLElement>('button, a')?.focus();
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const onViewport = () => { if (desktop.matches) setMobileOpen(false); };
+    desktop.addEventListener('change', onViewport);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { setMobileOpen(false); return; }
       if (e.key !== 'Tab' || !sheetRef.current) return;
@@ -136,7 +143,10 @@ export function Header({ locale }: { locale?: Locale }) {
     return () => {
       document.documentElement.classList.remove('sheet-open');
       document.removeEventListener('keydown', onKey);
-      (prevFocused ?? returnTarget)?.focus();
+      desktop.removeEventListener('change', onViewport);
+      sheet.close();
+      if (prevFocused?.isConnected) prevFocused.focus({ preventScroll: true });
+      else if (returnTarget?.isConnected) returnTarget.focus({ preventScroll: true });
     };
   }, [mobileOpen]);
 
@@ -187,6 +197,7 @@ export function Header({ locale }: { locale?: Locale }) {
   const closeAll = () => { setOpenKey(null); setMobileOpen(false); };
 
   return (
+    <>
     <header className={`site-header ${locale ? 'site-header-locale' : 'site-header-root'}`}>
       <div className="site-header-inner" ref={barRef}>
         <Link href={locale ? localePath(locale) : '/'} className="brand" aria-label={locale === 'fa' ? 'خانه کوانتی‌ویک' : 'Quantiviq home'} onClick={closeAll}>
@@ -248,13 +259,24 @@ export function Header({ locale }: { locale?: Locale }) {
         </div>
       </div>
 
-      {mobileOpen && (
-        <div id="site-mobile-menu" ref={sheetRef} className="nv-sheet" role="dialog" aria-modal="true" aria-label={t.nav2.menu}>
+    </header>
+
+      {mobileOpen && createPortal(
+        <dialog id="site-mobile-menu" ref={sheetRef} className="nv-sheet" dir={locale === 'fa' ? 'rtl' : 'ltr'} aria-label={t.nav2.menu} aria-modal="true" onCancel={(e) => { e.preventDefault(); closeAll(); }}>
           <div className="nv-sheet-head">
-            <span className="nv-sheet-title">{t.nav2.menu}</span>
-            <button type="button" className="nv-sheet-close" onClick={closeAll}>{t.nav2.close}</button>
+            <Link href={locale ? localePath(locale) : '/'} className="brand" onClick={closeAll} aria-label={locale === 'fa' ? 'خانه کوانتی‌ویک' : 'Quantiviq home'}><span className="brand-mark" aria-hidden /><span className="brand-word">{BRAND.wordmark}</span></Link>
+            <button type="button" className="nv-sheet-close" onClick={closeAll}>{t.nav2.close}<span aria-hidden> ×</span></button>
           </div>
           <div className="nv-sheet-body">
+            {locale && <div className="nv-sheet-start">
+              <p className="nv-sheet-kicker">{locale === 'fa' ? 'از اینجا شروع کنید' : 'Start here'}</p>
+              <h2>{locale === 'fa' ? 'دوست دارید چه کاری انجام دهید؟' : 'What would you like to do?'}</h2>
+              <div className="nv-sheet-shortcuts">
+                <Link href={lp('/solutions/find')} onClick={closeAll}><span>{locale === 'fa' ? 'راهکار مناسب را پیدا کنید' : 'Find the right solution'}</span><small>{locale === 'fa' ? 'از مسئله واقعی تیم شروع کنید' : 'Start with your team’s bottleneck'}</small><b aria-hidden>↗</b></Link>
+                <Link href={lp('/mind')} onClick={closeAll}><span>{locale === 'fa' ? 'از دستیار هوشمند بپرسید' : 'Ask Quantiviq Mind'}</span><small>{locale === 'fa' ? 'پاسخ‌ها را همراه منبع بررسی کنید' : 'Explore answers and their sources'}</small><b aria-hidden>↗</b></Link>
+              </div>
+            </div>}
+            <nav className="nv-sheet-nav" aria-label={locale === 'fa' ? 'همه بخش‌های سایت' : 'Explore the site'}>
             {groups.map((g) => (
               <section key={g.key} className="nv-sheet-group">
                 {g.href ? (
@@ -276,12 +298,14 @@ export function Header({ locale }: { locale?: Locale }) {
                 )}
               </section>
             ))}
+            </nav>
             <Link href={locale ? localePath(locale, '/contact') : '/en/contact'} className="btn btn-primary nv-sheet-cta" onClick={closeAll}>
               {t.nav2.start}
             </Link>
+            <p className="nv-sheet-note">{locale === 'fa' ? 'یک فرایند، پرسش یا مسئله را مطرح کنید؛ نقطه شروع را با هم روشن می‌کنیم.' : 'Bring a workflow, a question or a bottleneck. We’ll work out a useful first step.'}</p>
           </div>
-        </div>
+        </dialog>, document.body
       )}
-    </header>
+    </>
   );
 }

@@ -37,23 +37,51 @@
 html.sheet-open {
   overflow: hidden;
 }
+html.sheet-open body { overflow: hidden; }
 .nv-sheet {
   position: fixed;
-  inset: var(--header-h) 0 0 0;
-  z-index: 90;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  box-sizing: border-box;
   background: var(--canvas);
-  border-top: 1px solid var(--border);
+  color: var(--text);
+  border: 0;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  padding: 1rem var(--gutter) 2rem;
+  overflow: hidden;
+  padding: 0;
 }
+.nv-sheet::backdrop { background: rgb(20 38 31 / 0.35); }
 .nv-sheet-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4rem 0 1rem;
+  flex: 0 0 auto;
+  min-height: 72px;
+  gap: 1rem;
+  padding: max(0.65rem, env(safe-area-inset-top)) var(--gutter) 0.65rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--canvas);
 }
+.nv-sheet-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.3rem var(--gutter) max(2rem, env(safe-area-inset-bottom)); }
+.nv-sheet-start { margin-bottom: 1.4rem; }
+.nv-sheet-kicker { margin: 0 0 0.4rem; font-size: 0.75rem; color: var(--brand); font-weight: 650; }
+.nv-sheet-start h2 { margin: 0 0 1rem; font: 650 clamp(1.25rem, 4vw, 1.7rem)/1.5 var(--font-display); color: var(--ink); }
+.nv-sheet-shortcuts { display: grid; gap: 0.65rem; }
+.nv-sheet-shortcuts a { position: relative; display: grid; gap: 0.25rem; padding: 1rem; padding-inline-end: 2.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); text-decoration: none; }
+.nv-sheet-shortcuts a:first-child { background: var(--brand); border-color: var(--brand); color: var(--on-brand, #fff); }
+.nv-sheet-shortcuts a span { font-size: 1rem; font-weight: 650; }
+.nv-sheet-shortcuts a small { font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+.nv-sheet-shortcuts a:first-child small { color: #fff; }
+.nv-sheet-shortcuts a b { position: absolute; inset-inline-end: 1rem; top: 1rem; font-weight: 400; }
+.nv-sheet[dir='rtl'] .nv-sheet-shortcuts a b { transform: scaleX(-1); }
+.nv-sheet-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+.nv-sheet-note { margin: 0.8rem 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.8; }
 .nv-sheet-title {
   font: 700 1.1rem var(--font-display);
   color: var(--ink);
@@ -94,12 +122,14 @@ html[lang='fa'] .nv-sheet-h { letter-spacing: 0; }
   justify-content: space-between;
   gap: 0.5rem;
   min-height: 48px;
-  padding: 10px 12px;
+  padding: 10px 0;
   border-radius: var(--radius-sm);
-  font: 500 1rem var(--font-sans);
+  font: 500 0.9rem/1.7 var(--font-sans);
   color: var(--text);
   text-decoration: none;
 }
+.nv-sheet-item:hover, .nv-sheet-link:hover { color: var(--brand); background: var(--surface-2); }
+.nv-sheet :is(a, button):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .nv-sheet-item.is-here,
 .nv-sheet-link.is-here {
   background: var(--selected);

@@ -22,11 +22,11 @@ export function SolutionCard({ s, locale }: { s: SolutionEntry; locale: Locale }
         <span className={`sol-badge ${s.status}`}>{st[l]}</span>
       </div>
       <div className="sol-card-actions">
-        <Link className="sol-cta-mini" href={`/${locale}/solutions/${s.id}/request`}>
-          {locale === 'fa' ? 'ثبت درخواست' : 'Request'}
+        <Link className="sol-link" href={`/${locale}/solutions/${s.id}`} aria-label={locale === 'fa' ? `روش کار ${s.title[l]}` : `See how ${s.title[l]} works`}>
+          {locale === 'fa' ? 'این راهکار چطور کار می‌کند؟' : 'See how it works'} <span aria-hidden="true">{locale === 'fa' ? '←' : '→'}</span>
         </Link>
-        <Link className="sol-link" href={`/${locale}/solutions/${s.id}`}>
-          {locale === 'fa' ? 'بررسی جزئیات' : 'Explore details'} <span aria-hidden="true">{locale === 'fa' ? '←' : '→'}</span>
+        <Link className="sol-cta-mini" href={`/${locale}/solutions/${s.id}/request`} aria-label={locale === 'fa' ? `گفت‌وگو درباره ${s.title[l]}` : `Discuss ${s.title[l]}`}>
+          {locale === 'fa' ? 'بررسی نیاز من' : 'Discuss my need'}
         </Link>
       </div>
     </article>

@@ -14,6 +14,7 @@ export function SolutionsBrowser({ locale }: { locale: Locale }) {
   const t = SOLUTION_UI;
   const [q, setQ] = useState('');
   const [cat, setCat] = useState<SolutionCategory | 'all'>('all');
+  const hasFilters = q.trim().length > 0 || cat !== 'all';
   useEffect(() => { qEvent('solutions_view', { locale }); }, []);
 
   const filtered = useMemo(() => {
@@ -32,17 +33,20 @@ export function SolutionsBrowser({ locale }: { locale: Locale }) {
   return (
     <>
       <div className="sol-controls">
+        <label className="sol-search-label" htmlFor="solution-search">{l === 'fa' ? 'کدام بخش از کارتان را می‌خواهید بهتر کنید؟' : 'What would you like to improve?'}</label>
         <div className="sol-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
             <path d="M21 21l-4.3-4.3" />
           </svg>
           <input
+            id="solution-search"
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={t.searchPlaceholder[l]}
             aria-label={t.searchPlaceholder[l]}
+            aria-describedby="solution-result-count"
           />
         </div>
         <div className="sol-cat-chips" role="group" aria-label={l === 'fa' ? 'دسته‌بندی' : 'Categories'}>
@@ -57,11 +61,14 @@ export function SolutionsBrowser({ locale }: { locale: Locale }) {
         </div>
       </div>
       <div className="sol-results-head">
-        <p className="sol-count" aria-live="polite">{l === 'fa' ? `${filtered.length.toLocaleString('fa-IR')} راهکار` : `${filtered.length} solutions`}</p>
+        <div className="sol-result-summary">
+          <p id="solution-result-count" className="sol-count" role="status">{l === 'fa' ? `${filtered.length.toLocaleString('fa-IR')} راهکار از ${SOLUTIONS.length.toLocaleString('fa-IR')}` : `${filtered.length} of ${SOLUTIONS.length} solutions`}</p>
+          {hasFilters && <button type="button" className="sol-filter-reset" onClick={() => { setQ(''); setCat('all'); }}>{l === 'fa' ? 'پاک کردن فیلترها' : 'Clear filters'}<span aria-hidden="true">×</span></button>}
+        </div>
         <p className="sol-status-guide">{l === 'fa' ? '«مسیر اجرای مشخص» جزئیات تحویل دارد؛ «نیازمند نیازسنجی» پس از شناخت کسب‌وکار شما تعریف می‌شود.' : 'Detailed offerings have a delivery path; scoping engagements are defined after discovery.'}</p>
       </div>
       {filtered.length === 0 ? (
-        <div className="sol-empty"><p>{t.noResults[l]}</p><button className="sol-chip" onClick={() => { setQ(''); setCat('all'); }}>{l === 'fa' ? 'نمایش همه‌ی راهکارها' : 'Show all solutions'}</button></div>
+        <div className="sol-empty"><p>{t.noResults[l]}</p><p className="sol-empty-hint">{l === 'fa' ? 'نام مسئله را ساده‌تر بنویسید یا فیلتر حوزه را بردارید.' : 'Try a simpler problem description or remove the business-area filter.'}</p><button type="button" className="sol-chip" onClick={() => { setQ(''); setCat('all'); }}>{l === 'fa' ? 'نمایش همه‌ی راهکارها' : 'Show all solutions'}</button></div>
       ) : (
         <div className="sol-grid">
           {filtered.map((s) => (
