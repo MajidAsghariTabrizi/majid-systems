@@ -21,7 +21,7 @@ HOST = '171.22.24.45'
 HERE = Path(__file__).resolve().parent
 REMOTE = r'''
 from pathlib import Path
-import base64, datetime, fcntl, hashlib, io, json, os, re, socket, subprocess, sys, tarfile, urllib.request
+import base64, datetime, fcntl, hashlib, io, json, os, re, socket, subprocess, sys, tarfile, time, urllib.request
 os.umask(0o022)
 ROOT=Path('/var/www/peyvand'); DOMAIN='peyvand.quantiviq.xyz'
 SITE=Path('/etc/nginx/sites-available/peyvand'); ENABLED=Path('/etc/nginx/sites-enabled/peyvand'); HEADERS=Path('/etc/nginx/snippets/peyvand-headers.conf')
@@ -72,7 +72,11 @@ def path_request(path):
  require(p.returncode==0,'HTTPS path request failed:'+p.stderr.decode(errors='replace')[-300:])
  header,body=p.stdout.split(b'\r\n\r\n',1);code=int(header.splitlines()[0].split()[1]);return code,header.decode(),body
 def path_health():
- code,headers,body=path_request('/peyvand/');require(code==200 and b'noindex'in body,'Invalid path HTML');require('x-robots-tag: noindex'in headers.lower(),'Missing path noindex header')
+ code,headers,body=path_request('/peyvand/')
+ title=re.search(rb'<title>([^<]{0,300})</title>',body,re.I)
+ location=next((line.split(':',1)[1].strip()for line in headers.splitlines()if line.lower().startswith('location:')),'(none)')
+ detail='status='+str(code)+', bytes='+str(len(body))+', title='+(title.group(1).decode(errors='replace')if title else'(none)')+', location='+location
+ require(code==200 and b'noindex'in body,'Invalid path HTML ('+detail+')');require('x-robots-tag: noindex'in headers.lower(),'Missing path noindex header ('+detail+')')
  rel=(ROOT/'current').resolve();manifest=json.loads((rel/'verified-manifest.json').read_text())['files'];assets=[]
  for suffix in ['.css','.js','.woff2']:
   matches=sorted(p for p in manifest if p.endswith(suffix));require(matches,'Missing staticasset'+suffix)
@@ -95,7 +99,13 @@ def activate_path():
  expected['other_enabled_nginx'][main_enabled]=hashlib.sha256(new_main).hexdigest()
  try:
   point_to(rel);write(HEADERS,base64.b64decode(PAYLOAD['headers']));write(PATH_SNIPPET,base64.b64decode(PAYLOAD['path']));write(MAIN_SITE,new_main)
-  run(['nginx','-t']);run(['systemctl','reload','nginx']);health=path_health();require(protected()==expected,'Changebeyondreviewedadditiveinclude');main_health()
+  run(['nginx','-t']);run(['systemctl','reload','nginx'])
+  for attempt in range(6):
+   try:health=path_health();break
+   except RuntimeError:
+    if attempt==5:raise
+    time.sleep(.7)
+  require(protected()==expected,'Changebeyondreviewedadditiveinclude');main_health()
   record={'mode':'path','release':RELEASE,'health':health,'main_application_unchanged':True,'nginx_change':'one additiveinclude inexistingapexHTTPSserver plusproposal-onlysnippets','main_nginx_sha256_before':hashlib.sha256(old_main).hexdigest(),'main_nginx_sha256_after':hashlib.sha256(new_main).hexdigest(),'completed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'previous_target':str(old_target)if old_target else None}
   (ROOT/'activation.json').write_text(json.dumps(record,indent=2));print(json.dumps(record),flush=True)
  except BaseException:
