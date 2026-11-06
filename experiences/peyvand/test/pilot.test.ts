@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {simulatePilot}from'../lib/pilot';
+test('zero participation cannot produce activity',()=>assert.deepEqual(simulatePilot({organizations:0,acceptance:100,completion:100}),{organizations:0,requests:0,introductions:0,conversations:0,collaborations:0}));
+test('all funnel counts conserve their preceding population',()=>{for(const organizations of[0,1,24,60])for(const acceptance of[-10,0,40,100,120])for(const completion of[0,25,100,120]){const r=simulatePilot({organizations,acceptance,completion});assert.ok(r.requests>=r.introductions&&r.introductions>=r.conversations&&r.conversations>=r.collaborations);assert.ok(r.collaborations>=0)}});
+test('documented defaults are reproducible assumptions',()=>assert.deepEqual(simulatePilot({organizations:24,acceptance:40,completion:25}),{organizations:24,requests:48,introductions:24,conversations:9,collaborations:2}));
