@@ -33,6 +33,27 @@ button, input, select, textarea { accent-color: var(--brand); }
 .ins-prose { max-width: 72ch; }
 .ins-prose a { text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .ins-prose blockquote { border-inline-start-color: var(--copper); background: var(--surface-2); }
+.ins-prose sup a { color: var(--accent-warm); }
+.ins-prose .ins-takeaways { border-color: var(--border-strong); background: var(--selected); }
+/* Published charts retain their geometry, labels and values. Color attributes
+   are presented in the same mineral palette as the rest of the publication. */
+.ins-prose svg [fill='#0d1420'] { fill: var(--canvas); }
+.ins-prose svg [fill='#141f2b'] { fill: var(--surface-2); }
+.ins-prose svg [fill='#d7e0ea'] { fill: var(--ink); }
+.ins-prose svg [fill='#8fa3b8'] { fill: var(--muted); }
+.ins-prose svg [fill='#2a3a4c'], .ins-prose svg [fill='#3d5166'] { fill: var(--border-strong); }
+.ins-prose svg [fill='#69deb9'] { fill: var(--brand); }
+.ins-prose svg [fill='#f5b968'] { fill: var(--accent-warm); }
+.ins-prose svg [fill='#80c9f8'] { fill: var(--copper); }
+.ins-prose svg [fill='#a694f7'] { fill: #826f70; }
+.ins-prose svg [fill='#f27e85'] { fill: #a73e41; }
+.ins-prose svg [stroke='#2a3a4c'], .ins-prose svg [stroke='#3d5166'] { stroke: var(--border-strong); }
+.ins-prose svg [stroke='#8fa3b8'] { stroke: var(--muted); }
+.ins-prose svg [stroke='#69deb9'] { stroke: var(--brand); }
+.ins-prose svg [stroke='#f5b968'] { stroke: var(--accent-warm); }
+.ins-prose svg [stroke='#80c9f8'] { stroke: var(--copper); }
+.ins-prose svg [stroke='#a694f7'] { stroke: #826f70; }
+.ins-prose svg [stroke='#f27e85'] { stroke: #a73e41; }
 .ins-featured, .book-skill { box-shadow: none; }
 .book-card { background: var(--surface); }
 .book-filters .on, .chip-btn.on, .stack-node.on { border-color: var(--brand); background: var(--selected); }
