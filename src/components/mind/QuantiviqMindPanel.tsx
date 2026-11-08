@@ -153,7 +153,7 @@ export function QuantiviqMindPanel({ locale, s, onClose }: { locale: string; s: 
             </div>
           )}
           {messages.map((m) => (
-            <MindMessage key={m.id} m={m} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
+            <MindMessage key={m.id} m={m} locale={locale === 'fa' ? 'fa' : 'en'} label={s.sources} viewAll={s.viewAll} incompleteLabel={s.incomplete} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
           ))}
           {busy && (
             <div className="mind-typing" role="status" aria-label={locale === 'fa' ? 'در حال آماده‌سازی پاسخ' : 'Preparing a response'}>

@@ -93,7 +93,7 @@
 .mind-evidence-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(24, 42, 38, 0.32);
+  background: rgba(36, 26, 35, 0.32);
   display: flex;
   justify-content: flex-end;
   z-index: 120;

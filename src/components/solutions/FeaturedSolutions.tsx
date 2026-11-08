@@ -16,19 +16,19 @@ export function FeaturedSolutions({ locale }: { locale: Locale }) {
   const scrollBy = (dir: 1 | -1) => {
     const el = trackRef.current;
     if (!el) return;
-    const amount = 316 * 2; // two cards
-    el.scrollBy({ left: dir * amount * (locale === 'fa' ? -1 : 1), behavior: 'smooth' });
+    const amount = Math.max(el.clientWidth * 0.85, 280);
+    el.scrollBy({ left: dir * amount * (locale === 'fa' ? -1 : 1), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
   return (
     <section className="sol-section sol-carousel" aria-label={l === 'fa' ? 'راهکارهای منتخب کوانتی‌ویک' : 'Featured Quantiviq solutions'}>
       <div className="sol-carousel-head">
         <div>
-          <h2>{l === 'fa' ? 'از تز تا راهکار: مسائل واقعی کسب‌وکار' : 'From thesis to practice: real operating problems'}</h2>
+          <h2>{l === 'fa' ? 'از مسئله واقعی، به یک راهکار مشخص' : 'Real problems. A practical place to start.'}</h2>
           <span className="sub">
             {l === 'fa'
-              ? 'راهکارهای عملی با تأیید انسانی — نقطه شروع دیجیتال‌سازی هوشمند.'
-              : 'Practical AI-enabled engagements with human approvals — where smart digitization starts.'}
+              ? 'فروش، عملیات، مالی و دانش سازمان؛ فرایندی را پیدا کنید که ارزش بهبود دارد.'
+              : 'Sales, operations, finance, and shared knowledge. Find the workflow worth improving.'}
           </span>
         </div>
         <div className="sol-carousel-nav">

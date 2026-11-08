@@ -190,6 +190,7 @@ export function MindMarkdown({ text }: { text: string }) {
  *  reachable; numbering stable (position in the normalized list). */
 export function MindSources({
   m,
+  locale = 'en',
   label,
   viewAll,
   onOpen,
@@ -197,6 +198,7 @@ export function MindSources({
   onToggleExpand,
 }: {
   m: Msg;
+  locale?: 'en' | 'fa';
   label: string;
   viewAll: string;
   onOpen: (msgId: string, srcId: string) => void;
@@ -220,7 +222,7 @@ export function MindSources({
         </span>
         <span className="mind-sources-dots" aria-hidden>
           {srcs.slice(0, 7).map((s) => (
-            <i key={s.id} data-type={s.type} title={typeLabel(s.type, 'en')} />
+            <i key={s.id} data-type={s.type} title={typeLabel(s.type, locale)} />
           ))}
         </span>
         <span aria-hidden>{expanded ? '▴' : '▾'}</span>
@@ -237,7 +239,7 @@ export function MindSources({
               >
                 <span className="mind-cite-n" aria-hidden>{i + 1}</span>
                 <span className="mind-cite-title" dir="auto">{s.title}</span>
-                <span className="mind-cite-type" aria-hidden>{typeLabel(s.type, 'en')}</span>
+                <span className="mind-cite-type" aria-hidden>{typeLabel(s.type, locale)}</span>
               </button>
             </li>
           ))}
@@ -345,6 +347,7 @@ export function EvidenceInspector({
 /** one shared message renderer for both surfaces */
 export function MindMessage({
   m,
+  locale = 'en',
   label,
   viewAll,
   incompleteLabel,
@@ -353,6 +356,7 @@ export function MindMessage({
   onToggleExpand,
 }: {
   m: Msg;
+  locale?: 'en' | 'fa';
   label: string;
   viewAll: string;
   incompleteLabel?: string;
@@ -377,6 +381,7 @@ export function MindMessage({
       </div>
       <MindSources
         m={m}
+        locale={locale}
         label={label}
         viewAll={viewAll}
         onOpen={onOpen}

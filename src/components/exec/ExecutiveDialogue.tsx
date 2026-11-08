@@ -364,6 +364,7 @@ export function ExecutiveDialogue() {
                   <div key={m.id} className={'ex-msg ex-a' + (busy && m === lastMsg ? ' ex-streaming' : '')}>
                     <MindMessage
                       m={m}
+                      locale={locale}
                       label={t.sourcesLabel}
                       viewAll={t.viewAll}
                       incompleteLabel={t.incompleteLabel}
@@ -378,7 +379,7 @@ export function ExecutiveDialogue() {
                     )}
                   </div>
                 ) : (
-                  <MindMessage key={m.id} m={m} label={t.sourcesLabel} viewAll={t.viewAll} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
+                  <MindMessage key={m.id} m={m} locale={locale} label={t.sourcesLabel} viewAll={t.viewAll} onOpen={openEvidence} expandedSet={expandedSources} onToggleExpand={toggleExpand} />
                 )
               ))}
               {follow.mode !== 'follow-latest' && !follow.atBottom && messages.length > 0 && (

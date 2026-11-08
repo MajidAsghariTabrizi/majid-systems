@@ -38,13 +38,13 @@ export const CATEGORIES: { key: SolutionCategory; label: L<string> }[] = [
 
 export const STATUS_LABEL: Record<SolutionStatus, L<string> & { hint: L<string> }> = {
   flagship: {
-    en: 'Detailed offering',
+    en: 'Defined delivery path',
     fa: 'مسیر اجرای مشخص',
     hint: { en: 'Scoped engagement with a documented delivery path', fa: 'خدمت متناسب با سازمان، با مراحل اجرای مشخص' },
   },
   scoping: {
-    en: 'Scoping engagement',
-    fa: 'نیازمند نیازسنجی',
+    en: 'Discovery first',
+    fa: 'شروع با نیازسنجی',
     hint: { en: 'Available for discovery and a custom proposal after we understand your context', fa: 'پیشنهاد اختصاصی پس از بررسی نیاز و امکان‌سنجی' },
   },
 };
@@ -53,27 +53,27 @@ export const SOLUTION_UI = {
   cta: { en: 'Request This Solution', fa: 'درخواست این راهکار' },
   catalogTitle: { en: 'Solutions', fa: 'راهکارها' },
   catalogLead: {
-    en: 'Practical AI-enabled solutions for real operating problems. Every engagement is scoped to your organization and delivered with human approvals where judgment matters.',
+    en: 'Find the work that gets stuck, explore a practical way forward, and see what a first engagement could include. Each solution is adapted to your organization, with human approval where judgment matters.',
     fa: 'از فروش و نقدینگی تا عملیات و دانش سازمان؛ مسئله خود را پیدا کنید، مسیر پیشنهادی را بشناسید و برای بررسی اجرای متناسب با کسب‌وکارتان درخواست بدهید.',
   },
-  searchPlaceholder: { en: 'Search solutions…', fa: 'جست‌وجوی راهکار…' },
+  searchPlaceholder: { en: 'Search a problem or solution…', fa: 'جست‌وجوی مسئله یا راهکار…' },
   allCategories: { en: 'All', fa: 'همه' },
   viewDetails: { en: 'View details', fa: 'مشاهده جزئیات' },
   finderLink: { en: 'Not sure? Find your solution →', fa: 'برای انتخاب کمک می‌خواهید؟ راهنمای انتخاب راهکار ←' },
   heroEyebrow: { en: 'Quantiviq Solutions', fa: 'راهکارهای کوانتی‌ویک' },
   problemLabel: { en: 'The problem we solve', fa: 'مسئله از کجا شروع می‌شود؟' },
   buyerLabel: { en: 'Who it is for', fa: 'این راهکار برای چه تیمی مناسب است؟' },
-  capsLabel: { en: 'What it includes', fa: 'قابلیت‌های پیشنهادی' },
-  outcomeLabel: { en: 'The outcome', fa: 'نتیجه‌ای که ارزیابی می‌کنیم' },
+  capsLabel: { en: 'What it could include', fa: 'قابلیت‌های پیشنهادی' },
+  outcomeLabel: { en: 'What we measure', fa: 'نتیجه‌ای که می‌سنجیم' },
   beforeLabel: { en: 'Before (illustrative workflow)', fa: 'روش رایج پیش از اجرا' },
   afterLabel: { en: 'After (illustrative workflow)', fa: 'مسیر پیشنهادی پس از اجرا' },
   inputsLabel: { en: 'What we start from', fa: 'اطلاعات مورد نیاز برای شروع' },
-  deliverablesLabel: { en: 'How it is delivered', fa: 'مسیر اجرا و تحویل' },
+  deliverablesLabel: { en: 'Delivery and handover', fa: 'مسیر اجرا و تحویل' },
   faqLabel: { en: 'Common questions', fa: 'پرسش‌های متداول' },
   relatedLabel: { en: 'Related solutions', fa: 'راهکارهای مرتبط' },
   relatedInsightsLabel: { en: 'Related research', fa: 'پژوهش‌های مرتبط' },
   requestNote: {
-    en: 'No payment and no account needed. You submit a request; we review your context personally and reply with next steps.',
+    en: 'Describe your situation to start a discussion. No payment or account is needed to submit a request. We review the context and respond with a next step.',
     fa: 'برای ثبت درخواست به پرداخت یا ساخت حساب نیاز ندارید. مسئله و شرایط کسب‌وکارتان را توضیح دهید تا نیاز اولیه بررسی و گام بعدی مشخص شود.',
   },
   noResults: { en: 'No solutions match — try a different word or category.', fa: 'راهکاری با این جست‌وجو پیدا نشد. عبارت دیگری بنویسید یا دسته‌بندی را تغییر دهید.' },
@@ -83,8 +83,8 @@ export const SOLUTION_UI = {
   },
   bridgeTitle: { en: 'Apply this to your business', fa: 'از ایده تا اجرا در کسب‌وکار شما' },
   bridgeNote: {
-    en: 'We turn the ideas in this article into governed, working workflows for your organization.',
-    fa: 'ایده‌های این مقاله را به فرایندهای کارآمد و کنترل‌شده برای سازمان شما تبدیل می‌کنیم.',
+    en: 'Explore how the ideas in this article could shape a practical workflow for your organization.',
+    fa: 'ببینید ایده‌های این مقاله چگونه می‌توانند به یک فرایند کاربردی و متناسب با سازمان شما تبدیل شوند.',
   },
   finder: {
     title: { en: 'Find Your Solution', fa: 'راهکار خود را پیدا کنید' },
@@ -95,7 +95,7 @@ export const SOLUTION_UI = {
     matches: { en: 'Suggested for you', fa: 'راهکارهای نزدیک‌تر به نیاز شما' },
     why: { en: 'Why this matches', fa: 'چرا این پیشنهاد مناسب است' },
     custom: { en: 'Prefer a custom engagement?', fa: 'مسئله شما به راهکار اختصاصی نیاز دارد؟' },
-    customNote: { en: 'Tell us the problem in your words; we scope it personally.', fa: 'مسئله را با زبان خودتان توضیح دهید تا مسیر بررسی و دامنه مناسب آن را مشخص کنیم.' },
+    customNote: { en: 'Describe the problem in your own words so we can agree a useful starting point.', fa: 'مسئله را با زبان خودتان توضیح دهید تا نقطه شروع و دامنه مناسب همکاری را مشخص کنیم.' },
     start: { en: 'Start over', fa: 'شروع دوباره' },
   },
 } as const;

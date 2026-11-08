@@ -55,7 +55,7 @@ export default async function SystemPage({ params }: { params: { locale: string 
             <ol className="os-index">
               {s.osLayers.map((ly) => (
                 <li key={ly.num}>
-                  <span className="os-index-num">{ly.num}</span>
+                  <span className="os-index-num">{new Intl.NumberFormat(l, { minimumIntegerDigits: 2 }).format(Number(ly.num))}</span>
                   <span className="os-index-name">{ly.name}</span>
                   <span className="os-index-role">{ly.role}</span>
                 </li>

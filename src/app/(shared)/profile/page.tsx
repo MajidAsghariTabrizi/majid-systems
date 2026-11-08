@@ -75,7 +75,7 @@ export default async function ProfilePage() {
               <div className="stat">
                 <span className="stat-label">Flagship projects</span>
                 <span className="stat-value">{flagship.length}</span>
-                <span className="stat-sub">production systems</span>
+                <span className="stat-sub">documented systems</span>
               </div>
               <div className="stat">
                 <span className="stat-label">Public repos</span>

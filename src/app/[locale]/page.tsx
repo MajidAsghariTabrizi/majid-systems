@@ -1,16 +1,12 @@
 import type { Metadata } from 'next';
-import { FeaturedSolutions } from '@/components/solutions/FeaturedSolutions';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-
 import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
-import { IntelligenceMap } from '@/components/IntelligenceMap';
-import { OrgNervousSystem } from '@/components/OrgNervousSystem';
-import { SystemFlow } from '@/components/LearningLoop';
-import { Reveal } from '@/components/Reveal';
+import { proofStatusLabel } from '@/lib/proof-display';
+import { DecisionAtlas } from '@/components/DecisionAtlas';
 import { HomeStartGuide } from '@/components/HomeStartGuide';
-import { homeGuide } from '@/content/home-guide';
+import { FeaturedSolutions } from '@/components/solutions/FeaturedSolutions';
 import '../home-guide.css';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -33,349 +29,217 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function LocaleHome({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const l = params.locale;
+  const fa = l === 'fa';
   const t = dict(l);
   const h = t.home;
-  const guide = homeGuide(l);
+  const arrow = fa ? '←' : '→';
+  const number = (i: number) => new Intl.NumberFormat(l, { minimumIntegerDigits: 2 }).format(i);
+  const groups = [t.home2.groups.knowledge, t.home2.groups.execution, t.home2.groups.authority];
 
   return (
-    <>
-      {/* ===== 01 · HERO ===== */}
-      <section className="q-hero" aria-label={l === 'fa' ? 'کوانتی‌ویک — تحول سازمانی با هوش مصنوعی' : 'Quantiviq — AI-native organization transformation'}>
-        <div className="container-wide q-hero-grid">
-          <div className="q-hero-copy">
+    <div className="signature-home">
+      <section className="signature-hero" aria-labelledby="home-title">
+        <div className="container-wide signature-hero-grid">
+          <div className="signature-hero-copy">
             <span className="eyebrow sig">{t.hero.tag}</span>
-            <h1 className="q-display">{t.hero.h1}</h1>
-            <p className="q-hero-sub">{t.hero.sub}</p>
-            <p className="q-hero-body">{t.hero.bodyP1}</p>
-            <p className="q-hero-body">{t.hero.bodyP2}</p>
-            <p className="q-hero-promise">{t.hero.promise}</p>
+            <h1 id="home-title">{t.hero.h1}</h1>
+            <p className="signature-intro">{t.hero.sub}</p>
+            <p className="signature-body">{t.hero.bodyP1}</p>
             <div className="hero-actions">
               <Link href={`/${l}/solutions/find`} className="btn btn-primary">
-                {guide.heroPrimary} <span className="arrow" aria-hidden>{l === 'fa' ? '←' : '→'}</span>
+                {fa ? 'راهکار مناسب من' : 'Find my starting point'}
+                <span aria-hidden="true">{arrow}</span>
               </Link>
-              <Link href={`/${l}/explore`} className="btn">
-                {guide.heroSecondary} <span className="arrow" aria-hidden>{l === 'fa' ? '←' : '→'}</span>
+              <Link href={`/${l}/proof`} className="signature-text-link">
+                {fa ? 'شواهد را بررسی کنید' : 'Inspect the evidence'}
+                <span aria-hidden="true">{arrow}</span>
               </Link>
             </div>
-            <Link href="#start-here" className="home-hero-hint">{guide.heroHint}</Link>
+            <div className="signature-byline">
+              <span className="signature-monogram" aria-hidden="true">
+                M / A
+              </span>
+              <div>
+                <Link href={`/${l}/about`}>
+                  {fa ? 'مجید اصغری تبریزی' : 'Majid Asghari Tabrizi'}
+                </Link>
+                <p>
+                  {fa
+                    ? 'از طراحی محصول تا ساخت سیستم و تغییر شیوه کار سازمان'
+                    : 'Product judgment. Systems engineering. Organizational change.'}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="q-hero-visual">
-            <IntelligenceMap locale={l} />
-          </div>
+          <DecisionAtlas locale={l} />
+        </div>
+        <div className="container-wide signature-index">
+          <span>
+            {fa ? 'یک منطق، از پرسش تا نتیجه' : 'ONE LOGIC, FROM QUESTION TO OUTCOME'}
+          </span>
+          <a href="#start-here">{fa ? 'مسیرتان را انتخاب کنید' : 'Choose your path'} ↓</a>
+          <a href="#proof">{fa ? 'پشتوانه این رویکرد' : 'The work behind it'} ↓</a>
         </div>
       </section>
 
       <HomeStartGuide locale={l} />
-
-      {/* ===== 02 · COMPACT PREVIEW (full simulation lives on /explore) ===== */}
-      <section id="preview" className="q-section" aria-label={t.home2.previewTitle}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{t.home2.previewEyebrow}</span>
-                <h2 className="q-h2">{t.home2.previewTitle}</h2>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="preview-card">
-              <p className="q-lede" style={{ margin: 0 }}>{t.home2.previewBody}</p>
-              <div className="preview-signals" aria-hidden>
-                <span>{l === 'fa' ? 'مسئله مشتری' : 'customer issue'}</span>
-                <span>{l === 'fa' ? 'افت درآمد' : 'revenue drop'}</span>
-                <span>{l === 'fa' ? 'رویداد محصول' : 'product signal'}</span>
-              </div>
-              <div className="hero-actions">
-                <Link href={`/${l}/explore#simulator`} className="btn btn-primary">
-                  {t.home2.previewCta} <span className="arrow" aria-hidden>→</span>
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== 03 · THE PROBLEM ===== */}
-      {/* ===== 02b · FEATURED SOLUTIONS (commercial bridge: thesis → practice) ===== */}
       <FeaturedSolutions locale={l} />
 
-            <section id="problem" className="q-section" aria-label={h.problemH2}>
+      <section id="proof" className="signature-proof q-section" aria-labelledby="proof-title">
         <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{h.problemEyebrow}</span>
-                <h2 className="q-h2">{h.problemH2}</h2>
-              </div>
-            </div>
-            <p className="q-lede">{h.problemLede}</p>
-          </Reveal>
-          <ul className="latency-list">
-            {h.latencyForms.slice(0, 3).map((f, i) => (
-              <Reveal as="li" key={f.name} delay={i * 90} className="latency-row">
-                <div className="latency-main">
-                  <span className="latency-num">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3>{f.name}</h3>
-                    <p className="latency-question">{f.question}</p>
-                  </div>
+          <div className="signature-section-head">
+            <span className="eyebrow">
+              {fa ? 'ایده را با کار بسنجید' : 'JUDGE THE IDEA BY THE WORK'}
+            </span>
+            <h2 id="proof-title">
+              {fa ? 'آنچه ساخته‌ام؛ آنچه آموخته‌ام.' : 'Built, questioned, learned from.'}
+            </h2>
+            <p>
+              {fa
+                ? 'از حافظه سازمانی و زیرساخت عامل‌ها تا تجربه‌هایی که به توقف رسیدند. وضعیت هر سیستم و پشتوانه ادعا را جداگانه ببینید.'
+                : 'Organizational memory, agent infrastructure, and experiments that reached a deliberate stop. Inspect each system’s status and the evidence behind it.'}
+            </p>
+          </div>
+          <div className="signature-evidence-list">
+            {t.proof.items.map((p, i) => (
+              <Link href={`/${l}/proof`} className="signature-evidence-row" key={p.name}>
+                <span className="signature-row-num" aria-hidden="true">
+                  {number(i + 1)}
+                </span>
+                <div>
+                  <h3>{p.name}</h3>
+                  <p>{p.blurb}</p>
                 </div>
-                <div className="latency-bar" aria-hidden>
-                  <span style={{ width: `${34 + i * 14}%` }} />
-                  <span className="latency-bar-label">{guide.timeLabel}</span>
-                </div>
-                <p className="latency-body">{f.body}</p>
-            </Reveal>
-          ))}
-          </ul>
-          <details className="latency-more">
-            <summary>{t.home2.symptomsMore}</summary>
-            <ul className="latency-list">
-            {h.latencyForms.slice(3).map((f, i) => (
-              <Reveal as="li" key={f.name} delay={i * 90} className="latency-row">
-                <div className="latency-main">
-                  <span className="latency-num">{String(i + 4).padStart(2, '0')}</span>
-                  <div>
-                    <h3>{f.name}</h3>
-                    <p className="latency-question">{f.question}</p>
-                  </div>
-                </div>
-                <div className="latency-bar" aria-hidden>
-                  <span style={{ width: `${76 + i * 6}%` }} />
-                  <span className="latency-bar-label">{guide.timeLabel}</span>
-                </div>
-                <p className="latency-body">{f.body}</p>
-              </Reveal>
+                <span className="signature-status" data-status={p.status}>
+                  {proofStatusLabel(p.status, l)}
+                </span>
+                <span className="signature-row-arrow" aria-hidden="true">
+                  {arrow}
+                </span>
+              </Link>
             ))}
-            </ul>
-          </details>
+          </div>
+          <p className="signature-evidence-note">
+            {fa
+              ? 'در صفحه شواهد، کار عمومی قابل بررسی، روایت صاحب پروژه و مدل نمایشی از هم مشخص شده‌اند.'
+              : 'The evidence page distinguishes publicly inspectable work, owner-attested accounts, and illustrative models.'}
+          </p>
+          <Link href={`/${l}/proof`} className="signature-text-link">
+            {fa ? 'وضعیت و منابع هر سیستم' : 'Review status and sources'} {arrow}
+          </Link>
         </div>
       </section>
 
-      {/* ===== 04 · THE SYSTEM ===== */}
-      <section id="operating-model" className="q-section" aria-label={h.systemH2}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{h.systemEyebrow}</span>
-                <h2 className="q-h2">{h.systemH2}</h2>
-              </div>
-            </div>
-            <p className="q-lede">{h.systemLede}</p>
-          </Reveal>
-          <Reveal>
-            <div className="sys3-grid">
-              {[t.home2.groups.knowledge, t.home2.groups.execution, t.home2.groups.authority].map((g) => (
-                <div key={g.name} className="sys3-card">
+      <section
+        id="operating-model"
+        className="signature-model q-section"
+        aria-labelledby="model-title"
+      >
+        <div className="container-wide signature-model-grid">
+          <div className="signature-section-head">
+            <span className="eyebrow">
+              {fa ? 'شیوه فکر کردن من' : 'HOW I THINK ABOUT THE SYSTEM'}
+            </span>
+            <h2 id="model-title">
+              {fa
+                ? 'هوشمندی باید به شیوه کار وصل شود.'
+                : 'Intelligence belongs in the way work runs.'}
+            </h2>
+            <p>
+              {fa
+                ? 'یک پاسخ خوب کافی نیست. دانش، اجرای کار و اختیار تصمیم باید در یک طراحی مشترک به هم برسند.'
+                : 'A good answer is a beginning. Shared knowledge, execution, and decision rights need to work as one design.'}
+            </p>
+            <Link href={`/${l}/system`} className="signature-text-link">
+              {fa ? 'مدل کامل سازمان را بررسی کنید' : 'Inspect the full operating model'} {arrow}
+            </Link>
+          </div>
+          <ol className="signature-principles">
+            {groups.map((g, i) => (
+              <li key={g.name}>
+                <span aria-hidden="true">{number(i + 1)}</span>
+                <div>
                   <h3>{g.name}</h3>
                   <p>{g.role}</p>
                 </div>
-              ))}
-            </div>
-            <p style={{ marginTop: '0.9rem' }}>
-              <Link href={`/${l}/system`} className="home-more-link">
-                {t.home2.systemGroupsNote} <span aria-hidden>→</span>
-              </Link>
-            </p>
-          </Reveal>
-          <Reveal>
-            <OrgNervousSystem
-              locale={l}
-              layers={t.system.osLayers.map((ly, i) => ({
-                key: ['governance', 'authority', 'control-plane', 'workflows', 'agents', 'brain', 'data', 'tools'][i],
-                num: ly.num,
-                name: ly.name,
-                role: ly.role,
-                detail: ly.detail,
-              }))}
-            />
-          </Reveal>
-          <Reveal>
-            <ol className="os-index">
-              {t.system.osLayers.map((ly) => (
-                <li key={ly.num}>
-                  <span className="os-index-num">{ly.num}</span>
-                  <span className="os-index-name">{ly.name}</span>
-                  <span className="os-index-role">{ly.role}</span>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-          <Reveal>
-            <p className="q-punch">{h.systemOutro}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== 05 · HOW THE SYSTEM LEARNS ===== */}
-      <section id="learning" className="q-section" aria-label={h.learningH2}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{h.learningEyebrow}</span>
-                <h2 className="q-h2">{h.learningH2}</h2>
-              </div>
-            </div>
-            <p className="q-lede">{h.learningLede}</p>
-          </Reveal>
-          <Reveal>
-            <SystemFlow steps={h.flow} locale={l} />
-          </Reveal>
-          <Reveal>
-            <p className="q-punch" dir="ltr">{t.system.principle}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== 05b · SERVICES ===== */}
-      <section id="services" className="q-section" aria-label={t.home2.servicesTitle}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{t.services.eyebrow}</span>
-                <h2 className="q-h2">{t.home2.servicesTitle}</h2>
-              </div>
-            </div>
-            <p className="q-lede">{t.home2.servicesNote}</p>
-          </Reveal>
-          <div className="svc-grid">
-            {t.services.offers.map((o, i) => (
-              <Reveal key={o.key} delay={i * 70} className="svc-card">
-                <h3>{o.name}</h3>
-                <p className="svc-one">{o.oneLiner}</p>
-                <p className="svc-who"><strong>{t.services.whoFor}:</strong> {o.whoFor}</p>
-                <p className="svc-out"><strong>{t.services.deliverables}:</strong> {o.deliverables}</p>
-                <Link href={`/${l}/contact?intent=${o.intent}`} className="svc-cta">
-                  {t.services.cta} <span aria-hidden>→</span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 06 · PROOF ===== */}
-      <section id="proof" className="q-section" aria-label={h.proofH2}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{h.proofEyebrow}</span>
-                <h2 className="q-h2">{h.proofH2}</h2>
-              </div>
-              <span className="section-num">{t.proof.levels}</span>
-            </div>
-          </Reveal>
-          <div className="primitive-grid">
-            {t.proof.items.map((p, i) => (
-              <Reveal key={p.name} delay={i * 80} className="primitive-card">
-                <Link href={`/${l}/proof`} className="primitive-link">
-                  <div className="primitive-head">
-                    <span className={`chip chip-${p.level === 'PUBLICLY VERIFIED' ? 'ok' : 'path'}`}>
-                      {p.status}
-                    </span>
-                    <h3>{p.name}</h3>
-                  </div>
-                  <p className="primitive-one">{p.blurb}</p>
-                  <span className="card-cta">
-                    <span>{t.proof.seeSystem}</span>
-                    <span aria-hidden>→</span>
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal>
-            <p className="q-honesty">{h.honesty}</p>
-          </Reveal>
-          <Reveal>
-            <div className="proof-bridge">
-              <span className="eyebrow sig">{t.home2.founderEyebrow} · {h.bridgeEyebrow}</span>
-              <p className="hero-hiring" style={{ marginTop: 0 }}>
-                <Link href={`/${l}/leadership`}>{t.hero.hiringLink}</Link>
-              </p>
-              <p className="proof-bridge-line">{h.bridgeLine}</p>
-              <div className="hero-actions">
-                <Link href={`/${l}/leadership`} className="btn btn-primary">
-                  {h.bridgeLeadership} <span className="arrow" aria-hidden>→</span>
-                </Link>
-                <Link href="/journey" className="btn">
-                  {h.bridgeJourney} <span className="arrow" aria-hidden>→</span>
-                </Link>
-                <Link href="/profile" className="btn">
-                  {h.bridgeProfile} <span className="arrow" aria-hidden>→</span>
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== 07 · METHOD ===== */}
-      <section id="method" className="q-section" aria-label={h.methodH2}>
-        <div className="container-wide">
-          <Reveal>
-            <div className="section-header">
-              <div>
-                <span className="eyebrow sig">{h.methodEyebrow}</span>
-                <h2 className="q-h2">{h.methodH2}</h2>
-              </div>
-            </div>
-            <p className="q-lede">{h.methodLede}</p>
-          </Reveal>
-          <ol className="steps-list">
-            {t.method.stages.slice(0, 3).map((s, i) => (
-              <Reveal as="li" key={s.title} delay={i * 70} className="step-row">
-                <span className="step-num">{String(i + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.note}</p>
-                </div>
-              </Reveal>
+              </li>
             ))}
           </ol>
-          <Reveal>
-            <p style={{ marginTop: '0.9rem' }}>
-              <Link href={`/${l}/method`} className="home-more-link">
-                {t.home2.methodMore} <span aria-hidden>→</span>
-              </Link>
-            </p>
-          </Reveal>
-          <Reveal>
-            <p className="q-founder-p">{t.method.close}</p>
-          </Reveal>
-          <Reveal>
-            <div className="hero-actions" style={{ marginTop: '2.5rem' }}>
-              <Link href={`/${l}/contact`} className="btn btn-primary">
-                {t.method.cta} <span className="arrow" aria-hidden>→</span>
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* ===== FINAL ===== */}
-      <section className="q-final" aria-label={l === 'fa' ? 'شروع گفت‌وگو' : 'Start'}>
-        <div className="container-narrow">
-          <Reveal>
-            <p className="q-final-question">{h.finalQ}</p>
-            <p className="q-final-answer">{h.finalA}</p>
-            <h2 className="q-display q-final-h2">{h.finalH}</h2>
-            <div className="hero-actions q-final-actions">
-              <Link href={`/${l}/contact?intent=diagnostic`} className="btn btn-primary">
-                {h.finalPrimary} <span className="arrow" aria-hidden>→</span>
-              </Link>
-              <Link href={`/${l}/contact`} className="btn">
-                {h.finalSecondary} <span className="arrow" aria-hidden>→</span>
-              </Link>
-            </div>
-          </Reveal>
+      <section id="method" className="q-section signature-method" aria-labelledby="method-title">
+        <div className="container-wide">
+          <div className="signature-section-head">
+            <span className="eyebrow">{fa ? 'مسیر همکاری' : 'A PRACTICAL WAY TO BEGIN'}</span>
+            <h2 id="method-title">{h.methodH2}</h2>
+            <p>{h.methodLede}</p>
+          </div>
+          <ol className="signature-method-steps">
+            {t.method.stages.slice(0, 3).map((s, i) => (
+              <li key={s.title}>
+                <span className="signature-row-num">{number(i + 1)}</span>
+                <h3>{s.title}</h3>
+                <p>{s.note}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="signature-method-links">
+            <Link href={`/${l}/method`} className="signature-text-link">
+              {fa ? 'مراحل کامل همکاری' : 'The complete method'} {arrow}
+            </Link>
+            <Link href={`/${l}/services`} className="signature-text-link">
+              {fa ? 'شیوه‌های همکاری' : 'Ways to work together'} {arrow}
+            </Link>
+          </div>
         </div>
       </section>
-    </>
+
+      <section className="signature-founder" aria-labelledby="founder-title">
+        <div className="container-wide signature-founder-grid">
+          <div>
+            <span className="eyebrow">
+              {fa ? 'پشت این رویکرد' : 'THE PERSON BEHIND THE APPROACH'}
+            </span>
+            <h2 id="founder-title">
+              {fa ? 'مسئولیت فکر؛ مسئولیت اجرا.' : 'Own the thinking. Own the implementation.'}
+            </h2>
+          </div>
+          <div>
+            <p>{h.bridgeLine}</p>
+            <div className="signature-method-links">
+              <Link href={`/${l}/leadership`} className="signature-text-link">
+                {fa ? 'نگاه و تجربه مدیریتی' : 'Leadership & experience'} {arrow}
+              </Link>
+              <Link href="/profile" className="signature-text-link">
+                {fa ? 'پروژه‌های مهندسی · انگلیسی' : 'Engineering work'} {arrow}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="signature-final" aria-labelledby="final-title">
+        <div className="container-wide">
+          <span className="eyebrow">{fa ? 'گام بعد' : 'YOUR NEXT MOVE'}</span>
+          <h2 id="final-title">
+            {fa ? 'کجای کارتان باید بهتر پیش برود؟' : 'Where should work move better?'}
+          </h2>
+          <p>
+            {fa
+              ? 'یک فرایند، یک گره واقعی، یک نتیجه قابل سنجش. گفت‌وگو را از همین‌جا شروع کنیم.'
+              : 'One workflow. One real bottleneck. One outcome we can measure. Let’s start there.'}
+          </p>
+          <div className="hero-actions">
+            <Link href={`/${l}/contact?intent=diagnostic`} className="btn btn-primary">
+              {fa ? 'درباره مسئله‌تان گفت‌وگو کنیم' : 'Discuss your challenge'} {arrow}
+            </Link>
+            <Link href={`/${l}/mind`} className="signature-text-link">
+              {fa ? 'ابتدا از دستیار کوانتی‌ویک بپرسید' : 'Ask Quantiviq Mind first'} {arrow}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

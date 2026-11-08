@@ -24,7 +24,7 @@ export const SITE = {
 
 export const BRAND = {
   wordmark: 'QUANTIVIQ',
-  title: 'Quantiviq — Rebuild the Company for the Agentic Era',
+  title: 'Quantiviq — Design the Company Around Better Decisions',
   description:
     'AI-native organization design: structure, workflows, agents, decision systems and a persistent company brain engineered as one operating model.',
   ogImage: '/og/quantiviq-og.png',

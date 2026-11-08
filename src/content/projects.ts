@@ -78,8 +78,8 @@ export const PROJECTS: Project[] = [
     ],
     whatFailed: [
       'Early prototypes signed and broadcast directly when a modelled spread crossed a threshold — model, state, pool identity, fee tier, and signer boundary were not independent. That surface had to be rebuilt from the evidence layer up.',
-      'Wide initial scope (triangular routes, CEX strategies, sandwiching, blind scanning) created too much surface and too little truth. Scope was narrowed deliberately; breadth is being re-added lane-by-lane only after evidence.',
-      'Long-tail residual observer was activated for LINK/WETH and similar pairs, but upstream providers in the current slot do not support debug_traceTransaction — that lane remains research until the supporting sensor is available.',
+      'Wide initial scope (triangular routes, CEX strategies, sandwiching, blind scanning) created too much surface and too little truth. The scope was narrowed to lanes that could be evaluated against explicit evidence.',
+      'The long-tail residual observer was activated for LINK/WETH and similar pairs, but the available upstream providers did not support debug_traceTransaction. That lane remained research and was not promoted to execution.',
       'A healthy production system can sit in FULL_LIVE_NO_ALPHA for extended periods. That is not failure; it is the system refusing to act without authority. Recognizing this state took time.',
     ],
     technicalImplementation: [
@@ -107,7 +107,7 @@ export const PROJECTS: Project[] = [
       'Honest state naming matters. FULL_LIVE_NO_ALPHA is a valid terminal state. Pretending otherwise is how systems become fragile.',
     ],
     currentState:
-      'Production live in observation mode. The system is running, dual-provider authority is available, and no currently observed opportunity passes every profitability and safety gate. The next legitimate terminal state is FIRST_POSITIVE_REALIZED_PNL — and that label is only applied after a real transaction is submitted, confirmed, balance-reconciled, and produces positive realized net PnL.',
+      'Retired on 2026-09-17 after a measured evaluation of the targeted opportunities. No opportunity cleared the required economic and safety gates, and no revenue transaction was executed. The architecture, decision record and negative result remain available as a case study. Retirement is the final recorded outcome; this project is no longer presented as a running production system.',
     githubUrl: 'https://github.com/MajidAsghariTabrizi/anti-gravity-phoenix-v4',
     languages: ['Rust', 'Python', 'Go', 'Solidity', 'PLpgSQL', 'TypeScript', 'Shell', 'Dockerfile'],
     topics: [

@@ -1,6 +1,6 @@
 /* ============================================================
-   Executive Dialogue — Boardroom Ivory (direction A)
-   ivory paper / deep ink / forest + brass. No gradients, no glow.
+   Executive Dialogue — Mineral & Oxblood
+   mineral paper / graphite ink / oxblood + copper.
    ============================================================ */
 @font-face {
   font-family: 'Inter';
@@ -17,20 +17,20 @@
   font-display: swap;
 }
 :root {
-  --ex-ivory: #f7f4ec;
-  --ex-ivory-deep: #efe9dc;
-  --ex-ink: #1d1a16;
-  --ex-ink-soft: #4c463c;
-  --ex-ink-mute: #665d4f;
-  --ex-forest: #1f5c45;
-  --ex-forest-deep: #174534;
-  --ex-brass: #a8894f;
-  --ex-brass-soft: #c9b489;
+  --ex-ivory: #f5f1e9;
+  --ex-ivory-deep: #ece5d9;
+  --ex-ink: #29242a;
+  --ex-ink-soft: #554950;
+  --ex-ink-mute: #6c6065;
+  --ex-forest: #542b3a;
+  --ex-forest-deep: #3c1c29;
+  --ex-brass: #ab5836;
+  --ex-brass-soft: #d7b69e;
   /* text-safe variants (>=4.5:1 on ivory; decorative brass stays for lines) */
-  --ex-brass-ink: #6e5626;
-  --ex-ink-mute-ink: #665d4f;
-  --ex-line: #ddd4c2;
-  --ex-card: #fdfbf6;
+  --ex-brass-ink: #884329;
+  --ex-ink-mute-ink: #6c6065;
+  --ex-line: #d9cfc4;
+  --ex-card: #fffdf8;
   --ex-danger: #8c3a2b;
 }
 * { box-sizing: border-box; }
@@ -266,7 +266,7 @@ html[dir='rtl'] body.ex-body {
 
 /* mechanism diagram */
 .ex2-hero-visual { display: flex; justify-content: center; }
-.mx-stage { width: 100%; max-width: 460px; display: flex; flex-direction: column; align-items: stretch; background: var(--ex-card); border: 1px solid var(--ex-line); border-radius: 16px; padding: clamp(16px, 2vw, 26px); min-height: 430px; box-shadow: 0 1px 0 rgba(29,26,22,0.04); }
+.mx-stage { width: 100%; max-width: 460px; display: flex; flex-direction: column; align-items: stretch; background: var(--ex-card); border: 1px solid var(--ex-line); border-radius: 16px; padding: clamp(16px, 2vw, 26px); min-height: 430px; box-shadow: 0 1px 0 rgba(36,26,35,0.04); }
 .mx-chip { align-self: center; border: 1px solid var(--ex-line); background: var(--ex-ivory); border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--ex-ink-soft); }
 .mx-link { width: 1px; height: 18px; background: var(--ex-brass-soft); align-self: center; }
 .mx-mind { align-self: center; border: 1px solid var(--ex-forest-deep); background: var(--ex-forest); color: var(--ex-ivory); border-radius: 10px; padding: 10px 22px; text-align: center; }
@@ -303,7 +303,7 @@ html[dir='rtl'] body.ex-body {
 [dir="rtl"] .ex2-chat-mode { letter-spacing: 0; }
 .ex-back-btn { background: none; border: 1px solid var(--ex-line); border-radius: 8px; color: var(--ex-ink-soft); padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: inherit; min-height: 38px; }
 .ex-back-btn:hover { border-color: var(--ex-forest); color: var(--ex-forest); }
-.ex-jump { position: sticky; bottom: 10px; margin: 10px auto 0; display: block; border: 1px solid var(--ex-brass-soft); background: var(--ex-card); color: var(--ex-brass-ink); border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; min-height: 40px; box-shadow: 0 2px 8px rgba(29,26,22,0.08); z-index: 5; }
+.ex-jump { position: sticky; bottom: 10px; margin: 10px auto 0; display: block; border: 1px solid var(--ex-brass-soft); background: var(--ex-card); color: var(--ex-brass-ink); border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; min-height: 40px; box-shadow: 0 2px 8px rgba(36,26,35,0.08); z-index: 5; }
 .ex-challenge { margin-top: 8px; background: none; border: 1px dashed var(--ex-brass-soft); color: var(--ex-brass-ink); border-radius: 8px; padding: 7px 13px; font-size: 12.5px; cursor: pointer; font-family: inherit; min-height: 36px; }
 .ex-challenge:hover { border-color: var(--ex-forest); color: var(--ex-forest); }
 
@@ -336,10 +336,10 @@ html[dir='rtl'] body.ex-body {
 .ex-root .mind-md-table table { border-collapse: collapse; font-size: 13.5px; }
 .ex-root .mind-md-table th, .ex-root .mind-md-table td { border: 1px solid var(--ex-line); padding: 6px 10px; text-align: start; }
 .ex-root .mind-md-table th { background: var(--ex-ivory-deep); font-weight: 700; }
-.ex-root .mind-pre { background: #23211c; color: #efe9dc; border: 1px solid #33302a; border-radius: 9px; padding: 12px 14px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; margin: 0.5em 0; font-family: ui-monospace, monospace; }
+.ex-root .mind-pre { background: #241a23; color: #ece5d9; border: 1px solid #51404b; border-radius: 9px; padding: 12px 14px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; margin: 0.5em 0; font-family: ui-monospace, monospace; }
 .ex-root .mind-incomplete { color: var(--ex-danger); font-size: 12.5px; font-weight: 600; margin: 8px 0 0; }
 
-.ex-root .mind-evidence-overlay { position: fixed; inset: 0; background: rgba(29,26,22,0.35); display: flex; justify-content: flex-end; z-index: 120; }
+.ex-root .mind-evidence-overlay { position: fixed; inset: 0; background: rgba(36,26,35,0.35); display: flex; justify-content: flex-end; z-index: 120; }
 .ex-root .mind-evidence { width: min(420px, 100%); height: 100%; background: var(--ex-ivory); border-inline-start: 1px solid var(--ex-line); display: flex; flex-direction: column; overflow: hidden; }
 @media (max-width: 760px) {
   .ex-root .mind-evidence-overlay { align-items: flex-end; }

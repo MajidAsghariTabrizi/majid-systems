@@ -79,9 +79,9 @@
   margin-inline: auto;
   display: block;
 }
-.intel-map .im-h { font: 700 17px var(--font-sans); fill: #163f37; letter-spacing: 0.01em; }
-.intel-map .im-t { font: 500 11.5px var(--font-sans); fill: #53645d; }
-.intel-map .im-t2 { font: 600 12.5px var(--font-sans); fill: #f2f1e8; }
+.intel-map .im-h { font: 700 17px var(--font-sans); fill: var(--brand); letter-spacing: 0.01em; }
+.intel-map .im-t { font: 500 11.5px var(--font-sans); fill: var(--text-muted); }
+.intel-map .im-t2 { font: 600 12.5px var(--font-sans); fill: var(--inverse-fg); }
 html[lang='fa'] .intel-map .im-h,
 html[lang='fa'] .intel-map .im-t { font-family: 'Estedad', var(--font-sans); }
 .im-loop {

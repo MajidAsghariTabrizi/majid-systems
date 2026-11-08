@@ -17,6 +17,7 @@ import '../home-v2.css';
 import '../mind-evidence.css';
 import '../solutions.css';
 import '../site-polish.css';
+import '../signature.css';
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       siteName: 'Quantiviq',
       title: BRAND.title,
       description: BRAND.description,
-      images: [{ url: BRAND.ogImage, width: 1200, height: 630, alt: 'Quantiviq — Rebuild the Company' }],
+      images: [{ url: BRAND.ogImage, width: 1200, height: 630, alt: 'Quantiviq — Design the Company Around Better Decisions' }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -78,7 +79,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export const viewport: Viewport = {
-  themeColor: '#f7f4ec',
+  themeColor: '#f5f1e9',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,

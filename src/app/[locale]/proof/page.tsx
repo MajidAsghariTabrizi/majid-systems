@@ -6,6 +6,7 @@ import { dict, isLocale } from '@/content/i18n';
 import { socialMeta } from '@/lib/social';
 import { PRIMITIVES } from '@/content/quantiviq';
 import { Reveal } from '@/components/Reveal';
+import { proofDescription, proofLevelLabel, proofStatusLabel } from '@/lib/proof-display';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
@@ -46,6 +47,9 @@ export default async function ProofPage({ params }: { params: { locale: string }
       localName: loc.name,
       localBlurb: loc.blurb,
       level: loc.level,
+      localStatus: proofStatusLabel(p.status, l),
+      localLevel: proofLevelLabel(loc.level, l),
+      localProof: proofDescription(p.key, p.proof, l),
     };
   });
 
@@ -67,12 +71,12 @@ export default async function ProofPage({ params }: { params: { locale: string }
               <Reveal key={p.key} delay={i * 80} className="primitive-card">
                 <Link href={p.href} className="primitive-link">
                   <div className="primitive-head">
-                    <span className={`chip chip-${p.statusKind}`}>{p.status}</span>
+                    <span className={`chip chip-${p.statusKind}`} data-status={p.status}>{p.localStatus}</span>
                     <h3>{p.localName}</h3>
                   </div>
                   <p className="primitive-one">{p.localBlurb}</p>
                   <p className="primitive-proof">
-                    {p.level} · {p.proof}
+                    <span data-evidence-level={p.level}>{p.localLevel}</span> · {p.localProof}
                   </p>
                   <span className="card-cta">
                     <span>
@@ -90,8 +94,8 @@ export default async function ProofPage({ params }: { params: { locale: string }
           </Reveal>
           <Reveal>
             <div className="hero-actions">
-              <Link href="/journey" className="btn">{t.journeyCta} <span className="arrow" aria-hidden>→</span></Link>
-              <Link href="/profile" className="btn">{t.profileCta} <span className="arrow" aria-hidden>→</span></Link>
+              <Link href="/journey" className="btn">{t.journeyCta}{l === 'fa' ? <span className="shared-en-mark"> · انگلیسی</span> : null} <span className="arrow" aria-hidden>→</span></Link>
+              <Link href="/profile" className="btn">{t.profileCta}{l === 'fa' ? <span className="shared-en-mark"> · انگلیسی</span> : null} <span className="arrow" aria-hidden>→</span></Link>
             </div>
           </Reveal>
         </div>

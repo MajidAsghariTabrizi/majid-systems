@@ -33,14 +33,14 @@ const VISUAL_COPY = {
 } satisfies Record<SolutionCategory, { en: string[]; fa: string[] }>;
 
 const C = {
-  ink: '#163f37',
-  line: '#c4d2c7',
-  muted: '#81988b',
-  green: '#bce7d2',
-  pale: '#eaf1e9',
-  paper: '#ffffff',
-  warm: '#f1eadc',
-  copper: '#b65e37',
+  ink: 'var(--brand, #542b3a)',
+  line: 'var(--border, #d9cfc4)',
+  muted: 'var(--text-muted, #6c6065)',
+  accent: 'var(--celadon, #e7c5a6)',
+  pale: 'var(--selected, #eee0dc)',
+  paper: 'var(--surface, #fffdf8)',
+  warm: 'var(--surface-2, #ece5d9)',
+  copper: 'var(--copper, #ab5836)',
 };
 
 function Check({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
@@ -71,8 +71,8 @@ function ReviewEngine() {
     <g>
       <circle cx="281" cy="167" r="52" fill="none" stroke={C.line} strokeDasharray="3 7" />
       <rect x="246" y="132" width="70" height="70" rx="21" fill={C.ink} />
-      <path d="M263 155h13v-9m0 9h14v-9m-27 9v24h13v9m0-9h14v9m0-33v24m-27-12h27m-14-12v24" fill="none" stroke={C.green} strokeWidth="1.8" strokeLinejoin="round" />
-      <circle cx="304" cy="199" r="17" fill={C.green} stroke={C.paper} strokeWidth="4" />
+      <path d="M263 155h13v-9m0 9h14v-9m-27 9v24h13v9m0-9h14v9m0-33v24m-27-12h27m-14-12v24" fill="none" stroke={C.accent} strokeWidth="1.8" strokeLinejoin="round" />
+      <circle cx="304" cy="199" r="17" fill={C.accent} stroke={C.paper} strokeWidth="4" />
       <Check x={304} y={199} />
       <path d="M183 166h39m-7-5 7 5-7 5M339 166h31m-7-5 7 5-7 5" fill="none" stroke={C.muted} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="198" cy="166" r="3.5" fill={C.ink} />
@@ -87,7 +87,7 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
       <rect x="383" y="58" width="214" height="218" rx="15" fill={C.paper} stroke={C.line} />
       <path d="M383 95h214" stroke={C.line} />
       <circle cx="400" cy="77" r="3" fill={C.ink} />
-      <circle cx="412" cy="77" r="3" fill={C.green} />
+      <circle cx="412" cy="77" r="3" fill={C.accent} />
       <path d="M430 77h76" stroke={C.line} strokeWidth="4" strokeLinecap="round" />
       {category === 'sales' && (
         <g>
@@ -95,7 +95,7 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
           <path d="M414 124h14m-14 6h14m-14 6h8" stroke={C.ink} strokeWidth="2" strokeLinecap="round" />
           <path d="M451 122h118m-118 13h76" stroke={C.line} strokeWidth="4" strokeLinecap="round" />
           {[169, 190, 211].map(y => <g key={y}><path d={`M405 ${y}h97m28 0h42`} stroke={C.line} strokeWidth="4" strokeLinecap="round" /><circle cx="516" cy={y} r="2" fill={C.muted} /></g>)}
-          <rect x="497" y="235" width="78" height="22" rx="11" fill={C.green} />
+          <rect x="497" y="235" width="78" height="22" rx="11" fill={C.accent} />
           <Check x={536} y={247} scale={0.8} />
         </g>
       )}
@@ -104,7 +104,7 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
           <rect x="403" y="112" width="174" height="43" rx="8" fill={C.pale} />
           <path d="M415 126h66m-66 13h41" stroke={C.muted} strokeWidth="3" strokeLinecap="round" />
           <path d="M527 137l8-6 9 2 14-10" stroke={C.ink} strokeWidth="2.4" fill="none" strokeLinecap="round" />
-          {[178, 206, 234].map((y, i) => <g key={y}><circle cx="416" cy={y} r="6" fill={i === 1 ? C.warm : C.green} /><path d={`M433 ${y}h68m21 0h42`} stroke={C.line} strokeWidth="4" strokeLinecap="round" /></g>)}
+          {[178, 206, 234].map((y, i) => <g key={y}><circle cx="416" cy={y} r="6" fill={i === 1 ? C.warm : C.accent} /><path d={`M433 ${y}h68m21 0h42`} stroke={C.line} strokeWidth="4" strokeLinecap="round" /></g>)}
         </g>
       )}
       {category === 'operations' && (
@@ -112,7 +112,7 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
           {[405, 462, 519].map((x, i) => <g key={x}>
             <rect x={x} y="115" width="53" height="141" rx="6" fill={C.pale} />
             <path d={`M${x + 9} 129h32`} stroke={C.muted} strokeWidth="3" strokeLinecap="round" />
-            {[147, 180, ...(i === 1 ? [213] : [])].map((y, j) => <g key={y}><rect x={x + 5} y={y} width="43" height="26" rx="4" fill={i === 2 ? C.green : C.paper} stroke={C.line} />{i === 2 ? <Check x={x + 26} y={y + 14} scale={0.65} /> : <path d={`M${x + 12} ${y + 10}h${j ? 15 : 26}m-26 7h18`} stroke={C.line} strokeWidth="2" strokeLinecap="round" />}</g>)}
+            {[147, 180, ...(i === 1 ? [213] : [])].map((y, j) => <g key={y}><rect x={x + 5} y={y} width="43" height="26" rx="4" fill={i === 2 ? C.accent : C.paper} stroke={C.line} />{i === 2 ? <Check x={x + 26} y={y + 14} scale={0.65} /> : <path d={`M${x + 12} ${y + 10}h${j ? 15 : 26}m-26 7h18`} stroke={C.line} strokeWidth="2" strokeLinecap="round" />}</g>)}
           </g>)}
         </g>
       )}
@@ -121,8 +121,8 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
           <rect x="403" y="115" width="125" height="43" rx="10" fill={C.pale} />
           <path d="M416 129h93m-93 13h64" stroke={C.muted} strokeWidth="3" strokeLinecap="round" />
           <path d="M442 170h132v61H450l-11 10v-63a8 8 0 0 1 3-8Z" fill={C.ink} />
-          <path d="M452 185h104m-104 12h88m-88 12h64" stroke={C.green} strokeWidth="3" strokeLinecap="round" />
-          <circle cx="563" cy="244" r="10" fill={C.green} /><Check x={563} y={244} scale={0.65} />
+          <path d="M452 185h104m-104 12h88m-88 12h64" stroke={C.accent} strokeWidth="3" strokeLinecap="round" />
+          <circle cx="563" cy="244" r="10" fill={C.accent} /><Check x={563} y={244} scale={0.65} />
         </g>
       )}
       {category === 'enterprise' && (
@@ -138,7 +138,7 @@ function OutputPanel({ category }: { category: SolutionCategory }) {
         <g>
           <path d="M405 119h85m-85 11h47" stroke={C.muted} strokeWidth="3" strokeLinecap="round" />
           <path d="M406 222h166" stroke={C.line} />
-          {[{x:414,h:35},{x:448,h:58},{x:482,h:48},{x:516,h:85},{x:550,h:69}].map(({x,h}, i) => <rect key={x} x={x} y={222-h} width="21" height={h} rx="4" fill={i === 3 ? C.ink : C.green} />)}
+          {[{x:414,h:35},{x:448,h:58},{x:482,h:48},{x:516,h:85},{x:550,h:69}].map(({x,h}, i) => <rect key={x} x={x} y={222-h} width="21" height={h} rx="4" fill={i === 3 ? C.ink : C.accent} />)}
           <path d="M420 171l38-28 32 9 37-34 31 12" fill="none" stroke={C.copper} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <circle cx="527" cy="118" r="3.5" fill={C.copper} />
           <path d="M406 244h112" stroke={C.line} strokeWidth="4" strokeLinecap="round" />

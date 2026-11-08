@@ -7,7 +7,7 @@
 .home-guide-tabs { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-inline-end: 1px solid var(--border); background: var(--surface-2); }
 .home-guide-tabs button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 83px; padding: 16px 14px; border: 1px solid transparent; border-radius: 12px; text-align: start; color: var(--ink); background: transparent; cursor: pointer; font: inherit; transition: background .15s, border-color .15s; }
 .home-guide-tabs button:hover { background: var(--surface); border-color: var(--border); }
-.home-guide-tabs button[aria-selected='true'] { background: var(--surface); border-color: var(--brand); box-shadow: 0 2px 8px #163f3708; }
+.home-guide-tabs button[aria-selected='true'] { background: var(--surface); border-color: var(--brand); box-shadow: 0 2px 8px #542b3a08; }
 .home-guide-tab-number { flex: 0 0 auto; color: var(--brand); font-size: 12px; font-weight: 600; }
 .home-guide-tabs strong { display: block; font-size: 15px; font-weight: 650; }
 .home-guide-tabs small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.65; }

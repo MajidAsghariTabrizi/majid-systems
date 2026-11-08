@@ -201,7 +201,7 @@ export function LabTopology({ snap, locale, live }: { snap: LabSnapshot; locale:
                         key={i}
                         d={`M ${A.x + 52} ${A.y} C ${mx} ${A.y}, ${mx} ${B.y}, ${B.x - 52} ${B.y}`}
                         fill="none"
-                        stroke={learning ? 'rgba(138,180,248,.35)' : 'rgba(124,217,183,.25)'}
+                        stroke={learning ? 'var(--copper)' : 'var(--border-strong)'}
                         strokeWidth={highlighted ? 1.8 : isLive ? 1.1 : 0.7}
                         className={isLive && (A.live ?? 0) > 0.05 ? 'lab-flow-line' : undefined}
                         opacity={sel ? (highlighted ? 0.95 : 0.25) : 0.6}

@@ -1,0 +1,222 @@
+/* Quantiviq / operator's fieldbook.
+   Shared presentation layer; interactive viewport and chat geometry stay local. */
+:root {
+  --radius: 9px;
+  --radius-lg: 14px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 2px rgb(56 30 42 / .04), 0 12px 36px rgb(56 30 42 / .035);
+  --shadow-lift: 0 6px 30px rgb(56 30 42 / .09);
+}
+html { accent-color: var(--brand); }
+body { background: var(--canvas); }
+h1, h2 { text-wrap: balance; }
+button, input, select, textarea { accent-color: var(--brand); }
+.site-header { background: rgb(245 241 233 / .96); backdrop-filter: blur(16px); }
+.site-header-inner { min-height: 76px; }
+.brand-word { letter-spacing: .08em; }
+.btn, .sol-button { min-height: 48px; padding: .75rem 1.15rem; border-radius: 6px; }
+.btn-primary { color: var(--inverse-fg); }
+.eyebrow { font-size: .7rem; letter-spacing: .12em; }
+.sig::before { background: var(--copper); }
+.q-hero { background: linear-gradient(110deg, var(--canvas), #eee4d9); }
+.q-hero .q-display { max-width: 22ch; }
+.q-h2 { letter-spacing: -.035em; }
+.q-section { padding-block: clamp(48px, 6vw, 88px); }
+.section-header { margin-bottom: 2rem; }
+.q-hero-body, .lede { max-width: 65ch; }
+.q-final { background: var(--surface-2); }
+.service-card, .project-card, .book-card, .primitive-card, .contact-card, .ins-card,
+.stack-panel, .mindset-card { box-shadow: none; border-radius: var(--radius); }
+.project-card:hover, .book-card:hover, .primitive-card:hover { border-color: var(--copper); }
+.service-card { border-inline-start: 3px solid var(--brand); }
+.step-row { padding-block: 28px; }
+.ins-prose { max-width: 72ch; }
+.ins-prose a { text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.ins-prose blockquote { border-inline-start-color: var(--copper); background: var(--surface-2); }
+.ins-featured, .book-skill { box-shadow: none; }
+.book-card { background: var(--surface); }
+.book-filters .on, .chip-btn.on, .stack-node.on { border-color: var(--brand); background: var(--selected); }
+.knowledge-search input, .sol-search input { background: var(--surface); }
+.lead-form { box-shadow: 0 12px 40px rgb(56 30 42 / .035); border-radius: var(--radius); }
+.lead-field label { font-weight: 600; }
+.lead-field input, .lead-field textarea, .lead-field select { border-radius: 5px; }
+.site-footer { background: #e9e1d5; border-top: 1px solid var(--border-strong); padding-top: 56px; }
+.footer-founder-name { color: var(--brand); }
+
+/* Commercial detail pages: a calm hierarchy with a readable sticky brief. */
+.sol-detail-hero { padding-top: 28px; gap: clamp(24px, 5vw, 64px); }
+.sol-section-nav { gap: 8px 24px; background: var(--canvas); }
+.sol-section-nav a { min-height: 44px; font-weight: 550; }
+.sol-content-section { padding-block: 12px 44px; }
+.sol-content-section > h2 { max-width: 28ch; }
+.sol-capability-grid li { background: var(--surface); border-radius: 5px; }
+.sol-detail-page .sol-outcome { border-inline-start: 3px solid var(--copper); }
+.sol-summary-card { box-shadow: none; border-top: 3px solid var(--brand); }
+.sol-scenario { background: var(--surface-2); }
+.sol-card { border-radius: 8px; box-shadow: none; }
+.sol-card:hover { border-color: var(--copper); box-shadow: var(--shadow); }
+.sol-status-guide { line-height: 1.8; }
+.sol-faq details { border-radius: 5px; }
+
+/* Homepage composition: statement / working model / paths / inspectable work. */
+.signature-hero { padding: clamp(40px, 6vw, 88px) 0 0; background: linear-gradient(120deg, #f5f1e9 40%, #ebe0d5); border-bottom: 1px solid var(--border); }
+.signature-hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 76px); }
+.signature-hero-copy { min-width: 0; padding-block: 15px; }
+.signature-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(44px, 4.8vw, 72px); font-weight: 500; line-height: 1.04; letter-spacing: -.055em; max-width: 15ch; margin: 25px 0; color: var(--brand); }
+.signature-intro { font-size: clamp(17px, 1.45vw, 20px); line-height: 1.8; max-width: 48ch; color: var(--ink); }
+.signature-body { color: var(--muted); font-size: 15px; line-height: 1.85; max-width: 50ch; }
+.signature-hero .hero-actions { margin-block: 28px 34px; align-items: center; gap: 20px; }
+.signature-text-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding-block: 5px; color: var(--brand); font-size: 13px; font-weight: 600; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 6px; }
+.signature-text-link:hover { text-decoration-color: var(--brand); }
+.signature-byline { display: flex; align-items: center; gap: 14px; border-top: 1px solid var(--border); padding-top: 22px; }
+.signature-monogram { width: 46px; height: 46px; border: 1px solid var(--copper); display: grid; place-items: center; color: var(--copper); font: 12px var(--font-mono); flex-shrink: 0; }
+.signature-byline a { font-size: 13px; font-weight: 650; }
+.signature-byline p { font-size: 11px; color: var(--muted); margin: 3px 0 0; line-height: 1.8; }
+.signature-index { display: flex; gap: 20px 40px; align-items: center; flex-wrap: wrap; margin-top: 52px; padding-block: 20px; border-top: 1px solid var(--border); font-size: 11px; }
+.signature-index > span { color: var(--muted); margin-inline-end: auto; font: 10px var(--font-mono); letter-spacing: .08em; }
+.signature-index a { display: inline-flex; align-items: center; min-height: 36px; gap: 10px; color: var(--brand); }
+.signature-home .home-guide { padding-block: clamp(42px, 5vw, 72px); }
+.signature-home .home-guide-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); max-width: none; gap: 8px 50px; align-items: end; }
+.signature-home .home-guide-heading > .eyebrow { grid-column: 1 / -1; }
+.signature-home .home-guide-heading h2 { margin: 0; }
+.signature-home .home-guide-shell { border-radius: 8px; }
+.signature-home .home-guide-tabs button { border-radius: 5px; }
+.signature-home .home-guide-tabs button[aria-selected='true'] { background: var(--brand); color: var(--inverse-fg); box-shadow: none; }
+.signature-home .home-guide-tabs button[aria-selected='true'] :is(small, .home-guide-tab-number, .home-guide-tab-arrow) { color: var(--inverse-fg); }
+.signature-home .sol-carousel { padding-block: 32px 64px; }
+.signature-home .sol-carousel-head h2 { font-size: clamp(25px, 3vw, 36px); font-weight: 550; letter-spacing: -.035em; line-height: 1.3; }
+.signature-home .sol-track { padding-block: 16px; }
+.signature-section-head { max-width: 760px; margin-bottom: 32px; }
+.signature-section-head h2 { font-size: clamp(30px, 3.5vw, 45px); letter-spacing: -.04em; line-height: 1.15; font-weight: 550; margin: 16px 0; }
+.signature-section-head > p { color: var(--muted); font-size: 15px; line-height: 1.95; max-width: 64ch; }
+.signature-proof { background: var(--surface); }
+.signature-evidence-list { border-top: 1px solid var(--border-strong); }
+.signature-evidence-row { display: grid; grid-template-columns: 38px minmax(0, 1fr) 165px 20px; gap: 22px; align-items: start; padding: 25px 10px; border-bottom: 1px solid var(--border); transition: background .15s; }
+.signature-evidence-row:hover { background: var(--surface-2); }
+.signature-row-num { font: 11px var(--font-mono); color: var(--copper); line-height: 2; }
+.signature-evidence-row h3 { font-size: 19px; line-height: 1.4; margin-bottom: 8px; font-weight: 600; }
+.signature-evidence-row p { font-size: 13px; line-height: 1.85; color: var(--muted); max-width: 78ch; margin: 0; }
+.signature-status { font: 10px/1.7 var(--font-mono); border: 1px solid var(--border); padding: 5px 8px; color: var(--brand); width: fit-content; }
+.signature-row-arrow { color: var(--copper); }
+.signature-evidence-note { font-size: 11px; color: var(--muted); margin: 24px 0 5px; line-height: 1.9; }
+.signature-model-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+.signature-principles { padding: 0; margin: 0; list-style: none; }
+.signature-principles li { display: flex; gap: 24px; padding: 24px 0; border-top: 1px solid var(--border-strong); }
+.signature-principles li > span { font: 11px var(--font-mono); color: var(--copper); padding-top: 5px; }
+.signature-principles h3 { font-size: 20px; font-weight: 550; }
+.signature-principles p { font-size: 14px; line-height: 1.85; color: var(--muted); margin: 0; }
+.signature-method { background: var(--surface); }
+.signature-method-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 40px 0 20px; padding: 0; gap: 40px; }
+.signature-method-steps li { border-top: 1px solid var(--brand); padding-top: 18px; }
+.signature-method-steps h3 { margin: 20px 0 12px; font-size: 20px; }
+.signature-method-steps p { color: var(--muted); font-size: 14px; line-height: 1.85; }
+.signature-method-links { display: flex; flex-wrap: wrap; gap: 12px 30px; }
+.signature-founder { background: var(--brand); color: var(--inverse-fg); padding-block: clamp(48px, 6vw, 80px); }
+.signature-founder-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+.signature-founder .eyebrow { color: #e7c5a6; }
+.signature-founder h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(30px, 3.5vw, 46px); font-weight: 400; line-height: 1.2; margin: 18px 0 0; }
+.signature-founder p { color: var(--inverse-fg); font-size: 16px; line-height: 1.95; }
+.signature-founder .signature-text-link { color: #faf3e8; text-decoration-color: #ad8b8d; }
+.signature-final { padding-block: clamp(60px, 7vw, 110px); background: #ece2d5; }
+.signature-final h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(38px, 5.5vw, 72px); color: var(--brand); font-weight: 500; letter-spacing: -.045em; margin: 24px 0; max-width: 20ch; }
+.signature-final p { color: var(--muted); max-width: 56ch; line-height: 1.9; margin-bottom: 30px; }
+
+/* Signature interactive plate, built from real accessible buttons. */
+.decision-atlas { padding: 0; background: #faf6ef; border: 1px solid var(--border-strong); box-shadow: 10px 12px 0 #e6d9cd; min-width: 0; color: var(--ink); }
+.atlas-heading, .atlas-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; font: 9px/1.7 var(--font-mono); color: var(--muted); }
+.atlas-heading { border-bottom: 1px solid var(--border); }
+.atlas-heading > :last-child { color: var(--copper); }
+.atlas-plate { position: relative; aspect-ratio: 500 / 340; max-width: 580px; margin-inline: auto; background: radial-gradient(#c1afa1 .65px, transparent .65px); background-size: 18px 18px; }
+.atlas-lines { display: block; width: 100%; height: 100%; color: var(--copper); }
+.atlas-orbit { fill: none; stroke: #d9c7b6; stroke-width: 1; }
+.atlas-orbit.inner { stroke-dasharray: 2 5; }
+.atlas-route { fill: none; stroke: var(--copper); stroke-width: 1.1; }
+.atlas-register { stroke: #b7a18e; stroke-width: 1; }
+.atlas-notation { font: 9px var(--font-mono); fill: var(--muted); }
+.atlas-node { position: absolute; transform: translate(-50%, -50%); display: grid; place-content: center; gap: 3px; min-width: 76px; min-height: 52px; background: #faf6ef; border: 1px solid var(--border-strong); font: 550 11px/1.3 var(--font-sans); color: var(--brand); padding: 7px 10px; transition: background .15s, border-color .15s; }
+.atlas-node-number { font: 8px var(--font-mono); color: var(--copper); }
+.atlas-context { min-width: 110px; min-height: 110px; border-radius: 50%; background: #eee0d3; }
+.atlas-authority { border: 1px solid var(--brand); border-radius: 4px; min-width: 100px; }
+.atlas-node:hover { border-color: var(--brand); background: var(--selected); }
+.atlas-node[aria-pressed='true'] { background: var(--brand); color: #faf3e8; border-color: var(--brand); box-shadow: 0 0 0 4px #faf6ef, 0 0 0 5px var(--copper); }
+.atlas-node[aria-pressed='true'] .atlas-node-number { color: #e7c5a6; }
+.atlas-node:focus-visible { outline: 3px solid var(--copper); outline-offset: 6px; }
+.atlas-detail { padding: 20px 24px 24px; border-top: 1px solid var(--border); min-height: 202px; }
+.atlas-detail .atlas-detail-note { font-size: 10px; color: var(--copper); margin: 0 0 10px; line-height: 1.8; }
+.atlas-detail h2 { font-size: 20px; font-weight: 550; letter-spacing: -.03em; line-height: 1.3; margin-bottom: 10px; }
+.atlas-detail p { font-size: 12px; line-height: 1.85; color: var(--muted); margin: 0; }
+.atlas-footer { border-top: 1px solid var(--border); }
+.atlas-footer a { color: var(--brand); font-family: var(--font-sans); font-size: 11px; min-height: 32px; display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Persian is composed independently; no letter-spacing in joined script. */
+html[lang='fa'] .signature-hero h1, html[lang='fa'] .signature-final h2, html[lang='fa'] .signature-founder h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: 0; line-height: 1.65; }
+html[lang='fa'] .signature-hero h1 { font-size: clamp(34px, 3.4vw, 52px); max-width: 19ch; margin-block: 20px; }
+html[lang='fa'] .signature-section-head h2 { line-height: 1.65; font-size: clamp(28px, 2.8vw, 39px); }
+html[lang='fa'] :is(.signature-index, .atlas-heading, .atlas-footer, .signature-status, .atlas-detail-note) { font-family: var(--font-sans); letter-spacing: 0; }
+html[lang='fa'] .signature-intro { font-size: 17px; line-height: 2; }
+html[lang='fa'] .atlas-detail { min-height: 214px; }
+html[lang='fa'] .atlas-detail h2 { line-height: 1.8; font-size: 18px; }
+html[lang='fa'] .atlas-detail p { line-height: 2; }
+html[lang='fa'] .signature-status { line-height: 1.9; font-size: 10px; }
+html[lang='fa'] .signature-evidence-row h3 { line-height: 1.8; font-size: 18px; }
+html[lang='fa'] .eyebrow { letter-spacing: 0; }
+html[lang='fa'] .signature-section-head h2 { letter-spacing: 0; }
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .site-header-inner { gap: 10px; padding-inline: 18px; }
+  .nv-link, .nv-btn { padding-inline: 7px; font-size: 12px; }
+  .site-header-actions { gap: 7px; }
+  .site-header-actions .nav-cta { font-size: 11px; padding-inline: 12px; }
+  .brand-word { font-size: 14px; letter-spacing: .02em; }
+}
+@media (max-width: 1000px) {
+  .signature-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: 30px; }
+  .signature-hero h1 { font-size: 49px; }
+  .atlas-heading { flex-wrap: wrap; gap: 0 12px; padding: 12px 16px; }
+  .atlas-detail { padding: 18px; min-height: 232px; }
+  .atlas-detail h2 { font-size: 18px; }
+  .atlas-footer { padding: 12px 16px; flex-wrap: wrap; gap: 0 10px; }
+  .signature-model-grid, .signature-founder-grid { gap: 32px; }
+}
+@media (max-width: 760px) {
+  .signature-hero { padding-top: 34px; }
+  .signature-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .signature-hero h1 { font-size: clamp(43px, 10.5vw, 62px); max-width: 16ch; margin-block: 20px; }
+  .signature-intro { font-size: 17px; }
+  .signature-body { font-size: 14px; }
+  .signature-hero .hero-actions { gap: 12px 20px; margin-block: 24px; }
+  .signature-byline { padding-top: 20px; }
+  .decision-atlas { box-shadow: 5px 6px 0 #e6d9cd; margin-inline-end: 6px; }
+  .atlas-detail, html[lang='fa'] .atlas-detail { min-height: 218px; }
+  .atlas-node { min-width: 68px; min-height: 48px; font-size: 10px; padding: 5px 7px; }
+  .atlas-context { min-width: 86px; min-height: 86px; }
+  .atlas-authority { min-width: 88px; }
+  .signature-index { margin-top: 34px; gap: 5px 24px; padding-block: 16px; }
+  .signature-index > span { width: 100%; font-size: 9px; }
+  .signature-home .home-guide-heading { display: block; }
+  .signature-home .home-guide-heading h2 { margin-block: 12px; }
+  .signature-home .sol-carousel-head h2 { line-height: 1.65; }
+  .signature-home .sol-carousel { padding-bottom: 42px; }
+  .signature-evidence-row { grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 12px; padding: 22px 0; }
+  .signature-status { grid-column: 2; grid-row: 2; }
+  .signature-row-arrow { grid-column: 3; grid-row: 1; }
+  .signature-evidence-row h3 { font-size: 17px; }
+  .signature-model-grid, .signature-founder-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .signature-method-steps { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .signature-method-steps h3 { margin-block: 12px; }
+  .signature-method-steps li { padding-top: 18px; }
+  .signature-final h2 { font-size: 42px; }
+  .signature-final .hero-actions { gap: 14px 22px; }
+  html[lang='fa'] .signature-hero h1 { font-size: clamp(31px, 8.5vw, 43px); }
+  html[lang='fa'] .signature-final h2 { font-size: 34px; }
+  .sol-detail-hero { padding-top: 16px; }
+  .sol-section-nav { gap: 4px 19px; }
+  .sol-section-nav a { font-size: 11px; }
+  .q-section { padding-block: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-node, .signature-evidence-row { transition: none; }
+}
+@media (max-width: 400px) {
+  .atlas-detail, html[lang='fa'] .atlas-detail { min-height: 254px; }
+}

@@ -36,19 +36,19 @@ const PHASE_DUR = [3000, 6400, 3200, 4200, 3400];
 const TOTAL = PHASE_DUR.reduce((a, p) => a + p, 0);
 
 const C = {
-  // Boardroom Ivory canvas palette (2026-10-26 design migration).
+  // Mineral / oxblood / copper canvas palette.
   // Canvas API takes literal colors only - no CSS vars here.
-  edge: 'rgba(29, 26, 22, 0.30)',
-  edgeSoft: 'rgba(29, 26, 22, 0.16)',
-  nodeFill: '#fdfbf6',
-  nodeBorder: 'rgba(29, 26, 22, 0.35)',
-  nodeText: '#1d1a16',
-  muted: '#665d4f',
-  path: '#1f5c45',
-  warn: '#a8894f',
+  edge: 'rgba(41, 36, 42, 0.30)',
+  edgeSoft: 'rgba(41, 36, 42, 0.16)',
+  nodeFill: '#fffdf8',
+  nodeBorder: 'rgba(41, 36, 42, 0.35)',
+  nodeText: '#29242a',
+  muted: '#6c6065',
+  path: '#542b3a',
+  warn: '#884329',
   ok: '#1f5c45',
-  bandFill: 'rgba(29, 26, 22, 0.04)',
-  text: '#1d1a16',
+  bandFill: 'rgba(41, 36, 42, 0.04)',
+  text: '#29242a',
 };
 
 function clamp01(x: number) {
@@ -448,8 +448,8 @@ function drawScene(
     L.stations.forEach((st, i) => {
       const arrived = hopProgress >= i - 1e-6;
       const active = s.phase === 1 && Math.floor(hopProgress) === i;
-      ctx.fillStyle = active ? 'rgba(138,180,248,0.14)' : C.nodeFill;
-      ctx.strokeStyle = active ? C.path : arrived ? 'rgba(240,168,104,0.55)' : C.nodeBorder;
+      ctx.fillStyle = active ? 'rgba(84,43,58,0.14)' : C.nodeFill;
+      ctx.strokeStyle = active ? C.path : arrived ? 'rgba(171,88,54,0.55)' : C.nodeBorder;
       roundRect(ctx, { x: st.x, y: st.y, w: st.w, h: 22 }, 5);
       ctx.fill();
       ctx.stroke();
@@ -459,8 +459,8 @@ function drawScene(
       const hop = SIGNAL_HOPS[i];
       if (hop.latency && arrived && s.phase >= 1) {
         const chipW = ctx.measureText(hop.latency).width + 14;
-        ctx.fillStyle = 'rgba(240,168,104,0.10)';
-        ctx.strokeStyle = 'rgba(240,168,104,0.4)';
+        ctx.fillStyle = 'rgba(171,88,54,0.10)';
+        ctx.strokeStyle = 'rgba(171,88,54,0.4)';
         roundRect(ctx, { x: st.x + st.w / 2 - chipW / 2, y: st.y - 17, w: chipW, h: 14 }, 4);
         ctx.fill();
         ctx.stroke();
@@ -487,7 +487,7 @@ function drawScene(
     if (showMetrics > 0.01) {
       ctx.globalAlpha = tradAlpha * showMetrics;
       for (const m of L.metrics) {
-        ctx.fillStyle = 'rgba(29, 26, 22, 0.045)';
+        ctx.fillStyle = 'rgba(41, 36, 42, 0.045)';
         ctx.strokeStyle = C.edge;
         roundRect(ctx, { x: m.x, y: m.y, w: W - m.x - 18, h: s.mobile ? 22 : 30 }, 6);
         ctx.fill();
@@ -541,7 +541,7 @@ function drawScene(
       ];
       const pr = easeInOut(s.t);
       const p = dotOnRoute(wpts, pr * (wpts.length - 1));
-      ctx.strokeStyle = 'rgba(138,180,248,0.35)';
+      ctx.strokeStyle = 'rgba(84,43,58,0.35)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       wpts.forEach((q, i) => (i === 0 ? ctx.moveTo(q.x, q.y) : ctx.lineTo(q.x, q.y)));
@@ -552,7 +552,7 @@ function drawScene(
       ctx.fill();
       // brain pulse
       const pulse = 0.5 + 0.5 * Math.sin(s.elapsed / 260);
-      ctx.strokeStyle = `rgba(124,217,183,${0.25 + 0.45 * pulse})`;
+      ctx.strokeStyle = `rgba(171,88,54,${0.25 + 0.45 * pulse})`;
       roundRect(ctx, { x: 18, y: brain.y, w: fullW, h: brain.h }, 8);
       ctx.stroke();
       if (s.t > 0.85) {
@@ -569,7 +569,7 @@ function drawScene(
   if (s.phase === 4) {
     const a = easeInOut(clamp01((s.t - 0.15) * 2));
     ctx.globalAlpha = a;
-    ctx.fillStyle = 'rgba(10,11,13,0.72)';
+    ctx.fillStyle = 'rgba(245,241,233,0.94)';
     ctx.fillRect(0, 0, W, H);
     ctx.font = `600 ${Math.min(26, W / 22)}px Inter, system-ui, sans-serif`;
     ctx.fillStyle = C.text;

@@ -56,7 +56,7 @@ html.sheet-open body { overflow: hidden; }
   overflow: hidden;
   padding: 0;
 }
-.nv-sheet::backdrop { background: rgb(20 38 31 / 0.35); }
+.nv-sheet::backdrop { background: rgb(36 26 35 / 0.35); }
 .nv-sheet-head {
   display: flex;
   align-items: center;

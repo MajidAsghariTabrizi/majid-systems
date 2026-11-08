@@ -42,7 +42,7 @@ export default async function ServicesPage({ params }: { params: { locale: strin
           {t.offers.map((o, i) => (
             <Reveal key={o.key} delay={i * 60} className="service-card">
               <div className="service-head">
-                <span className="service-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="service-num">{new Intl.NumberFormat(l, { minimumIntegerDigits: 2 }).format(i + 1)}</span>
                 <div>
                   <h2 className="service-name">{o.name}</h2>
                   <p className="service-one">{o.oneLiner}</p>

@@ -9,6 +9,7 @@ import { QuantiviqMind } from '@/components/mind/QuantiviqMind';
 import '../globals.css';
 import '../header-v2.css';
 import '../site-polish.css';
+import '../signature.css';
 
 /**
  * Root layout for the shared deep-content tree (journey, profile, work,
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f7f4ec',
+  themeColor: '#f5f1e9',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,

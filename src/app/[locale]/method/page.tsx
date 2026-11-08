@@ -42,7 +42,7 @@ export default async function MethodPage({ params }: { params: { locale: string 
           <ol className="steps-list">
             {t.stages.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 70} className="step-row">
-                <span className="step-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="step-num">{new Intl.NumberFormat(l, { minimumIntegerDigits: 2 }).format(i + 1)}</span>
                 <div>
                   <h3>{s.title}</h3>
                   <p>{s.note}</p>

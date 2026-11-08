@@ -26,7 +26,7 @@ export function socialMeta(opts: {
 }): Pick<Metadata, 'openGraph' | 'twitter' | 'alternates'> {
   const base = SITE.canonicalUrl;
   const image = opts.image ?? '/og/quantiviq-og.png';
-  const alt = opts.imageAlt ?? 'Quantiviq — Rebuild the Company';
+  const alt = opts.imageAlt ?? 'Quantiviq — Design the Company Around Better Decisions';
   return {
     alternates: {
       canonical: opts.path,

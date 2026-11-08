@@ -122,6 +122,7 @@ function MindPageInner({ locale, s }: { locale: 'en' | 'fa'; s: MindStrings }) {
                     <MindMessage
                       key={m.id}
                       m={m}
+                      locale={locale}
                       label={s.sources}
                       viewAll={s.viewAll}
                       incompleteLabel={s.incomplete}
